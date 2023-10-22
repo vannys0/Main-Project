@@ -1,0 +1,89 @@
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing:border-box;
+    font-family: 'Monserrat', sans-serif;
+}
+.loginPage {
+    align-items: center;
+    justify-content: center;
+}
+.loginPage .container {
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    width: 700px;
+    height: auto;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+.welcome-span {
+    font-size: 18px;
+}
+.welcome-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: #fff;
+    width: 50%;
+    background-color: #00828c;
+}
+.loginPage .container .inputDiv {
+    margin-top: 15px;
+}
+.inputDiv label {
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+.loginPage .container .form {
+    padding: 25px;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+   
+}
+.login-title {
+    align-self: center;
+    color: #00828c;
+}
+.input {
+    display: flex;
+    align-items: center;
+    width: 300px;
+    height: 40px;
+    background-color: #eaeaea;
+}
+.input input {
+    width: 85%;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    font-size: 16px;
+}
+.input .icons {
+    margin-left: 8px;
+    color: #111111;
+}
+.login-btn, .register-btn {
+    margin: 25px 0px 15px 0px;
+    width: 300px;
+    height: 40px;
+    font-size: 16px;
+    color: #111111;
+    border: 2px solid #00828c;
+    border-radius: 0;
+    font-weight: 500;
+}
+.login-btn:hover {
+    border: 2px solid #00828c;
+    color: #00828c;
+}
+.register-btn:hover {
+    border: 2px solid #00828c;
+    color: #00828c;
+}
+.loginPage .container .form div a {
+    color: #00828c;
+    text-decoration: none;
+}

@@ -1,0 +1,5 @@
+.app {
+  width: 100dvw;
+  display: flex;
+  justify-content: center;
+}

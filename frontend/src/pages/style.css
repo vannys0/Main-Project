@@ -1,0 +1,485 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+html {
+    font-size: 90%;
+}
+a {
+    text-decoration: none;
+}
+button {
+    background-color: transparent;
+    border: none;
+}
+.primary {
+    color: #0d6efd;
+}
+.primary:hover {
+    color: #0b5ed7;
+}
+.secondary {
+    color: #6c757d;
+}
+.secondary:hover {
+    color: #5c636a;
+}
+.success {  
+    color: #198754;
+    
+}
+.success:hover {
+    color: #157347;
+}
+.danger {
+    color: #dc3545;  
+ }
+ .danger:hover {
+    color: #bb2d3b;
+ }
+.warning {
+    color: #ffc107;
+    
+}
+.warning:hover {
+    color: #ffca2c;
+}
+
+/* Pages */
+
+.main-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.adopt-div,
+.contact-div,
+.about-div,
+.rabbit-data-div,
+.form-div {
+    width: 60%;
+    height: auto;
+    margin-bottom: 50px;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+/* Home.jsx */
+.home-div {
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.brandname {
+    margin-top: 100px;
+    font-size: 3.5rem;
+}
+.search-input {
+    width: 50%;
+}
+.home-div .rabbit-home {
+    width: 100%;
+}
+.rabbit-home {
+    background-image: url(../images/rabbit-home1.jpg);
+    width: 100%;
+    min-height: 100dvh;
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+.rabbit-home::after {
+    position: absolute;
+    content: '';
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+.home-div a {
+    text-decoration: none;
+    font-size: 24px;
+}
+.floating {
+    position: absolute;
+    top: 20%;
+    left: 5%;
+    font-size: 4rem;
+    color: #EC7D20;
+    outline: #fff;
+}
+.home-div .adoptbtn {
+    position: absolute;
+    top: 86%;
+    left: 5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 260px;
+    height: 60px;
+    text-align: center;
+    background-color: #EC7D20;
+    color: #fff;
+    border-radius: 50px;
+    margin: 50px 0px;
+
+}
+.home-div .adoptbtn:hover {
+    background-color: #00828c;
+    color: #fff;
+    border: 3px solid #00828c;
+}
+.home-body {
+    display: flex;
+}
+.home-body>div {
+    width: 50%;
+    padding: 70px;
+}
+.home-body>div>img {
+    width: 100%;
+}
+.haveQuestion {
+    padding: 70px;
+}
+.email {
+    color: #00828c;
+}
+
+/* Adopt.jsx */
+
+.adopt-div {
+    width: 50%;
+    padding: 20px;
+}
+.rehome-div h2 {
+    margin-bottom: 50px;
+}
+.search-input {
+    padding: 2px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-bottom: 40px;
+}
+.search-input>span {
+    background-color: #00828c;
+    width: 120px;
+    padding: 8px;
+    color: #fff;
+    text-align: center;
+}
+.search-input>input {
+    width: 100%;
+    height: 38px;
+    border: 2px solid #eaeaea;
+    font-size: 16px;
+    padding: 4px;
+}
+.rabbitList {
+    gap: 10px;
+    display: grid;
+    grid-template-columns: auto auto;
+}
+.btn-toHIde {
+    display: none;
+}
+.see-details {
+    border: 2px solid #fff;
+    color: #fff;
+}
+.see-details:hover {
+    border: 2px solid #fff;
+}
+/* Contact.jsx */
+.contact-div {
+    padding: 100px 20px 20px 20px;
+}
+.contact-div div {
+    margin-bottom: 35px;
+}
+.main-div .rabbit-contact {
+    width: 500px;
+    height: 400px;
+    position: absolute;
+    top: 340px;
+    right: 100px;
+}
+.send-us {
+    align-self: center;
+    font-size: 4rem;
+}
+
+/* About.jsx */
+
+.about-div {
+    padding: 50px 20px 20px 20px;
+}
+.about-div .content {
+    display: flex;
+    flex-direction: column;
+}
+.main-div .about-div .rabbit-about {
+    width: 300px;
+    height: 450px;
+    position: absolute;
+    right: 50px;
+    bottom: -60%;
+}
+.about-us,
+.our-goal,
+.visit-us {
+    align-self: center;
+    font-size: 2rem;
+}
+
+/* AdoptForm.jsx */
+
+.main-div .form-div {
+    margin-top: 50px;
+    padding: 20px;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    border: 2px solid #eaeaea;
+}
+.main-div .form-div form h4{
+    width: 100%;
+    padding: 30px;
+    background-color: #00828c;
+    color: #fff;
+}
+.address {
+    gap: 10px;
+    display: grid;
+    grid-template-columns: auto auto;
+}
+.cancel {
+    margin-right: 20px;
+}
+.errmsg {
+    color: red;
+}
+
+/* RabitData.jsx */
+
+.rabbit-data-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.cards {
+    width: 60%;
+    padding: 20px;
+}
+.back {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    font-size: 14px;
+    color: #111111;
+    margin: 0px 15px 20px 0;
+}
+.back>.icons {
+    width: 20px;
+    font-size: 18px;
+    margin-right: 10px;
+}
+.cards .img-div {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #797979;
+    margin-bottom: 20px;
+}
+.cards img {
+    width: 70%;
+    align-content: center;
+}
+.cards-title {
+    font-size: 24px;
+}
+.rabbitDetails div {
+    width: 40%;
+    margin-right: 50px;
+}
+.rabbitData-container div img {
+    margin-bottom: 20px;
+    width: 50%;
+    height: 50%;
+    border: 2px solid #00828c;
+}
+.apply-btn {
+    margin-top: 20px;
+    border: 2px solid #00828c;
+    color: #00828c;
+}
+.apply-btn:hover {
+    border: 2px solid #00828c;
+    background-color: #00828c;
+    color: #fff;
+}
+.data-div {
+    display: flex;
+}
+.data-div>div {
+    width: 25%;
+}
+
+/* My Application */
+
+.application-div {
+    width: 95%;
+}
+.application-div>h1 {
+    margin: 50px 0px 20px 0px;
+}
+.action-btn {
+    gap: 15px;
+    display: flex;
+}
+.action-btn button {
+    margin-right: 8px;
+}
+.application-div table thead tr th {
+    background-color: #00828c;
+    color: #fff;
+}
+/* .input-photo {
+    display: none;
+} */
+/* .uploadFile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 35px;
+    border-radius: 5px;
+    border: 1px dashed #00828c;
+    cursor: pointer;
+} */
+.image-div {
+    display: flex;
+    justify-content: center;
+    border: 2px solid #00828c;
+}
+.image-div>img {
+    width: 60%;
+}
+
+
+
+
+
+
+@media (max-width: 480px) {
+    .home-div,
+    .adopt-div,
+    .contact-div,
+    .about-div {
+        gap: 0;
+        width: 100%;
+    
+        padding: 30px;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    /* Home */
+    .home-div {
+        padding: 10px;
+    }
+    .rabbit-home {
+    }
+    .rabbit-home::after {
+        width: 10%;
+        height: 10%;
+    }
+    .floating {
+        font-size: 26px;
+        top: 35%;
+        left: 7%;
+    }
+    .home-body {
+        display: flex;
+        flex-direction: column;
+    }
+    .home-body>div {
+        padding: 0;
+        width: 100%;
+    }
+    .home-div .adoptbtn {
+        top: 38%;
+        left: 7%;
+        width: 180px;
+        height: 40px;
+        font-size: 18px;
+    }
+    .related-business {
+        margin-top: 20px;
+    }
+    .home-body>div>img {
+        width: 100%;
+    }
+    /* Contact */
+    .contact-div h2 {
+        font-size: 20px;
+    }
+    .contact-div h4 {
+        font-size: 18px;
+    }
+    .main-div .rabbit-contact {
+        display: none;
+    }
+    .haveQuestion {
+        padding: 0;
+        margin-top: 50px;
+    }
+    /* About */
+    .about-div h2 {
+        font-size: 20px;
+    }
+    .about-div .content h2 {
+        font-size: 20px;
+    }
+    .about-div .content p{
+        font-size: 18px;
+    }
+    .main-div .about-div .rabbit-about {
+        display: none;
+    }
+    /* Adopt */
+    .adopt-div {
+    width: 100dvw;
+    }
+    .adopt-div .rabbitList {
+        padding: 0;
+        gap: 10px;
+        display: grid;
+        justify-content: center;
+        grid-template-columns: auto;
+    }
+    .search-input {
+        width: 100%;
+    }
+
+    /* RAbbitData */
+    .rabbit-data-div {
+        width: 100%;
+    }
+    .cards {
+        width: 100%;
+        margin-top: 0;
+    }
+
+    /* AdoptForm */
+    .main-div .form-div {
+        width: 100%;
+        padding: 20px;
+        margin-top: 0;
+    }
+
+}
