@@ -18,6 +18,15 @@ const onApprove = (e, o) => {
     .catch((err) => console.log(err));
 };
 
+const onDecline = (e, o) => {
+  axios
+    .put(BASE_URL + "/decline-adoption/" + o.id)
+    .then((res) => {
+      window.location.reload();
+    })
+    .catch((err) => console.log(err));
+};
+
 function Request() {
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false);
   const OpenSidebar = () => {
@@ -41,7 +50,7 @@ function Request() {
       />
       <div className="main-container">
         <h3>REQUEST</h3>
-        <Table striped bordered hover responsive="sm">
+        <Table bordered hover responsive="sm">
           <thead>
             <tr style={{ height: "60px" }}>
               <th>Name</th>
@@ -57,20 +66,19 @@ function Request() {
               <tr key={i}>
                 <td>{data.fullname}</td>
                 <td>
-                  {data.barangay}, {data.city}
+                  {data.barangay}, {data.city}, {data.province}
                 </td>
                 <td>{data.adoption_date}</td>
                 <td>{data.service_option}</td>
                 <td>{data.transaction_status}</td>
                 <td className="actions">
                   <ReviewRequest data={data} />
-                  <button
-                    className="success"
-                    onClick={(e) => onApprove(e, data)}
-                  >
-                    Approve Request
-                  </button>
-                  <button className="danger">Decline</button>
+                  <Link className="success" onClick={(e) => onApprove(e, data)}>
+                    Approve
+                  </Link>
+                  <Link className="danger" onClick={(e) => onDecline(e, data)}>
+                    Decline
+                  </Link>
                 </td>
               </tr>
             ))}

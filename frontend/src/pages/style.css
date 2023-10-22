@@ -193,7 +193,9 @@ button {
 .see-details:hover {
     border: 2px solid #fff;
 }
+
 /* Contact.jsx */
+
 .contact-div {
     padding: 100px 20px 20px 20px;
 }
@@ -364,7 +366,6 @@ button {
 .image-div {
     display: flex;
     justify-content: center;
-    border: 2px solid #00828c;
 }
 .image-div>img {
     width: 60%;

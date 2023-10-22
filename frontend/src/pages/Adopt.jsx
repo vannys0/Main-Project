@@ -13,7 +13,6 @@ function Adopt() {
   const [rabbits, setRabbits] = useState([]);
   const [record, setRecord] = useState([]);
   const photo = "http://localhost:8081/";
-  
 
   useEffect(() => {
     axios
@@ -44,7 +43,13 @@ function Adopt() {
         <div className="rabbitList">
           {record.map((data, i) => (
             <Card key={i} style={{ width: "100%" }}>
-              <Card.Img className="w-100" variant="top" src= {`http://localhost:8081/uploads/${data.image_path}`} height={250} alt="No Image"/> 
+              <Card.Img
+                className="w-100"
+                variant="top"
+                src={`http://localhost:8081/uploads/${data.image_path}`}
+                height={250}
+                alt="No Image"
+              />
               <Card.Body style={{ backgroundColor: "#00828c", color: "#fff" }}>
                 <Card.Title>{data.name}</Card.Title>
                 <Card.Text>

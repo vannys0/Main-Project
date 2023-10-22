@@ -27,7 +27,7 @@ function RabbitList() {
   const onRehome = (e, o) => {
     axios
       .put(BASE_URL + "/update-rehome/" + o.id, {
-        rehome: "REHOME",
+        rehome: "Rehome",
       })
       .then((res) => {
         window.location.reload();
@@ -101,7 +101,7 @@ function RabbitList() {
             Add Rabbit
           </Link>
         </div>
-        <Table striped bordered hover responsive="sm">
+        <Table bordered hover responsive="sm">
           <thead>
             <tr>
               <th>Name</th>
@@ -134,7 +134,7 @@ function RabbitList() {
                     <FaEdit className="success" />
                   </Link>
 
-                  {data.rehome === "REHOME" ? (
+                  {data.rehome === "Rehome" ? (
                     <Link onClick={(e) => onUnRehome(e, data)}>
                       <MdCancel className="danger" />
                     </Link>

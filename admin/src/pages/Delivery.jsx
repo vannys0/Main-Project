@@ -4,7 +4,7 @@ import Header from "../components/Header";
 import "../Style.css";
 import { Table } from "react-bootstrap";
 import axios from "axios";
-
+import { Link } from "react-router-dom";
 import appConfig from "../../config.json";
 const BASE_URL = appConfig.apiBasePath;
 
@@ -31,9 +31,9 @@ function Delivery() {
       />
       <div className="main-container">
         <h3>DELIVERY</h3>
-        <Table striped bordered hover responsive="sm">
+        <Table bordered hover responsive="sm">
           <thead>
-            <tr style={{ height: "60px" }}>
+            <tr>
               <th>Name</th>
               <th>Address</th>
               <th>Date</th>
@@ -54,13 +54,10 @@ function Delivery() {
                 <td>{data.transaction_status}</td>
                 <td className="actions">
                   {/* <ReviewRequest data={data}/> */}
-                  <button
-                    className="success"
-                    onClick={(e) => onApprove(e, data)}
-                  >
+                  <Link className="success" onClick={(e) => onApprove(e, data)}>
                     Accept
-                  </button>
-                  <button className="success">Delivered</button>
+                  </Link>
+                  <Link className="success">Delivered</Link>
                 </td>
               </tr>
             ))}

@@ -60,9 +60,8 @@ function Breeding() {
         <Table striped bordered hover>
           <thead>
             <tr>
-              <th>Pair Id</th>
-              <th>Buck</th>
-              <th>Doe</th>
+              <th>Male</th>
+              <th>Female</th>
               <th>Pairing date</th>
               <th>Action</th>
             </tr>
@@ -70,7 +69,6 @@ function Breeding() {
           <tbody>
             {data.map((data, i) => (
               <tr key={i}>
-                <td>{data.id}</td>
                 <td>{data.buck_id}</td>
                 <td>{data.doe_id}</td>
                 <td>{data.pairing_date}</td>

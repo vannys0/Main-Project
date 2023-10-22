@@ -6,8 +6,6 @@ import { Form } from "react-bootstrap";
 import { toast } from "react-toastify";
 import SecureStore from "react-secure-storage";
 
-
-
 function AdoptForm() {
   const { id, name } = useParams();
   const navigateTo = useNavigate();
@@ -16,7 +14,7 @@ function AdoptForm() {
   const [file, setFile] = useState();
   const [img, setImg] = useState();
 
-  const onFileChange = e => {
+  const onFileChange = (e) => {
     setImg(e.target.files[0]);
     setFile(URL.createObjectURL(e.target.files[0]));
   };
@@ -34,7 +32,7 @@ function AdoptForm() {
     reason: "",
     otherpets: "",
     user_id: user.id,
-    transaction_status: "PENDING",
+    transaction_status: "Pending",
     serviceoption: "",
   });
   const handleInput = (e) => {
@@ -45,9 +43,9 @@ function AdoptForm() {
     e.preventDefault();
 
     const formData = new FormData();
-    formData.append('image', img);
+    formData.append("image", img);
     const postData = JSON.stringify(values);
-    formData.append('values', postData);
+    formData.append("values", postData);
 
     axios
       .post("http://localhost:8081/rabbitdata/" + id + "/adopt-form", formData)
@@ -165,9 +163,9 @@ function AdoptForm() {
             name="serviceoption"
             required
           >
-             <option value="" hidden>
-                Choose
-              </option>
+            <option value="" hidden>
+              Choose
+            </option>
             <option value="Pick up">Pick up</option>
             <option value="Deliver">Deliver</option>
           </Form.Select>
@@ -181,7 +179,8 @@ function AdoptForm() {
             name="image"
             className="form-control"
             id="image"
-            onChange={onFileChange} />
+            onChange={onFileChange}
+          />
           <br />
           <img src={file} />
           {/* {fileData()} */}

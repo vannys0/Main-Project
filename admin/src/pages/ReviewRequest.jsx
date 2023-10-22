@@ -3,6 +3,7 @@ import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import "../Style.css";
 import { Button, Modal } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 function ReviewRequest({ data }) {
   const [show, setShow] = useState(false);
@@ -12,9 +13,9 @@ function ReviewRequest({ data }) {
   return (
     <>
       <div className="d-flex">
-        <button className="secondary" onClick={handleShow}>
+        <Link className="secondary text-decoration-none" onClick={handleShow}>
           Review
-        </button>
+        </Link>
       </div>
 
       <Modal show={show} onHide={handleClose}>
@@ -26,15 +27,13 @@ function ReviewRequest({ data }) {
         <Modal.Body>
           <div className="d-flex">
             <div className="w-50">
-              <p>Rabbit Id</p>
-              <p>Adopter Fullname</p>
-              <p>Phone</p>
+              <p>Fullname</p>
+              <p>Phone number</p>
               <p>Address</p>
               <p>Reason to Adopt</p>
               <p>Other Pets</p>
             </div>
             <div>
-              <p>: {data.rabbit_id}</p>
               <p>: {data.fullname}</p>
               <p>: {data.phone}</p>
               <p>
