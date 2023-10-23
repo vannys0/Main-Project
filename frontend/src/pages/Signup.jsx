@@ -13,6 +13,7 @@ function Login() {
     name: "",
     email: "",
     Password: "",
+    user_type: "client",
   });
 
   const navigate = useNavigate();

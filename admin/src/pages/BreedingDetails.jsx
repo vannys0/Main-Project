@@ -10,13 +10,13 @@ function BreedingDetails({ data }) {
   return (
     <>
       <Link className="secondary" onClick={handleShow}>
-        <FcViewDetails />
+        View
       </Link>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header
           closeButton
-          style={{ backgroundColor: "#00828c", color: "#fff" }}
+          style={{ backgroundColor: "#2962ff", color: "#fff" }}
         >
           <Modal.Title>Pair Details</Modal.Title>
         </Modal.Header>

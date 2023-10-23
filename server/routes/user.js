@@ -19,7 +19,7 @@ router.post("/login", (req, res) => {
   const password = req.body.LoginPassowrd;
   const values = [req.body.LoginUserName, req.body.LoginPassowrd];
   db.query(
-    "SELECT * FROM user where email = ? AND password = ?",
+    "SELECT * FROM user where email = ? AND password = ? AND user_type='admin'",
     [email, password],
     (err, results) => {
       if (err) {
@@ -28,6 +28,18 @@ router.post("/login", (req, res) => {
       return res.json(results);
     }
   );
+});
+
+// Clients
+router.get("/clients", (req, res) => {
+  db.query("SELECT * FROM user WHERE user_type='client'", (err, results) => {
+    if (err) {
+      console.error("Error fetching :", err);
+      res.status(500).json({ error: "Internal Server Error" });
+      return;
+    }
+    return res.json(results);
+  });
 });
 
 module.exports = router;

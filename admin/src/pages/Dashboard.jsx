@@ -185,10 +185,6 @@ function Dashboard() {
 
   const navigateTo = useNavigate();
 
-  const Rabbits = () => {
-    navigateTo("/rabbits");
-  };
-
   return (
     <div className="grid-container">
       <Header OpenSidebar={OpenSidebar} />
@@ -202,7 +198,7 @@ function Dashboard() {
         </div>
 
         <div className="main-cards">
-          <div className="card">
+          <div className="card" onClick={(e) => navigateTo("/clients")}>
             <div className="card-inner">
               <h3>CLIENTS</h3>
               <BsPeopleFill className="card_icon" />
@@ -210,14 +206,14 @@ function Dashboard() {
             <h1>{userCount}</h1>
           </div>
 
-          <div className="card">
+          <div className="card" onClick={() => navigateTo("/request")}>
             <div className="card-inner">
               <h3>PENDING</h3>
               <BsFillGrid3X3GapFill className="card_icon" />
             </div>
             <h1>{pending}</h1>
           </div>
-          <div className="card" onClick={Rabbits}>
+          <div className="card" onClick={(e) => navigateTo("/rabbits")}>
             <div className="card-inner">
               <h3>RABBITS</h3>
               <BsFillArchiveFill className="card_icon" />

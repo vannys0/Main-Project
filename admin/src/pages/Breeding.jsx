@@ -78,7 +78,7 @@ function Breeding() {
                     className="danger"
                     onClick={(e) => handleDelete(data.id)}
                   >
-                    <FaTrash className="danger" />
+                    Cancel
                   </Link>
                 </td>
               </tr>

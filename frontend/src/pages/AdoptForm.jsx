@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Form } from "react-bootstrap";
@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import SecureStore from "react-secure-storage";
 
 function AdoptForm() {
+  const [currentDate, setCurrentDate] = useState("");
   const { id, name } = useParams();
   const navigateTo = useNavigate();
   const date = new Date().toLocaleDateString();
@@ -19,9 +20,30 @@ function AdoptForm() {
     setFile(URL.createObjectURL(e.target.files[0]));
   };
 
+  useEffect(() => {
+    const today = new Date();
+    const monthNames = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+    const month = monthNames[today.getMonth()];
+    const formattedDate = `${month} ${today.getDate()}, ${today.getFullYear()}`;
+    setCurrentDate(formattedDate);
+  }, []);
+
   const [values, setValues] = useState({
     rabbit_id: id,
-    data: "",
+    date: currentDate,
     fullname: "",
     email: "",
     phone: "",
@@ -56,6 +78,7 @@ function AdoptForm() {
       })
       .catch((err) => console.log(err));
   };
+
   return (
     <div className="main-div">
       <Navbar />
@@ -100,10 +123,11 @@ function AdoptForm() {
             Date <span className="errmsg">*</span>
           </label>
           <input
-            type="date"
+            type="text"
             name="date"
+            value={currentDate}
             className="form-control"
-            required
+            readOnly
             onChange={handleInput}
           />
           <br />

@@ -94,10 +94,7 @@ function RabbitList() {
         </div>
         <br />
         <div className="d-flex">
-          <Link
-            to="/add-rabbit"
-            className="btn-primary text-decoration-none addRabbit"
-          >
+          <Link to="/add-rabbit" className="primary text-decoration-none">
             Add Rabbit
           </Link>
         </div>
@@ -118,7 +115,7 @@ function RabbitList() {
                 <td>{data.name}</td>
                 <td>
                   <img
-                    style={{ width: "28px", height: "28px" }}
+                    style={{ width: "25px", height: "25px" }}
                     src={`http://localhost:8081/uploads/${data.image_path}`}
                   />
                 </td>
@@ -129,23 +126,32 @@ function RabbitList() {
                 <td className="actions">
                   <Link
                     to={`/edit-rabbit/${data.id}`}
-                    className="text-decoration-none"
+                    className="success text-decoration-none"
                   >
-                    <FaEdit className="success" />
+                    Edit
                   </Link>
 
                   {data.rehome === "Rehome" ? (
-                    <Link onClick={(e) => onUnRehome(e, data)}>
-                      <MdCancel className="danger" />
+                    <Link
+                      className="secondary"
+                      onClick={(e) => onUnRehome(e, data)}
+                    >
+                      Rehome
                     </Link>
                   ) : (
-                    <Link onClick={(e) => onRehome(e, data)}>
-                      <RiSendPlaneFill />
+                    <Link
+                      className="primary"
+                      onClick={(e) => onRehome(e, data)}
+                    >
+                      Rehome
                     </Link>
                   )}
 
-                  <Link onClick={(e) => handleDelete(data.id)}>
-                    <FaTrash className="danger" />
+                  <Link
+                    className="danger"
+                    onClick={(e) => handleDelete(data.id)}
+                  >
+                    Cancel
                   </Link>
                 </td>
               </tr>

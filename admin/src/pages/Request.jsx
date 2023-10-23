@@ -52,7 +52,7 @@ function Request() {
         <h3>REQUEST</h3>
         <Table bordered hover responsive="sm">
           <thead>
-            <tr style={{ height: "60px" }}>
+            <tr>
               <th>Name</th>
               <th>Address</th>
               <th>Date</th>
@@ -70,7 +70,17 @@ function Request() {
                 </td>
                 <td>{data.adoption_date}</td>
                 <td>{data.service_option}</td>
-                <td>{data.transaction_status}</td>
+                <td>
+                  {data.transaction_status === "Pending" ? (
+                    <span style={{ color: "red" }}>
+                      {data.transaction_status}
+                    </span>
+                  ) : (
+                    <span style={{ color: "green" }}>
+                      {data.transaction_status}
+                    </span>
+                  )}
+                </td>
                 <td className="actions">
                   <ReviewRequest data={data} />
                   <Link className="success" onClick={(e) => onApprove(e, data)}>

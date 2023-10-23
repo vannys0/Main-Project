@@ -27,6 +27,7 @@ import Request from "./pages/Request";
 import AddRabbit from "./pages/AddRabbit";
 import EditRabbit from "./pages/EditRabbit";
 import AddBreedPair from "./pages/AddBreedPair";
+import Clients from "./pages/Clients";
 
 function App() {
   const signIn = useContext(AuthContext);
@@ -71,6 +72,16 @@ function App() {
         <div>
           <PrivateRoute>
             <Delivery />
+          </PrivateRoute>
+        </div>
+      ),
+    },
+    {
+      path: "/clients",
+      element: (
+        <div>
+          <PrivateRoute>
+            <Clients />
           </PrivateRoute>
         </div>
       ),

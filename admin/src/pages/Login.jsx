@@ -95,17 +95,12 @@ function Login() {
               />
             </div>
           </div>
-          <button
-            type="submit"
-            className="login-btn"
-            onClick={loginUser}
-          >
+          <button type="submit" className="login-btn" onClick={loginUser}>
             <span>Login </span>
           </button>
           <div>
             Don't have an account? <Link to="/register">Sign up</Link>
           </div>
-
         </form>
       </div>
     </div>

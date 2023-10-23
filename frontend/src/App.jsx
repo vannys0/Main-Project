@@ -10,7 +10,6 @@ import "./App.css";
 import { ToastContainer } from "react-toastify";
 import AdoptForm from "./pages/AdoptForm.jsx";
 import RabbitData from "./pages/RabbitData.jsx";
-import AddRabbit from "./pages/AddRabbit.jsx";
 import AboutRabbit from "./pages/AboutRabbit.jsx";
 import NewForm from "./pages/NewForm.jsx";
 import {
@@ -100,7 +99,6 @@ function App() {
           <PrivateRoute>
             <AdoptForm />
           </PrivateRoute>
-          
         </div>
       ),
     },
@@ -118,18 +116,8 @@ function App() {
       path: "/rabbitdata/:id",
       element: (
         <div>
-           <PrivateRoute>
-            <RabbitData />
-           </PrivateRoute>
-        </div>
-      ),
-    },
-    {
-      path: "/addrabbit",
-      element: (
-        <div>
           <PrivateRoute>
-            <AddRabbit />
+            <RabbitData />
           </PrivateRoute>
         </div>
       ),
@@ -201,7 +189,6 @@ function App() {
     []
   );
 
-
   useEffect(() => {
     console.log("---------APP USE EFFECT---------");
     let userToken = localStorage.getItem("userToken");
@@ -226,7 +213,6 @@ function App() {
         <RouterProvider router={router} />
       </div>
     </AuthContext.Provider>
-
   );
 }
 
