@@ -206,7 +206,7 @@ function AdoptForm() {
             onChange={onFileChange}
           />
           <br />
-          <img src={file} />
+          <img src={file} className="w-100" />
           {/* {fileData()} */}
 
           <label htmlFor="reason">

@@ -47,6 +47,7 @@ function ReviewRequest({ data }) {
             <p>Home Environment</p>
             <img
               src={`http://localhost:8081/uploads/${data.home_environment_image_path}`}
+              className="w-100"
             />
           </div>
         </Modal.Body>
