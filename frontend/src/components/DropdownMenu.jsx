@@ -25,7 +25,7 @@ function DropdownMenu() {
   return (
     <div className="dropdown">
       <ul className="">
-        <h3>{user.name}</h3>
+        <h4>{user.name}</h4>
         <Link to="/myapplication">
           <AiOutlineForm className="icon icons" />
           My application

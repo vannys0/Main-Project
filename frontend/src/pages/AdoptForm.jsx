@@ -7,10 +7,10 @@ import { toast } from "react-toastify";
 import SecureStore from "react-secure-storage";
 
 function AdoptForm() {
-  const [currentDate, setCurrentDate] = useState("");
+  // const [currentDate, setCurrentDate] = useState("");
   const { id, name } = useParams();
   const navigateTo = useNavigate();
-  const date = new Date().toLocaleDateString();
+  const dateToday = new Date().toLocaleDateString();
   const user = SecureStore.getItem("userToken");
   const [file, setFile] = useState();
   const [img, setImg] = useState();
@@ -20,30 +20,30 @@ function AdoptForm() {
     setFile(URL.createObjectURL(e.target.files[0]));
   };
 
-  useEffect(() => {
-    const today = new Date();
-    const monthNames = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
-    ];
-    const month = monthNames[today.getMonth()];
-    const formattedDate = `${month} ${today.getDate()}, ${today.getFullYear()}`;
-    setCurrentDate(formattedDate);
-  }, []);
+  // useEffect(() => {
+  //   const today = new Date();
+  //   const monthNames = [
+  //     "January",
+  //     "February",
+  //     "March",
+  //     "April",
+  //     "May",
+  //     "June",
+  //     "July",
+  //     "August",
+  //     "September",
+  //     "October",
+  //     "November",
+  //     "December",
+  //   ];
+  //   const month = monthNames[today.getMonth()];
+  //   const formattedDate = `${month} ${today.getDate()}, ${today.getFullYear()}`;
+  //   setCurrentDate(formattedDate);
+  // }, []);
 
   const [values, setValues] = useState({
     rabbit_id: id,
-    date: currentDate,
+    date: dateToday,
     fullname: "",
     email: "",
     phone: "",
@@ -84,7 +84,9 @@ function AdoptForm() {
       <Navbar />
       <div className="form-div">
         <form onSubmit={handleSubmit} encType="multipart/form-data">
-          <h4>Adoption Application for {name}</h4>
+          <h4>
+            Adoption Application for {name} {dateToday}
+          </h4>
           <br />
           <label htmlFor="fullname">
             Full Name <span className="errmsg">*</span>
@@ -103,6 +105,7 @@ function AdoptForm() {
           <input
             type="email"
             name="email"
+            inputMode="email"
             className="form-control"
             required
             onChange={handleInput}
@@ -115,22 +118,22 @@ function AdoptForm() {
             type="tel"
             name="phone"
             className="form-control"
+            inputMode="tel"
             required
             onChange={handleInput}
           />
           <br />
-          <label htmlFor="date">
+          {/* <label htmlFor="date">
             Date <span className="errmsg">*</span>
           </label>
           <input
-            type="text"
+            type="date"
             name="date"
-            value={currentDate}
+            inputMode="numeric"
             className="form-control"
-            readOnly
+            required
             onChange={handleInput}
-          />
-          <br />
+          /> */}
           <label>
             Address <span className="errmsg">*</span>
           </label>
@@ -165,6 +168,7 @@ function AdoptForm() {
             <input
               type="text"
               name="postalcode"
+              inputMode="numeric"
               placeholder="Postal code"
               className="form-control"
               onChange={handleInput}
@@ -174,12 +178,9 @@ function AdoptForm() {
           <br />
           <hr />
           <br />
-          <label htmlFor="environment">
-            <span className="errmsg">*</span>
-          </label>
 
           <label htmlFor="serviceoption">
-            Service Option <span className="errmsg">*</span>
+            Delivery Option <span className="errmsg">*</span>
           </label>
           <Form.Select
             aria-label="Default select example"
@@ -188,7 +189,7 @@ function AdoptForm() {
             required
           >
             <option value="" hidden>
-              Choose
+              Select
             </option>
             <option value="Pick up">Pick up</option>
             <option value="Deliver">Deliver</option>
