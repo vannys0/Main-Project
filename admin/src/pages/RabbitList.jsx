@@ -151,7 +151,7 @@ function RabbitList() {
                     className="danger"
                     onClick={(e) => handleDelete(data.id)}
                   >
-                    Cancel
+                    Delete
                   </Link>
                 </td>
               </tr>

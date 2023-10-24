@@ -61,79 +61,91 @@ function EditRabbit() {
       />
       <div className="main-container">
         <h3>EDIT</h3>
-        <form className="form" onSubmit={handleSubmit}>
-          <label htmlFor="">Image:</label>
-          <br />
-          <img
-            style={{ width: "300px", height: "300px" }}
-            src={`http://localhost:8081/uploads/${values.image_path}`}
-          />
-          <br />
-          <label htmlFor="">Name :</label>
-          <input
-            type="text"
-            name="name"
-            value={values.name}
-            className="form-control"
-            onChange={handleInput}
-            required
-          />
-          <br />
-          <label htmlFor="">Age (month/s) :</label>
-          <input
-            type="number"
-            name="age"
-            value={values.age}
-            className="form-control"
-            onChange={handleInput}
-            required
-          />
-          <br />
-          <label htmlFor="">Sex :</label>
-          <Form.Select
-            aria-label="Default select example"
-            onChange={handleInput}
-            name="sex"
-          >
-            <option value="" hidden>
-              {values.sex}
-            </option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-          </Form.Select>
-          <br />
-          <label htmlFor="">Weight (klg/s) :</label>
-          <input
-            type="text"
-            name="weight"
-            value={values.weight}
-            className="form-control"
-            onChange={handleInput}
-            required
-          />
-          <br />
-
-          <label htmlFor="">Code :</label>
-          <div className="App">
-            {value && (
-              <QRCode
-                title="GeeksForGeeks"
-                value={`Id: ${values.id}, Name: ${values.name}, Age: ${values.age}, Sex: ${values.sex}, Weight: ${values.weight}`}
-                bgColor={back}
-                fgColor={fore}
-                size={size === "" ? 0 : size}
+        <div className="edit-div">
+          <div>
+            <form className="form">
+              <label htmlFor="">Image:</label>
+              <br />
+              <img
+                style={{ width: "200px" }}
+                src={`http://localhost:8081/uploads/${values.image_path}`}
               />
-            )}
+              <br />
+              <br />
+              <label htmlFor="">Name :</label>
+              <input
+                type="text"
+                name="name"
+                value={values.name}
+                className="form-control"
+                onChange={handleInput}
+                required
+              />
+              <br />
+              <label htmlFor="">Age (month/s) :</label>
+              <input
+                type="number"
+                name="age"
+                value={values.age}
+                className="form-control"
+                onChange={handleInput}
+                required
+              />
+              <br />
+              <label htmlFor="">Sex :</label>
+              <Form.Select
+                aria-label="Default select example"
+                onChange={handleInput}
+                name="sex"
+              >
+                <option value="" hidden>
+                  {values.sex}
+                </option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </Form.Select>
+              <br />
+              <label htmlFor="">Weight (klg/s) :</label>
+              <input
+                type="text"
+                name="weight"
+                value={values.weight}
+                className="form-control"
+                onChange={handleInput}
+                required
+              />
+              <br />
+
+              <br />
+              <br />
+              <div style={{ display: "flex", gap: "20px" }}>
+                <Link to="/rabbits" className="secondary text-decoration-none">
+                  Cancel
+                </Link>
+                <Link
+                  className="primary text-decoration-none"
+                  onClick={handleSubmit}
+                >
+                  Update
+                </Link>
+              </div>
+            </form>
           </div>
-          <br />
-          <br />
-          <div style={{ display: "flex", gap: "10px" }}>
-            <Link to="/rabbits" className="secondary text-decoration-none">
-              Cancel
-            </Link>
-            <button className="primary">Update</button>
+          <div>
+            <div className="d-grid justify-content-center">
+              {value && (
+                <QRCode
+                  title="GeeksForGeeks"
+                  value={`Id: ${values.id}, Name: ${values.name}, Age: ${values.age}, Sex: ${values.sex}, Weight: ${values.weight}`}
+                  bgColor={back}
+                  fgColor={fore}
+                  size={size === "" ? 0 : size}
+                />
+              )}
+              <button className="btn btn-primary">Download QR Code</button>
+            </div>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   );

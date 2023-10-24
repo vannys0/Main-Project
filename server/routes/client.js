@@ -11,14 +11,21 @@ const storage = multer.diskStorage({
     cb(null, file.originalname);
   },
 });
+
 const upload = multer({ storage: storage });
 
 router.post("/signup", (req, res) => {
   const email = req.body.email;
   const checkEmailQuery = "SELECT * FROM user WHERE email = ?";
   const insertUserQuery =
-    "INSERT INTO user (`name`, `email`, `password`, `user_type`) VALUES (?)";
-  const values = [req.body.name, email, req.body.password, req.body.user_type];
+    "INSERT INTO user (`id`, `name`, `email`, `password`, `user_type`) VALUES (?)";
+  const values = [
+    req.body.id,
+    req.body.name,
+    email,
+    req.body.password,
+    req.body.user_type,
+  ];
 
   // Check if the email already exists
   db.query(checkEmailQuery, [email], (err, result) => {
@@ -91,7 +98,7 @@ function verifyToken(req, res, next) {
 
 // Adopt
 router.get("/adopt", (req, res) => {
-  db.query("SELECT * FROM rabbit WHERE rehome = 'REHOME'", (err, results) => {
+  db.query("SELECT * FROM rabbit WHERE rehome = 'Rehome'", (err, results) => {
     if (err) {
       console.error("Error fetching rabbits:", err);
       res.status(500).json({ error: "Internal Server Error" });
@@ -111,21 +118,6 @@ router.get("/rabbitdata/:id", (req, res) => {
   });
 });
 
-//Add rabbit
-router.post("/addrabbit", (req, res) => {
-  const sql = "INSERT INTO rabbit (`name`, `age`, `sex`, `weight`) VALUES (?)";
-  const values = [req.body.name, req.body.age, req.body.sex, req.body.weight];
-
-  db.query(sql, [values], (err, data) => {
-    if (err) {
-      return res.json("Error");
-    }
-    return res.json(data);
-  });
-});
-
-//end
-
 //Adopt Form
 router.post(
   "/rabbitdata/:id/adopt-form",
@@ -137,6 +129,7 @@ router.post(
     console.log(result);
 
     const values = [
+      result.id,
       result.rabbit_id,
       result.date,
       result.fullname,
@@ -155,7 +148,7 @@ router.post(
     ];
 
     const sql =
-      "INSERT INTO adoption (`rabbit_id`, `adoption_date`, `fullname`, `email`, `phone`, `province`, `city`, `barangay`, `postal_code`, `reason_for_adoption`, `other_pets`, `user_id`, `transaction_status`, `home_environment_image_path`, `service_option`) VALUES (?)";
+      "INSERT INTO adoption (`id`, `rabbit_id`, `adoption_date`, `fullname`, `email`, `phone`, `province`, `city`, `barangay`, `postal_code`, `reason_for_adoption`, `other_pets`, `user_id`, `transaction_status`, `home_environment_image_path`, `service_option`) VALUES (?)";
     db.query(sql, [values], (error, results) => {
       if (error) {
         console.log(error);

@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar.jsx";
-import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import "./style.css";
 import axios from "axios";
 import RabbitData from "./RabbitData.jsx";
-import { Link } from "react-router-dom";
 import Footer from "../components/footer.jsx";
 import AboutRabbit from "./AboutRabbit.jsx";
 
@@ -44,7 +42,7 @@ function Adopt() {
           {record.map((data, i) => (
             <Card key={i} style={{ width: "100%" }}>
               <Card.Img
-                className="w-100"
+                style={{ width: "300px", alignSelf: "center" }}
                 variant="top"
                 src={`http://localhost:8081/uploads/${data.image_path}`}
                 height={250}

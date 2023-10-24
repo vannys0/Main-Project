@@ -9,24 +9,6 @@ import ReviewRequest from "./ReviewRequest";
 import appConfig from "../../config.json";
 const BASE_URL = appConfig.apiBasePath;
 
-const onApprove = (e, o) => {
-  axios
-    .put(BASE_URL + "/approve-adoption/" + o.id)
-    .then((res) => {
-      window.location.reload();
-    })
-    .catch((err) => console.log(err));
-};
-
-const onDecline = (e, o) => {
-  axios
-    .put(BASE_URL + "/decline-adoption/" + o.id)
-    .then((res) => {
-      window.location.reload();
-    })
-    .catch((err) => console.log(err));
-};
-
 function Request() {
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false);
   const OpenSidebar = () => {
@@ -34,6 +16,25 @@ function Request() {
   };
 
   const [values, setValues] = useState([]);
+
+  const onApprove = (e, o) => {
+    axios
+      .put(BASE_URL + "/approve-adoption/" + o.id)
+      .then((res) => {
+        window.location.reload();
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const onDecline = (e, o) => {
+    axios
+      .put(BASE_URL + "/decline-adoption/" + o.id)
+      .then((res) => {
+        window.location.reload();
+      })
+      .catch((err) => console.log(err));
+  };
+
   useEffect(() => {
     axios
       .get(BASE_URL + "/adoptions")

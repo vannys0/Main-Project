@@ -28,6 +28,7 @@ import AddRabbit from "./pages/AddRabbit";
 import EditRabbit from "./pages/EditRabbit";
 import AddBreedPair from "./pages/AddBreedPair";
 import Clients from "./pages/Clients";
+import Uuid from "./pages/Uuid";
 
 function App() {
   const signIn = useContext(AuthContext);
@@ -37,6 +38,14 @@ function App() {
       element: (
         <div>
           <Login />
+        </div>
+      ),
+    },
+    {
+      path: "/uuid",
+      element: (
+        <div>
+          <Uuid />
         </div>
       ),
     },

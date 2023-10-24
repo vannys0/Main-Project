@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   BsCart3,
   BsGrid1X2Fill,
@@ -9,11 +9,20 @@ import {
   BsBoxArrowLeft,
   BsFillCollectionFill,
 } from "react-icons/bs";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineClose } from "react-icons/ai";
 import "./Sidebar.css";
+import { AuthContext } from "../App";
 
 function Sidebar({ openSidebarToggle, OpenSidebar }) {
+  const authContext = useContext(AuthContext);
+  const navigateTo = useNavigate();
+
+  function onLogout() {
+    authContext.signOut();
+    navigateTo("/");
+  }
+
   return (
     <aside
       id="sidebar"
@@ -59,7 +68,7 @@ function Sidebar({ openSidebarToggle, OpenSidebar }) {
           </Link>
         </li>
         <li className="sidebar-list-item">
-          <Link to="">
+          <Link to="" onClick={onLogout}>
             <BsBoxArrowLeft className="icon" /> Logout
           </Link>
         </li>

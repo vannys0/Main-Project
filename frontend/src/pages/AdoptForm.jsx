@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Form } from "react-bootstrap";
-import { toast } from "react-toastify";
+import { v4 as uuidv4 } from "uuid";
 import SecureStore from "react-secure-storage";
 
 function AdoptForm() {
@@ -42,6 +42,7 @@ function AdoptForm() {
   // }, []);
 
   const [values, setValues] = useState({
+    id: uuidv4(),
     rabbit_id: id,
     date: dateToday,
     fullname: "",
@@ -73,7 +74,6 @@ function AdoptForm() {
       .post("http://localhost:8081/rabbitdata/" + id + "/adopt-form", formData)
       .then((res) => {
         console.log(res);
-        toast.success("Application sent!");
         navigateTo("/myapplication");
       })
       .catch((err) => console.log(err));
@@ -84,9 +84,7 @@ function AdoptForm() {
       <Navbar />
       <div className="form-div">
         <form onSubmit={handleSubmit} encType="multipart/form-data">
-          <h4>
-            Adoption Application for {name} {dateToday}
-          </h4>
+          <h4>Adopt {name}</h4>
           <br />
           <label htmlFor="fullname">
             Full Name <span className="errmsg">*</span>
@@ -95,6 +93,7 @@ function AdoptForm() {
             type="text"
             name="fullname"
             className="form-control"
+            value={user.name}
             required
             onChange={handleInput}
           />
@@ -107,6 +106,7 @@ function AdoptForm() {
             name="email"
             inputMode="email"
             className="form-control"
+            value={user.email}
             required
             onChange={handleInput}
           />
@@ -207,7 +207,7 @@ function AdoptForm() {
             onChange={onFileChange}
           />
           <br />
-          <img src={file} className="w-100" />
+          <img src={file} className="w-50" />
           {/* {fileData()} */}
 
           <label htmlFor="reason">
@@ -223,14 +223,13 @@ function AdoptForm() {
           </label>
           <br />
           <label htmlFor="otherpets">
-            Other pets <span className="errmsg">*</span>
+            Other pets
             <textarea
               name="otherpets"
               rows={2}
               cols={100}
               className="form-control"
               onChange={handleInput}
-              required
               placeholder="If any"
             />
           </label>

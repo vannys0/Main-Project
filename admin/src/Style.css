@@ -175,6 +175,17 @@ body {
   }
   
   /* End Main  */
+
+  /* EditRabbit */
+  .grid-container .main-container .edit-div {
+    width: 100%;
+    display: flex;
+    margin: 0;
+    overflow-x: hidden;
+  }
+  .grid-container .main-container .edit-div > div {
+    width: 50%;
+  }
   
   
   /* Medium <= 992px */
@@ -226,5 +237,9 @@ body {
     }
     #sidebar {
         width: 65%;
+    }
+    .grid-container .main-container .edit-div {
+      display: flex;
+      flex-direction: column;
     }
   }

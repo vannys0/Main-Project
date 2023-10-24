@@ -6,7 +6,7 @@ import Header from "../components/Header";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { Form } from "react-bootstrap";
-
+import { v4 as uuidv4 } from "uuid";
 import appConfig from "../../config.json";
 const BASE_URL = appConfig.apiBasePath; //e.g "http://localhost:8080/api"
 
@@ -28,6 +28,7 @@ function AddRabbit() {
   };
 
   const [values, setValues] = useState({
+    id: uuidv4(),
     name: "",
     age: "",
     sex: "",
@@ -78,7 +79,8 @@ function AddRabbit() {
             onChange={onFileChange}
           />
           <br />
-          <img src={file} style={{ width: "100%" }} />
+          <img src={file} style={{ width: "200px" }} />
+          <br />
           <br />
 
           <label htmlFor="">Name :</label>
@@ -109,8 +111,9 @@ function AddRabbit() {
             <option value="" hidden>
               Select
             </option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
           </Form.Select>
           <br />
           <label htmlFor="">Weight (klg/s) :</label>

@@ -2,16 +2,15 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { Link, useParams } from "react-router-dom";
-import Rabbit from "../images/rabbit-contact.png";
+import { Link } from "react-router-dom";
 
 function AboutRabbit({ data }) {
   const [show, setShow] = useState(false);
-
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleShow = () => {
+    setShow(true);
+  };
 
-  const { id } = useParams();
   const [rabbit, setRabbit] = useState([]);
 
   useEffect(() => {
@@ -36,7 +35,10 @@ function AboutRabbit({ data }) {
         </Modal.Header>
         <Modal.Body>
           <div className="image-div">
-            <img src={`http://localhost:8081/uploads/${data.image_path}`} alt="" />
+            <img
+              src={`http://localhost:8081/uploads/${data.image_path}`}
+              alt=""
+            />
           </div>
           <br />
           <p>Hi, my name is {data.name} and I am looking for a new home.</p>

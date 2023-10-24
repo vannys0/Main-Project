@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 23, 2023 at 01:12 PM
+-- Generation Time: Oct 24, 2023 at 07:40 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.10
 
@@ -28,8 +28,8 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `adoption` (
-  `id` int(11) NOT NULL,
-  `rabbit_id` int(11) NOT NULL,
+  `id` varchar(255) NOT NULL,
+  `rabbit_id` varchar(255) NOT NULL,
   `adoption_date` text NOT NULL,
   `fullname` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
@@ -51,17 +51,9 @@ CREATE TABLE `adoption` (
 --
 
 INSERT INTO `adoption` (`id`, `rabbit_id`, `adoption_date`, `fullname`, `email`, `phone`, `province`, `city`, `barangay`, `postal_code`, `reason_for_adoption`, `other_pets`, `user_id`, `transaction_status`, `home_environment_image_path`, `service_option`) VALUES
-(46, 3, '2023-10-10', 'Ivan Bengc', 'ivan@gmail.com', 9, 'Camarines Sur', 'sdgs', 'sdgsd', 5415, 'dsfvsdf', 'dsfsd', 13, 'Approved', 'Screenshot (91).png', 'Pick up'),
-(47, 3, '2023-10-10', 'ivhasfd', 'gfv@gmail.com', 65465, 'Camarines Sur', 'dfg', 'asdfgasd', 85, 'dffd', 'dfbgdfv', 13, 'Pending', 'Screenshot (96).png', 'Deliver'),
-(48, 68, '0000-00-00', 'fsdgh', 'sdfg@gmail.com', 6545, 'Camarines Sur', 'zxcz', 'zxc', 0, 'zxcz', 'zxczx', 13, 'Pending', 'Screenshot (83).png', 'Pick up'),
-(49, 68, '0000-00-00', 'Ngunyan na', 'n@gmail.com', 5511, 'Camarines Sur', 'adaa', 'aaaaasd', 463, 'fgh', 'fghfg', 13, 'Approved', 'Screenshot (97).png', 'Deliver'),
-(50, 3, '0000-00-00', 'Last', 'j@gmail.com', 6515, 'Camarines Sur', 'asas', 'asdfasd', 6, 'asd', 'asda', 13, 'Pending', 'Screenshot (90).png', 'Deliver'),
-(51, 68, '', 'Pinak', 'jhb@gmail.com', 651251, 'Camarines Sur', 'dfgdf', 'dfgdf', 5324, 'fgh', 'fghf', 13, 'Pending', 'Screenshot (95).png', 'Deliver'),
-(52, 68, '', 'iohnioasdisdilczsduifv', 'sdcf@gmail.com', 77, 'Camarines Sur', 'scvs', 'sdcs', 5463, 'fdghf', 'fghf', 13, 'Pending', 'Screenshot (98).png', 'Deliver'),
-(53, 6, '2023-10-10', 'Snow', 's@gmail.com', 515415, 'Camarines Sur', 'fgbh', 'sdfgb', 0, 'deg', 'sdfg', 3, 'Pending', 'Screenshot (95).png', 'Deliver'),
-(54, 6, '', 'adfgbasdf', 'd@gmail.com', 56165, 'Camarines Sur', 'dsfgvasd', 'sdfg', 0, 'fdhr', 'erehg', 3, 'Pending', 'Screenshot (94).png', 'Pick up'),
-(56, 6, '10/23/2023', 'Now', 'now@gmail.com', 0, 'Camarines Sur', 'asdfcs', 'sdfws', 0, 'cfg', 'xfgnbxd', 3, 'Pending', 'Screenshot (94).png', 'Pick up'),
-(57, 70, '10/23/2023', 'Cynthia Lorio', 'cynthia@gmail.com', 6312562, 'Camarines Sur', 'asdas', 'asda', 6556, 'asdas', 'ddd', 3, 'Pending', 'Screenshot (112).png', 'Deliver');
+('62', '0', '10/24/2023', 'Ivan Bengcolado', 'ivanpaglinawan0@gmail.com', 2147483647, 'Camarines Sur', 'Cabusao', 'Sta. Cruz', 4406, 'Pet', 'none', 0, 'Approved', 'received_435216483919816.jpeg', 'Deliver'),
+('b100cf78-89ca-4f6d-9ac8-519db19e3b68', '0', '10/24/2023', 'Francis Bawag', 'bawagfrancis@gmail.com', 2147483647, 'Camarines Sur', 'Cabusao', 'Sta. Cruz', 4406, 'Pet', 'none', 92611, 'Pending', 'received_3558326954240573.jpeg', 'Deliver'),
+('cdccb8e2-b83e-424f-9911-8d076492d1f9', 'e66938f5-bf97-4370-bc1a-761005ea0621', '10/24/2023', 'Arjay Manlangit', 'manlangitarjay@gmail.com', 2147483647, 'Camarines Sur', 'Pasacao', 'Balogo', 4407, 'Pet', 'none', 1, 'Pending', 'received_3558326954240573.jpeg', 'Deliver');
 
 -- --------------------------------------------------------
 
@@ -115,11 +107,11 @@ INSERT INTO `chat` (`id`, `message`, `user_id`, `type`) VALUES
 --
 
 CREATE TABLE `rabbit` (
-  `id` int(11) NOT NULL,
-  `name` varchar(20) NOT NULL,
-  `age` int(11) NOT NULL,
-  `sex` varchar(10) NOT NULL,
-  `weight` int(11) NOT NULL,
+  `id` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `age` varchar(255) NOT NULL,
+  `sex` varchar(255) NOT NULL,
+  `weight` varchar(255) NOT NULL,
   `image_path` varchar(255) DEFAULT NULL,
   `rehome` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -129,32 +121,14 @@ CREATE TABLE `rabbit` (
 --
 
 INSERT INTO `rabbit` (`id`, `name`, `age`, `sex`, `weight`, `image_path`, `rehome`) VALUES
-(3, 'Gerald', 8, 'female', 2, 'LoginRabbit.jpg', 'Rehome'),
-(5, 'Nomi', 6, 'female', 3, 'rabbit-about.png', NULL),
-(6, 'Snow', 9, 'Female', 1, '1234.png', 'Rehome'),
-(68, 'daisy', 2, 'female', 10, 'daisy.jpg', 'Rehome'),
-(69, 'daisyson', 3, 'female', 3, 'daisy.jpg', NULL),
-(70, 'justin', 12, 'male', 4, 'Screenshot (84).png', 'Rehome'),
-(71, 'Us', 12, 'male', 4, 'IMG_20190918_171113.jpg', NULL);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `upload`
---
-
-CREATE TABLE `upload` (
-  `id` int(11) NOT NULL,
-  `image` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `upload`
---
-
-INSERT INTO `upload` (`id`, `image`) VALUES
-(1, '4321.png'),
-(3, 'Screenshot 2023-07-29 161411.png');
+('0a3907d1-862d-44d9-811b-f1421d31014f', 'Luna', '9', 'Female', '2.2', '380406889_991333761947340_5705480706998434077_n.jpg', NULL),
+('21f765fa-d21a-4e63-9356-af7e1cf079b3', 'Loki and Gina', '9', 'Other', '2.1', '380049148_1714769638992092_5184204807976145661_n.jpg', 'Rehome'),
+('5c868551-825b-4e0b-899f-dd00ee9d0819', 'Daisy', '7', 'Female', '1.9', '380502373_1061951088297453_6379436113640909426_n.jpg', NULL),
+('6d250a50-c52d-451e-819c-05308733d11f', 'Willow', '7', 'Female', '2.3', '384568249_1039028950558601_930443351806386619_n.jpg', NULL),
+('b5aa0eac-7a18-4476-bdf2-05ea99beddba', 'Clover', '10', 'Male', '3', '386866419_866182368415166_824641735645251020_n.jpg', 'Rehome'),
+('d0cef2ac-4577-421a-bbb8-a00639111993', 'George', '10', 'Male', '2', '385510364_996745374876198_1520617944626592398_n.jpg', 'Rehome'),
+('e33ed0d0-eaac-430e-beb7-b9470b0b27f5', 'Pancake', '10', 'Female', '3.2', '385398170_2818302821642629_5674628126964585107_n.jpg', NULL),
+('e66938f5-bf97-4370-bc1a-761005ea0621', 'Totoro', '8', 'Male', '2', '384567738_860532318967961_3155797217690923076_n.jpg', 'Rehome');
 
 -- --------------------------------------------------------
 
@@ -163,7 +137,7 @@ INSERT INTO `upload` (`id`, `image`) VALUES
 --
 
 CREATE TABLE `user` (
-  `id` int(11) NOT NULL,
+  `id` varchar(255) NOT NULL,
   `name` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
   `password` varchar(20) NOT NULL,
@@ -175,25 +149,11 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `name`, `email`, `password`, `user_type`) VALUES
-(1, 'Admin', 'admin@gmail.com', 'admin', 'admin'),
-(2, 'Francis Bawag', 'bawag@gmail.com', '1', 'client'),
-(3, 'Cynthia Lorio', 'cynthia@gmail.com', '1234', 'client'),
-(4, 'Aeriel', 'aeriel@gmail.com', '1234', 'client'),
-(5, 'Josh', 'josh@gmail.com', 'josh123', 'client'),
-(6, 'Jopay', 'jopay@gmail.com', 'jopay123', 'client'),
-(7, 'Cris', 'cris@gmail.com', '0000', 'client'),
-(8, 'Francis Paglinawan', 'paglinawan@gmail.com', '1111', 'client'),
-(9, 'Cynthia', 'cynthia1@gmail.com', '0000', 'client'),
-(10, 'Cynthia', 'cynthia1@gmail.com', '0000', 'client'),
-(11, 'Ivan', 'ivan0@gmail.com', '0000', 'client'),
-(12, 'Me', 'me@gmail.com', 'meme', 'client'),
-(13, 'Ivaaann', 'ivan@gmail.com', '1234', 'client'),
-(14, 'Ivvvan', 'ivan@gmail.com', '12345', 'client'),
-(15, 'ivan', 'ivan@gmail.com', '12343', 'client'),
-(16, 'Chloe', 'ivan1@gmail.com', '1234', 'client'),
-(17, 'Ivan Bengcolado', 'ivan000@gmail.com', '1234', 'client'),
-(18, 'j', 'j@gmail.com', '1', 'client'),
-(19, 'Maam', 'maam@gmail.com', '1234', 'client');
+('1a0df3ed-65f7-4b39-af7b-bc09c48cdc4b', 'Jose Beqiuo', 'josebeqiou@gmail.com', 'jose', 'client'),
+('1b4277c9-3d30-4c9f-8561-63eeecf0cb69', 'Arjay Manlangit', 'manlangitarjay@gmail.com', 'arjay', 'client'),
+('92611b67-b1be-4d00-bfcd-b4a893504962', 'Francis Bawag', 'bawagfrancis@gmail.com', '1234', 'client'),
+('b38b90b3-9ea1-4337-842b-0e95c8086d67', 'Darren Mulleda', 'darrenmulleda@gmail.com', 'mulleda', 'client'),
+('d239ef1a-721e-11ee-b403-94de80265f1f', 'Leonardo Nogra', 'leonardo@gmail.com', 'admin', 'admin');
 
 --
 -- Indexes for dumped tables
@@ -224,12 +184,6 @@ ALTER TABLE `rabbit`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `upload`
---
-ALTER TABLE `upload`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
@@ -240,40 +194,16 @@ ALTER TABLE `user`
 --
 
 --
--- AUTO_INCREMENT for table `adoption`
---
-ALTER TABLE `adoption`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
-
---
 -- AUTO_INCREMENT for table `breeding_pair`
 --
 ALTER TABLE `breeding_pair`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `chat`
 --
 ALTER TABLE `chat`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `rabbit`
---
-ALTER TABLE `rabbit`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
-
---
--- AUTO_INCREMENT for table `upload`
---
-ALTER TABLE `upload`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `user`
---
-ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
