@@ -6,6 +6,7 @@ import { Table } from "react-bootstrap";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import ReviewRequest from "./ReviewRequest";
+import Swal from "sweetalert2";
 import appConfig from "../../config.json";
 const BASE_URL = appConfig.apiBasePath;
 
@@ -18,21 +19,47 @@ function Request() {
   const [values, setValues] = useState([]);
 
   const onApprove = (e, o) => {
-    axios
-      .put(BASE_URL + "/approve-adoption/" + o.id)
-      .then((res) => {
-        window.location.reload();
-      })
-      .catch((err) => console.log(err));
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You want to approved this request?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#2e7d32",
+      cancelButtonColor: "#797979",
+      confirmButtonText: "Yes, approve it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire("Approved!", "Request has been approved.", "success");
+        axios
+          .put(BASE_URL + "/approve-adoption/" + o.id)
+          .then((res) => {
+            window.location.reload();
+          })
+          .catch((err) => console.log(err));
+      }
+    });
   };
 
   const onDecline = (e, o) => {
-    axios
-      .put(BASE_URL + "/decline-adoption/" + o.id)
-      .then((res) => {
-        window.location.reload();
-      })
-      .catch((err) => console.log(err));
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You want to decline this request?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d50000",
+      cancelButtonColor: "#797979",
+      confirmButtonText: "Yes, decline it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire("Declined!", "Request has been declined.", "success");
+        axios
+          .put(BASE_URL + "/decline-adoption/" + o.id)
+          .then((res) => {
+            window.location.reload();
+          })
+          .catch((err) => console.log(err));
+      }
+    });
   };
 
   useEffect(() => {
@@ -73,11 +100,11 @@ function Request() {
                 <td>{data.service_option}</td>
                 <td>
                   {data.transaction_status === "Pending" ? (
-                    <span style={{ color: "red" }}>
+                    <span style={{ color: "#d50000" }}>
                       {data.transaction_status}
                     </span>
                   ) : (
-                    <span style={{ color: "green" }}>
+                    <span style={{ color: "#2e7d32" }}>
                       {data.transaction_status}
                     </span>
                   )}

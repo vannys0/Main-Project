@@ -38,6 +38,7 @@
 }
 .loginPage .container .form {
     padding: 25px;
+    gap: 10px;
     width: 50%;
     display: flex;
     flex-direction: column;
@@ -60,10 +61,10 @@
     border: none;
     outline: none;
     font-size: 16px;
+    color: #111111;
 }
 .input .icons {
-    margin-left: 8px;
-    color: #111111;
+    margin: 0px 8px;
 }
 .login-btn, .register-btn {
     margin: 25px 0px 15px 0px;
@@ -86,4 +87,7 @@
 .loginPage .container .form div a {
     color: #00828c;
     text-decoration: none;
+}
+.page-icon {
+    color: #797979;
 }

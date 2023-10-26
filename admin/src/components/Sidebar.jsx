@@ -13,14 +13,26 @@ import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineClose } from "react-icons/ai";
 import "./Sidebar.css";
 import { AuthContext } from "../App";
-
+import Swal from "sweetalert2";
 function Sidebar({ openSidebarToggle, OpenSidebar }) {
   const authContext = useContext(AuthContext);
   const navigateTo = useNavigate();
 
   function onLogout() {
-    authContext.signOut();
-    navigateTo("/");
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You want to logout?",
+      showCancelButton: true,
+      confirmButtonColor: "#d50000",
+      cancelButtonColor: "#797979",
+      confirmButtonText: "Yes!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire("Logged out!", "You have been logout.", "success");
+        authContext.signOut();
+        navigateTo("/");
+      }
+    });
   }
 
   return (

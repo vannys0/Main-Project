@@ -18,6 +18,7 @@ import {
 export const AuthContext = createContext(null);
 import SecureStore from "react-secure-storage";
 import PrivateRoute from "./pages/PrivateRoute";
+import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import RabbitList from "./pages/RabbitList";
@@ -49,14 +50,14 @@ function App() {
         </div>
       ),
     },
-    // {
-    //   path: "/register",
-    //   element: (
-    //     <div>
-    //       <Register />
-    //     </div>
-    //   ),
-    // },
+    {
+      path: "/register",
+      element: (
+        <div>
+          <Register />
+        </div>
+      ),
+    },
     // {
     //   path: "/createPass",
     //   element: (

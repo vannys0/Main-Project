@@ -37,8 +37,7 @@ function Delivery() {
               <th>Name</th>
               <th>Address</th>
               <th>Date</th>
-              <th>Delivery Option</th>
-              <th>Status</th>
+              <th>Delivery Status</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -50,12 +49,11 @@ function Delivery() {
                   {data.barangay}, {data.city}
                 </td>
                 <td>{data.adoption_date}</td>
-                <td>{data.service_option}</td>
-                <td>{data.transaction_status}</td>
+                <td>Pending</td>
                 <td className="actions">
                   {/* <ReviewRequest data={data}/> */}
                   <Link className="success" onClick={(e) => onApprove(e, data)}>
-                    Accept
+                    Approve
                   </Link>
                   <Link className="success">Delivered</Link>
                 </td>

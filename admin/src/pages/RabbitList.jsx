@@ -11,7 +11,7 @@ import { RiSendPlaneFill } from "react-icons/ri";
 import { MdCancel } from "react-icons/md";
 import { FaTrash } from "react-icons/fa";
 import { Button } from "react-bootstrap";
-
+import Swal from "sweetalert2";
 import appConfig from "../../config.json";
 const BASE_URL = appConfig.apiBasePath;
 
@@ -58,13 +58,27 @@ function RabbitList() {
   }, []);
 
   const handleDelete = async (id) => {
-    try {
-      await axios.delete(BASE_URL + "/delete-rabbit/" + id);
-      window.location.reload();
-      toast.success("Successfully deleted!");
-    } catch (err) {
-      console.log(err);
-    }
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You want to delete this item?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d50000",
+      cancelButtonColor: "#797979",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire("Deleted!", "Successfully deleted.", "success");
+        axios.delete(BASE_URL + "/delete-rabbit/" + id);
+        window.location.reload();
+      }
+    });
+    // try {
+    //   await axios.delete(BASE_URL + "/delete-rabbit/" + id);
+    //   window.location.reload();
+    // } catch (err) {
+    //   console.log(err);
+    // }
   };
 
   // Search rabbit filter

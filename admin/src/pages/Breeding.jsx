@@ -4,12 +4,10 @@ import Header from "../components/Header";
 import "../Style.css";
 import { Link, useParams } from "react-router-dom";
 import Table from "react-bootstrap/Table";
-import { FaTrash } from "react-icons/fa";
-import { AiOutlineDatabase } from "react-icons/ai";
 import axios from "axios";
 import appConfig from "../../config.json";
 import BreedingDetails from "./BreedingDetails";
-import { Button } from "react-bootstrap";
+import Swal from "sweetalert2";
 const BASE_URL = appConfig.apiBasePath;
 
 function Breeding() {
@@ -31,12 +29,21 @@ function Breeding() {
   }, []);
 
   const handleDelete = async (id) => {
-    try {
-      await axios.delete(BASE_URL + "/cancel_breeding/" + id);
-      window.location.reload();
-    } catch (err) {
-      console.log(err);
-    }
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You want to cancel this?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d50000",
+      cancelButtonColor: "#797979",
+      confirmButtonText: "Yes, cancel it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire("Cancelled!", "You have been cancel this list.", "success");
+        axios.delete(BASE_URL + "/cancel_breeding/" + id);
+        window.location.reload();
+      }
+    });
   };
 
   return (

@@ -35,6 +35,7 @@ function Login() {
           const user = res.data;
           SecureStore.setItem("userToken", user);
           authContext.signIn(user);
+
           navigate("/home");
         } else {
           toast.error("Incorrect Email or Password");

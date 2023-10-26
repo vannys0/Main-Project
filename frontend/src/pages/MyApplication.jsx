@@ -51,11 +51,11 @@ function MyApplication() {
                 <td width={100}>{data.service_option}</td>
                 <td width={100}>
                   {data.transaction_status === "Approved" ? (
-                    <span style={{ color: "green" }}>
+                    <span style={{ color: "#2e7d32" }}>
                       {data.transaction_status}
                     </span>
                   ) : (
-                    <span style={{ color: "red" }}>
+                    <span style={{ color: "#d50000" }}>
                       {data.transaction_status}
                     </span>
                   )}

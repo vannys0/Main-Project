@@ -43,11 +43,10 @@ const Register = () => {
           </h2>
         </div>
         <form className="form grid">
-          <h2 className="login-title">Administrator</h2>
+          <h2 className="login-title">Sign up</h2>
           <div className="inputDiv">
-            <label htmlFor="username">Name</label>
             <div className="input flex">
-              <BiUser className="icons" />
+              <BiUser className="icons page-icon" />
               <input
                 type="text"
                 id="username"
@@ -60,9 +59,8 @@ const Register = () => {
             </div>
           </div>
           <div className="inputDiv">
-            <label htmlFor="email">Email</label>
             <div className="input flex">
-              <AiOutlineMail className="icons" />
+              <AiOutlineMail className="icons page-icon" />
               <input
                 type="email"
                 id="email"
@@ -76,9 +74,8 @@ const Register = () => {
           </div>
 
           <div className="inputDiv">
-            <label htmlFor="password">Password</label>
             <div className="input flex">
-              <RiLockPasswordLine className="icons" />
+              <RiLockPasswordLine className="icons page-icon" />
               <input
                 type="password"
                 id="password"
@@ -92,8 +89,9 @@ const Register = () => {
           </div>
 
           <button
+            style={{ margin: "20px 0px 0px 0px" }}
             type="submit"
-            className="register-btn"
+            className="btn btn-primary"
             onClick={createUser}
           >
             <span>Sign up</span>

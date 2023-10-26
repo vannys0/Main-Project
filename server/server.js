@@ -2,13 +2,12 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 
-
 app.use(cors());
 app.use(express.json());
 app.use("/uploads", express.static("uploads"));
 
 app.listen(8081, () => {
-  console.log("Server is running on port 8080");
+  console.log("Server is running on port 8081");
 });
 
 const user = require("./routes/user");
@@ -29,5 +28,3 @@ app.use("", client);
 
 const dashbard = require("./routes/dashboard");
 app.use("/api", dashbard);
-
-
