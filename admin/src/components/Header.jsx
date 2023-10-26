@@ -7,14 +7,16 @@ import {
   BsJustify,
 } from "react-icons/bs";
 import "./Header.css";
+import SecureStore from "react-secure-storage";
 function Header({ OpenSidebar }) {
+  const user = SecureStore.getItem("userToken");
   return (
     <header className="header">
       <div className="menu-icon">
         <BsJustify className="icon" onClick={OpenSidebar} />
       </div>
       <div className="header-left">
-        <BsSearch className="icon" />
+        <h5>Hi, {user.name}</h5>
       </div>
       <div className="header-right">
         <BsFillBellFill className="icon" />

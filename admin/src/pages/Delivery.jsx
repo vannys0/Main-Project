@@ -30,8 +30,9 @@ function Delivery() {
         OpenSidebar={OpenSidebar}
       />
       <div className="main-container">
-        <h3>DELIVERY</h3>
-        <Table bordered hover responsive="sm">
+        <h3>Delivery</h3>
+        <br />
+        <Table striped hover responsive="sm">
           <thead>
             <tr>
               <th>Name</th>

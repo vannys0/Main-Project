@@ -36,7 +36,7 @@ function Login() {
           icon: "success",
           title: "Successfully Login",
           showConfirmButton: false,
-          timer: 2500,
+          timer: 3000,
         });
         navigateTo("/dashboard"); // if the credebntial match in db
       } else {

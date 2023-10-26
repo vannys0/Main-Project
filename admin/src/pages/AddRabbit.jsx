@@ -7,6 +7,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { Form } from "react-bootstrap";
 import { v4 as uuidv4 } from "uuid";
+import Swal from "sweetalert2";
 import appConfig from "../../config.json";
 const BASE_URL = appConfig.apiBasePath; //e.g "http://localhost:8080/api"
 
@@ -50,7 +51,6 @@ function AddRabbit() {
     axios
       .post(BASE_URL + "/add-rabbit", formData)
       .then((res) => {
-        toast.success("Successfully added!");
         navigate("/rabbits");
       })
       .catch((err) => console.log(err));
@@ -64,12 +64,8 @@ function AddRabbit() {
         OpenSidebar={OpenSidebar}
       />
       <div className="main-container">
-        <h3>ADD RABBIT</h3>
-        <form
-          className="form"
-          onSubmit={handleSubmit}
-          encType="multipart/form-data"
-        >
+        <h3>Add rabbit</h3>
+        <form className="form w-50" encType="multipart/form-data">
           <label htmlFor="">Image :</label>
           <input
             type="file"
@@ -79,9 +75,7 @@ function AddRabbit() {
             onChange={onFileChange}
           />
           <br />
-          <img src={file} style={{ width: "200px" }} />
-          <br />
-          <br />
+          {/* <img src={file} style={{ width: "200px" }} /> */}
 
           <label htmlFor="">Name :</label>
           <input
@@ -127,10 +121,12 @@ function AddRabbit() {
           <br />
 
           <div className="actions">
-            <Link to="/rabbits" className="secondary text-decoration-none">
+            <Link to="/rabbits" className="secondary">
               Back
             </Link>
-            <button className="primary">Add</button>
+            <Link type="submit" className="primary" onClick={handleSubmit}>
+              Add
+            </Link>
           </div>
         </form>
       </div>

@@ -9,7 +9,7 @@ import {
   BsBoxArrowLeft,
   BsFillCollectionFill,
 } from "react-icons/bs";
-import { Link, useNavigate } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import { AiOutlineClose } from "react-icons/ai";
 import "./Sidebar.css";
 import { AuthContext } from "../App";
@@ -48,42 +48,29 @@ function Sidebar({ openSidebarToggle, OpenSidebar }) {
       </div>
 
       <ul className="sidebar-list">
-        <li className="sidebar-list-item">
-          <Link to="/dashboard">
-            <BsGrid1X2Fill className="icon" /> Dashboard
-          </Link>
-        </li>
-        <li className="sidebar-list-item">
-          <Link to="/rabbits">
-            <BsFillGrid3X3GapFill className="icon" /> Rabbit List
-          </Link>
-        </li>
-        <li className="sidebar-list-item">
-          <Link to="/breeding">
-            <BsListCheck className="icon" /> Breeding
-          </Link>
-        </li>
-        <li className="sidebar-list-item">
-          <Link to="/request">
-            <BsFillCollectionFill className="icon" /> Request
-          </Link>
-        </li>
-        <li className="sidebar-list-item">
-          <Link to="/delivery">
-            <BsTruck className="icon" /> Delivery
-          </Link>
-        </li>
+        <NavLink to="/dashboard" className="sidebar-list-item">
+          <BsGrid1X2Fill className="icon" /> Dashboard
+        </NavLink>
+        <NavLink to="/rabbits" className="sidebar-list-item">
+          <BsFillGrid3X3GapFill className="icon" /> Rabbit List
+        </NavLink>
+        <NavLink to="/breeding" className="sidebar-list-item">
+          <BsListCheck className="icon" /> Breeding
+        </NavLink>
 
-        <li className="sidebar-list-item">
-          <Link to="/clients">
-            <BsPeopleFill className="icon" /> clients
-          </Link>
-        </li>
-        <li className="sidebar-list-item">
-          <Link to="" onClick={onLogout}>
-            <BsBoxArrowLeft className="icon" /> Logout
-          </Link>
-        </li>
+        <NavLink to="/request" className="sidebar-list-item">
+          <BsFillCollectionFill className="icon" /> Request
+        </NavLink>
+
+        <NavLink to="/delivery" className="sidebar-list-item">
+          <BsTruck className="icon" /> Delivery
+        </NavLink>
+        <NavLink to="/clients" className="sidebar-list-item">
+          <BsPeopleFill className="icon" /> clients
+        </NavLink>
+        <Link to="" onClick={onLogout} className="sidebar-list-item">
+          <BsBoxArrowLeft className="icon" /> Logout
+        </Link>
       </ul>
     </aside>
   );

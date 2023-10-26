@@ -22,7 +22,6 @@ function Request() {
     Swal.fire({
       title: "Are you sure?",
       text: "You want to approved this request?",
-      icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#2e7d32",
       cancelButtonColor: "#797979",
@@ -44,7 +43,6 @@ function Request() {
     Swal.fire({
       title: "Are you sure?",
       text: "You want to decline this request?",
-      icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#d50000",
       cancelButtonColor: "#797979",
@@ -77,8 +75,10 @@ function Request() {
         OpenSidebar={OpenSidebar}
       />
       <div className="main-container">
-        <h3>REQUEST</h3>
-        <Table bordered hover responsive="sm">
+        <h3>Adoption request</h3>
+        <br />
+
+        <Table striped hover responsive="sm">
           <thead>
             <tr>
               <th>Name</th>

@@ -90,4 +90,15 @@ router.get("/approveCount", (req, res) => {
   );
 });
 
+router.get("/recent-rabbit", (req, res) => {
+  db.query("SELECT * FROM rabbit Limit 5", (err, results) => {
+    if (err) {
+      console.error("Error fetching rabbit:", err);
+      res.status(500).json({ error: "Internal Server Error" });
+      return;
+    }
+    return res.json(results);
+  });
+});
+
 module.exports = router;

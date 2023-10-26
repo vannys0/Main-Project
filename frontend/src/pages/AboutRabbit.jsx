@@ -26,7 +26,7 @@ function AboutRabbit({ data }) {
   return (
     <>
       <button className="btn form-control see-details" onClick={handleShow}>
-        See datails
+        See details
       </button>
 
       <Modal show={show} onHide={handleClose}>

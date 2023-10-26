@@ -51,8 +51,8 @@ function Adopt() {
               <Card.Body style={{ backgroundColor: "#00828c", color: "#fff" }}>
                 <Card.Title>{data.name}</Card.Title>
                 <Card.Text>
-                  • {data.sex} <br />• {data.age} months <br />• {data.weight}{" "}
-                  pounds
+                  {/* • {data.sex} <br />• {data.age} months <br />• {data.weight}{" "}
+                  pounds */}
                 </Card.Text>
                 <AboutRabbit data={data} />
                 {/* <Link

@@ -24,8 +24,8 @@ import Sidebar from "../components/Sidebar";
 import SecureStore from "react-secure-storage";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
 import appConfig from "../../config.json";
+import { Table } from "react-bootstrap";
 const BASE_URL = appConfig.apiBasePath;
 
 function Dashboard() {
@@ -37,11 +37,9 @@ function Dashboard() {
   const user = SecureStore.getItem("userToken");
 
   const [userCount, setUserCount] = useState(0);
-  const [requestCount, setRequestCount] = useState(0);
   const [rabbitCount, setRabbitCount] = useState(0);
   const [pending, setPending] = useState(0);
-  const [pairCount, setPairCount] = useState(0);
-  const [approveCount, setApproveRequest] = useState(0);
+  const [rabbit, setRabbit] = useState([]);
 
   useEffect(() => {
     axios
@@ -71,7 +69,6 @@ function Dashboard() {
         console.error(error);
       });
 
-    //see dashboard.js
     axios
       .get(BASE_URL + "/pending-adoption")
       .then((response) => {
@@ -102,6 +99,15 @@ function Dashboard() {
       .get(BASE_URL + "/pairCount")
       .then((response) => {
         setPairCount(response.data[0].pairCount);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+
+    axios
+      .get(BASE_URL + "/recent-rabbit")
+      .then((res) => {
+        setRabbit(res.data);
       })
       .catch((error) => {
         console.error(error);
@@ -193,46 +199,47 @@ function Dashboard() {
         OpenSidebar={OpenSidebar}
       />
       <main className="main-container">
-        <div className="main-title">
-          <h3>DASHBOARD</h3>
-        </div>
+        <h3>Dashboard</h3>
 
         <div className="main-cards">
           <div className="card" onClick={(e) => navigateTo("/clients")}>
             <div className="card-inner">
-              <h3>CLIENTS</h3>
-              <BsPeopleFill className="card_icon" />
+              <h3>Clients</h3>
+              <BsPeopleFill className="card_icon " />
             </div>
-            <h1>{userCount}</h1>
+            <h3>{userCount}</h3>
           </div>
 
           <div className="card" onClick={() => navigateTo("/request")}>
             <div className="card-inner">
-              <h3>PENDING</h3>
+              <h3>Pending</h3>
               <BsFillGrid3X3GapFill className="card_icon" />
             </div>
-            <h1>{pending}</h1>
+            <h3>{pending}</h3>
           </div>
           <div className="card" onClick={(e) => navigateTo("/rabbits")}>
             <div className="card-inner">
-              <h3>RABBITS</h3>
+              <h3>Rabbits</h3>
               <BsFillArchiveFill className="card_icon" />
             </div>
-            <h1>{rabbitCount}</h1>
+            <h3>{rabbitCount}</h3>
           </div>
           <div className="card">
             <div className="card-inner">
-              <h3>UPCOMING</h3>
+              <h3>Upcoming</h3>
               <BsFillBellFill className="card_icon" />
             </div>
-            <h1>42</h1>
+            <h3>42</h3>
           </div>
         </div>
-
         <div className="charts">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
-              style={{ height: "300px" }}
+              style={{
+                boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.3)",
+                padding: "10px",
+                borderRadius: "5px",
+              }}
               width={500}
               height={300}
               data={data}
@@ -255,7 +262,11 @@ function Dashboard() {
 
           <ResponsiveContainer width="100%" height="100%">
             <LineChart
-              style={{ height: "300px" }}
+              style={{
+                boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.3)",
+                padding: "10px",
+                borderRadius: "5px",
+              }}
               width={500}
               height={300}
               data={data}
@@ -280,6 +291,46 @@ function Dashboard() {
               <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
             </LineChart>
           </ResponsiveContainer>
+        </div>
+        <div className="activity">
+          <div
+            className="rabbit-added"
+            style={{
+              boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.3)",
+              padding: "10px",
+              borderRadius: "5px",
+            }}
+          >
+            <h5>Recent Added</h5>
+            <Table hover responsive="sm">
+              <thead>
+                <tr className="bg-transparent">
+                  <th>Rabbit name</th>
+                  <th>Sex</th>
+                  <th>Age</th>
+                </tr>
+              </thead>
+              <tbody>
+                {rabbit.map((data, i) => (
+                  <tr key={i}>
+                    <td>{data.name}</td>
+                    <td>{data.sex}</td>
+                    <td>{data.age}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          </div>
+          <div
+            className="recent-activity"
+            style={{
+              boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.3)",
+              padding: "10px",
+              borderRadius: "5px",
+            }}
+          >
+            <h5>Recent Activities</h5>
+          </div>
         </div>
       </main>
     </div>

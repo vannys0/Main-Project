@@ -32,7 +32,6 @@ function Breeding() {
     Swal.fire({
       title: "Are you sure?",
       text: "You want to cancel this?",
-      icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#d50000",
       cancelButtonColor: "#797979",
@@ -54,7 +53,7 @@ function Breeding() {
         OpenSidebar={OpenSidebar}
       />
       <div className="main-container">
-        <h3>BREEDING LIST</h3>
+        <h3>Breeding List</h3>
         <br />
         <div className="d-flex">
           <Link
@@ -64,7 +63,7 @@ function Breeding() {
             Add Pair
           </Link>
         </div>
-        <Table striped bordered hover>
+        <Table striped hover responsive="sm">
           <thead>
             <tr>
               <th>Male</th>

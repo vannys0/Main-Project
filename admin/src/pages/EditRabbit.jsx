@@ -60,7 +60,7 @@ function EditRabbit() {
         OpenSidebar={OpenSidebar}
       />
       <div className="main-container">
-        <h3>EDIT</h3>
+        <h3>Edit rabbit</h3>
         <div className="edit-div">
           <div>
             <form className="form">

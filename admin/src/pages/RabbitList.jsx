@@ -59,9 +59,8 @@ function RabbitList() {
 
   const handleDelete = async (id) => {
     Swal.fire({
-      title: "Are you sure?",
-      text: "You want to delete this item?",
-      icon: "warning",
+      title: "Confirm delete?",
+      text: "Are you sure? You want to delete this?",
       showCancelButton: true,
       confirmButtonColor: "#d50000",
       cancelButtonColor: "#797979",
@@ -73,12 +72,6 @@ function RabbitList() {
         window.location.reload();
       }
     });
-    // try {
-    //   await axios.delete(BASE_URL + "/delete-rabbit/" + id);
-    //   window.location.reload();
-    // } catch (err) {
-    //   console.log(err);
-    // }
   };
 
   // Search rabbit filter
@@ -96,7 +89,7 @@ function RabbitList() {
         OpenSidebar={OpenSidebar}
       />
       <div className="main-container">
-        <h3>LIST</h3>
+        <h3>Rabbit List</h3>
         <div className="search-filter-div">
           <input
             type="text"
@@ -112,7 +105,7 @@ function RabbitList() {
             Add Rabbit
           </Link>
         </div>
-        <Table bordered hover responsive="sm">
+        <Table striped hover responsive="sm">
           <thead>
             <tr>
               <th>Name</th>

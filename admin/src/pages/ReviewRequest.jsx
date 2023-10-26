@@ -37,7 +37,7 @@ function ReviewRequest({ data }) {
               <p>: {data.fullname}</p>
               <p>: {data.phone}</p>
               <p>
-                : {data.province} {data.city} {data.barangay}
+                : {data.province}, {data.city}, {data.barangay}
               </p>
               <p>: {data.reason_for_adoption}</p>
               <p>: {data.other_pets}</p>

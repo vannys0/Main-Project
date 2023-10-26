@@ -34,7 +34,7 @@ function Clients() {
       />
       <div className="main-container">
         <h3>CLIENTS</h3>
-        <Table bordered hover responsive="sm">
+        <Table striped hover responsive="sm">
           <thead>
             <tr>
               <th>Client Id</th>

@@ -104,8 +104,7 @@ function BreedPair() {
         OpenSidebar={OpenSidebar}
       />
       <div className="main-container">
-        <br />
-        <h1>Add Rabbit Pair</h1>
+        <h3>Add Rabbit Pair</h3>
         <br />
         <div className="breed-ground">
           <div className="ground">

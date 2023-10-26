@@ -14,6 +14,20 @@
     font-family: 'Montserrat', sans-serif;
   }
   
+  .active {
+    background-color: #2962ff;
+    color: #fff;
+    
+  }
+
+  ul .active {
+    color: #fff;
+  }
+
+  ul .active:hover {
+    color: #fff;
+  }
+  
   .sidebar-title {
     display: flex;
     justify-content: space-between;
@@ -33,38 +47,30 @@
   }
   
   .sidebar-list {
+    display: flex;
+    flex-direction: column;
     padding: 0;
     list-style-type: none;
+    
   }
   
   .sidebar-list-item {
-    padding: 20px 20px 20px 20px;
+    padding: 20px;
     font-size: 18px;
   }
   
-  .sidebar-list-item:hover {
-    background-color: #2962ff;
-    color: #fff;
-    cursor: pointer;
-  }
-  
-  .sidebar-list-item > a {
+  .sidebar-list-item {
     text-decoration: none;
     color: rgba(0, 0, 0, .75);
     font-weight: 500;
     text-transform: uppercase;
   }
-  .sidebar-list-item > a:hover {
-    color: #fff;
+  .sidebar-list-item:hover {
+    color: rgba(0, 0, 0, .75);
   }
   .sidebar-responsive {
     display: inline !important;
     position: absolute;
-    /*
-      we want the z-index of the sidebar higher so that
-      the charts are not showing over the sidebar 
-      on small screens
-    */
     z-index: 12 !important;
   }
   
