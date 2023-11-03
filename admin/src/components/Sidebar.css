@@ -5,7 +5,7 @@
     left: 0;
     top: 0;
     grid-area: sidebar;
-    width: 18%;
+    width: 260px;
     height: 100%;
     background-color: #eaeaea;
     overflow-y: auto;
@@ -15,18 +15,42 @@
   }
   
   .active {
-    background-color: #2962ff;
-    color: #fff;
+    background-color: #fff;
+    color: #1e1e1e;
+    border-left: 8px solid blue;
     
   }
 
-  ul .active {
-    color: #fff;
+  .admin-profile {
+    gap: 20px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    cursor: pointer;
   }
 
-  ul .active:hover {
-    color: #fff;
+  .admin-profile > div > .icons {
+    font-size: 34px;
+    color: #00828c;
   }
+
+  .admin-profile .admin-user {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .admin-profile > .admin-user > h6 {
+    font-weight: 600;
+  }
+
+  ul .active {
+    color: #1e1e1e;
+  }
+
+  /* ul .active:hover {
+    color: #fff;
+  } */
   
   .sidebar-title {
     display: flex;
@@ -55,15 +79,15 @@
   }
   
   .sidebar-list-item {
-    padding: 20px;
-    font-size: 18px;
-  }
-  
-  .sidebar-list-item {
     text-decoration: none;
     color: rgba(0, 0, 0, .75);
+    padding: 10px 10px 10px 20px;
+    font-size: 18px;
     font-weight: 500;
     text-transform: uppercase;
+  }
+  .sidebar-list-item .icon {
+    font-size: 16px;
   }
   .sidebar-list-item:hover {
     color: rgba(0, 0, 0, .75);

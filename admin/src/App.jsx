@@ -29,7 +29,7 @@ import AddRabbit from "./pages/AddRabbit";
 import EditRabbit from "./pages/EditRabbit";
 import AddBreedPair from "./pages/AddBreedPair";
 import Clients from "./pages/Clients";
-import Uuid from "./pages/Uuid";
+import AdminProfile from "./pages/AdminProfile";
 
 function App() {
   const signIn = useContext(AuthContext);
@@ -43,14 +43,6 @@ function App() {
       ),
     },
     {
-      path: "/uuid",
-      element: (
-        <div>
-          <Uuid />
-        </div>
-      ),
-    },
-    {
       path: "/register",
       element: (
         <div>
@@ -58,20 +50,22 @@ function App() {
         </div>
       ),
     },
-    // {
-    //   path: "/createPass",
-    //   element: (
-    //     <div>
-    //       <CreateNewPass />
-    //     </div>
-    //   ),
-    // },
     {
       path: "/dashboard",
       element: (
         <div>
           <PrivateRoute>
             <Dashboard />
+          </PrivateRoute>
+        </div>
+      ),
+    },
+    {
+      path: "/profile",
+      element: (
+        <div>
+          <PrivateRoute>
+            <AdminProfile />
           </PrivateRoute>
         </div>
       ),
@@ -126,16 +120,6 @@ function App() {
         </div>
       ),
     },
-    // {
-    //   path: "/chart",
-    //   element: (
-    //     <div>
-    //       <PrivateRoute>
-    //         <Chart />
-    //       </PrivateRoute>
-    //     </div>
-    //   ),
-    // },
     {
       path: "/breeding",
       element: (

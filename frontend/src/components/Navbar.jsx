@@ -51,6 +51,18 @@ function Navbar() {
             About
           </NavLink>
         </li>
+        <li>
+          <NavLink to="/myapplication" className="to-hide">
+            {/* <FcAbout className="icons" style={{ color: "#fff" }} /> */}
+            Application
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/" className="to-hide">
+            {/* <FcAbout className="icons" style={{ color: "#fff" }} /> */}
+            Logout
+          </NavLink>
+        </li>
         <div onClick={() => setDropdown((prev) => !prev)}>
           <MdAccountCircle className="profile" />
         </div>

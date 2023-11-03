@@ -49,7 +49,8 @@ router.post("/signup", (req, res) => {
 });
 
 router.post("/login-client", (req, res) => {
-  const sql = "SELECT * FROM user WHERE `email` = ? AND `password` = ?";
+  const sql =
+    "SELECT * FROM user WHERE `email` = ? AND `password` = ? AND user_type='client'";
   db.query(sql, [req.body.email, req.body.password], (err, data) => {
     if (err) {
       return res.json({ Message: "Error" });

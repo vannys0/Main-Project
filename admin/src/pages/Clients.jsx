@@ -5,6 +5,7 @@ import Table from "react-bootstrap/Table";
 import { useEffect } from "react";
 import "../Style.css";
 import axios from "axios";
+import ReactPaginate from "react-paginate";
 import appConfig from "../../config.json";
 const BASE_URL = appConfig.apiBasePath;
 
@@ -15,6 +16,8 @@ function Clients() {
   };
 
   const [clients, setClients] = useState([]);
+  const [pageNumber, setPageNumber] = useState(0);
+  const clientsPerPage = 10;
 
   useEffect(() => {
     axios
@@ -24,6 +27,18 @@ function Clients() {
       })
       .catch((err) => console.log(err));
   }, []);
+
+  const pagesVisited = pageNumber * clientsPerPage;
+  const displayedClients = clients.slice(
+    pagesVisited,
+    pagesVisited + clientsPerPage
+  );
+
+  const pageCount = Math.ceil(clients.length / clientsPerPage);
+
+  const changePage = ({ selected }) => {
+    setPageNumber(selected);
+  };
 
   return (
     <div className="grid-container">
@@ -43,7 +58,7 @@ function Clients() {
             </tr>
           </thead>
           <tbody>
-            {clients.map((data, i) => (
+            {displayedClients.map((data, i) => (
               <tr key={i}>
                 <td>{data.id}</td>
                 <td>{data.name}</td>
@@ -52,6 +67,17 @@ function Clients() {
             ))}
           </tbody>
         </Table>
+        <ReactPaginate
+          previousLabel={"Previous"}
+          nextLabel={"Next"}
+          pageCount={pageCount}
+          onPageChange={changePage}
+          containerClassName={"pagination"}
+          previousLinkClassName={"pagination__link"}
+          nextLinkClassName={"pagination__link"}
+          disabledClassName={"pagination__link--disabled"}
+          activeClassName={"pagination__link--active"}
+        />
       </div>
     </div>
   );

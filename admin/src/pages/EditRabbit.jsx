@@ -142,7 +142,7 @@ function EditRabbit() {
                   size={size === "" ? 0 : size}
                 />
               )}
-              <button className="btn btn-primary">Download QR Code</button>
+              <button className="btn btn-primary">Generate QR Code</button>
             </div>
           </div>
         </div>

@@ -8,6 +8,8 @@ import {
 } from "react-icons/bs";
 import "./Header.css";
 import SecureStore from "react-secure-storage";
+import { Badge } from "antd";
+
 function Header({ OpenSidebar }) {
   const user = SecureStore.getItem("userToken");
   return (
@@ -16,12 +18,15 @@ function Header({ OpenSidebar }) {
         <BsJustify className="icon" onClick={OpenSidebar} />
       </div>
       <div className="header-left">
-        <h5>Hi, {user.name}</h5>
+        <h5></h5>
       </div>
       <div className="header-right">
-        <BsFillBellFill className="icon" />
-        <BsFillEnvelopeFill className="icon" />
-        <BsPersonCircle className="icon" />
+        <Badge count={20}>
+          <BsFillBellFill className="icon" />
+        </Badge>
+        <Badge count={10}>
+          <BsFillEnvelopeFill className="icon" />
+        </Badge>
       </div>
     </header>
   );

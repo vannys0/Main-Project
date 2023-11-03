@@ -33,33 +33,44 @@ function Delivery() {
         <h3>Delivery</h3>
         <br />
         <Table striped hover responsive="sm">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Address</th>
-              <th>Date</th>
-              <th>Delivery Status</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {values.map((data, i) => (
-              <tr key={i}>
-                <td>{data.fullname}</td>
-                <td>
-                  {data.barangay}, {data.city}
-                </td>
-                <td>{data.adoption_date}</td>
-                <td>Pending</td>
-                <td className="actions">
-                  {/* <ReviewRequest data={data}/> */}
-                  <Link className="success" onClick={(e) => onApprove(e, data)}>
-                    Approve
-                  </Link>
-                  <Link className="success">Delivered</Link>
-                </td>
+          {values.length > 0 && (
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Date</th>
+                <th>Delivery Status</th>
+                <th>Action</th>
               </tr>
-            ))}
+            </thead>
+          )}
+          <tbody>
+            {values.length > 0 ? (
+              values.map((data, i) => (
+                <tr key={i}>
+                  <td>{data.fullname}</td>
+                  <td>
+                    {data.barangay}, {data.city}
+                  </td>
+                  <td>{data.adoption_date}</td>
+                  <td>Pending</td>
+                  <td className="actions">
+                    {/* <ReviewRequest data={data}/> */}
+                    <Link
+                      className="success"
+                      onClick={(e) => onApprove(e, data)}
+                    >
+                      Approve
+                    </Link>
+                    <Link className="success">Delivered</Link>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="5">No results found</td>
+              </tr>
+            )}
           </tbody>
         </Table>
       </div>

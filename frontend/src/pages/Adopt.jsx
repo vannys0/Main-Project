@@ -39,34 +39,38 @@ function Adopt() {
           <br />
         </div>
         <div className="rabbitList">
-          {record.map((data, i) => (
-            <Card key={i} style={{ width: "100%" }}>
-              <Card.Img
-                style={{ width: "300px", alignSelf: "center" }}
-                variant="top"
-                src={`http://localhost:8081/uploads/${data.image_path}`}
-                height={250}
-                alt="No Image"
-              />
-              <Card.Body style={{ backgroundColor: "#00828c", color: "#fff" }}>
-                <Card.Title>{data.name}</Card.Title>
-                <Card.Text>
-                  {/* • {data.sex} <br />• {data.age} months <br />• {data.weight}{" "}
-                  pounds */}
-                </Card.Text>
-                <AboutRabbit data={data} />
-                {/* <Link
-                  to={`/rabbitdata/${data.id}`}
-                  className="btn form-control see-details"
+          {record.length > 0 ? (
+            record.map((data, i) => (
+              <Card key={i} style={{ width: "100%" }}>
+                <Card.Img
+                  style={{ width: "300px", alignSelf: "center" }}
+                  variant="top"
+                  src={`http://localhost:8081/uploads/${data.image_path}`}
+                  height={250}
+                  alt="No Image"
+                />
+                <Card.Body
+                  style={{ backgroundColor: "#00828c", color: "#fff" }}
                 >
-                  See details
-                </Link> */}
-              </Card.Body>
-            </Card>
-          ))}
+                  <Card.Title>{data.name}</Card.Title>
+                  <Card.Text></Card.Text>
+                  <AboutRabbit data={data} />
+                  {/* <Link
+          to={`/rabbitdata/${data.id}`}
+          className="btn form-control see-details"
+        >
+          See details
+        </Link> */}
+                </Card.Body>
+              </Card>
+            ))
+          ) : (
+            <div>
+              <h1>No rabbits found</h1>
+            </div>
+          )}
         </div>
       </div>
-      <Footer />
     </div>
   );
 }

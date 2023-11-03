@@ -5,12 +5,7 @@ import Table from "react-bootstrap/Table";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
-import { FaEdit } from "react-icons/fa";
-import { RiSendPlaneFill } from "react-icons/ri";
-import { MdCancel } from "react-icons/md";
-import { FaTrash } from "react-icons/fa";
-import { Button } from "react-bootstrap";
+import ReactPaginate from "react-paginate";
 import Swal from "sweetalert2";
 import appConfig from "../../config.json";
 const BASE_URL = appConfig.apiBasePath;
@@ -23,6 +18,21 @@ function RabbitList() {
 
   const [rabbits, setRabbits] = useState([]);
   const [record, setRecord] = useState([]);
+
+  const [pageNumber, setPageNumber] = useState(0);
+  const rabbitsPerPage = 10;
+
+  const pagesVisited = pageNumber * rabbitsPerPage;
+  const displayedRabbits = record.slice(
+    pagesVisited,
+    pagesVisited + rabbitsPerPage
+  );
+
+  const pageCount = Math.ceil(record.length / rabbitsPerPage);
+
+  const changePage = ({ selected }) => {
+    setPageNumber(selected);
+  };
 
   const onRehome = (e, o) => {
     axios
@@ -106,65 +116,84 @@ function RabbitList() {
           </Link>
         </div>
         <Table striped hover responsive="sm">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Image</th>
-              <th>Age</th>
-              <th>Sex</th>
-              <th>Weight</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {record.map((data, i) => (
-              <tr key={i}>
-                <td>{data.name}</td>
-                <td>
-                  <img
-                    style={{ width: "25px", height: "25px" }}
-                    src={`http://localhost:8081/uploads/${data.image_path}`}
-                  />
-                </td>
-
-                <td>{data.age}</td>
-                <td>{data.sex}</td>
-                <td>{data.weight}</td>
-                <td className="actions">
-                  <Link
-                    to={`/edit-rabbit/${data.id}`}
-                    className="success text-decoration-none"
-                  >
-                    Edit
-                  </Link>
-
-                  {data.rehome === "Rehome" ? (
-                    <Link
-                      className="secondary"
-                      onClick={(e) => onUnRehome(e, data)}
-                    >
-                      Rehome
-                    </Link>
-                  ) : (
-                    <Link
-                      className="primary"
-                      onClick={(e) => onRehome(e, data)}
-                    >
-                      Rehome
-                    </Link>
-                  )}
-
-                  <Link
-                    className="danger"
-                    onClick={(e) => handleDelete(data.id)}
-                  >
-                    Delete
-                  </Link>
-                </td>
+          {displayedRabbits.length > 0 && (
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Image</th>
+                <th>Age</th>
+                <th>Sex</th>
+                <th>Weight</th>
+                <th>Action</th>
               </tr>
-            ))}
+            </thead>
+          )}
+          <tbody>
+            {displayedRabbits.length > 0 ? (
+              displayedRabbits.map((data, i) => (
+                <tr key={i}>
+                  <td>{data.name}</td>
+                  <td>
+                    <img
+                      style={{ width: "25px", height: "25px" }}
+                      src={`http://localhost:8081/uploads/${data.image_path}`}
+                    />
+                  </td>
+
+                  <td>{data.age}</td>
+                  <td>{data.sex}</td>
+                  <td>{data.weight}</td>
+                  <td className="actions">
+                    <Link
+                      to={`/edit-rabbit/${data.id}`}
+                      className="success text-decoration-none"
+                    >
+                      Edit
+                    </Link>
+
+                    {data.rehome === "Rehome" ? (
+                      <Link
+                        className="secondary"
+                        onClick={(e) => onUnRehome(e, data)}
+                      >
+                        Rehome
+                      </Link>
+                    ) : (
+                      <Link
+                        className="primary"
+                        onClick={(e) => onRehome(e, data)}
+                      >
+                        Rehome
+                      </Link>
+                    )}
+
+                    <Link
+                      className="danger"
+                      onClick={(e) => handleDelete(data.id)}
+                    >
+                      Delete
+                    </Link>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="6">No results found</td>
+              </tr>
+            )}
           </tbody>
         </Table>
+        <ReactPaginate
+          previousLabel={"Previous"}
+          nextLabel={"Next"}
+          pageCount={pageCount}
+          onPageChange={changePage}
+          containerClassName={"pagination"}
+          previousLinkClassName={"pagination__link"}
+          nextLinkClassName={"pagination__link"}
+          disabledClassName={"pagination__link--disabled"}
+          activeClassName={"pagination__link--active"}
+        />
       </div>
     </div>
   );

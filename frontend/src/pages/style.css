@@ -327,7 +327,7 @@ button {
 .data-div {
     display: flex;
 }
-.data-div>div {
+.data-div > div {
     width: 25%;
 }
 
@@ -336,8 +336,8 @@ button {
 .application-div {
     width: 95%;
 }
-.application-div>h1 {
-    margin: 50px 0px 20px 0px;
+.application-div > h1 {
+    margin: 20px 0px 10px 0px;
 }
 .action-btn {
     gap: 15px;
@@ -346,10 +346,10 @@ button {
 .action-btn button {
     margin-right: 8px;
 }
-.application-div table thead tr th {
+/* .application-div table thead tr th {
     background-color: #00828c;
     color: #fff;
-}
+} */
 /* .input-photo {
     display: none;
 } */
@@ -480,6 +480,12 @@ button {
     .main-div .form-div {
         width: 100%;
         padding: 20px;
+        margin-top: 0;
+    }
+    /* Application */
+    .application-div {
+        width: 100vw;
+        padding: 10px;
         margin-top: 0;
     }
 

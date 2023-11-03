@@ -8,13 +8,18 @@ import {
   BsListCheck,
   BsBoxArrowLeft,
   BsFillCollectionFill,
+  BsPersonFill,
+  BsPersonCircle,
 } from "react-icons/bs";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import { AiOutlineClose } from "react-icons/ai";
 import "./Sidebar.css";
 import { AuthContext } from "../App";
 import Swal from "sweetalert2";
+import SecureStore from "react-secure-storage";
+
 function Sidebar({ openSidebarToggle, OpenSidebar }) {
+  const user = SecureStore.getItem("userToken");
   const authContext = useContext(AuthContext);
   const navigateTo = useNavigate();
 
@@ -48,8 +53,20 @@ function Sidebar({ openSidebarToggle, OpenSidebar }) {
       </div>
 
       <ul className="sidebar-list">
+        <div className="admin-profile" onClick={() => navigateTo("/profile")}>
+          <div>
+            <BsPersonCircle className="icons" />
+          </div>
+          <div className="admin-user">
+            <h5>{user.name}</h5>
+            <h6>Admin</h6>
+          </div>
+        </div>
         <NavLink to="/dashboard" className="sidebar-list-item">
           <BsGrid1X2Fill className="icon" /> Dashboard
+        </NavLink>
+        <NavLink to="/profile" className="sidebar-list-item">
+          <BsPersonFill className="icon" /> Profile
         </NavLink>
         <NavLink to="/rabbits" className="sidebar-list-item">
           <BsFillGrid3X3GapFill className="icon" /> Rabbit List

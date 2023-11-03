@@ -204,32 +204,32 @@ function Dashboard() {
         <div className="main-cards">
           <div className="card" onClick={(e) => navigateTo("/clients")}>
             <div className="card-inner">
-              <h3>Clients</h3>
+              <h5>Clients</h5>
               <BsPeopleFill className="card_icon " />
             </div>
-            <h3>{userCount}</h3>
+            <h5>{userCount}</h5>
           </div>
 
           <div className="card" onClick={() => navigateTo("/request")}>
             <div className="card-inner">
-              <h3>Pending</h3>
+              <h5>Pending</h5>
               <BsFillGrid3X3GapFill className="card_icon" />
             </div>
-            <h3>{pending}</h3>
+            <h5>{pending}</h5>
           </div>
           <div className="card" onClick={(e) => navigateTo("/rabbits")}>
             <div className="card-inner">
-              <h3>Rabbits</h3>
+              <h5>Rabbits</h5>
               <BsFillArchiveFill className="card_icon" />
             </div>
-            <h3>{rabbitCount}</h3>
+            <h5>{rabbitCount}</h5>
           </div>
           <div className="card">
             <div className="card-inner">
-              <h3>Upcoming</h3>
+              <h5>Upcoming</h5>
               <BsFillBellFill className="card_icon" />
             </div>
-            <h3>42</h3>
+            <h5>42</h5>
           </div>
         </div>
         <div className="charts">

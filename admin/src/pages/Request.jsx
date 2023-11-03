@@ -79,47 +79,61 @@ function Request() {
         <br />
 
         <Table striped hover responsive="sm">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Address</th>
-              <th>Date</th>
-              <th>Delivery Option</th>
-              <th>Status</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {values.map((data, i) => (
-              <tr key={i}>
-                <td>{data.fullname}</td>
-                <td>
-                  {data.barangay}, {data.city}, {data.province}
-                </td>
-                <td>{data.adoption_date}</td>
-                <td>{data.service_option}</td>
-                <td>
-                  {data.transaction_status === "Pending" ? (
-                    <span style={{ color: "#d50000" }}>
-                      {data.transaction_status}
-                    </span>
-                  ) : (
-                    <span style={{ color: "#2e7d32" }}>
-                      {data.transaction_status}
-                    </span>
-                  )}
-                </td>
-                <td className="actions">
-                  <ReviewRequest data={data} />
-                  <Link className="success" onClick={(e) => onApprove(e, data)}>
-                    Approve
-                  </Link>
-                  <Link className="danger" onClick={(e) => onDecline(e, data)}>
-                    Decline
-                  </Link>
-                </td>
+          {values.length > 0 && (
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Date</th>
+                <th>Delivery Option</th>
+                <th>Status</th>
+                <th>Action</th>
               </tr>
-            ))}
+            </thead>
+          )}
+          <tbody>
+            {values.length > 0 ? (
+              values.map((data, i) => (
+                <tr key={i}>
+                  <td>{data.fullname}</td>
+                  <td>
+                    {data.barangay}, {data.city}, {data.province}
+                  </td>
+                  <td>{data.adoption_date}</td>
+                  <td>{data.service_option}</td>
+                  <td>
+                    {data.transaction_status === "Pending" ? (
+                      <span style={{ color: "#d50000" }}>
+                        {data.transaction_status}
+                      </span>
+                    ) : (
+                      <span style={{ color: "#2e7d32" }}>
+                        {data.transaction_status}
+                      </span>
+                    )}
+                  </td>
+                  <td className="actions">
+                    <ReviewRequest data={data} />
+                    <Link
+                      className="success"
+                      onClick={(e) => onApprove(e, data)}
+                    >
+                      Approve
+                    </Link>
+                    <Link
+                      className="danger"
+                      onClick={(e) => onDecline(e, data)}
+                    >
+                      Decline
+                    </Link>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="6">No results found</td>
+              </tr>
+            )}
           </tbody>
         </Table>
       </div>

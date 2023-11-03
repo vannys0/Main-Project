@@ -64,31 +64,39 @@ function Breeding() {
           </Link>
         </div>
         <Table striped hover responsive="sm">
-          <thead>
-            <tr>
-              <th>Male</th>
-              <th>Female</th>
-              <th>Pairing date</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((data, i) => (
-              <tr key={i}>
-                <td>{data.buck_id}</td>
-                <td>{data.doe_id}</td>
-                <td>{data.pairing_date}</td>
-                <td className="actions">
-                  <BreedingDetails data={data} />
-                  <Link
-                    className="danger"
-                    onClick={(e) => handleDelete(data.id)}
-                  >
-                    Cancel
-                  </Link>
-                </td>
+          {data.length > 0 && (
+            <thead>
+              <tr>
+                <th>Male</th>
+                <th>Female</th>
+                <th>Pairing date</th>
+                <th>Action</th>
               </tr>
-            ))}
+            </thead>
+          )}
+          <tbody>
+            {data.length > 0 ? (
+              data.map((data, i) => (
+                <tr key={i}>
+                  <td>{data.buck_id}</td>
+                  <td>{data.doe_id}</td>
+                  <td>{data.pairing_date}</td>
+                  <td className="actions">
+                    <BreedingDetails data={data} />
+                    <Link
+                      className="danger"
+                      onClick={(e) => handleDelete(data.id)}
+                    >
+                      Cancel
+                    </Link>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="4">No results found</td>
+              </tr>
+            )}
           </tbody>
         </Table>
       </div>

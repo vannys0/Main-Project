@@ -147,7 +147,7 @@ body {
     background-color: #fff;
     border: none;
   }
-  .card:first-child h3,
+  .card:first-child h5,
   .card:first-child .card_icon,
   .card:first-child h1 {
     color: #2962ff;
@@ -158,7 +158,7 @@ body {
     border: none;
   }
   
-  .card:nth-child(2) h3,
+  .card:nth-child(2) h5,
   .card:nth-child(2) .card_icon,
   .card:nth-child(2) h1 {
     color: #ff6d00;
@@ -167,7 +167,7 @@ body {
     background-color: #fff;
     border: none;
   }
-  .card:nth-child(3) h3,
+  .card:nth-child(3) h5,
   .card:nth-child(3) .card_icon,
   .card:nth-child(3) h1 {
     color: #2e7d32;
@@ -177,7 +177,7 @@ body {
     background-color: #fff;
     border: none;
   }
-  .card:nth-child(4) h3,
+  .card:nth-child(4) h5,
   .card:nth-child(4) .card_icon,
   .card:nth-child(4) h1 {
     color: #d50000;
@@ -204,6 +204,36 @@ body {
   
   /* End Main  */
 
+  /* AddRabbit */
+
+  /* Pagination Styles */
+.pagination {
+  display: flex;
+  justify-content: flex-end;
+  list-style: none;
+  padding: 0;
+  margin-top: 20px;
+}
+
+.pagination__link {
+  margin: 0 5px;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  color: #333;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.pagination__link--active {
+  color: #007bff;
+}
+
+.pagination__link--disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
   /* EditRabbit */
   .grid-container .main-container .edit-div {
     width: 100%;
@@ -214,7 +244,28 @@ body {
   .grid-container .main-container .edit-div > div {
     width: 50%;
   }
-  
+
+  /* AdminProfile */
+  .profile-div {
+    display: grid;
+    width: 50%;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    padding: 20px;
+    border-radius: 5px;
+    color: #1e1e1e;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+  }
+  .icon-div {
+    display: flex;
+    justify-content: center;
+    grid-column: span 2;
+    margin-bottom: 20px;
+  }
+  .profile-icon {
+    font-size: 5rem;
+    color: #9e9ea4;
+  }
   
   /* Medium <= 992px */
     
@@ -269,5 +320,8 @@ body {
     .grid-container .main-container .edit-div {
       display: flex;
       flex-direction: column;
+    }
+    .profile-div {
+      width: 100%;
     }
   }
