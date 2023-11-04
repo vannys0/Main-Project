@@ -66,7 +66,7 @@ function Adopt() {
             ))
           ) : (
             <div>
-              <h1>No rabbits found</h1>
+              <h2>No rabbits found</h2>
             </div>
           )}
         </div>

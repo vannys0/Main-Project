@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { Button, Modal } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import { FcViewDetails } from "react-icons/fc";
+import { Modal } from "react-bootstrap";
+import { Button } from "antd";
 function BreedingDetails({ data }) {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -9,9 +8,9 @@ function BreedingDetails({ data }) {
 
   return (
     <>
-      <Link className="secondary" onClick={handleShow}>
+      <Button type="text" onClick={handleShow}>
         View
-      </Link>
+      </Button>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header

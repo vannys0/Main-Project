@@ -1,11 +1,11 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
+import "../Style.css";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
-import "../Style.css";
-import { Table } from "react-bootstrap";
-import axios from "axios";
-import { Link } from "react-router-dom";
 import ReviewRequest from "./ReviewRequest";
+import { Link, useNavigate } from "react-router-dom";
+import { Button, Input, Table, Tag, Space, Pagination } from "antd";
 import Swal from "sweetalert2";
 import appConfig from "../../config.json";
 const BASE_URL = appConfig.apiBasePath;
@@ -15,8 +15,10 @@ function Request() {
   const OpenSidebar = () => {
     setOpenSidebarToggle(!openSidebarToggle);
   };
-
+  const navigateTo = useNavigate();
   const [values, setValues] = useState([]);
+  const [pageNumber, setPageNumber] = useState(1);
+  const itemsPerPage = 6;
 
   const onApprove = (e, o) => {
     Swal.fire({
@@ -67,6 +69,16 @@ function Request() {
       .catch((err) => console.log(err));
   }, []);
 
+  const handlePageChange = (page) => {
+    setPageNumber(page);
+  };
+
+  const getDisplayedData = () => {
+    const startIndex = (pageNumber - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return values.slice(startIndex, endIndex);
+  };
+
   return (
     <div className="grid-container">
       <Header OpenSidebar={OpenSidebar} />
@@ -77,65 +89,91 @@ function Request() {
       <div className="main-container">
         <h3>Adoption request</h3>
         <br />
-
-        <Table striped hover responsive="sm">
-          {values.length > 0 && (
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Address</th>
-                <th>Date</th>
-                <th>Delivery Option</th>
-                <th>Status</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-          )}
-          <tbody>
-            {values.length > 0 ? (
-              values.map((data, i) => (
-                <tr key={i}>
-                  <td>{data.fullname}</td>
-                  <td>
-                    {data.barangay}, {data.city}, {data.province}
-                  </td>
-                  <td>{data.adoption_date}</td>
-                  <td>{data.service_option}</td>
-                  <td>
-                    {data.transaction_status === "Pending" ? (
-                      <span style={{ color: "#d50000" }}>
-                        {data.transaction_status}
-                      </span>
-                    ) : (
-                      <span style={{ color: "#2e7d32" }}>
-                        {data.transaction_status}
-                      </span>
-                    )}
-                  </td>
-                  <td className="actions">
-                    <ReviewRequest data={data} />
-                    <Link
-                      className="success"
-                      onClick={(e) => onApprove(e, data)}
-                    >
-                      Approve
-                    </Link>
-                    <Link
-                      className="danger"
-                      onClick={(e) => onDecline(e, data)}
-                    >
-                      Decline
-                    </Link>
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="6">No results found</td>
-              </tr>
+        <div className="search-filter-div">
+          <Input
+            type="text"
+            name=""
+            className="form-control"
+            placeholder="Search rabbit by name"
+          />
+        </div>
+        <br />
+        <Table dataSource={getDisplayedData()} pagination={false}>
+          <Table.Column title="Name" dataIndex="fullname" key="name" />
+          <Table.Column
+            title="Address"
+            key="address"
+            render={(text, record) => (
+              <span>
+                {record.barangay}, {record.city}, {record.province}
+              </span>
             )}
-          </tbody>
+          />
+          <Table.Column title="Date" dataIndex="adoption_date" key="date" />
+          <Table.Column
+            title="Mode of Delivery"
+            dataIndex="service_option"
+            key="service_option"
+          />
+          <Table.Column
+            title="Status"
+            dataIndex="transaction_status"
+            key="transaction_status"
+            render={(text, record) => (
+              <span>
+                {record.transaction_status === "Pending" ? (
+                  <Tag color="warning">{record.transaction_status}</Tag>
+                ) : record.transaction_status === "Declined" ? (
+                  <Tag color="error">{record.transaction_status}</Tag>
+                ) : (
+                  <Tag color="success">{record.transaction_status}</Tag>
+                )}
+              </span>
+            )}
+          />
+          <Table.Column
+            title="Action"
+            key="action"
+            render={(text, record) => (
+              <Space>
+                <ReviewRequest data={record} />
+                {record.transaction_status === "Pending" ? (
+                  <Button type="primary" onClick={(e) => onApprove(e, record)}>
+                    Approve
+                  </Button>
+                ) : (
+                  <Button type="primary" disabled>
+                    Approve
+                  </Button>
+                )}
+                {record.transaction_status === "Pending" ? (
+                  <Button
+                    type="primary"
+                    danger
+                    onClick={(e) => onDecline(e, record)}
+                  >
+                    Decline
+                  </Button>
+                ) : (
+                  <Button type="primary" disabled>
+                    Decline
+                  </Button>
+                )}
+              </Space>
+            )}
+          />
         </Table>
+        <Pagination
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "flex-end",
+          }}
+          current={pageNumber}
+          pageSize={itemsPerPage}
+          total={values.length}
+          onChange={handlePageChange}
+        />
       </div>
     </div>
   );

@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import { Form } from "react-bootstrap";
 import { v4 as uuidv4 } from "uuid";
 import Swal from "sweetalert2";
+import { Select, Button } from "antd";
 import appConfig from "../../config.json";
 const BASE_URL = appConfig.apiBasePath; //e.g "http://localhost:8080/api"
 
@@ -17,9 +18,9 @@ function AddRabbit() {
     setOpenSidebarToggle(!openSidebarToggle);
   };
 
-  const navigate = useNavigate();
+  const navigateTo = useNavigate();
 
-  const [file, setFile] = useState();
+  const [file, setFile] = useState([]);
   const [img, setImg] = useState();
 
   const onFileChange = (e) => {
@@ -51,7 +52,7 @@ function AddRabbit() {
     axios
       .post(BASE_URL + "/add-rabbit", formData)
       .then((res) => {
-        navigate("/rabbits");
+        navigateTo("/rabbits");
       })
       .catch((err) => console.log(err));
   };
@@ -65,7 +66,7 @@ function AddRabbit() {
       />
       <div className="main-container">
         <h3>Add rabbit</h3>
-        <form className="form w-50" encType="multipart/form-data">
+        <form className="form" encType="multipart/form-data">
           <label htmlFor="">Image :</label>
           <input
             type="file"
@@ -75,7 +76,6 @@ function AddRabbit() {
             onChange={onFileChange}
           />
           <br />
-          {/* <img src={file} style={{ width: "200px" }} /> */}
 
           <label htmlFor="">Name :</label>
           <input
@@ -86,10 +86,10 @@ function AddRabbit() {
             required
           />
           <br />
-          <label htmlFor="">Age (month/s) :</label>
+          <label htmlFor="">Date of birth :</label>
           <input
-            type="number"
-            name="age"
+            type="date"
+            name="dateOfBirth"
             className="form-control"
             onChange={handleInput}
             required
@@ -121,12 +121,16 @@ function AddRabbit() {
           <br />
 
           <div className="actions">
-            <Link to="/rabbits" className="secondary">
-              Back
-            </Link>
-            <Link type="submit" className="primary" onClick={handleSubmit}>
+            <Button
+              type="primary"
+              danger
+              onClick={() => navigateTo("/rabbits")}
+            >
+              Cancel
+            </Button>
+            <Button type="primary" onClick={handleSubmit}>
               Add
-            </Link>
+            </Button>
           </div>
         </form>
       </div>

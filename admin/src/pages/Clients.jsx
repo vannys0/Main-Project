@@ -1,12 +1,10 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
-import Table from "react-bootstrap/Table";
-import { useEffect } from "react";
-import "../Style.css";
+import { Table, Pagination, Space, Button } from "antd"; // Import Ant Design Table and Pagination
 import axios from "axios";
-import ReactPaginate from "react-paginate";
 import appConfig from "../../config.json";
+import { useNavigate, useParams } from "react-router-dom";
 const BASE_URL = appConfig.apiBasePath;
 
 function Clients() {
@@ -14,10 +12,10 @@ function Clients() {
   const OpenSidebar = () => {
     setOpenSidebarToggle(!openSidebarToggle);
   };
-
+  const navigateTo = useNavigate();
   const [clients, setClients] = useState([]);
-  const [pageNumber, setPageNumber] = useState(0);
-  const clientsPerPage = 10;
+  const [pageNumber, setPageNumber] = useState(1);
+  const clientsPerPage = 7;
 
   useEffect(() => {
     axios
@@ -28,7 +26,7 @@ function Clients() {
       .catch((err) => console.log(err));
   }, []);
 
-  const pagesVisited = pageNumber * clientsPerPage;
+  const pagesVisited = (pageNumber - 1) * clientsPerPage;
   const displayedClients = clients.slice(
     pagesVisited,
     pagesVisited + clientsPerPage
@@ -36,9 +34,41 @@ function Clients() {
 
   const pageCount = Math.ceil(clients.length / clientsPerPage);
 
-  const changePage = ({ selected }) => {
-    setPageNumber(selected);
+  const handlePageChange = (page, pageSize) => {
+    setPageNumber(page);
   };
+
+  const columns = [
+    {
+      title: "Client Id",
+      dataIndex: "id",
+      key: "id",
+    },
+    {
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+    },
+    {
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
+    },
+    {
+      title: "Action",
+      key: "action",
+      render: (text, clients) => (
+        <Space>
+          <Button
+            type="text"
+            onClick={() => navigateTo(`/client-profile/${clients.id}`)}
+          >
+            View
+          </Button>
+        </Space>
+      ),
+    },
+  ];
 
   return (
     <div className="grid-container">
@@ -49,34 +79,22 @@ function Clients() {
       />
       <div className="main-container">
         <h3>CLIENTS</h3>
-        <Table striped hover responsive="sm">
-          <thead>
-            <tr>
-              <th>Client Id</th>
-              <th>Name</th>
-              <th>Email</th>
-            </tr>
-          </thead>
-          <tbody>
-            {displayedClients.map((data, i) => (
-              <tr key={i}>
-                <td>{data.id}</td>
-                <td>{data.name}</td>
-                <td>{data.email}</td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-        <ReactPaginate
-          previousLabel={"Previous"}
-          nextLabel={"Next"}
-          pageCount={pageCount}
-          onPageChange={changePage}
-          containerClassName={"pagination"}
-          previousLinkClassName={"pagination__link"}
-          nextLinkClassName={"pagination__link"}
-          disabledClassName={"pagination__link--disabled"}
-          activeClassName={"pagination__link--active"}
+        <Table
+          columns={columns}
+          dataSource={displayedClients}
+          pagination={false}
+        />
+        <Pagination
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "flex-end",
+          }}
+          current={pageNumber}
+          total={clients.length}
+          pageSize={clientsPerPage}
+          showSizeChanger={false}
+          onChange={handlePageChange}
         />
       </div>
     </div>

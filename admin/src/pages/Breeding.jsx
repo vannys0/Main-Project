@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import "../Style.css";
-import { Link, useParams } from "react-router-dom";
-import Table from "react-bootstrap/Table";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { Table, Button, Pagination } from "antd"; // Import Ant Design Table, Button, and Pagination
 import axios from "axios";
-import appConfig from "../../config.json";
 import BreedingDetails from "./BreedingDetails";
 import Swal from "sweetalert2";
+import appConfig from "../../config.json";
 const BASE_URL = appConfig.apiBasePath;
 
 function Breeding() {
@@ -15,9 +15,20 @@ function Breeding() {
   const OpenSidebar = () => {
     setOpenSidebarToggle(!openSidebarToggle);
   };
-
+  const navigateTo = useNavigate();
   const { id } = useParams();
   const [data, setData] = useState([]);
+  const [pageNumber, setPageNumber] = useState(1); // Ant Design Pagination starts from 1
+  const itemsPerPage = 7;
+
+  const pagesVisited = (pageNumber - 1) * itemsPerPage;
+  const displayedData = data.slice(pagesVisited, pagesVisited + itemsPerPage);
+
+  const totalItems = data.length;
+
+  const handlePageChange = (page, pageSize) => {
+    setPageNumber(page);
+  };
 
   useEffect(() => {
     axios
@@ -45,6 +56,36 @@ function Breeding() {
     });
   };
 
+  const columns = [
+    {
+      title: "Male",
+      dataIndex: "buck_id",
+      key: "buck_id",
+    },
+    {
+      title: "Female",
+      dataIndex: "doe_id",
+      key: "doe_id",
+    },
+    {
+      title: "Pairing date",
+      dataIndex: "pairing_date",
+      key: "pairing_date",
+    },
+    {
+      title: "Action",
+      key: "action",
+      render: (text, record) => (
+        <div className="actions">
+          <BreedingDetails data={record} />
+          <Button type="primary" danger onClick={() => handleDelete(record.id)}>
+            Cancel
+          </Button>
+        </div>
+      ),
+    },
+  ];
+
   return (
     <div className="grid-container">
       <Header OpenSidebar={OpenSidebar} />
@@ -56,49 +97,27 @@ function Breeding() {
         <h3>Breeding List</h3>
         <br />
         <div className="d-flex">
-          <Link
-            to="/add-breed-pair"
-            className="success breed-btn text-decoration-none"
-          >
+          <Button type="primary" onClick={() => navigateTo("/add-breed-pair")}>
             Add Pair
-          </Link>
+          </Button>
         </div>
-        <Table striped hover responsive="sm">
-          {data.length > 0 && (
-            <thead>
-              <tr>
-                <th>Male</th>
-                <th>Female</th>
-                <th>Pairing date</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-          )}
-          <tbody>
-            {data.length > 0 ? (
-              data.map((data, i) => (
-                <tr key={i}>
-                  <td>{data.buck_id}</td>
-                  <td>{data.doe_id}</td>
-                  <td>{data.pairing_date}</td>
-                  <td className="actions">
-                    <BreedingDetails data={data} />
-                    <Link
-                      className="danger"
-                      onClick={(e) => handleDelete(data.id)}
-                    >
-                      Cancel
-                    </Link>
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="4">No results found</td>
-              </tr>
-            )}
-          </tbody>
-        </Table>
+        <Table
+          columns={columns}
+          dataSource={displayedData}
+          pagination={false}
+        />
+        <Pagination
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "flex-end",
+          }}
+          current={pageNumber}
+          total={totalItems}
+          pageSize={itemsPerPage}
+          showSizeChanger={false}
+          onChange={handlePageChange}
+        />
       </div>
     </div>
   );

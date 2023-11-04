@@ -99,14 +99,17 @@ function verifyToken(req, res, next) {
 
 // Adopt
 router.get("/adopt", (req, res) => {
-  db.query("SELECT * FROM rabbit WHERE rehome = 'Rehome'", (err, results) => {
-    if (err) {
-      console.error("Error fetching rabbits:", err);
-      res.status(500).json({ error: "Internal Server Error" });
-      return;
+  db.query(
+    "SELECT * FROM rabbit WHERE rehome_status = 'Rehome'",
+    (err, results) => {
+      if (err) {
+        console.error("Error fetching rabbits:", err);
+        res.status(500).json({ error: "Internal Server Error" });
+        return;
+      }
+      res.json(results);
     }
-    res.json(results);
-  });
+  );
 });
 
 // Rabbit Data

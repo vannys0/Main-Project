@@ -30,6 +30,7 @@ import EditRabbit from "./pages/EditRabbit";
 import AddBreedPair from "./pages/AddBreedPair";
 import Clients from "./pages/Clients";
 import AdminProfile from "./pages/AdminProfile";
+import ClientProfile from "./pages/Profile/ClientProfile";
 
 function App() {
   const signIn = useContext(AuthContext);
@@ -150,19 +151,18 @@ function App() {
         </div>
       ),
     },
-    // {
-    //   path: "/review_request",
-    //   element: (
-    //     <div>
-    //       <PrivateRoute>
-    //         <ReviewRequest />
-    //       </PrivateRoute>
-    //     </div>
-    //   ),
-    // },
+    {
+      path: "/client-profile/:id",
+      element: (
+        <div>
+          <PrivateRoute>
+            <ClientProfile />
+          </PrivateRoute>
+        </div>
+      ),
+    },
   ]);
 
-  //state is not final where to use.
   const [state, dispatch] = useReducer(
     (prevState, action) => {
       switch (action.type) {

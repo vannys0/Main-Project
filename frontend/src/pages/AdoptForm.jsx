@@ -117,23 +117,13 @@ function AdoptForm() {
           <input
             type="tel"
             name="phone"
+            maxLength={11}
             className="form-control"
             inputMode="tel"
             required
             onChange={handleInput}
           />
           <br />
-          {/* <label htmlFor="date">
-            Date <span className="errmsg">*</span>
-          </label>
-          <input
-            type="date"
-            name="date"
-            inputMode="numeric"
-            className="form-control"
-            required
-            onChange={handleInput}
-          /> */}
           <label>
             Address <span className="errmsg">*</span>
           </label>
@@ -169,6 +159,7 @@ function AdoptForm() {
               type="text"
               name="postalcode"
               inputMode="numeric"
+              maxLength={4}
               placeholder="Postal code"
               className="form-control"
               onChange={handleInput}

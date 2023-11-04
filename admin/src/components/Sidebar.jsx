@@ -53,7 +53,7 @@ function Sidebar({ openSidebarToggle, OpenSidebar }) {
       </div>
 
       <ul className="sidebar-list">
-        <div className="admin-profile" onClick={() => navigateTo("/profile")}>
+        <div className="admin-side" onClick={() => navigateTo("/profile")}>
           <div>
             <BsPersonCircle className="icons" />
           </div>
@@ -83,7 +83,7 @@ function Sidebar({ openSidebarToggle, OpenSidebar }) {
           <BsTruck className="icon" /> Delivery
         </NavLink>
         <NavLink to="/clients" className="sidebar-list-item">
-          <BsPeopleFill className="icon" /> clients
+          <BsPeopleFill className="icon" /> Clients
         </NavLink>
         <Link to="" onClick={onLogout} className="sidebar-list-item">
           <BsBoxArrowLeft className="icon" /> Logout

@@ -3,10 +3,11 @@ import "../Style.css";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import { Form } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import { Html5QrcodeScanner } from "html5-qrcode";
 import axios from "axios";
+import { Button } from "antd";
 import appConfig from "../../config.json";
+import { useNavigate } from "react-router-dom";
 const BASE_URL = appConfig.apiBasePath;
 
 function BreedPair() {
@@ -14,7 +15,7 @@ function BreedPair() {
   const OpenSidebar = () => {
     setOpenSidebarToggle(!openSidebarToggle);
   };
-
+  const navigateTo = useNavigate();
   const [maleRabbits, setMaleRabbits] = useState([]);
   const [femaleRabbits, setFemaleRabbits] = useState([]);
 
@@ -125,7 +126,6 @@ function BreedPair() {
             ) : (
               <div id="reader"></div>
             )}
-            <button className="btn btn-primary">Scan code</button>
           </div>
           <div className="center-ground">Matching result</div>
           <div className="ground">
@@ -146,22 +146,30 @@ function BreedPair() {
             ) : (
               <div id="reader1"></div>
             )}
-            <button className="btn btn-primary">Scan code</button>
           </div>
         </div>
         <br />
         <br />
         <div className="actions">
-          <Link to="/breeding" className="secondary text-decoration-none">
+          <Button
+            type="primary"
+            danger
+            onClick={(e) => {
+              navigateTo("/breeding");
+            }}
+          >
             Cancel
-          </Link>
-          <Link
+          </Button>
+          <Button
+            type="primary"
             to="/breeding"
-            onClick={(e) => onPair(e)}
-            className="primary text-decoration-none"
+            onClick={(e) => {
+              navigateTo("/breeding");
+              onPair(e);
+            }}
           >
             Pair now
-          </Link>
+          </Button>
         </div>
       </div>
     </div>

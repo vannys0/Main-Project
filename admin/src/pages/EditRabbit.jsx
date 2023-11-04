@@ -4,11 +4,10 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import axios from "axios";
-import { toast } from "react-toastify";
 import QRCode from "react-qr-code";
-
-import appConfig from "../../config.json";
 import { Form } from "react-bootstrap";
+import { Image, Button } from "antd";
+import appConfig from "../../config.json";
 const BASE_URL = appConfig.apiBasePath; //e.g "http://localhost:8080/api"
 
 function EditRabbit() {
@@ -18,7 +17,7 @@ function EditRabbit() {
   };
 
   const { id } = useParams();
-  const navigate = useNavigate();
+  const navigateTo = useNavigate();
 
   const [values, setValues] = useState([]);
 
@@ -47,7 +46,7 @@ function EditRabbit() {
     axios
       .put(BASE_URL + "/update-rabbit/" + id, values)
       .then((res) => {
-        navigate("/rabbits");
+        navigateTo("/rabbits");
       })
       .catch((err) => console.log(err));
   };
@@ -66,7 +65,7 @@ function EditRabbit() {
             <form className="form">
               <label htmlFor="">Image:</label>
               <br />
-              <img
+              <Image
                 style={{ width: "200px" }}
                 src={`http://localhost:8081/uploads/${values.image_path}`}
               />
@@ -82,11 +81,11 @@ function EditRabbit() {
                 required
               />
               <br />
-              <label htmlFor="">Age (month/s) :</label>
+              <label htmlFor="">Date of birth :</label>
               <input
-                type="number"
-                name="age"
-                value={values.age}
+                type="date"
+                name="dateOfbirth"
+                value={values.date_of_birth}
                 className="form-control"
                 onChange={handleInput}
                 required
@@ -115,19 +114,17 @@ function EditRabbit() {
                 required
               />
               <br />
-
-              <br />
-              <br />
-              <div style={{ display: "flex", gap: "20px" }}>
-                <Link to="/rabbits" className="secondary text-decoration-none">
-                  Cancel
-                </Link>
-                <Link
-                  className="primary text-decoration-none"
-                  onClick={handleSubmit}
+              <div style={{ display: "flex", gap: "10px" }}>
+                <Button
+                  type="primary"
+                  danger
+                  onClick={() => navigateTo("/rabbits")}
                 >
+                  Cancel
+                </Button>
+                <Button type="primary" onClick={handleSubmit}>
                   Update
-                </Link>
+                </Button>
               </div>
             </form>
           </div>
@@ -136,13 +133,12 @@ function EditRabbit() {
               {value && (
                 <QRCode
                   title="GeeksForGeeks"
-                  value={`Id: ${values.id}, Name: ${values.name}, Age: ${values.age}, Sex: ${values.sex}, Weight: ${values.weight}`}
+                  value={`RabbitID: ${values.id}`}
                   bgColor={back}
                   fgColor={fore}
                   size={size === "" ? 0 : size}
                 />
               )}
-              <button className="btn btn-primary">Generate QR Code</button>
             </div>
           </div>
         </div>

@@ -42,4 +42,16 @@ router.get("/clients", (req, res) => {
   });
 });
 
+router.get("/client-profile/:id", (req, res) => {
+  const id = req.params.id;
+  db.query("SELECT * FROM user WHERE id = ?", [id], (err, results) => {
+    if (err) {
+      console.error("Error fetching :", err);
+      res.status(500).json({ error: "Internal Server Error" });
+      return;
+    }
+    return res.json(results);
+  });
+});
+
 module.exports = router;

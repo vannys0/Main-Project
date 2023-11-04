@@ -4,9 +4,8 @@
     box-sizing: border-box;
 }
 .active {
-    background-color: #fff;
-    border-radius: 5px;
-    color: #1e1e1e;
+    border-bottom: 2px solid #fff;
+    padding-bottom: 6px;
 }
 nav {
     width: 100dvw;
@@ -55,16 +54,7 @@ nav ul li a {
     font-size: 18px;
     font-weight: 600;
 }
-nav ul li a:hover {
-    border-bottom: 2px solid #fff;
-    padding-bottom: 6px;
-    /* background-color: #fff;
-    color: #00828c;
-    padding-bottom: 6px;
-    border-bottom: 2px solid #fff;
-    border-radius: 2px;
-    transition: all ease; */
-}
+
 .profile {
     margin-right: 32px;
     margin-left: 20px;

@@ -24,8 +24,8 @@ import Sidebar from "../components/Sidebar";
 import SecureStore from "react-secure-storage";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { Table } from "antd";
 import appConfig from "../../config.json";
-import { Table } from "react-bootstrap";
 const BASE_URL = appConfig.apiBasePath;
 
 function Dashboard() {
@@ -302,23 +302,10 @@ function Dashboard() {
             }}
           >
             <h5>Recent Added</h5>
-            <Table hover responsive="sm">
-              <thead>
-                <tr className="bg-transparent">
-                  <th>Rabbit name</th>
-                  <th>Sex</th>
-                  <th>Age</th>
-                </tr>
-              </thead>
-              <tbody>
-                {rabbit.map((data, i) => (
-                  <tr key={i}>
-                    <td>{data.name}</td>
-                    <td>{data.sex}</td>
-                    <td>{data.age}</td>
-                  </tr>
-                ))}
-              </tbody>
+            <Table dataSource={rabbit} pagination={false}>
+              <Table.Column title="Rabbit name" dataIndex="name" key="name" />
+              <Table.Column title="Sex" dataIndex="sex" key="sex" />
+              <Table.Column title="Age" dataIndex="age" key="age" />
             </Table>
           </div>
           <div

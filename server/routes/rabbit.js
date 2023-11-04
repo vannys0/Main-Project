@@ -22,11 +22,11 @@ router.post("/add-rabbit", upload.single("image"), (req, res) => {
   console.log(req.file.filename);
 
   const sql =
-    "INSERT INTO rabbit (`id`, `name`, `age`, `sex`, `weight`, `image_path`) VALUES (?)";
+    "INSERT INTO rabbit (`id`, `name`, `date_of_birth`, `sex`, `weight`, `image_path`) VALUES (?)";
   const values = [
     result.id,
     result.name,
-    result.age,
+    result.dateOfBirth,
     result.sex,
     result.weight,
     req.file.filename,
@@ -54,7 +54,7 @@ router.get("/rabbit", (req, res) => {
 });
 
 router.get("/rabbits", (req, res) => {
-  db.query("SELECT * FROM rabbit", (err, results) => {
+  db.query("SELECT * FROM rabbit ORDER BY name", (err, results) => {
     if (err) {
       console.error("Error fetching rabbit:", err);
       res.status(500).json({ error: "Internal Server Error" });
@@ -103,8 +103,13 @@ router.get("/edit-rabbit/:id", (req, res) => {
 //PutMapping
 router.put("/update-rabbit/:id", (req, res) => {
   const sql =
-    "UPDATE rabbit SET `name` = ?, `age` = ?, `sex` = ?, `weight` = ? WHERE id = ?";
-  const values = [req.body.name, req.body.age, req.body.sex, req.body.weight];
+    "UPDATE rabbit SET `name` = ?, `date_of_birth` = ?, `sex` = ?, `weight` = ? WHERE id = ?";
+  const values = [
+    req.body.name,
+    req.body.dateOfBirth,
+    req.body.sex,
+    req.body.weight,
+  ];
   const id = req.params.id;
 
   db.query(sql, [...values, id], (err, data) => {
@@ -117,8 +122,8 @@ router.put("/update-rabbit/:id", (req, res) => {
 
 router.put("/update-rehome/:id", (req, res) => {
   console.log(req.body);
-  const sql = "UPDATE rabbit SET `rehome` = ? WHERE id = ?";
-  const values = [req.body.rehome];
+  const sql = "UPDATE rabbit SET `rehome_status` = ? WHERE id = ?";
+  const values = [req.body.rehome_status];
   const id = req.params.id;
 
   db.query(sql, [...values, id], (err, data) => {

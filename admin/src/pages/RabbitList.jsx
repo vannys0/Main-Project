@@ -1,13 +1,13 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import "../Style.css";
-import Table from "react-bootstrap/Table";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
-import { Link } from "react-router-dom";
-import ReactPaginate from "react-paginate";
+import { Link, useNavigate } from "react-router-dom";
+import { Button, Input, Table, Tag, Space, Pagination, Image } from "antd";
 import Swal from "sweetalert2";
 import appConfig from "../../config.json";
+
 const BASE_URL = appConfig.apiBasePath;
 
 function RabbitList() {
@@ -15,29 +15,16 @@ function RabbitList() {
   const OpenSidebar = () => {
     setOpenSidebarToggle(!openSidebarToggle);
   };
-
+  const navigateTo = useNavigate();
   const [rabbits, setRabbits] = useState([]);
   const [record, setRecord] = useState([]);
-
-  const [pageNumber, setPageNumber] = useState(0);
-  const rabbitsPerPage = 10;
-
-  const pagesVisited = pageNumber * rabbitsPerPage;
-  const displayedRabbits = record.slice(
-    pagesVisited,
-    pagesVisited + rabbitsPerPage
-  );
-
-  const pageCount = Math.ceil(record.length / rabbitsPerPage);
-
-  const changePage = ({ selected }) => {
-    setPageNumber(selected);
-  };
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(6);
 
   const onRehome = (e, o) => {
     axios
       .put(BASE_URL + "/update-rehome/" + o.id, {
-        rehome: "Rehome",
+        rehome_status: "Rehome",
       })
       .then((res) => {
         window.location.reload();
@@ -48,7 +35,7 @@ function RabbitList() {
   const onUnRehome = (e, o) => {
     axios
       .put(BASE_URL + "/update-rehome/" + o.id, {
-        rehome: null,
+        rehome_status: null,
       })
       .then((res) => {
         window.location.reload();
@@ -64,7 +51,6 @@ function RabbitList() {
         setRecord(res.data);
       })
       .catch((err) => console.log(err));
-    console.log(rabbits);
   }, []);
 
   const handleDelete = async (id) => {
@@ -84,11 +70,88 @@ function RabbitList() {
     });
   };
 
-  // Search rabbit filter
   const Filter = (e) => {
     setRecord(
       rabbits.filter((f) => f.name.toLowerCase().includes(e.target.value))
     );
+  };
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = record.slice(indexOfFirstItem, indexOfLastItem);
+
+  const columns = [
+    {
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+    },
+    {
+      title: "Image",
+      dataIndex: "image_path",
+      key: "image_path",
+      render: (imagePath) => (
+        <Image
+          style={{ width: "25px", height: "25px" }}
+          src={`http://localhost:8081/uploads/${imagePath}`}
+        />
+      ),
+    },
+    {
+      title: "Date of Birth",
+      dataIndex: "date_of_birth",
+      key: "date_of_birth",
+    },
+    {
+      title: "Sex",
+      dataIndex: "sex",
+      key: "sex",
+    },
+    {
+      title: "Weight (klg/s)",
+      dataIndex: "weight",
+      key: "weight",
+    },
+    {
+      title: "Action",
+      key: "action",
+      render: (text, record) => (
+        <Space>
+          <Button
+            type="text"
+            onClick={() => navigateTo(`/edit-rabbit/${record.id}`)}
+          >
+            Edit
+          </Button>
+          {record.rehome_status === "Rehome" ? (
+            <Button
+              disabled
+              type="primary"
+              onClick={(e) => onUnRehome(e, record)}
+            >
+              Rehome
+            </Button>
+          ) : (
+            <Button type="primary" onClick={(e) => onRehome(e, record)}>
+              Rehome
+            </Button>
+          )}
+          <Button
+            type="primary"
+            danger
+            onClick={(e) => handleDelete(record.id)}
+          >
+            Delete
+          </Button>
+        </Space>
+      ),
+    },
+  ];
+
+  const paginationProps = {
+    current: currentPage,
+    total: record.length,
+    pageSize: itemsPerPage,
+    onChange: (page) => setCurrentPage(page),
   };
 
   return (
@@ -101,7 +164,7 @@ function RabbitList() {
       <div className="main-container">
         <h3>Rabbit List</h3>
         <div className="search-filter-div">
-          <input
+          <Input
             type="text"
             name=""
             className="form-control"
@@ -111,88 +174,14 @@ function RabbitList() {
         </div>
         <br />
         <div className="d-flex">
-          <Link to="/add-rabbit" className="primary text-decoration-none">
+          <Button type="primary" onClick={() => navigateTo("/add-rabbit")}>
             Add Rabbit
-          </Link>
+          </Button>
         </div>
-        <Table striped hover responsive="sm">
-          {displayedRabbits.length > 0 && (
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Image</th>
-                <th>Age</th>
-                <th>Sex</th>
-                <th>Weight</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-          )}
-          <tbody>
-            {displayedRabbits.length > 0 ? (
-              displayedRabbits.map((data, i) => (
-                <tr key={i}>
-                  <td>{data.name}</td>
-                  <td>
-                    <img
-                      style={{ width: "25px", height: "25px" }}
-                      src={`http://localhost:8081/uploads/${data.image_path}`}
-                    />
-                  </td>
-
-                  <td>{data.age}</td>
-                  <td>{data.sex}</td>
-                  <td>{data.weight}</td>
-                  <td className="actions">
-                    <Link
-                      to={`/edit-rabbit/${data.id}`}
-                      className="success text-decoration-none"
-                    >
-                      Edit
-                    </Link>
-
-                    {data.rehome === "Rehome" ? (
-                      <Link
-                        className="secondary"
-                        onClick={(e) => onUnRehome(e, data)}
-                      >
-                        Rehome
-                      </Link>
-                    ) : (
-                      <Link
-                        className="primary"
-                        onClick={(e) => onRehome(e, data)}
-                      >
-                        Rehome
-                      </Link>
-                    )}
-
-                    <Link
-                      className="danger"
-                      onClick={(e) => handleDelete(data.id)}
-                    >
-                      Delete
-                    </Link>
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="6">No results found</td>
-              </tr>
-            )}
-          </tbody>
-        </Table>
-        <ReactPaginate
-          previousLabel={"Previous"}
-          nextLabel={"Next"}
-          pageCount={pageCount}
-          onPageChange={changePage}
-          containerClassName={"pagination"}
-          previousLinkClassName={"pagination__link"}
-          nextLinkClassName={"pagination__link"}
-          disabledClassName={"pagination__link--disabled"}
-          activeClassName={"pagination__link--active"}
+        <Table
+          columns={columns}
+          dataSource={currentItems}
+          pagination={paginationProps}
         />
       </div>
     </div>

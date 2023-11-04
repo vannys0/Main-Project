@@ -14,17 +14,14 @@ router.get("/adoption", (req, res) => {
 });
 
 router.get("/adoptions", (req, res) => {
-  db.query(
-    "SELECT * FROM adoption WHERE transaction_status = 'Pending'",
-    (err, results) => {
-      if (err) {
-        console.error("Error fetching :", err);
-        res.status(500).json({ error: "Internal Server Error" });
-        return;
-      }
-      return res.json(results);
+  db.query("SELECT * FROM adoption ORDER BY adoption_date", (err, results) => {
+    if (err) {
+      console.error("Error fetching :", err);
+      res.status(500).json({ error: "Internal Server Error" });
+      return;
     }
-  );
+    return res.json(results);
+  });
 });
 
 router.get("/adoptions-deliver", (req, res) => {
@@ -52,8 +49,23 @@ router.get("/adoptions-deliver", (req, res) => {
 //   });
 // });
 
+// Approve Adoption
 router.put("/approve-adoption/:id", (req, res) => {
   const sql = "UPDATE adoption SET `transaction_status` = ? WHERE id = ?";
+  const values = ["Approved"];
+  const id = req.params.id;
+
+  db.query(sql, [...values, id], (err, data) => {
+    if (err) {
+      return res.json("Error");
+    }
+    return res.json(data);
+  });
+});
+
+// Approver Deliver
+router.put("/approve-delivery/:id", (req, res) => {
+  const sql = "UPDATE adoption SET `delivery_status` = ? WHERE id = ?";
   const values = ["Approved"];
   const id = req.params.id;
 

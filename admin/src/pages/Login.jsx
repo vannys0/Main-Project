@@ -7,13 +7,15 @@ import Axios from "axios";
 import * as UserController from "../controller/UserController.jsx";
 import { AuthContext } from "../App";
 import Swal from "sweetalert2";
+import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
+import { Button, Input, Space } from "antd";
+import SecureStore from "react-secure-storage";
 import appConfig from "../../config.json";
 const BASE_URL = appConfig.apiBasePath; //e.g "http://localhost:8080/api";
-import SecureStore from "react-secure-storage";
 
 function Login() {
   const authContext = useContext(AuthContext);
-
+  const [passwordVisible, setPasswordVisible] = useState(false);
   const [loginUserName, setLoginUserName] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
 
@@ -60,8 +62,6 @@ function Login() {
   //       }
   //   }, [loginStatus])
 
-  const onSubmit = () => {};
-
   return (
     <div className="loginPage">
       <div className="container">
@@ -72,46 +72,43 @@ function Login() {
             E-LEPORIDAE
           </h2>
         </div>
-        <form className="form grid" onSubmit={onSubmit}>
+        <form className="form grid">
           <h2 className="login-title">Login</h2>
-          <div className="inputDiv">
-            <div className="input flex">
-              <AiOutlineMail className="icons page-icon" />
-              <input
-                type="text"
-                id="username"
-                name="username"
-                placeholder="Email"
-                autoComplete="on"
-                onChange={(event) => {
-                  setLoginUserName(event.target.value);
-                }}
-              />
-            </div>
-          </div>
-          <div className="inputDiv">
-            <div className="input flex">
-              <RiLockPasswordLine className="icons page-icon" />
-              <input
-                type="password"
-                id="password"
-                name="password"
-                autoComplete="on"
-                placeholder="Password"
-                onChange={(event) => {
-                  setLoginPassword(event.target.value);
-                }}
-              />
-            </div>
-          </div>
-          <button
+          <Space direction="vertical">
+            <label htmlFor="username">Email</label>
+            <Input
+              style={{ height: "40px", fontSize: "16px" }}
+              type="text"
+              id="username"
+              name="username"
+              onChange={(e) => {
+                setLoginUserName(e.target.value);
+              }}
+            />
+          </Space>
+          <Space direction="vertical">
+            <label htmlFor="password">Password</label>
+            <Input.Password
+              style={{ display: "flex", height: "40px", fontSize: "16px" }}
+              type="password"
+              id="password"
+              name="password"
+              iconRender={(visible) =>
+                visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+              }
+              onChange={(e) => {
+                setLoginPassword(e.target.value);
+              }}
+            />
+          </Space>
+          <Button
             style={{ margin: "20px 0px 0px 0px" }}
-            type="submit"
+            type="primary"
             className="btn btn-primary"
             onClick={loginUser}
           >
             <span>Login </span>
-          </button>
+          </Button>
           <div>
             Don't have an account? <Link to="/register">Sign up</Link>
           </div>
