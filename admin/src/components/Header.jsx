@@ -56,7 +56,6 @@ function Header({ OpenSidebar }) {
       <div className="header-right">
         <Badge count={pending}>
           <Dropdown
-            placement="bottomCenter"
             menu={{
               items,
               selectable: true,

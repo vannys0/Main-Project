@@ -36,6 +36,20 @@ function EditRabbit() {
       .catch((err) => console.log(err));
   }, []);
 
+  // Download QR
+  const downloadQRCode = () => {
+    const canvas = document.getElementById("myqrcode")?.querySelector("canvas");
+    if (canvas) {
+      const url = canvas.toDataURL();
+      const a = document.createElement("a");
+      a.download = `${values.name}_QRCode.png`;
+      a.href = url;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+  };
+
   const handleInput = (e) => {
     setValues((prev) => ({ ...prev, [e.target.name]: [e.target.value] }));
   };
@@ -136,9 +150,19 @@ function EditRabbit() {
             </div>
           </form>
           <Space direction="vertical" align="center">
-            <QRCode size={200} value={values.id} />
+            <div id="myqrcode">
+              <QRCode
+                value={values.id}
+                bgColor="#fff"
+                style={{
+                  marginBottom: 16,
+                }}
+              />
+            </div>
             <p>{values.id}</p>
-            <Button type="primary">Download QR Code</Button>
+            <Button type="primary" onClick={downloadQRCode}>
+              Download QR Code
+            </Button>
           </Space>
         </div>
       </div>

@@ -18,13 +18,34 @@ function Login() {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [loginUserName, setLoginUserName] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
-
   const navigateTo = useNavigate();
-
   const [loginStatus, setLoginStatus] = useState("");
+
+  // State for email and password validation and error messages
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
 
   function loginUser(e) {
     e.preventDefault();
+
+    // Check if the email input is empty
+    if (!loginUserName.trim()) {
+      setEmailError("Email is required");
+      return;
+    }
+
+    // Validate the email input
+    if (!validateEmail(loginUserName)) {
+      setEmailError("Invalid email format");
+      return;
+    }
+
+    // Check if the password input is empty
+    if (!loginPassword.trim()) {
+      setPasswordError("Password is required");
+      return;
+    }
+
     Axios.post(BASE_URL + "/login", {
       LoginUserName: loginUserName,
       LoginPassowrd: loginPassword,
@@ -40,27 +61,36 @@ function Login() {
           showConfirmButton: false,
           timer: 3000,
         });
-        navigateTo("/dashboard"); // if the credebntial match in db
+        navigateTo("/dashboard"); // if the credentials match in the database
       } else {
         Swal.fire({
           icon: "error",
           title: "Oops...",
-          text: "Incoorect email or password!",
+          text: "Incorrect email or password!",
         });
-        navigateTo("/"); // navigate to login page
-        setLoginStatus("Credential Dont Exist ");
+        navigateTo("/"); // navigate to the login page
+        setLoginStatus("Credentials Don't Exist");
       }
     });
   }
 
-  //   useEffect(()=>{
-  //       if(loginStatus !== '') {
-  //           setstatusHolder('showMessage')//show vessage
-  //           setTimeout(()=>{
-  //               setstatusHolder('message')//hide mofo message
-  //           }, 4000);
-  //       }
-  //   }, [loginStatus])
+  // Function to validate email format
+  function validateEmail(email) {
+    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+    return emailRegex.test(email);
+  }
+
+  // Handle email input changes
+  function handleEmailChange(e) {
+    setLoginUserName(e.target.value);
+    setEmailError(""); // Clear the email error
+  }
+
+  // Handle password input changes
+  function handlePasswordChange(e) {
+    setLoginPassword(e.target.value);
+    setPasswordError(""); // Clear the password error
+  }
 
   return (
     <div className="loginPage">
@@ -83,10 +113,9 @@ function Login() {
               type="text"
               id="username"
               name="username"
-              onChange={(e) => {
-                setLoginUserName(e.target.value);
-              }}
+              onChange={handleEmailChange}
             />
+            {emailError && <span className="error-message">{emailError}</span>}
           </Space>
           <Space direction="vertical">
             <label htmlFor="password">Password</label>
@@ -98,10 +127,11 @@ function Login() {
               iconRender={(visible) =>
                 visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
               }
-              onChange={(e) => {
-                setLoginPassword(e.target.value);
-              }}
+              onChange={handlePasswordChange}
             />
+            {passwordError && (
+              <span className="error-message">{passwordError}</span>
+            )}
           </Space>
           <Button
             style={{ margin: "20px 0px 0px 0px", height: "40px" }}

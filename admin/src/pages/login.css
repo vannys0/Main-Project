@@ -5,6 +5,9 @@
     box-sizing:border-box;
     font-family: 'Monserrat', sans-serif;
 }
+.error-message {
+    color: red;
+}
 .loginPage {
     align-items: center;
     justify-content: center;

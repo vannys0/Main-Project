@@ -31,6 +31,7 @@ import AddBreedPair from "./pages/AddBreedPair";
 import Clients from "./pages/Clients";
 import Calendar from "./pages/Calendar";
 import AdminProfile from "./pages/AdminProfile";
+// import Scanner from "./pages/Scanner";
 import ClientProfile from "./pages/Profile/ClientProfile";
 
 function App() {
@@ -172,6 +173,16 @@ function App() {
         </div>
       ),
     },
+    // {
+    //   path: "/scanner",
+    //   element: (
+    //     <div>
+    //       <PrivateRoute>
+    //         <Scanner />
+    //       </PrivateRoute>
+    //     </div>
+    //   ),
+    // },
   ]);
 
   const [state, dispatch] = useReducer(
