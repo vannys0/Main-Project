@@ -18,57 +18,19 @@ body {
   }
   /* End */
 
-  .primary,
-  .secondary,
-  .success,
-  .danger,
-  .warning {
-    background-color: transparent;
-  }
-  .primary {
-    color: #2962ff;
-  }
-  .primary:hover {
-    color: #2962ff;
-  }
-  .secondary {
-    color: #797979;
-  }
-  .secondary:hover {
-    color: #797979;
-  }
-  .success {
-    color: #2e7d32;
-  }
-  .success:hover {
-    color: #2e7d32;
-  }
-  .warning {
-    color: #ff6d00;
-  }
-  .danger {
-    color: #d50000;
-  }
-  .danger:hover {
-    color: #d50000;
-  }
-
   .icon {
     vertical-align: middle;
     line-height: 1px;
     font-size: 20px;
   }
-
   .icon_header {
     vertical-align: middle;
     line-height: 1px;
     font-size: 26px;
   }
-  
   .icon, .icon_header {
     margin-right: 5px;
   }
-  
   .close_icon {
     color: #d50000;
     margin-left: 30px;
@@ -77,7 +39,6 @@ body {
   }
 
   /* All */
-
   .grid-container {
     display: grid;
     grid-template-columns: 260px 1fr 1fr 1fr;
@@ -90,17 +51,7 @@ body {
     font-family: 'Montserrat', sans-serif;
   }
 
-  /* .grid-container .main-container table thead tr th {
-    background-color: #2962ff;
-    color: #fff;
-    font-weight: 500;
-  } */
-
-  /* Dashboard */
-
-  
   /* Main  */  
-
   .main-container {
     grid-area: main;
     overflow-y: auto;
@@ -118,7 +69,8 @@ body {
   .main-container h3 {
     color: #1e1e1e;
   }
-  
+
+  /* Dashboard */
   .main-cards {
     height: 120px;
     display: grid;
@@ -135,70 +87,33 @@ body {
     padding: 8px 15px;
     border-radius: 5px;
     cursor: pointer;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
-    
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px
+  4px 0px, rgba(99, 99, 99, 0.1) 0px -2px 8px 0px;
   }
-
-  .card:first-child {
-    background-color: #fff;
-    border: none;
-  }
-  .card:first-child h5,
-  .card:first-child .card_icon,
-  .card:first-child h1 {
-    color: #2962ff;
-  }
-  
-  .card:nth-child(2) {
-    background-color: #fff;
-    border: none;
-  }
-  
-  .card:nth-child(2) h5,
-  .card:nth-child(2) .card_icon,
-  .card:nth-child(2) h1 {
-    color: #ff6d00;
-  }
-  .card:nth-child(3) {
-    background-color: #fff;
-    border: none;
-  }
-  .card:nth-child(3) h5,
-  .card:nth-child(3) .card_icon,
-  .card:nth-child(3) h1 {
-    color: #2e7d32;
-  }
-  
-  .card:nth-child(4) {
-    background-color: #fff;
-    border: none;
-  }
-  .card:nth-child(4) h5,
-  .card:nth-child(4) .card_icon,
-  .card:nth-child(4) h1 {
-    color: #d50000;
-  }
-  
   .card-inner {
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
-  
-  .card-inner > .card_icon {
-    font-size: 25px;
+  .card-inner > div {
+    padding: 10px;
+    border-radius: 50%;
   }
-  
+  .card-inner > div > .card_icon {
+    font-size: 25px;
+    color: #fff;
+  }
   .charts,
   .activity {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
     margin-top: 20px;
-    height: 300px;
   }
-  
-/* End Main  */
+  .activity .rabbit-added,
+  .activity .recent-activity {
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+  }
 
 /* AddRabbit */
 .main-container form {
@@ -206,9 +121,9 @@ body {
 }
 
 /* Client Profile and Admin Profile*/
-
 .client-profile,
-.admin-profile {
+.admin-profile,
+.edit-div {
   width: 100%;
   display: flex;
   align-items: center;
@@ -261,6 +176,9 @@ body {
     margin: 0;
     overflow-x: hidden;
   }
+  .grid-container > .main-container > .edit-div > .rabbit-form {
+    width: 50%;
+  }
   .grid-container .main-container .edit-div > div {
     width: 50%;
   }
@@ -274,7 +192,8 @@ body {
     padding: 20px;
     border-radius: 5px;
     color: #1e1e1e;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px
+  4px 0px, rgba(99, 99, 99, 0.1) 0px -2px 8px 0px;
   }
   .icon-div {
     display: flex;
@@ -337,14 +256,23 @@ body {
     #sidebar {
         width: 65%;
     }
-    .grid-container .main-container .edit-div {
-      display: flex;
-      flex-direction: column;
-    }
     .profile-div {
       width: 100%;
     }
     .main-container form {
+      width: 100%;
+    }
+    /* Dashboard */
+    .activity {
+      grid-template-columns: 1fr;
+      margin-top: 300px;
+    }
+    /* Edit Rabbit */
+    .grid-container .main-container .edit-div {
+      display: flex;
+      flex-direction: column;
+    }
+    .grid-container > .main-container > .edit-div > .rabbit-form {
       width: 100%;
     }
   }

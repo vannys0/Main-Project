@@ -4,9 +4,8 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import axios from "axios";
-import QRCode from "react-qr-code";
 import { Form } from "react-bootstrap";
-import { Image, Button } from "antd";
+import { Image, Button, Space, Input, QRCode, Avatar } from "antd";
 import appConfig from "../../config.json";
 const BASE_URL = appConfig.apiBasePath; //e.g "http://localhost:8080/api"
 
@@ -61,86 +60,86 @@ function EditRabbit() {
       <div className="main-container">
         <h3>Edit rabbit</h3>
         <div className="edit-div">
-          <div>
-            <form className="form">
-              <label htmlFor="">Image:</label>
-              <br />
-              <Image
-                style={{ width: "200px" }}
-                src={`http://localhost:8081/uploads/${values.image_path}`}
-              />
-              <br />
-              <br />
-              <label htmlFor="">Name :</label>
-              <input
-                type="text"
-                name="name"
-                value={values.name}
-                className="form-control"
-                onChange={handleInput}
-                required
-              />
-              <br />
-              <label htmlFor="">Date of birth :</label>
-              <input
-                type="date"
-                name="dateOfbirth"
-                value={values.date_of_birth}
-                className="form-control"
-                onChange={handleInput}
-                required
-              />
-              <br />
-              <label htmlFor="">Sex :</label>
-              <Form.Select
-                aria-label="Default select example"
-                onChange={handleInput}
-                name="sex"
-              >
-                <option value="" hidden>
-                  {values.sex}
-                </option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-              </Form.Select>
-              <br />
-              <label htmlFor="">Weight (klg/s) :</label>
-              <input
-                type="text"
-                name="weight"
-                value={values.weight}
-                className="form-control"
-                onChange={handleInput}
-                required
-              />
-              <br />
-              <div style={{ display: "flex", gap: "10px" }}>
-                <Button
-                  type="primary"
-                  danger
-                  onClick={() => navigateTo("/rabbits")}
-                >
-                  Cancel
-                </Button>
-                <Button type="primary" onClick={handleSubmit}>
-                  Update
-                </Button>
-              </div>
-            </form>
-          </div>
-          <div>
-            <div className="d-grid justify-content-center">
-              {value && (
-                <QRCode
-                  title="GeeksForGeeks"
-                  value={`RabbitID: ${values.id}`}
-                  bgColor={back}
-                  fgColor={fore}
-                  size={size === "" ? 0 : size}
+          <Space align="center" direction="vertical">
+            <Avatar
+              style={{
+                width: "350px",
+                height: "350px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+              shape="square"
+              src={
+                <Image
+                  src={`http://localhost:8081/uploads/${values.image_path}`}
+                  alt="avatar"
                 />
-              )}
+              }
+            />
+          </Space>
+          <form className="rabbit-form">
+            <label htmlFor="">Name :</label>
+            <input
+              type="text"
+              name="name"
+              value={values.name}
+              className="form-control"
+              onChange={handleInput}
+              required
+            />
+            <br />
+            <label htmlFor="">Date of birth :</label>
+            <input
+              type="date"
+              name="dateOfbirth"
+              value={values.date_of_birth}
+              className="form-control"
+              onChange={handleInput}
+              required
+            />
+            <br />
+            <label htmlFor="">Sex :</label>
+            <Form.Select
+              aria-label="Default select example"
+              onChange={handleInput}
+              name="sex"
+            >
+              <option value="" hidden>
+                {values.sex}
+              </option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </Form.Select>
+            <br />
+            <label htmlFor="">Weight (klg/s) :</label>
+            <input
+              type="text"
+              name="weight"
+              value={values.weight}
+              className="form-control"
+              onChange={handleInput}
+              required
+            />
+            <br />
+            <div style={{ display: "flex", gap: "10px" }}>
+              <Button
+                type="primary"
+                danger
+                onClick={() => navigateTo("/rabbits")}
+              >
+                Cancel
+              </Button>
+              <Button type="primary" onClick={handleSubmit}>
+                Update
+              </Button>
             </div>
-          </div>
+          </form>
+          <Space direction="vertical" align="center">
+            <QRCode size={200} value={values.id} />
+            <p>{values.id}</p>
+            <Button type="primary">Download QR Code</Button>
+          </Space>
         </div>
       </div>
     </div>

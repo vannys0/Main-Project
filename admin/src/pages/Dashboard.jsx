@@ -24,7 +24,7 @@ import Sidebar from "../components/Sidebar";
 import SecureStore from "react-secure-storage";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { Table } from "antd";
+import { Table, Col, Row, Statistic } from "antd";
 import appConfig from "../../config.json";
 const BASE_URL = appConfig.apiBasePath;
 
@@ -52,15 +52,6 @@ function Dashboard() {
       });
 
     axios
-      .get(BASE_URL + "/requestCount")
-      .then((response) => {
-        setRequestCount(response.data[0].requestCount);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-
-    axios
       .get(BASE_URL + "/countRabbits")
       .then((response) => {
         setRabbitCount(response.data[0].rabbitCount);
@@ -73,32 +64,6 @@ function Dashboard() {
       .get(BASE_URL + "/pending-adoption")
       .then((response) => {
         setPending(response.data[0].pending);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-
-    axios
-      .get(BASE_URL + "/pairCount")
-      .then((response) => {
-        setPairCount(response.data[0].pairCount);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-
-    axios
-      .get(BASE_URL + "/approveCount")
-      .then((response) => {
-        setApproveRequest(response.data[0].approveCount);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-    axios
-      .get(BASE_URL + "/pairCount")
-      .then((response) => {
-        setPairCount(response.data[0].pairCount);
       })
       .catch((error) => {
         console.error(error);
@@ -200,12 +165,13 @@ function Dashboard() {
       />
       <main className="main-container">
         <h3>Dashboard</h3>
-
         <div className="main-cards">
           <div className="card" onClick={(e) => navigateTo("/clients")}>
             <div className="card-inner">
               <h5>Clients</h5>
-              <BsPeopleFill className="card_icon " />
+              <div style={{ backgroundColor: "#1677ff" }}>
+                <BsPeopleFill className="card_icon " />
+              </div>
             </div>
             <h5>{userCount}</h5>
           </div>
@@ -213,26 +179,59 @@ function Dashboard() {
           <div className="card" onClick={() => navigateTo("/request")}>
             <div className="card-inner">
               <h5>Pending</h5>
-              <BsFillGrid3X3GapFill className="card_icon" />
+              <div style={{ backgroundColor: "#faad14" }}>
+                <BsFillGrid3X3GapFill className="card_icon" />
+              </div>
             </div>
             <h5>{pending}</h5>
           </div>
           <div className="card" onClick={(e) => navigateTo("/rabbits")}>
             <div className="card-inner">
               <h5>Rabbits</h5>
-              <BsFillArchiveFill className="card_icon" />
+              <div style={{ backgroundColor: "#52c41a" }}>
+                <BsFillArchiveFill className="card_icon" />
+              </div>
             </div>
             <h5>{rabbitCount}</h5>
           </div>
           <div className="card">
             <div className="card-inner">
               <h5>Upcoming</h5>
-              <BsFillBellFill className="card_icon" />
+              <div style={{ backgroundColor: "#ff4d4f" }}>
+                <BsFillBellFill className="card_icon" />
+              </div>
             </div>
             <h5>42</h5>
           </div>
         </div>
-        <div className="charts">
+        <div className="activity">
+          <div
+            className="rabbit-added"
+            style={{
+              padding: "10px",
+              borderRadius: "5px",
+            }}
+          >
+            <h5>Recent Added</h5>
+            <Table dataSource={rabbit} pagination={false}>
+              <Table.Column title="Rabbit name" dataIndex="name" key="name" />
+              <Table.Column title="Sex" dataIndex="sex" key="sex" />
+              <Table.Column title="Age" dataIndex="age" key="age" />
+            </Table>
+          </div>
+          <div
+            className="recent-activity"
+            style={{
+              boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.3)",
+              padding: "10px",
+              borderRadius: "5px",
+            }}
+          >
+            <h5>Recent Activities</h5>
+          </div>
+        </div>
+
+        <div>
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
               style={{
@@ -292,33 +291,125 @@ function Dashboard() {
             </LineChart>
           </ResponsiveContainer>
         </div>
-        <div className="activity">
-          <div
-            className="rabbit-added"
-            style={{
-              boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.3)",
-              padding: "10px",
-              borderRadius: "5px",
-            }}
-          >
-            <h5>Recent Added</h5>
-            <Table dataSource={rabbit} pagination={false}>
-              <Table.Column title="Rabbit name" dataIndex="name" key="name" />
-              <Table.Column title="Sex" dataIndex="sex" key="sex" />
-              <Table.Column title="Age" dataIndex="age" key="age" />
-            </Table>
+        {/* <div className="dashboard-div">
+          <div className="card" onClick={(e) => navigateTo("/clients")}>
+            <div className="card-inner">
+              <h5>Clients</h5>
+              <BsPeopleFill className="card_icon " />
+            </div>
+            <h5>{userCount}</h5>
           </div>
-          <div
-            className="recent-activity"
-            style={{
-              boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.3)",
-              padding: "10px",
-              borderRadius: "5px",
-            }}
-          >
-            <h5>Recent Activities</h5>
+
+          <div className="card" onClick={() => navigateTo("/request")}>
+            <div className="card-inner">
+              <h5>Pending</h5>
+              <BsFillGrid3X3GapFill className="card_icon" />
+            </div>
+            <h5>{pending}</h5>
           </div>
-        </div>
+          <div className="card" onClick={(e) => navigateTo("/rabbits")}>
+            <div className="card-inner">
+              <h5>Rabbits</h5>
+              <BsFillArchiveFill className="card_icon" />
+            </div>
+            <h5>{rabbitCount}</h5>
+          </div>
+          <div className="card">
+            <div className="card-inner">
+              <h5>Upcoming</h5>
+              <BsFillBellFill className="card_icon" />
+            </div>
+            <h5>42</h5>
+          </div>
+
+          <div className="charts">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart
+                style={{
+                  boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.3)",
+                  padding: "10px",
+                  borderRadius: "5px",
+                }}
+                width={500}
+                height={300}
+                data={data}
+                margin={{
+                  top: 5,
+                  right: 30,
+                  left: 20,
+                  bottom: 5,
+                }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="pv" fill="#8884d8" />
+                <Bar dataKey="uv" fill="#82ca9d" />
+              </BarChart>
+            </ResponsiveContainer>
+
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart
+                style={{
+                  boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.3)",
+                  padding: "10px",
+                  borderRadius: "5px",
+                }}
+                width={500}
+                height={300}
+                data={data}
+                margin={{
+                  top: 5,
+                  right: 30,
+                  left: 20,
+                  bottom: 5,
+                }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Line
+                  type="monotone"
+                  dataKey="pv"
+                  stroke="#8884d8"
+                  activeDot={{ r: 8 }}
+                />
+                <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+          <div className="activity">
+            <div
+              className="rabbit-added"
+              style={{
+                boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.3)",
+                padding: "10px",
+                borderRadius: "5px",
+              }}
+            >
+              <h5>Recent Added</h5>
+              <Table dataSource={rabbit} pagination={false}>
+                <Table.Column title="Rabbit name" dataIndex="name" key="name" />
+                <Table.Column title="Sex" dataIndex="sex" key="sex" />
+                <Table.Column title="Age" dataIndex="age" key="age" />
+              </Table>
+            </div>
+            <div
+              className="recent-activity"
+              style={{
+                boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.3)",
+                padding: "10px",
+                borderRadius: "5px",
+              }}
+            >
+              <h5>Recent Activities</h5>
+            </div>
+          </div>
+        </div> */}
       </main>
     </div>
   );
