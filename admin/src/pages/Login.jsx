@@ -75,7 +75,9 @@ function Login() {
         <form className="form grid">
           <h2 className="login-title">Login</h2>
           <Space direction="vertical">
-            <label htmlFor="username">Email</label>
+            <label htmlFor="username" className="email">
+              Email
+            </label>
             <Input
               style={{ height: "40px", fontSize: "16px" }}
               type="text"
@@ -102,7 +104,7 @@ function Login() {
             />
           </Space>
           <Button
-            style={{ margin: "20px 0px 0px 0px" }}
+            style={{ margin: "20px 0px 0px 0px", height: "40px" }}
             type="primary"
             className="btn btn-primary"
             onClick={loginUser}

@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   BsFillBellFill,
   BsFillEnvelopeFill,
@@ -8,15 +9,14 @@ import {
 } from "react-icons/bs";
 import "./Header.css";
 import SecureStore from "react-secure-storage";
-import { Badge } from "antd";
-import { useState } from "react";
-import { useEffect } from "react";
+import { Badge, Space, Typography, Dropdown } from "antd";
 import axios from "axios";
 import appConfig from "../../config.json";
 const BASE_URL = appConfig.apiBasePath;
 
 function Header({ OpenSidebar }) {
   const user = SecureStore.getItem("userToken");
+  const navigateTo = useNavigate();
   const [pending, setPending] = useState();
   useEffect(() => {
     axios
@@ -28,6 +28,23 @@ function Header({ OpenSidebar }) {
         console.error(error);
       });
   });
+
+  const items = [
+    {
+      key: "1",
+      label: (
+        <a
+          style={{ textDecoration: "none" }}
+          rel="noopener noreferrer"
+          href="/request"
+          onClick={() => navigateTo("/request")}
+        >
+          You have {pending} pending request
+        </a>
+      ),
+    },
+  ];
+
   return (
     <header className="header">
       <div className="menu-icon">
@@ -38,9 +55,19 @@ function Header({ OpenSidebar }) {
       </div>
       <div className="header-right">
         <Badge count={pending}>
-          <BsFillBellFill className="icon" />
+          <Dropdown
+            placement="bottomCenter"
+            menu={{
+              items,
+              selectable: true,
+            }}
+          >
+            <Space>
+              <BsFillBellFill className="icon" />
+            </Space>
+          </Dropdown>
         </Badge>
-        <Badge count={10}>
+        <Badge count={0}>
           <BsFillEnvelopeFill className="icon" />
         </Badge>
       </div>

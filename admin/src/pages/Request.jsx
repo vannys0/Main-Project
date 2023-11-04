@@ -89,15 +89,6 @@ function Request() {
       <div className="main-container">
         <h3>Adoption request</h3>
         <br />
-        <div className="search-filter-div">
-          <Input
-            type="text"
-            name=""
-            className="form-control"
-            placeholder="Search rabbit by name"
-          />
-        </div>
-        <br />
         <Table dataSource={getDisplayedData()} pagination={false}>
           <Table.Column title="Name" dataIndex="fullname" key="name" />
           <Table.Column

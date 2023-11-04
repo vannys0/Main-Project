@@ -13,7 +13,7 @@
     padding: 0;
     display: flex;
     justify-content: center;
-    width: 700px;
+    width: 50%;
     height: auto;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 }
@@ -90,4 +90,34 @@
 }
 .page-icon {
     color: #797979;
+}
+
+
+@media screen and (max-width: 576px) {
+    .loginPage {
+        padding: 10px;
+    }
+    .loginPage .container {
+        width: 100%;
+    }
+    .welcome-div {
+        display: none;
+    }
+    .loginPage .container .form {
+        position: relative;
+        width: 100%;
+    }
+    .loginPage .container .form .login-title {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        color: #fff;
+        padding: 20px 0px;
+        text-align: center;
+        background-color: #00828c;
+    }
+    .email {
+        margin-top: 70px;
+    }
 }

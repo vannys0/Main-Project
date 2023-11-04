@@ -120,6 +120,11 @@ body {
   width: 50%;
 }
 
+/* Request */
+.active {
+  color: #007bff;
+}
+
 /* Client Profile and Admin Profile*/
 .client-profile,
 .admin-profile,
@@ -263,10 +268,21 @@ body {
       width: 100%;
     }
     /* Dashboard */
+    .bar-chart {
+      margin-top: 305px;
+    }
+    .resp-chart {
+      height: 100px;
+    }
     .activity {
       grid-template-columns: 1fr;
-      margin-top: 300px;
     }
+    /* Profile */
+    .client-profile,
+    .admin-profile,
+    .edit-div {
+      flex-direction: column;
+}
     /* Edit Rabbit */
     .grid-container .main-container .edit-div {
       display: flex;

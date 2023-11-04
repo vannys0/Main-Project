@@ -13,17 +13,22 @@ router.get("/adoption", (req, res) => {
   });
 });
 
+// All Adoption Request
 router.get("/adoptions", (req, res) => {
-  db.query("SELECT * FROM adoption ORDER BY adoption_date", (err, results) => {
-    if (err) {
-      console.error("Error fetching :", err);
-      res.status(500).json({ error: "Internal Server Error" });
-      return;
+  db.query(
+    "SELECT * FROM adoption ORDER BY transaction_status DESC",
+    (err, results) => {
+      if (err) {
+        console.error("Error fetching :", err);
+        res.status(500).json({ error: "Internal Server Error" });
+        return;
+      }
+      return res.json(results);
     }
-    return res.json(results);
-  });
+  );
 });
 
+// Adoption Request Deliver Option
 router.get("/adoptions-deliver", (req, res) => {
   db.query(
     "SELECT * FROM adoption WHERE transaction_status = 'Approved' AND service_option = 'Deliver'",

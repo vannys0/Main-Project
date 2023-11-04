@@ -79,6 +79,7 @@ function Clients() {
       />
       <div className="main-container">
         <h3>CLIENTS</h3>
+        <br />
         <Table
           columns={columns}
           dataSource={displayedClients}

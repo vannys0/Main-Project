@@ -29,6 +29,7 @@ import AddRabbit from "./pages/AddRabbit";
 import EditRabbit from "./pages/EditRabbit";
 import AddBreedPair from "./pages/AddBreedPair";
 import Clients from "./pages/Clients";
+import Calendar from "./pages/Calendar";
 import AdminProfile from "./pages/AdminProfile";
 import ClientProfile from "./pages/Profile/ClientProfile";
 
@@ -157,6 +158,16 @@ function App() {
         <div>
           <PrivateRoute>
             <ClientProfile />
+          </PrivateRoute>
+        </div>
+      ),
+    },
+    {
+      path: "/calendar",
+      element: (
+        <div>
+          <PrivateRoute>
+            <Calendar />
           </PrivateRoute>
         </div>
       ),

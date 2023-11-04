@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../Style.css";
 import {
   BsFillArchiveFill,
@@ -23,8 +24,7 @@ import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 import SecureStore from "react-secure-storage";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { Table, Col, Row, Statistic } from "antd";
+import { Table, Col, Row, Statistic, Space } from "antd";
 import appConfig from "../../config.json";
 const BASE_URL = appConfig.apiBasePath;
 
@@ -204,6 +204,66 @@ function Dashboard() {
             <h5>42</h5>
           </div>
         </div>
+        <ResponsiveContainer width="100%" height="50%">
+          <BarChart
+            className="bar-chart"
+            style={{
+              boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.3)",
+              padding: "10px",
+              borderRadius: "5px",
+            }}
+            width={500}
+            height={300}
+            data={data}
+            margin={{
+              top: 5,
+              right: 30,
+              left: 20,
+              bottom: 5,
+            }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="pv" fill="#8884d8" />
+            <Bar dataKey="uv" fill="#82ca9d" />
+          </BarChart>
+        </ResponsiveContainer>
+        <ResponsiveContainer width="100%" height="50%">
+          <LineChart
+            style={{
+              boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.3)",
+              padding: "10px",
+              borderRadius: "5px",
+              marginTop: "20px",
+            }}
+            width={500}
+            height={300}
+            data={data}
+            margin={{
+              top: 5,
+              right: 30,
+              left: 20,
+              bottom: 5,
+            }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Line
+              type="monotone"
+              dataKey="pv"
+              stroke="#8884d8"
+              activeDot={{ r: 8 }}
+            />
+            <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
+          </LineChart>
+        </ResponsiveContainer>
+
         <div className="activity">
           <div
             className="rabbit-added"
@@ -212,11 +272,15 @@ function Dashboard() {
               borderRadius: "5px",
             }}
           >
-            <h5>Recent Added</h5>
+            <h6>Recent Added</h6>
             <Table dataSource={rabbit} pagination={false}>
               <Table.Column title="Rabbit name" dataIndex="name" key="name" />
               <Table.Column title="Sex" dataIndex="sex" key="sex" />
-              <Table.Column title="Age" dataIndex="age" key="age" />
+              <Table.Column
+                title="Date of birth"
+                dataIndex="date_of_birth"
+                key="dateOfBirth"
+              />
             </Table>
           </div>
           <div
@@ -227,69 +291,8 @@ function Dashboard() {
               borderRadius: "5px",
             }}
           >
-            <h5>Recent Activities</h5>
+            <h6>Recent Activity</h6>
           </div>
-        </div>
-
-        <div>
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart
-              style={{
-                boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.3)",
-                padding: "10px",
-                borderRadius: "5px",
-              }}
-              width={500}
-              height={300}
-              data={data}
-              margin={{
-                top: 5,
-                right: 30,
-                left: 20,
-                bottom: 5,
-              }}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Bar dataKey="pv" fill="#8884d8" />
-              <Bar dataKey="uv" fill="#82ca9d" />
-            </BarChart>
-          </ResponsiveContainer>
-
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart
-              style={{
-                boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.3)",
-                padding: "10px",
-                borderRadius: "5px",
-              }}
-              width={500}
-              height={300}
-              data={data}
-              margin={{
-                top: 5,
-                right: 30,
-                left: 20,
-                bottom: 5,
-              }}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Line
-                type="monotone"
-                dataKey="pv"
-                stroke="#8884d8"
-                activeDot={{ r: 8 }}
-              />
-              <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
-            </LineChart>
-          </ResponsiveContainer>
         </div>
         {/* <div className="dashboard-div">
           <div className="card" onClick={(e) => navigateTo("/clients")}>
