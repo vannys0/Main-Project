@@ -41,6 +41,10 @@ function Dashboard() {
   const [pending, setPending] = useState(0);
   const [rabbit, setRabbit] = useState([]);
 
+  //chart api
+  const [monthSales, setMonthSales] = useState([]);
+  const [adopt, setAdopt] = useState([]);
+
   useEffect(() => {
     axios
       .get(BASE_URL + "/userCount")
@@ -77,82 +81,102 @@ function Dashboard() {
       .catch((error) => {
         console.error(error);
       });
+
+    axios
+      .get(BASE_URL + "/chart-adoption")
+      .then((res) => {
+        setAdopt(res.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+
+    axios
+      .get(BASE_URL + "/chart-monthly-sales")
+      .then((res) => {
+        setMonthSales(res.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+
+
   }, []);
 
-  const data = [
-    {
-      name: "Jan",
-      male: 4000,
-      female: 2400,
-      amt: 2400,
-    },
-    {
-      name: "Feb",
-      male: 3000,
-      female: 1398,
-      amt: 2210,
-    },
-    {
-      name: "Mar",
-      male: 2000,
-      female: 9800,
-      amt: 2290,
-    },
-    {
-      name: "Apr",
-      male: 2780,
-      female: 3908,
-      amt: 2000,
-    },
-    {
-      name: "May",
-      male: 1890,
-      female: 4800,
-      amt: 2181,
-    },
-    {
-      name: "Jun",
-      male: 2390,
-      female: 3800,
-      amt: 2500,
-    },
-    {
-      name: "Jul",
-      male: 3490,
-      female: 4300,
-      amt: 2100,
-    },
-    {
-      name: "Aug",
-      male: 3490,
-      female: 5033,
-      amt: 2023,
-    },
-    {
-      name: "Sep",
-      male: 1405,
-      female: 3227,
-      amt: 2000,
-    },
-    {
-      name: "Oct",
-      male: 2210,
-      female: 3402,
-      amt: 1875,
-    },
-    {
-      name: "Nov",
-      male: 2333,
-      female: 2307,
-      amt: 3012,
-    },
-    {
-      name: "Dec",
-      male: 1006,
-      female: 1123,
-      amt: 2342,
-    },
-  ];
+  // const data = [
+  //   {
+  //     name: "Jan",
+  //     male: 4000,
+  //     female: 2400,
+  //     amt: 2400,
+  //   },
+  //   {
+  //     name: "Feb",
+  //     male: 3000,
+  //     female: 1398,
+  //     amt: 2210,
+  //   },
+  //   {
+  //     name: "Mar",
+  //     male: 2000,
+  //     female: 9800,
+  //     amt: 2290,
+  //   },
+  //   {
+  //     name: "Apr",
+  //     male: 2780,
+  //     female: 3908,
+  //     amt: 2000,
+  //   },
+  //   {
+  //     name: "May",
+  //     male: 1890,
+  //     female: 4800,
+  //     amt: 2181,
+  //   },
+  //   {
+  //     name: "Jun",
+  //     male: 2390,
+  //     female: 3800,
+  //     amt: 2500,
+  //   },
+  //   {
+  //     name: "Jul",
+  //     male: 3490,
+  //     female: 4300,
+  //     amt: 2100,
+  //   },
+  //   {
+  //     name: "Aug",
+  //     male: 3490,
+  //     female: 5033,
+  //     amt: 2023,
+  //   },
+  //   {
+  //     name: "Sep",
+  //     male: 1405,
+  //     female: 3227,
+  //     amt: 2000,
+  //   },
+  //   {
+  //     name: "Oct",
+  //     male: 2210,
+  //     female: 3402,
+  //     amt: 1875,
+  //   },
+  //   {
+  //     name: "Nov",
+  //     male: 2333,
+  //     female: 2307,
+  //     amt: 3012,
+  //   },
+  //   {
+  //     name: "Dec",
+  //     male: 1006,
+  //     female: 1123,
+  //     amt: 2342,
+  //   },
+  // ];
 
   const navigateTo = useNavigate();
 
@@ -204,6 +228,9 @@ function Dashboard() {
             <h5>42</h5>
           </div>
         </div>
+
+        <br/>
+        <h3>Adoption</h3>
         <ResponsiveContainer width="100%" height="50%">
           <BarChart
             className="bar-chart"
@@ -214,7 +241,7 @@ function Dashboard() {
             }}
             width={500}
             height={300}
-            data={data}
+            data={adopt}
             margin={{
               top: 5,
               right: 30,
@@ -227,21 +254,23 @@ function Dashboard() {
             <YAxis />
             <Tooltip />
             <Legend />
-            <Bar dataKey="male" fill="#8884d8" />
-            <Bar dataKey="female" fill="#82ca9d" />
+            <Bar dataKey="adopt" fill="#8884d8" />
+            <Bar dataKey="g" fill="#82ca9d" />
           </BarChart>
         </ResponsiveContainer>
+
+        <br/>
+        <h3>Sales</h3>
         <ResponsiveContainer width="100%" height="50%">
           <LineChart
             style={{
               boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.3)",
               padding: "10px",
-              borderRadius: "5px",
-              marginTop: "20px",
+              borderRadius: "5px"
             }}
             width={500}
             height={300}
-            data={data}
+            data={monthSales}
             margin={{
               top: 5,
               right: 30,
@@ -256,11 +285,11 @@ function Dashboard() {
             <Legend />
             <Line
               type="monotone"
-              dataKey="female"
+              dataKey="sales"
               stroke="#8884d8"
               activeDot={{ r: 8 }}
             />
-            <Line type="monotone" dataKey="male" stroke="#82ca9d" />
+            {/* <Line type="monotone" dataKey="g" stroke="#82ca9d" /> */}
           </LineChart>
         </ResponsiveContainer>
 

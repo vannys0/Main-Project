@@ -82,6 +82,9 @@ function Sidebar({ openSidebarToggle, OpenSidebar }) {
         <NavLink to="/delivery" className="sidebar-list-item">
           <BsTruck className="icon" /> Delivery
         </NavLink>
+        <NavLink to="/rabbit-sales" className="sidebar-list-item">
+          <BsPeopleFill className="icon" /> Rabbit Sales
+        </NavLink>
         <NavLink to="/clients" className="sidebar-list-item">
           <BsPeopleFill className="icon" /> Users
         </NavLink>

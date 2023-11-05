@@ -33,6 +33,7 @@ import Calendar from "./pages/Calendar";
 import AdminProfile from "./pages/AdminProfile";
 // import Scanner from "./pages/Scanner";
 import ClientProfile from "./pages/Profile/ClientProfile";
+import RabbitSale from "./pages/RabbitSale";
 
 function App() {
   const signIn = useContext(AuthContext);
@@ -183,6 +184,15 @@ function App() {
     //     </div>
     //   ),
     // },
+
+    {
+      path: "/rabbit-sales",
+      element: (
+        <div>
+            <RabbitSale />
+        </div>
+      ),
+    },
   ]);
 
   const [state, dispatch] = useReducer(

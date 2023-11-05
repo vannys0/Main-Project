@@ -28,3 +28,6 @@ app.use("", client);
 
 const dashbard = require("./routes/dashboard");
 app.use("/api", dashbard);
+
+const chartutil = require("./routes/chartutil");
+app.use("/api", chartutil);
