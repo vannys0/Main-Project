@@ -1,39 +1,30 @@
-import React, { Component } from "react";
+import React, { useRef, useState } from "react";
 import QrReader from "react-qr-reader";
 
-class QRCodeScanner extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      result: "No QR code scanned yet",
-    };
-  }
+const Scanner = ({ isOpen, onRequestClose }) => {
+  const [result, setResult] = useState(null);
 
-  handleScan = (data) => {
+  const handleScan = (data) => {
     if (data) {
-      this.setState({
-        result: data,
-      });
+      setResult(data);
     }
   };
 
-  handleError = (err) => {
-    console.error(err);
+  const handleError = (error) => {
+    console.error("QR code scanning error:", error);
   };
 
-  render() {
-    return (
-      <div>
-        <QrReader
-          delay={300}
-          onScan={this.handleScan}
-          onError={this.handleError}
-          style={{ width: "100%" }}
-        />
-        <p>Result: {this.state.result}</p>
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      <h2>QR Code Scanner</h2>
+      <QrReader
+        onScan={handleScan}
+        onError={handleError}
+        style={{ width: "100%" }}
+      />
+      {result && <p>Scanned QR Code: {result}</p>}
+    </div>
+  );
+};
 
-export default QRCodeScanner;
+export default Scanner;

@@ -69,11 +69,13 @@ function RabbitList() {
       }
     });
   };
-
-  const Filter = (e) => {
-    setRecord(
-      rabbits.filter((f) => f.name.toLowerCase().includes(e.target.value))
+  const { Search } = Input;
+  const Filter = (value) => {
+    const lowerCaseValue = value.toLowerCase();
+    const filteredRabbits = rabbits.filter((rabbit) =>
+      rabbit.name.toLowerCase().includes(lowerCaseValue)
     );
+    setRecord(filteredRabbits);
   };
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -164,27 +166,33 @@ function RabbitList() {
       <div className="main-container">
         <h3>Rabbit List</h3>
         <div className="search-filter-div">
-          <Input
-            type="text"
-            name=""
-            className="form-control"
+          <br />
+          <Search
+            style={{
+              height: "40px",
+              fontSize: "16px",
+              width: "400px",
+              marginBottom: "10px",
+              backgroundColor: "#eaeaea",
+            }}
             placeholder="Search rabbit by name"
-            onChange={Filter}
+            allowClear
+            enterButton="Search"
+            size="large"
+            onSearch={Filter}
           />
         </div>
-        <br />
+
         <div className="d-flex">
           <Button type="primary" onClick={() => navigateTo("/add-rabbit")}>
             Add Rabbit
           </Button>
         </div>
-        <div style={{ overflowX: "auto" }}>
-          <Table
-            columns={columns}
-            dataSource={currentItems}
-            pagination={paginationProps}
-          />
-        </div>
+        <Table
+          columns={columns}
+          dataSource={currentItems}
+          pagination={paginationProps}
+        />
       </div>
     </div>
   );

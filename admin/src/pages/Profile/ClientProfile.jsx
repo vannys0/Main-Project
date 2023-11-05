@@ -50,7 +50,8 @@ function ClientProfile() {
             icon={<UserOutlined />}
           />
           <div className="client-data">
-            <p>Client ID: {clients.id}</p>
+            <p>Role: {clients.user_type}</p>
+            <p>User ID: {clients.id}</p>
             <p>Name: {clients.name}</p>
             <p>Email: {clients.email}</p>
           </div>

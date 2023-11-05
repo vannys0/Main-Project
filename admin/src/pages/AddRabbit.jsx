@@ -4,10 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import axios from "axios";
-import { toast } from "react-toastify";
 import { Form } from "react-bootstrap";
 import { v4 as uuidv4 } from "uuid";
-import Swal from "sweetalert2";
 import { Select, Button } from "antd";
 import appConfig from "../../config.json";
 const BASE_URL = appConfig.apiBasePath; //e.g "http://localhost:8080/api"
@@ -17,25 +15,21 @@ function AddRabbit() {
   const OpenSidebar = () => {
     setOpenSidebarToggle(!openSidebarToggle);
   };
-
   const navigateTo = useNavigate();
-
   const [file, setFile] = useState([]);
   const [img, setImg] = useState();
-
+  const [values, setValues] = useState({
+    id: uuidv4(),
+    name: "",
+    dateOfBirth: "",
+    sex: "",
+    weight: "",
+  });
   const onFileChange = (e) => {
     console.log(e.target.files[0]);
     setImg(e.target.files[0]);
     setFile(URL.createObjectURL(e.target.files[0]));
   };
-
-  const [values, setValues] = useState({
-    id: uuidv4(),
-    name: "",
-    age: "",
-    sex: "",
-    weight: "",
-  });
 
   const handleInput = (e) => {
     setValues((prev) => ({ ...prev, [e.target.name]: [e.target.value] }));
@@ -43,12 +37,10 @@ function AddRabbit() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     const formData = new FormData();
     formData.append("image", img);
     const postData = JSON.stringify(values);
     formData.append("values", postData);
-
     axios
       .post(BASE_URL + "/add-rabbit", formData)
       .then((res) => {
