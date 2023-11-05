@@ -178,11 +178,13 @@ function RabbitList() {
             Add Rabbit
           </Button>
         </div>
-        <Table
-          columns={columns}
-          dataSource={currentItems}
-          pagination={paginationProps}
-        />
+        <div style={{ overflowX: "auto" }}>
+          <Table
+            columns={columns}
+            dataSource={currentItems}
+            pagination={paginationProps}
+          />
+        </div>
       </div>
     </div>
   );

@@ -101,11 +101,13 @@ function Breeding() {
             Add Pair
           </Button>
         </div>
-        <Table
-          columns={columns}
-          dataSource={displayedData}
-          pagination={false}
-        />
+        <div style={{ overflowX: "auto" }}>
+          <Table
+            columns={columns}
+            dataSource={displayedData}
+            pagination={false}
+          />
+        </div>
         <Pagination
           style={{
             display: "flex",

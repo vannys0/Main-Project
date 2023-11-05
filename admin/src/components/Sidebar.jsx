@@ -83,7 +83,7 @@ function Sidebar({ openSidebarToggle, OpenSidebar }) {
           <BsTruck className="icon" /> Delivery
         </NavLink>
         <NavLink to="/clients" className="sidebar-list-item">
-          <BsPeopleFill className="icon" /> Clients
+          <BsPeopleFill className="icon" /> Users
         </NavLink>
         <Link to="" onClick={onLogout} className="sidebar-list-item">
           <BsBoxArrowLeft className="icon" /> Logout

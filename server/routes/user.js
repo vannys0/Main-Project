@@ -32,7 +32,7 @@ router.post("/login", (req, res) => {
 
 // Clients
 router.get("/clients", (req, res) => {
-  db.query("SELECT * FROM user WHERE user_type='client'", (err, results) => {
+  db.query("SELECT * FROM user ORDER BY user_type", (err, results) => {
     if (err) {
       console.error("Error fetching :", err);
       res.status(500).json({ error: "Internal Server Error" });

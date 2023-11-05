@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
-import { Table, Pagination, Space, Button } from "antd"; // Import Ant Design Table and Pagination
+import { Input, Table, Pagination, Space, Button } from "antd"; // Import Ant Design Table and Pagination
 import axios from "axios";
 import appConfig from "../../config.json";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 const BASE_URL = appConfig.apiBasePath;
 
 function Clients() {
@@ -16,6 +16,7 @@ function Clients() {
   const [clients, setClients] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
   const clientsPerPage = 7;
+  const [searchedClients, setSearchedClients] = useState([]); // State for searched clients
 
   useEffect(() => {
     axios
@@ -26,24 +27,23 @@ function Clients() {
       .catch((err) => console.log(err));
   }, []);
 
+  useEffect(() => {
+    setSearchedClients(clients); // Initialize searchedClients with all clients
+  }, [clients]);
+
   const pagesVisited = (pageNumber - 1) * clientsPerPage;
-  const displayedClients = clients.slice(
+  const displayedClients = searchedClients.slice(
     pagesVisited,
     pagesVisited + clientsPerPage
   );
 
-  const pageCount = Math.ceil(clients.length / clientsPerPage);
+  const pageCount = Math.ceil(searchedClients.length / clientsPerPage);
 
   const handlePageChange = (page, pageSize) => {
     setPageNumber(page);
   };
 
   const columns = [
-    {
-      title: "Client Id",
-      dataIndex: "id",
-      key: "id",
-    },
     {
       title: "Name",
       dataIndex: "name",
@@ -55,13 +55,18 @@ function Clients() {
       key: "email",
     },
     {
-      title: "Action",
+      title: "User Type",
+      dataIndex: "user_type",
+      key: "user_type",
+    },
+    {
+      title: "Actions",
       key: "action",
-      render: (text, clients) => (
+      render: (text, client) => (
         <Space>
           <Button
             type="text"
-            onClick={() => navigateTo(`/client-profile/${clients.id}`)}
+            onClick={() => navigateTo(`/client-profile/${client.id}`)}
           >
             View
           </Button>
@@ -69,6 +74,15 @@ function Clients() {
       ),
     },
   ];
+
+  // Search Function
+  const { Search } = Input;
+  const onSearch = (value) => {
+    const filteredClients = clients.filter((client) =>
+      client.name.toLowerCase().includes(value.toLowerCase())
+    );
+    setSearchedClients(filteredClients);
+  };
 
   return (
     <div className="grid-container">
@@ -78,13 +92,31 @@ function Clients() {
         OpenSidebar={OpenSidebar}
       />
       <div className="main-container">
-        <h3>CLIENTS</h3>
+        <h3>USERS</h3>
         <br />
-        <Table
-          columns={columns}
-          dataSource={displayedClients}
-          pagination={false}
+        <Search
+          style={{
+            height: "40px",
+            fontSize: "16px",
+            width: "400px",
+            marginBottom: "10px",
+            backgroundColor: "#eaeaea",
+          }}
+          placeholder="Search user by name"
+          allowClear
+          enterButton="Search"
+          size="large"
+          onSearch={onSearch}
         />
+
+        <div style={{ overflowX: "auto" }}>
+          <Table
+            columns={columns}
+            dataSource={displayedClients}
+            pagination={false}
+          />
+        </div>
+
         <Pagination
           style={{
             display: "flex",
@@ -92,7 +124,7 @@ function Clients() {
             justifyContent: "flex-end",
           }}
           current={pageNumber}
-          total={clients.length}
+          total={searchedClients.length}
           pageSize={clientsPerPage}
           showSizeChanger={false}
           onChange={handlePageChange}

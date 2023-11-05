@@ -104,11 +104,13 @@ function Delivery() {
       <div className="main-container">
         <h3>Delivery</h3>
         <br />
-        <Table
-          columns={columns}
-          dataSource={displayedValues}
-          pagination={false}
-        />
+        <div style={{ overflowX: "auto" }}>
+          <Table
+            columns={columns}
+            dataSource={displayedValues}
+            pagination={false}
+          />
+        </div>
         <Pagination
           style={{
             display: "flex",

@@ -82,74 +82,74 @@ function Dashboard() {
   const data = [
     {
       name: "Jan",
-      uv: 4000,
-      pv: 2400,
+      male: 4000,
+      female: 2400,
       amt: 2400,
     },
     {
       name: "Feb",
-      uv: 3000,
-      pv: 1398,
+      male: 3000,
+      female: 1398,
       amt: 2210,
     },
     {
       name: "Mar",
-      uv: 2000,
-      pv: 9800,
+      male: 2000,
+      female: 9800,
       amt: 2290,
     },
     {
       name: "Apr",
-      uv: 2780,
-      pv: 3908,
+      male: 2780,
+      female: 3908,
       amt: 2000,
     },
     {
       name: "May",
-      uv: 1890,
-      pv: 4800,
+      male: 1890,
+      female: 4800,
       amt: 2181,
     },
     {
       name: "Jun",
-      uv: 2390,
-      pv: 3800,
+      male: 2390,
+      female: 3800,
       amt: 2500,
     },
     {
       name: "Jul",
-      uv: 3490,
-      pv: 4300,
+      male: 3490,
+      female: 4300,
       amt: 2100,
     },
     {
       name: "Aug",
-      uv: 3490,
-      pv: 5033,
+      male: 3490,
+      female: 5033,
       amt: 2023,
     },
     {
       name: "Sep",
-      uv: 1405,
-      pv: 3227,
+      male: 1405,
+      female: 3227,
       amt: 2000,
     },
     {
       name: "Oct",
-      uv: 2210,
-      pv: 3402,
+      male: 2210,
+      female: 3402,
       amt: 1875,
     },
     {
       name: "Nov",
-      uv: 2333,
-      pv: 2307,
+      male: 2333,
+      female: 2307,
       amt: 3012,
     },
     {
       name: "Dec",
-      uv: 1006,
-      pv: 1123,
+      male: 1006,
+      female: 1123,
       amt: 2342,
     },
   ];
@@ -227,8 +227,8 @@ function Dashboard() {
             <YAxis />
             <Tooltip />
             <Legend />
-            <Bar dataKey="pv" fill="#8884d8" />
-            <Bar dataKey="uv" fill="#82ca9d" />
+            <Bar dataKey="male" fill="#8884d8" />
+            <Bar dataKey="female" fill="#82ca9d" />
           </BarChart>
         </ResponsiveContainer>
         <ResponsiveContainer width="100%" height="50%">
@@ -256,11 +256,11 @@ function Dashboard() {
             <Legend />
             <Line
               type="monotone"
-              dataKey="pv"
+              dataKey="female"
               stroke="#8884d8"
               activeDot={{ r: 8 }}
             />
-            <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
+            <Line type="monotone" dataKey="male" stroke="#82ca9d" />
           </LineChart>
         </ResponsiveContainer>
 

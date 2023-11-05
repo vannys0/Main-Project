@@ -89,71 +89,76 @@ function Request() {
       <div className="main-container">
         <h3>Adoption request</h3>
         <br />
-        <Table dataSource={getDisplayedData()} pagination={false}>
-          <Table.Column title="Name" dataIndex="fullname" key="name" />
-          <Table.Column
-            title="Address"
-            key="address"
-            render={(text, record) => (
-              <span>
-                {record.barangay}, {record.city}, {record.province}
-              </span>
-            )}
-          />
-          <Table.Column title="Date" dataIndex="adoption_date" key="date" />
-          <Table.Column
-            title="Mode of Delivery"
-            dataIndex="service_option"
-            key="service_option"
-          />
-          <Table.Column
-            title="Status"
-            dataIndex="transaction_status"
-            key="transaction_status"
-            render={(text, record) => (
-              <span>
-                {record.transaction_status === "Pending" ? (
-                  <Tag color="warning">{record.transaction_status}</Tag>
-                ) : record.transaction_status === "Declined" ? (
-                  <Tag color="error">{record.transaction_status}</Tag>
-                ) : (
-                  <Tag color="success">{record.transaction_status}</Tag>
-                )}
-              </span>
-            )}
-          />
-          <Table.Column
-            title="Action"
-            key="action"
-            render={(text, record) => (
-              <Space>
-                <ReviewRequest data={record} />
-                {record.transaction_status === "Pending" ? (
-                  <Button type="primary" onClick={(e) => onApprove(e, record)}>
-                    Approve
-                  </Button>
-                ) : (
-                  <Button type="primary" disabled>
-                    Approve
-                  </Button>
-                )}
-                {record.transaction_status === "Pending" ? (
-                  <Button
-                    type="primary"
-                    danger
-                    onClick={(e) => onDecline(e, record)}
-                  >
-                    Decline
-                  </Button>
-                ) : (
-                  <Button type="primary" disabled>
-                    Decline
-                  </Button>
-                )}
-              </Space>
-            )}
-          />
-        </Table>
+        <div style={{ overflowX: "auto" }}>
+          <Table dataSource={getDisplayedData()} pagination={false}>
+            <Table.Column title="Name" dataIndex="fullname" key="name" />
+            <Table.Column
+              title="Address"
+              key="address"
+              render={(text, record) => (
+                <span>
+                  {record.barangay}, {record.city}, {record.province}
+                </span>
+              )}
+            />
+            <Table.Column title="Date" dataIndex="adoption_date" key="date" />
+            <Table.Column
+              title="Mode of Delivery"
+              dataIndex="service_option"
+              key="service_option"
+            />
+            <Table.Column
+              title="Status"
+              dataIndex="transaction_status"
+              key="transaction_status"
+              render={(text, record) => (
+                <span>
+                  {record.transaction_status === "Pending" ? (
+                    <Tag color="warning">{record.transaction_status}</Tag>
+                  ) : record.transaction_status === "Declined" ? (
+                    <Tag color="error">{record.transaction_status}</Tag>
+                  ) : (
+                    <Tag color="success">{record.transaction_status}</Tag>
+                  )}
+                </span>
+              )}
+            />
+            <Table.Column
+              title="Action"
+              key="action"
+              render={(text, record) => (
+                <Space>
+                  <ReviewRequest data={record} />
+                  {record.transaction_status === "Pending" ? (
+                    <Button
+                      type="primary"
+                      onClick={(e) => onApprove(e, record)}
+                    >
+                      Approve
+                    </Button>
+                  ) : (
+                    <Button type="primary" disabled>
+                      Approve
+                    </Button>
+                  )}
+                  {record.transaction_status === "Pending" ? (
+                    <Button
+                      type="primary"
+                      danger
+                      onClick={(e) => onDecline(e, record)}
+                    >
+                      Decline
+                    </Button>
+                  ) : (
+                    <Button type="primary" disabled>
+                      Decline
+                    </Button>
+                  )}
+                </Space>
+              )}
+            />
+          </Table>
+        </div>
         <Pagination
           style={{
             display: "flex",

@@ -152,6 +152,7 @@ function EditRabbit() {
           <Space direction="vertical" align="center">
             <div id="myqrcode">
               <QRCode
+                size={250}
                 value={values.id}
                 bgColor="#fff"
                 style={{
