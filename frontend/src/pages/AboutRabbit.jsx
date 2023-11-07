@@ -17,7 +17,6 @@ function AboutRabbit({ data }) {
     axios
       .get("http://localhost:8081/adopt")
       .then((res) => {
-        console.log(res);
         setRabbit(res.data[0]);
       })
       .catch((err) => console.log(err));

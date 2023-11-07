@@ -5,6 +5,10 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { Form } from "react-bootstrap";
 import { v4 as uuidv4 } from "uuid";
 import SecureStore from "react-secure-storage";
+import {
+  getAllCityByProvinceCodeList,
+  getAllBarangayByCityCodeList,
+} from "./Api/camarinessur";
 
 function AdoptForm() {
   // const [currentDate, setCurrentDate] = useState("");
@@ -12,8 +16,28 @@ function AdoptForm() {
   const navigateTo = useNavigate();
   const dateToday = new Date().toLocaleDateString();
   const user = SecureStore.getItem("userToken");
+  const [citymunOptions, setCitymunOptions] = useState([]);
+  const [brgyOptions, setBrgyOptions] = useState([]);
   const [file, setFile] = useState();
   const [img, setImg] = useState();
+
+  useEffect(() => {
+    getAllCityByProvinceCodeList((data) => {
+      setCitymunOptions(data);
+    });
+  }, []);
+
+  const handleCityChange = (e) => {
+    setValues((prev) => ({ ...prev, city: selectedCityCode }));
+    const selectedCityCode = e.target.value;
+    if (selectedCityCode) {
+      getAllBarangayByCityCodeList(selectedCityCode, (data) => {
+        setBrgyOptions(data);
+      });
+    } else {
+      setBrgyOptions([]);
+    }
+  };
 
   const onFileChange = (e) => {
     setImg(e.target.files[0]);
@@ -51,7 +75,6 @@ function AdoptForm() {
     province: "",
     city: "",
     barangay: "",
-    postalcode: "",
     reason: "",
     otherpets: "",
     user_id: user.id,
@@ -64,7 +87,6 @@ function AdoptForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     const formData = new FormData();
     formData.append("image", img);
     const postData = JSON.stringify(values);
@@ -139,32 +161,34 @@ function AdoptForm() {
               </option>
               <option value="Camarines Sur">Camarines Sur</option>
             </Form.Select>
-            <input
-              type="text"
+            <Form.Select
               name="city"
-              placeholder="City/Municipality"
               className="form-control"
-              onChange={handleInput}
-              required
-            />
-            <input
-              type="text"
+              onChange={handleCityChange}
+            >
+              <option value="" hidden>
+                City
+              </option>
+              {citymunOptions.map((option) => (
+                <option key={option.citymunCode} value={option.citymunCode}>
+                  {option.citymunDesc}
+                </option>
+              ))}
+            </Form.Select>
+            <Form.Select
               name="barangay"
-              placeholder="Barangay"
               className="form-control"
               onChange={handleInput}
-              required
-            />
-            <input
-              type="text"
-              name="postalcode"
-              inputMode="numeric"
-              maxLength={4}
-              placeholder="Postal code"
-              className="form-control"
-              onChange={handleInput}
-              required
-            />
+            >
+              <option value="" hidden>
+                Barangay
+              </option>
+              {brgyOptions.map((option) => (
+                <option key={option.brgyCode} value={option.brgyDesc}>
+                  {option.brgyDesc}
+                </option>
+              ))}
+            </Form.Select>
           </div>
           <br />
           <hr />
@@ -198,9 +222,6 @@ function AdoptForm() {
             onChange={onFileChange}
           />
           <br />
-          <img src={file} className="w-50" />
-          {/* {fileData()} */}
-
           <label htmlFor="reason">
             Reason for Adoption <span className="errmsg">*</span>
             <textarea

@@ -86,20 +86,17 @@ function ViewApplication({ data }) {
                 className="form-control"
                 readOnly
               />
-              <input
-                type="text"
-                value={data.postal_code}
-                name="postalcode"
-                placeholder="Postal code"
-                className=" form-control"
-                readOnly
-              />
             </div>
             <br />
             <hr />
             <br />
             <label htmlFor="environment">Home environment</label>
-            <input type="file" className="form-control" />
+            <img
+              className="w-100"
+              src={`http://localhost:8081/uploads/${data.home_environment_image_path}`}
+              alt=""
+            />
+            <br />
             <br />
             <label htmlFor="reason">
               Reason for Adoption
