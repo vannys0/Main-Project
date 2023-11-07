@@ -149,10 +149,11 @@ button {
 }
 
 /* Adopt.jsx */
-
 .adopt-div {
     width: 50%;
     padding: 20px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px
+  4px 0px, rgba(99, 99, 99, 0.1) 0px -2px 8px 0px;
 }
 .rehome-div h2 {
     margin-bottom: 50px;
@@ -181,7 +182,7 @@ button {
 .rabbitList {
     gap: 10px;
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: 1fr 1fr 1fr;
 }
 .btn-toHIde {
     display: none;
@@ -238,20 +239,25 @@ button {
 }
 
 /* AdoptForm.jsx */
-
 .main-div .form-div {
-    margin-top: 50px;
-    padding: 20px;
+    position: relative;
+    padding: 20px 20px 0px 20px;
     width: 50%;
     display: flex;
     justify-content: center;
     border: 2px solid #eaeaea;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px
+  4px 0px, rgba(99, 99, 99, 0.1) 0px -2px 8px 0px;
+}
+.main-div .form-div .label-name {
+    margin-top: 20px;
 }
 .main-div .form-div form h4{
-    width: 100%;
-    padding: 30px;
-    background-color: #00828c;
-    color: #fff;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 20px;
 }
 .address {
     gap: 10px;
@@ -332,9 +338,14 @@ button {
 }
 
 /* My Application */
-
 .application-div {
-    width: 95%;
+    width: 50%;
+    padding: 20px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px
+  4px 0px, rgba(99, 99, 99, 0.1) 0px -2px 8px 0px;
+}
+.application-div table {
+    border: 2px solid #eaeaea;
 }
 .application-div > h1 {
     margin: 20px 0px 10px 0px;
@@ -455,13 +466,14 @@ button {
     /* Adopt */
     .adopt-div {
     width: 100dvw;
+    padding: 10px;
     }
     .adopt-div .rabbitList {
         padding: 0;
         gap: 10px;
         display: grid;
         justify-content: center;
-        grid-template-columns: auto;
+        grid-template-columns: 1fr 1fr;
     }
     .search-input {
         width: 100%;
@@ -479,8 +491,15 @@ button {
     /* AdoptForm */
     .main-div .form-div {
         width: 100%;
-        padding: 20px;
+        padding: 10px;
         margin-top: 0;
+
+    }
+    .main-div .form-div form h4 {
+        padding: 10px;
+        background-color: #fff;
+        color: #1e1e1e;
+        border-bottom: 2px solid #eaeaea;
     }
     /* Application */
     .application-div {

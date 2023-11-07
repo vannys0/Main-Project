@@ -1,17 +1,18 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
-import { Link } from "react-router-dom";
+import { Button, Modal } from "antd";
+import { Link, useNavigate } from "react-router-dom";
 
 function AboutRabbit({ data }) {
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => {
-    setShow(true);
-  };
-
+  const navigateTo = useNavigate();
   const [rabbit, setRabbit] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
 
   useEffect(() => {
     axios
@@ -24,51 +25,57 @@ function AboutRabbit({ data }) {
 
   return (
     <>
-      <button className="btn form-control see-details" onClick={handleShow}>
-        See details
-      </button>
-
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>About {data.name} </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div className="image-div">
-            <img
-              src={`http://localhost:8081/uploads/${data.image_path}`}
-              alt=""
-            />
-          </div>
-          <br />
-          <p>Hi, my name is {data.name} and I am looking for a new home.</p>
-          <div className="d-flex">
-            <div className="w-25">
-              <h6>Rabbit Id</h6>
-              <h6>Breed</h6>
-              <h6>Sex</h6>
-              <h6>Age</h6>
-              <h6>Weight</h6>
-            </div>
-            <div>
-              <h6>: {data.id}</h6>
-              <h6>: {data.breed} Other</h6>
-              <h6>: {data.sex}</h6>
-              <h6>: {data.age} months</h6>
-              <h6>: {data.weight} pounds</h6>
-            </div>
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+      <div className="d-flex justify-content-center">
+        <Button type="primary" className="w-100" onClick={showModal}>
+          Details
+        </Button>
+      </div>
+      <Modal
+        title="Details"
+        style={{
+          top: 20,
+        }}
+        open={isModalOpen}
+        onCancel={handleCancel}
+        footer={[
+          <Button key="cancel" type="text" onClick={handleCancel}>
             Close
-          </Button>
-          <Link
-            to={`/rabbitdata/${data.name}/${data.id}/adopt-form`}
-            className="btn btn-primary"
+          </Button>,
+          <Button
+            key="adopt"
+            type="primary"
+            onClick={() =>
+              navigateTo(`/rabbitdata/${data.name}/${data.id}/adopt-form`)
+            }
           >
-            Apply for adoption
-          </Link>
-        </Modal.Footer>
+            Adopt
+          </Button>,
+        ]}
+      >
+        <div className="image-div">
+          <img
+            src={`http://localhost:8081/uploads/${data.image_path}`}
+            alt=""
+          />
+        </div>
+        <br />
+        <p>Hi, my name is {data.name} and I am looking for a new home.</p>
+        <div className="d-flex">
+          <div className="w-25">
+            <h6>Rabbit Id</h6>
+            <h6>Breed</h6>
+            <h6>Sex</h6>
+            <h6>Age</h6>
+            <h6>Weight</h6>
+          </div>
+          <div>
+            <h6>: {data.id}</h6>
+            <h6>: {data.breed} Other</h6>
+            <h6>: {data.sex}</h6>
+            <h6>: {data.age} months</h6>
+            <h6>: {data.weight} klg</h6>
+          </div>
+        </div>
       </Modal>
     </>
   );

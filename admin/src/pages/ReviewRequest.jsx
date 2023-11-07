@@ -27,8 +27,12 @@ function ReviewRequest({ data }) {
           top: 20,
         }}
         open={isModalOpen}
-        onOk={handleOk}
         onCancel={handleCancel}
+        footer={[
+          <Button key="cancel" type="text" onClick={handleCancel}>
+            Close
+          </Button>,
+        ]}
       >
         <div className="d-flex">
           <div className="w-50">

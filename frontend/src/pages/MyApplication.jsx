@@ -4,6 +4,8 @@ import { Table } from "react-bootstrap";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import ViewApplication from "./ViewApplication";
+import { Button, Tag } from "antd";
+import Swal from "sweetalert2";
 import SecureStore from "react-secure-storage";
 
 function MyApplication() {
@@ -19,19 +21,27 @@ function MyApplication() {
   }, []);
 
   const handleDelete = async (id) => {
-    try {
-      await axios.delete("http://localhost:8081/delete_application/" + id);
-      window.location.reload();
-    } catch (err) {
-      console.log(err);
-    }
+    Swal.fire({
+      title: "Are you sure?",
+      text: "you want to cancel this?",
+      showCancelButton: true,
+      confirmButtonColor: "#d50000",
+      cancelButtonColor: "#797979",
+      confirmButtonText: "Yes!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire("Successful!", "You have cancelled the request", "success");
+        axios.delete("http://localhost:8081/delete_application/" + id);
+        window.location.reload();
+      }
+    });
   };
 
   return (
     <div className="main-div">
       <Navbar />
       <div className="application-div">
-        <h1>My application</h1>
+        <h4>My application</h4>
         <Table striped hover responsive="sm">
           {values.length > 0 && (
             <thead>
@@ -52,25 +62,24 @@ function MyApplication() {
                   <td>{data.reason_for_adoption}</td>
                   <td width={100}>{data.service_option}</td>
                   <td width={100}>
-                    {data.transaction_status === "Approved" ? (
-                      <span style={{ color: "#2e7d32" }}>
-                        {data.transaction_status}
-                      </span>
+                    {data.transaction_status === "Pending" ? (
+                      <Tag color="warning">{data.transaction_status}</Tag>
+                    ) : data.transaction_status === "Declined" ? (
+                      <Tag color="error">{data.transaction_status}</Tag>
                     ) : (
-                      <span style={{ color: "#d50000" }}>
-                        {data.transaction_status}
-                      </span>
+                      <Tag color="success">{data.transaction_status}</Tag>
                     )}
                   </td>
-                  <td className="action-btn">
+                  <td className="d-flex gap-2">
                     <ViewApplication data={data} />
                     {data.transaction_status === "Pending" ? (
-                      <button
-                        className="danger"
+                      <Button
+                        type="primary"
+                        danger
                         onClick={(e) => handleDelete(data.id)}
                       >
                         Cancel
-                      </button>
+                      </Button>
                     ) : (
                       <span style={{ color: "black" }}></span>
                     )}

@@ -27,25 +27,22 @@ function Login() {
 
   function loginUser(e) {
     e.preventDefault();
-
     // Check if the email input is empty
     if (!loginUserName.trim()) {
       setEmailError("Email is required");
       return;
     }
-
     // Validate the email input
     if (!validateEmail(loginUserName)) {
       setEmailError("Invalid email format");
       return;
     }
-
     // Check if the password input is empty
     if (!loginPassword.trim()) {
       setPasswordError("Password is required");
       return;
     }
-
+    // Post method
     Axios.post(BASE_URL + "/login", {
       LoginUserName: loginUserName,
       LoginPassowrd: loginPassword,
@@ -61,31 +58,28 @@ function Login() {
           showConfirmButton: false,
           timer: 3000,
         });
-        navigateTo("/dashboard"); // if the credentials match in the database
+        navigateTo("/dashboard");
       } else {
         Swal.fire({
           icon: "error",
           title: "Oops...",
           text: "Incorrect email or password!",
         });
-        navigateTo("/"); // navigate to the login page
+        navigateTo("/");
         setLoginStatus("Credentials Don't Exist");
       }
     });
   }
-
   // Function to validate email format
   function validateEmail(email) {
     const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
     return emailRegex.test(email);
   }
-
   // Handle email input changes
   function handleEmailChange(e) {
     setLoginUserName(e.target.value);
     setEmailError(""); // Clear the email error
   }
-
   // Handle password input changes
   function handlePasswordChange(e) {
     setLoginPassword(e.target.value);

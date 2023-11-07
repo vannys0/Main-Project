@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Form } from "react-bootstrap";
 import { v4 as uuidv4 } from "uuid";
+import { Button } from "antd";
 import SecureStore from "react-secure-storage";
 import {
   getAllCityByProvinceCodeList,
@@ -105,10 +106,10 @@ function AdoptForm() {
     <div className="main-div">
       <Navbar />
       <div className="form-div">
-        <form onSubmit={handleSubmit} encType="multipart/form-data">
+        <form encType="multipart/form-data">
           <h4>Adopt {name}</h4>
           <br />
-          <label htmlFor="fullname">
+          <label htmlFor="fullname" className="label-name">
             Full Name <span className="errmsg">*</span>
           </label>
           <input
@@ -245,12 +246,14 @@ function AdoptForm() {
               placeholder="If any"
             />
           </label>
-          <Link to="/adopt" className="btn btn-secondary cancel">
-            Cancel
-          </Link>
-          <button type="submit" className="btn btn-primary">
-            Apply
-          </button>
+          <div className="d-flex justify-content-end gap-2 my-4">
+            <Button type="primary" danger onClick={() => navigateTo("/adopt")}>
+              Cancel
+            </Button>
+            <Button type="primary" onClick={handleSubmit}>
+              Apply
+            </Button>
+          </div>
         </form>
       </div>
     </div>

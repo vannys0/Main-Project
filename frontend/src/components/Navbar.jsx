@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import "./Navbar.css";
 import { AiOutlineHome, AiOutlineContacts } from "react-icons/ai";
@@ -8,58 +8,73 @@ import { MdAccountCircle } from "react-icons/md";
 import Button from "react-bootstrap/Button";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownMenu from "./DropdownMenu.jsx";
+import { BsJustify } from "react-icons/bs";
+import Swal from "sweetalert2";
+import SecureStore from "react-secure-storage";
+import { AuthContext } from "../App";
 
 function Navbar() {
+  const user = SecureStore.getItem("userToken");
+  const navigateTo = useState();
+  const authContext = useContext(AuthContext);
   const [open, setOpen] = useState(false);
   const handleToggle = () => {
     setOpen(!open);
   };
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdown, setDropdown] = useState(false);
+
+  const handleLogout = () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You want to logout?",
+      showCancelButton: true,
+      confirmButtonColor: "#d50000",
+      cancelButtonColor: "#797979",
+      confirmButtonText: "Yes!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire("Logged out!", "You have been logout.", "success");
+        SecureStore.removeItem();
+        authContext.signOut();
+        navigateTo("/");
+      }
+    });
+  };
+
   return (
     <nav>
       <Link to="/home" className="title">
         <h2 className="brand">e-Leporidae</h2>
       </Link>
       <div className="menu" onClick={() => setMenuOpen(!menuOpen)}>
-        <span></span>
-        <span></span>
-        <span></span>
+        <BsJustify className="icons menu-icon" />
       </div>
       <ul className={menuOpen ? "open" : ""}>
         <li>
-          <NavLink to="/home">
-            {/* <AiOutlineHome className="icons" style={{}} /> */}
-            Home
-          </NavLink>
+          <NavLink to="/home">Home</NavLink>
         </li>
         <li>
-          <NavLink to="/adopt">
-            {/* <GiRabbit className="icons" /> */}
-            Adopt
-          </NavLink>
+          <NavLink to="/adopt">Adopt</NavLink>
         </li>
         <li>
-          <NavLink to="/contact">
-            {/* <AiOutlineContacts className="icons" /> */}
-            Contact
-          </NavLink>
+          <NavLink to="/contact">Contact</NavLink>
         </li>
         <li>
-          <NavLink to="/about">
-            {/* <FcAbout className="icons" style={{ color: "#fff" }} /> */}
-            About
+          <NavLink to="/about">About</NavLink>
+        </li>
+        <li>
+          <NavLink to="" className="to-hide">
+            My Profile
           </NavLink>
         </li>
         <li>
           <NavLink to="/myapplication" className="to-hide">
-            {/* <FcAbout className="icons" style={{ color: "#fff" }} /> */}
             Application
           </NavLink>
         </li>
         <li>
-          <NavLink to="/" className="to-hide">
-            {/* <FcAbout className="icons" style={{ color: "#fff" }} /> */}
+          <NavLink className="to-hide" onClick={handleLogout}>
             Logout
           </NavLink>
         </li>
@@ -68,33 +83,6 @@ function Navbar() {
         </div>
 
         {dropdown && <DropdownMenu />}
-
-        {/* <Dropdown show={open} onToggle={handleToggle}>
-          <Dropdown.Toggle
-            style={{
-              backgroundColor: "#00828c",
-              color: "#fff",
-              outline: "none",
-              border: "none",
-              fontSize: "18px",
-              fontWeight: "600",
-            }}
-            className="myAccount-btn"
-            id="basic-button"
-          >
-            Me
-          </Dropdown.Toggle>
-          <Dropdown.Menu
-            style={{
-              width: "100px",
-            }}
-          >
-            <Dropdown.Item onClick={handleToggle}>My application</Dropdown.Item>
-            <Dropdown.Item onClick={handleToggle}>Mapping</Dropdown.Item>
-            <Dropdown.Divider />
-            <Dropdown.Item onClick={handleToggle}>Logout</Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown> */}
       </ul>
     </nav>
   );

@@ -5,6 +5,7 @@ import "./style.css";
 import axios from "axios";
 import RabbitData from "./RabbitData.jsx";
 import Footer from "../components/footer.jsx";
+import { Input } from "antd";
 import AboutRabbit from "./AboutRabbit.jsx";
 
 function Adopt() {
@@ -21,46 +22,64 @@ function Adopt() {
       })
       .catch((err) => console.log(err));
   }, []);
-
-  const Filter = (e) => {
-    setRecord(
-      rabbits.filter((f) => f.name.toLowerCase().includes(e.target.value))
+  // Search Filter
+  const { Search } = Input;
+  const Filter = (value) => {
+    const lowerCaseValue = value.toLowerCase();
+    const filteredRabbits = rabbits.filter((rabbit) =>
+      rabbit.name.toLowerCase().includes(lowerCaseValue)
     );
+    setRecord(filteredRabbits);
   };
 
   return (
     <div className="main-div">
       <Navbar />
       <div className="adopt-div">
-        <h2>Adoptable Rabbits</h2> <br />
-        <div className="search-input">
-          <span>Search</span>
-          <input type="text" onChange={Filter} />
-          <br />
+        <div className="d-flex justify-content-between">
+          <h2>Adoptable Rabbits</h2>
+          <Search
+            style={{
+              height: "40px",
+              fontSize: "16px",
+              width: "300px",
+              marginBottom: "20px",
+              backgroundColor: "#eaeaea",
+            }}
+            placeholder="Search rabbit by name"
+            allowClear
+            enterButton="Search"
+            size="large"
+            onSearch={Filter}
+          />
         </div>
         <div className="rabbitList">
           {record.length > 0 ? (
             record.map((data, i) => (
-              <Card key={i} style={{ width: "100%" }}>
+              <Card
+                key={i}
+                style={{
+                  width: "100%",
+                  borderRadius: "0",
+                  boxShadow:
+                    "rgba(99, 99, 99, 0.2) 0px 2px 4px 0px, rgba(99, 99, 99, 0.1) 0px -2px 8px 0px",
+                }}
+              >
                 <Card.Img
-                  style={{ width: "300px", alignSelf: "center" }}
+                  style={{
+                    width: "100%",
+                    alignSelf: "center",
+                    borderRadius: "0",
+                  }}
                   variant="top"
                   src={`http://localhost:8081/uploads/${data.image_path}`}
                   height={250}
                   alt="No Image"
                 />
-                <Card.Body
-                  style={{ backgroundColor: "#00828c", color: "#fff" }}
-                >
+                <Card.Body>
                   <Card.Title>{data.name}</Card.Title>
                   <Card.Text></Card.Text>
                   <AboutRabbit data={data} />
-                  {/* <Link
-          to={`/rabbitdata/${data.id}`}
-          className="btn form-control see-details"
-        >
-          See details
-        </Link> */}
                 </Card.Body>
               </Card>
             ))

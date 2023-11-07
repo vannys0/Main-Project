@@ -7,10 +7,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button, Input, Table, Tag, Space, Pagination, Image } from "antd";
 import Swal from "sweetalert2";
 import appConfig from "../../config.json";
-
 const BASE_URL = appConfig.apiBasePath;
 
 function RabbitList() {
+  // Responsive Sidebar
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false);
   const OpenSidebar = () => {
     setOpenSidebarToggle(!openSidebarToggle);
@@ -20,7 +20,7 @@ function RabbitList() {
   const [record, setRecord] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(6);
-
+  // Rehome Rabbit
   const onRehome = (e, o) => {
     axios
       .put(BASE_URL + "/update-rehome/" + o.id, {
@@ -42,7 +42,7 @@ function RabbitList() {
       })
       .catch((err) => console.log(err));
   };
-
+  // Get
   useEffect(() => {
     axios
       .get(BASE_URL + "/rabbits")
@@ -52,7 +52,7 @@ function RabbitList() {
       })
       .catch((err) => console.log(err));
   }, []);
-
+  // Delete Rabbit
   const handleDelete = async (id) => {
     Swal.fire({
       title: "Confirm delete?",
@@ -69,6 +69,7 @@ function RabbitList() {
       }
     });
   };
+  // Search Function
   const { Search } = Input;
   const Filter = (value) => {
     const lowerCaseValue = value.toLowerCase();
@@ -77,10 +78,7 @@ function RabbitList() {
     );
     setRecord(filteredRabbits);
   };
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = record.slice(indexOfFirstItem, indexOfLastItem);
-
+  // Table
   const columns = [
     {
       title: "Name",
@@ -148,7 +146,10 @@ function RabbitList() {
       ),
     },
   ];
-
+  // Pagination
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = record.slice(indexOfFirstItem, indexOfLastItem);
   const paginationProps = {
     current: currentPage,
     total: record.length,
