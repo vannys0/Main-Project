@@ -7,8 +7,9 @@ import { v4 as uuidv4 } from "uuid";
 import { Button } from "antd";
 import SecureStore from "react-secure-storage";
 import {
-  getAllCityByProvinceCodeList,
-  getAllBarangayByCityCodeList,
+  getAllProvince,
+  getAllCityByProvinceCode,
+  getAllBarangayByCityCodeList
 } from "./Api/camarinessur";
 
 function AdoptForm() {
@@ -17,28 +18,52 @@ function AdoptForm() {
   const navigateTo = useNavigate();
   const dateToday = new Date().toLocaleDateString();
   const user = SecureStore.getItem("userToken");
+
+  const [prov, setProv] = useState([]);
   const [citymunOptions, setCitymunOptions] = useState([]);
   const [brgyOptions, setBrgyOptions] = useState([]);
   const [file, setFile] = useState();
   const [img, setImg] = useState();
 
   useEffect(() => {
-    getAllCityByProvinceCodeList((data) => {
-      setCitymunOptions(data);
+    getAllProvince((data) => {
+      setProv(data);
     });
+
+    // getAllCityByProvinceCodeList((data) => {
+    //   setCitymunOptions(data);
+    // });
   }, []);
 
+  const handleProvinceChange = (e) => {
+    setValues((prev) => ({ ...prev, province: selectedProvCode }));
+    const selectedProvCode = JSON.parse(e.target.value); //object
+    console.log(selectedProvCode);
+
+    if (selectedProvCode) {
+      getAllCityByProvinceCode(selectedProvCode.provCode, (data) => {
+        setCitymunOptions(data);
+      });
+    } else {
+      setCitymunOptions([]);
+    }
+  };
+
   const handleCityChange = (e) => {
-    setValues((prev) => ({ ...prev, city: selectedCityCode }));
-    const selectedCityCode = e.target.value;
-    if (selectedCityCode) {
-      getAllBarangayByCityCodeList(selectedCityCode, (data) => {
+
+    setValues((prev) => ({ ...prev, city: selectedCitymunCode }));
+    const selectedCitymunCode = JSON.parse(e.target.value);
+    if (selectedCitymunCode) {
+      getAllBarangayByCityCodeList(selectedCitymunCode.citymunCode, (data) => {
         setBrgyOptions(data);
       });
     } else {
       setBrgyOptions([]);
     }
   };
+
+
+
 
   const onFileChange = (e) => {
     setImg(e.target.files[0]);
@@ -153,14 +178,18 @@ function AdoptForm() {
           <div className="address">
             <Form.Select
               aria-label="Default select example"
-              onChange={handleInput}
+              onChange={handleProvinceChange}
               name="province"
               required
             >
               <option value="" hidden>
                 Province
               </option>
-              <option value="Camarines Sur">Camarines Sur</option>
+              {prov.map((option) => (
+                <option key={option.id} value={JSON.stringify(option)}>
+                  {option.provDesc}
+                </option>
+              ))}
             </Form.Select>
             <Form.Select
               name="city"
@@ -171,7 +200,7 @@ function AdoptForm() {
                 City
               </option>
               {citymunOptions.map((option) => (
-                <option key={option.citymunCode} value={option.citymunCode}>
+                <option key={option.id} value={JSON.stringify(option)}>
                   {option.citymunDesc}
                 </option>
               ))}
@@ -185,7 +214,7 @@ function AdoptForm() {
                 Barangay
               </option>
               {brgyOptions.map((option) => (
-                <option key={option.brgyCode} value={option.brgyDesc}>
+                <option key={option.id} value={option.brgyDesc}>
                   {option.brgyDesc}
                 </option>
               ))}

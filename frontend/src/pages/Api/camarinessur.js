@@ -1,16 +1,15 @@
-export function getAllCityByProvinceCodeList(callback) {
+export function getAllProvince(callback) {
   fetchData(
-    "https://phaddress.onrender.com/api/v1/ph/citymuns?regCode=05&provCode=0517",
+    "https://phaddress.onrender.com/api/v1/ph/provinces",
     (data) => {
       callback(data);
     }
   );
 }
 
-export function getAllBarangayByCityDescList(desc, callback) {
+export function getAllCityByProvinceCode(provCode, callback) {
   fetchData(
-    "https://phaddress.onrender.com/api/v1/ph/barangays?provCode=0517&citymunDesc=" +
-      `${desc}`,
+    "https://phaddress.onrender.com/api/v1/ph/citymuns?provCode=" + `${provCode}`,
     (data) => {
       callback(data);
     }
@@ -27,39 +26,62 @@ export function getAllBarangayByCityCodeList(code, callback) {
   );
 }
 
-export function getAllCityByProvinceCode(callback) {
-  fetchData(
-    "https://phaddress.onrender.com/api/v1/ph/citymuns?regCode=05&provCode=0517",
-    (data) => {
-      for (var d of data) {
-        callback(d);
-      }
-    }
-  );
-}
-export function getAllBarangayByCityCode(code, callback) {
-  fetchData(
-    "https://phaddress.onrender.com/api/v1/ph/barangays?provCode=0517&citymunCode=" +
-      `${code}`,
-    (data) => {
-      for (var d of data) {
-        callback(d);
-      }
-    }
-  );
-}
+// export function getAllCityByProvinceCodeList(callback) {
+//   fetchData(
+//     "https://phaddress.onrender.com/api/v1/ph/citymuns?regCode=05&provCode=0517",
+//     (data) => {
+//       callback(data);
+//     }
+//   );
+// }
 
-export function getAllBarangayByCityCodeDescList(code, callback) {
-  fetchData(
-    "https://ph-address.onrender.com/ph/barangays?provCode=0517&citymunCode=" +
-      `${code}`,
-    (data) => {
-      for (var d of data) {
-        callback(d);
-      }
-    }
-  );
-}
+
+// export function getAllBarangayByCityDescList(desc, callback) {
+//   fetchData(
+//     "https://phaddress.onrender.com/api/v1/ph/barangays?provCode=0517&citymunDesc=" +
+//       `${desc}`,
+//     (data) => {
+//       callback(data);
+//     }
+//   );
+// }
+
+// export function getAllCityByProvinceCode(callback) {
+//   fetchData(
+//     "https://phaddress.onrender.com/api/v1/ph/citymuns?regCode=05&provCode=0517",
+//     (data) => {
+//       for (var d of data) {
+//         callback(d);
+//       }
+//     }
+//   );
+// }
+// export function getAllBarangayByCityCode(code, callback) {
+//   fetchData(
+//     "https://phaddress.onrender.com/api/v1/ph/barangays?provCode=0517&citymunCode=" +
+//       `${code}`,
+//     (data) => {
+//       for (var d of data) {
+//         callback(d);
+//       }
+//     }
+//   );
+// }
+
+// export function getAllBarangayByCityCodeDescList(code, callback) {
+//   fetchData(
+//     "https://ph-address.onrender.com/ph/barangays?provCode=0517&citymunCode=" +
+//       `${code}`,
+//     (data) => {
+//       for (var d of data) {
+//         callback(d);
+//       }
+//     }
+//   );
+// }
+
+
+
 function fetchData(url, callback) {
   let options = {
     method: "GET",
