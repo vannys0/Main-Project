@@ -18,32 +18,44 @@ function Login() {
   });
 
   const navigate = useNavigate();
+
   const [errors, setErrors] = useState({});
-  const [signupError, setSignUpError] = useState(null);
 
   const handleInput = (e) => {
     setValues((prev) => ({ ...prev, [e.target.name]: [e.target.value] }));
   };
 
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   setErrors(Validation(values));
+
+  //   if (errors.name === "" && errors.email === "" && errors.password === "") {
+  //     axios
+  //       .post("http://localhost:8081/signup", values)
+  //       .then((res) => {
+  //         toast.success("Account created");
+  //         navigate("/");
+  //       })
+  //       .catch((err) => console.log(err));
+  //   }
+  // };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    setErrors(Validation(values));
-
-    if (errors.name === "" && errors.email === "" && errors.password === "") {
-      axios
-        .post("http://localhost:8081/signup", values)
-        .then((res) => {
-          navigate("/");
-        })
-        .catch((err) => {
-          if (err.response && err.response.status === 400) {
-            setSignUpError("Email already exist!");
-          } else {
-            setSignUpError("");
-            console.log(err);
-          }
-        });
-    }
+    axios
+      .post("http://localhost:8081/signup", values)
+      .then((res) => {
+        toast.success("Account created");
+        navigate("/");
+      })
+      .catch((err) => {
+        if (err.response && err.response.status === 400) {
+          // Handle the "Email already exists" error
+          toast.error("Email already exists");
+        } else {
+          console.log(err);
+        }
+      });
   };
 
   return (
@@ -54,47 +66,36 @@ function Login() {
           <h4 className="text">Create an account</h4>
         </div>
         <form onSubmit={handleSubmit}>
-          <div className="d-flex align-items-center justify-content-center login-error">
-            {signupError && <span className="errorMsg">{signupError}</span>}
-          </div>
           <div className="inputs">
             <div className="input">
-              <div className="input-group">
-                <HiOutlineUser className="icons" />
-                <input
-                  type="text"
-                  onChange={handleInput}
-                  name="name"
-                  placeholder="Name"
-                />
-              </div>
-              {errors.name && <span className="error">{errors.name}</span>}
+              <HiOutlineUser className="icons" />
+              <input
+                type="text"
+                onChange={handleInput}
+                name="name"
+                placeholder="Name"
+                required
+              />
             </div>
             <div className="input">
-              <div className="input-group">
-                <AiOutlineMail className="icons" />
-                <input
-                  type="text"
-                  onChange={handleInput}
-                  name="email"
-                  placeholder="Email"
-                />
-              </div>
-              {errors.email && <span className="error">{errors.email}</span>}
+              <AiOutlineMail className="icons" />
+              <input
+                type="text"
+                onChange={handleInput}
+                name="email"
+                placeholder="Email"
+                required
+              />
             </div>
             <div className="input">
-              <div className="input-group">
-                <RiLockPasswordLine className="icons" />
-                <input
-                  type="password"
-                  onChange={handleInput}
-                  name="password"
-                  placeholder="Password"
-                />
-              </div>
-              {errors.password && (
-                <span className="error">{errors.password}</span>
-              )}
+              <RiLockPasswordLine className="icons" />
+              <input
+                type="password"
+                onChange={handleInput}
+                name="password"
+                placeholder="Password"
+                required
+              />
             </div>
           </div>
           <button type="submit" className="submit">

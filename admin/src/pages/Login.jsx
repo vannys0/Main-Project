@@ -42,7 +42,7 @@ function Login() {
       setPasswordError("Password is required");
       return;
     }
-    // Post
+    // Post method
     Axios.post(BASE_URL + "/login", {
       LoginUserName: loginUserName,
       LoginPassowrd: loginPassword,
@@ -70,7 +70,7 @@ function Login() {
       }
     });
   }
-  // Validate email format
+  // Function to validate email format
   function validateEmail(email) {
     const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
     return emailRegex.test(email);

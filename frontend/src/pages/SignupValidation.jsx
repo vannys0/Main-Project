@@ -1,42 +1,41 @@
-function validateName(name) {
-  const namePattern = /^[A-Z][a-zA-Z]*$/;
-  const hasNumber = /\d/.test(name);
-
-  return name === ""
-    ? "Name is required"
-    : hasNumber
-    ? "Invalid name"
-    : namePattern.test(name)
-    ? ""
-    : "First letter must be uppercase";
-}
-
-function validateEmail(email) {
-  const emailPattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
-  return email === ""
-    ? "Email is required"
-    : emailPattern.test(email)
-    ? ""
-    : "Invalid email format";
-}
-
-function validatePassword(password) {
-  // const passwordPattern = /^(?=.*\d.*\D|\D.*\d)[a-zA-Z\d]{4,}$/;
-  return password === ""
-    ? "Password is required"
-    : // : passwordPattern.test(password)
-      // ? ""
-      "";
-}
+import { toast } from "react-toastify";
 
 function Validation(values) {
-  let errors = {};
+  let error = {};
+  const email_pattern = /^[^s@]+@[^\s@]+\.[^\s@]+$/;
+  const password_pattern =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,16}$/;
 
-  errors.name = validateName(values.name);
-  errors.email = validateEmail(values.email);
-  errors.password = validatePassword(values.password);
+  if (values.name === "") {
+    toast.warning("Name field is required");
+  } else {
+    error.name = "";
+  }
+  // validate email
+  if (values.email === "") {
+    toast.warning("Email field is required");
+    // } else if (!email_pattern.test(values.email)) {
+    //   toast.warning("Please enter a valid email");
+  } else {
+    error.email = "";
+  }
+  //validate password
+  if (values.password === "") {
+    //   } else if (!password_pattern.test(values.password)) {
+    toast.warning("Password field is required");
+  } else {
+    error.password = "";
+  }
 
-  return errors;
+  return error;
+  // if (values.password === "") {
+  //   error.password = "Field is required";
+  //   // } else if (!password_pattern.test(values.password)) {
+  //   //   error.password = "Minimum of 8 characters";
+  // } else {
+  //   error.password = "";
+  // }
+  // return error;
 }
 
 export default Validation;

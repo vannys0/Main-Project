@@ -5,46 +5,46 @@ import Validation from "./LoginValidation.jsx";
 import { AiOutlineMail } from "react-icons/ai";
 import { RiLockPasswordLine } from "react-icons/ri";
 import axios from "axios";
-
+import { toast } from "react-toastify";
 import SecureStore from "react-secure-storage";
 import { AuthContext } from "../App";
 
 function Login() {
   const authContext = useContext(AuthContext);
-  const navigate = useNavigate();
   const [values, setValues] = useState({
     email: "",
     password: "",
   });
+  const navigate = useNavigate();
   const [errors, setErrors] = useState({});
-  const [loginError, setLoginError] = useState(null);
-
   const handleInput = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setErrors(Validation(values));
+    axios
+      .post("http://localhost:8081/login-client", values)
+      .then((res) => {
+        if (res.data.Message === "Success") {
+          // Assuming the server responds with a 'token' field upon successful login
+          // const token = res.data.token;
+          // Store the JWT token securely (e.g., in localStorage)
+          // localStorage.setItem("token", res.data.email);
 
-    if (errors.email === "" && errors.password === "") {
-      axios
-        .post("http://localhost:8081/login-client", values)
-        .then((res) => {
-          if (res.data.Message === "Success") {
-            const token = res.data.token; // Update this based on your API response
-            SecureStore.setItem("userToken", token);
-            authContext.signIn(token);
-            navigate("/home");
-          } else {
-            setLoginError("Incorrect email or password.");
-          }
-        })
-        .catch((err) => {
-          console.error(err);
-          setLoginError("An error occurred. Please try again later.");
-        });
-    }
+          const user = res.data;
+          SecureStore.setItem("userToken", user);
+          authContext.signIn(user);
+
+          navigate("/home");
+        } else {
+          toast.error("Incorrect Email or Password");
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        toast.error("An error occurred during login");
+      });
   };
 
   return (
@@ -58,38 +58,30 @@ function Login() {
           </h4>
         </div>
         <form onSubmit={handleSubmit}>
-          <div className="d-flex align-items-center justify-content-center login-error">
-            {loginError && <span className="errorMsg">{loginError}</span>}
-          </div>
           <div className="inputs">
             <div className="input">
-              <div className="input-group">
-                <AiOutlineMail className="icons" />
-                <input
-                  type="text"
-                  name="email"
-                  value={values.email}
-                  onChange={handleInput}
-                  placeholder="Email"
-                />
-              </div>
-              {errors.email && <span className="error">{errors.email}</span>}
+              <AiOutlineMail className="icons" />
+              <input
+                type="text"
+                name="email"
+                value={values.email}
+                onChange={handleInput}
+                placeholder="Email"
+                required
+              />
+              {errors.email && <p className="error">{errors.email}</p>}
             </div>
-
             <div className="input">
-              <div className="input-group">
-                <RiLockPasswordLine className="icons" />
-                <input
-                  type="password"
-                  name="password"
-                  value={values.password}
-                  onChange={handleInput}
-                  placeholder="Password"
-                />
-              </div>
-              {errors.password && (
-                <span className="error">{errors.password}</span>
-              )}
+              <RiLockPasswordLine className="icons" />
+              <input
+                type="password"
+                name="password"
+                value={values.password}
+                onChange={handleInput}
+                placeholder="Password"
+                required
+              />
+              {errors.password && <p className="error">{errors.password}</p>}
             </div>
           </div>
           <button type="submit" className="submit login-btn">

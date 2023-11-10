@@ -53,7 +53,7 @@
     flex-direction: column;
     gap: 20px;
 }
-.main-container .inputs .input .input-group {
+.main-container .inputs .input {
     height: 40px;
     display: flex;
     align-items: center;
@@ -61,19 +61,6 @@
 }
 .main-container .inputs .input .icons {
     width: 30px;
-}
-.main-container form .login-error {}
-.main-container form .errorMsg {
-    text-align: center;
-    width: 100%;
-    color: #ff5757;
-    padding: 8px 10px;
-    border-radius: 2px;
-    margin-bottom: 20px;
-    background-color: #ffe7e6;
-}
-.main-container form .error {
-    color: #ff5757;
 }
 input {
     width: 82%;
