@@ -16,7 +16,7 @@ router.get("/adoption", (req, res) => {
 // All Adoption Request
 router.get("/adoptions", (req, res) => {
   db.query(
-    "SELECT * FROM adoption ORDER BY transaction_status DESC",
+    "SELECT * FROM adoption ORDER BY transaction_status DESC, adoption_date DESC",
     (err, results) => {
       if (err) {
         console.error("Error fetching :", err);

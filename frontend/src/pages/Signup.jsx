@@ -42,7 +42,6 @@ function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     axios
       .post("http://localhost:8081/signup", values)
       .then((res) => {
@@ -102,7 +101,7 @@ function Login() {
           <button type="submit" className="submit">
             Sign up
           </button>
-          <div className="login-link">
+          <div className="signup-link my-2">
             Already have an account? <Link to="/">Login</Link>
           </div>
         </form>

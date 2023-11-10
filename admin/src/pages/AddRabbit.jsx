@@ -33,6 +33,7 @@ function AddRabbit() {
 
   const handleInput = (e) => {
     setValues((prev) => ({ ...prev, [e.target.name]: [e.target.value] }));
+    console.log(e.target.value);
   };
 
   const handleSubmit = (e) => {

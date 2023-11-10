@@ -19,7 +19,7 @@ function RabbitList() {
   const [rabbits, setRabbits] = useState([]);
   const [record, setRecord] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(6);
+  const [itemsPerPage] = useState(5);
   // Rehome Rabbit
   const onRehome = (e, o) => {
     axios

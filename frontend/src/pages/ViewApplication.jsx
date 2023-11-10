@@ -28,15 +28,6 @@ function ViewApplication({ data }) {
           <Button key="cancel" type="text" onClick={handleCancel}>
             Close
           </Button>,
-          <Button
-            key="adopt"
-            type="primary"
-            onClick={() =>
-              navigateTo(`/rabbitdata/${data.name}/${data.id}/adopt-form`)
-            }
-          >
-            Adopt
-          </Button>,
         ]}
       >
         <form>

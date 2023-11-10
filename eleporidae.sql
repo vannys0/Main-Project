@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 04, 2023 at 05:09 AM
+-- Generation Time: Nov 10, 2023 at 02:18 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.10
 
@@ -30,17 +30,16 @@ SET time_zone = "+00:00";
 CREATE TABLE `adoption` (
   `id` varchar(255) NOT NULL,
   `rabbit_id` varchar(255) NOT NULL,
-  `adoption_date` text NOT NULL,
+  `adoption_date` date NOT NULL,
   `fullname` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
-  `phone` int(11) NOT NULL,
+  `phone` varchar(255) NOT NULL,
   `province` varchar(100) NOT NULL,
   `city` varchar(100) NOT NULL,
   `barangay` varchar(100) NOT NULL,
-  `postal_code` int(11) NOT NULL,
   `reason_for_adoption` varchar(200) NOT NULL,
   `other_pets` varchar(200) NOT NULL,
-  `user_id` int(11) NOT NULL,
+  `user_id` varchar(255) NOT NULL,
   `transaction_status` varchar(255) NOT NULL,
   `home_environment_image_path` varchar(255) DEFAULT NULL,
   `service_option` varchar(255) DEFAULT NULL,
@@ -51,10 +50,14 @@ CREATE TABLE `adoption` (
 -- Dumping data for table `adoption`
 --
 
-INSERT INTO `adoption` (`id`, `rabbit_id`, `adoption_date`, `fullname`, `email`, `phone`, `province`, `city`, `barangay`, `postal_code`, `reason_for_adoption`, `other_pets`, `user_id`, `transaction_status`, `home_environment_image_path`, `service_option`, `delivery_status`) VALUES
-('49224e02-d8bd-41b8-b859-b7dce2c389bb', '31455020-63bd-4326-8029-2298da34b1a4', '11/4/2023', 'Ivan Bengcolado', 'ivanpaglinawan0@gmail.com', 2147483647, 'Camarines Sur', 'Cabusao', 'Sta. Cruz', 4406, 'Pet', '', 7, 'Declined', 'Screenshot (90).png', 'Deliver', 'Approved'),
-('d7bc20a7-240e-4022-8a8e-9910fbe5409a', '3421c418-85de-40f2-b89f-7fb2edf3d421', '10/28/2023', 'Francis Bawag', 'francisbawag@gmail.com', 2147483647, 'Camarines Sur', 'Cabusao', 'Sta. Cruz', 4406, 'Pet', '', 3, 'Pending', 'banana.jpg', 'Deliver', 'Approved'),
-('eab9b965-c45c-4004-b410-cf17684493ff', '9d4e8655-1004-4439-9b76-9ea683d1288e', '10/28/2023', 'Ivan Bengcolado', 'ivanpaglinawan0@gmail.com', 2147483647, 'Camarines Sur', 'Cabusao', 'Sta. Cruz', 4406, 'Pet', '', 7, 'Approved', 'santol.jpg', 'Deliver', 'Approved');
+INSERT INTO `adoption` (`id`, `rabbit_id`, `adoption_date`, `fullname`, `email`, `phone`, `province`, `city`, `barangay`, `reason_for_adoption`, `other_pets`, `user_id`, `transaction_status`, `home_environment_image_path`, `service_option`, `delivery_status`) VALUES
+('245648ae-02ce-403f-a581-49e4af563cdb', '7a6f5ef6-a93c-422f-b5d7-6bef9f598939', '2023-05-10', 'Cynthia Lorio', 'cynthialorio@gmail.com', '09522505618', 'CAMARINES SUR', 'SIPOCOT', 'South Centro (Pob.)', 'Pet', '', 'f75cbbc5-6479-4add-83e2-6ca52e93f882', 'Approved', 'santol.jpg', 'Deliver', NULL),
+('41a2d427-cd8b-423e-9d7b-806f2cc83571', '0b8a9fb9-4be1-4768-baab-890555a82526', '2023-11-10', 'Ivan Bengcolado', 'ivanpaglinawan0@gmail.com', '0948', 'CAMARINES SUR', 'CABUSAO', 'Santa Cruz', 'Another', '', '6226702d-125e-4c1d-973b-994c76bf52a3', 'Pending', 'banana.jpg', 'Pick up', NULL),
+('66d50eb1-5847-42ba-b090-1423bcfade50', 'a4d5559f-1031-4c2d-a610-1d503c4bc206', '2023-08-10', 'Ivan Bengcolado', 'ivanpaglinawan0@gmail.com', '09482048756', 'CAMARINES SUR', 'CABUSAO', 'Santa Cruz', 'Pet', '', '6226702d-125e-4c1d-973b-994c76bf52a3', 'Approved', 'santol.jpg', 'Deliver', NULL),
+('8b5ed4bc-04ff-45e0-b00b-984e8145c394', '754328cd-f03d-43ed-93a0-176f849ca1b9', '2023-11-10', 'Francis Bawag', 'francisbawag@gmail.com', '09815808362', 'CAMARINES SUR', 'SIPOCOT', 'Impig', 'Pet', '', 'f0a9b912-a774-4219-badd-c0a9c5317d5d', 'Pending', 'santol.jpg', 'Deliver', NULL),
+('9e6657c2-0a02-47e0-bf0d-475299cffbc3', '0b8a9fb9-4be1-4768-baab-890555a82526', '2023-08-10', 'Cynthia Lorio', 'cynthialorio@gmail.com', '09485521044', 'CAMARINES SUR', 'SIPOCOT', 'South Centro (Pob.)', 'Pet', '', 'f75cbbc5-6479-4add-83e2-6ca52e93f882', 'Pending', 'santol.jpg', 'Deliver', NULL),
+('cb13a3c5-434a-488e-a211-c638a2be4b93', '7a6f5ef6-a93c-422f-b5d7-6bef9f598939', '2023-11-10', 'Francis Bawag', 'francisbawag@gmail.com', '09252886320', 'CAMARINES SUR', 'SIPOCOT', 'Impig', 'Pet', '', 'f0a9b912-a774-4219-badd-c0a9c5317d5d', 'Approved', 'banana.jpg', 'Deliver', NULL),
+('d415fdda-4b4c-49e2-a1fe-3ae86e9e9608', 'a2061718-3ca6-469e-b75b-a80c9a6d2241', '2023-11-10', 'Ivan Bengcolado', 'ivanpaglinawan0@gmail.com', '09482048756', 'CAMARINES SUR', 'CABUSAO', 'Santa Cruz', 'Pet', '', '6226702d-125e-4c1d-973b-994c76bf52a3', 'Pending', 'banana.jpg', 'Deliver', NULL);
 
 -- --------------------------------------------------------
 
@@ -64,18 +67,10 @@ INSERT INTO `adoption` (`id`, `rabbit_id`, `adoption_date`, `fullname`, `email`,
 
 CREATE TABLE `breeding_pair` (
   `id` int(11) NOT NULL,
-  `buck_id` int(11) NOT NULL,
-  `doe_id` int(11) NOT NULL,
+  `buck_id` varchar(255) NOT NULL,
+  `doe_id` varchar(255) NOT NULL,
   `pairing_date` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `breeding_pair`
---
-
-INSERT INTO `breeding_pair` (`id`, `buck_id`, `doe_id`, `pairing_date`) VALUES
-(14, 5, 1, '0000-00-00'),
-(15, 0, 0, '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -118,17 +113,45 @@ CREATE TABLE `rabbit` (
 --
 
 INSERT INTO `rabbit` (`id`, `name`, `date_of_birth`, `sex`, `weight`, `image_path`, `rehome_status`) VALUES
-('16e1dc74-9db0-480c-b8b9-3c598fc99f93', 'Juan', '2023-11-02', 'Male', '4', '380502373_1061951088297453_6379436113640909426_n.jpg', 'Rehome'),
-('1bcc8334-70af-4e3e-814c-ee3ca920d15b', 'Jolly', '2023-10-30', 'Female', '3', '379941148_641139911470004_6475572836204101764_n.jpg', NULL),
-('31455020-63bd-4326-8029-2298da34b1a4', 'Jos', '0000-00-00', 'Male', '3', '379941148_641139911470004_6475572836204101764_n.jpg', 'Rehome'),
-('359ef3ea-3796-4182-a9d6-73275dd86dfb', 'Loki', '0000-00-00', 'Male', '4', '385398170_2818302821642629_5674628126964585107_n.jpg', NULL),
-('487fed52-d55c-4d35-b760-c019ff3de303', 'Last', '2023-10-10', 'Male', '3', '379941148_641139911470004_6475572836204101764_n.jpg', NULL),
-('49ec61fa-30b8-4d67-8578-fdf0feac59a8', 'Luna', '0000-00-00', 'Male', '3', '380502373_1061951088297453_6379436113640909426_n.jpg', NULL),
-('872eb029-5c19-4cae-928f-6c7f9268662b', 'Gerrald', '2023-10-12', 'Male', '2', '379941148_641139911470004_6475572836204101764_n.jpg', NULL),
-('9fff33d8-c18c-4d83-bb48-85448c5f9889', 'Mercy', '2023-11-01', 'Female', '3', '385510364_996745374876198_1520617944626592398_n.jpg', NULL),
-('a14b6b57-e3b5-446f-baaf-434e6d0b3cb3', 'Pancake', '0000-00-00', 'Female', '3', '385510364_996745374876198_1520617944626592398_n.jpg', NULL),
-('abb20abf-280a-4ec4-9e19-b63e8fa477f3', 'Lunox', '0000-00-00', 'Female', '3', '380502373_1061951088297453_6379436113640909426_n.jpg', NULL),
-('ee49f7a6-df2c-4b0c-a86e-9c450d36fd3b', 'Multi', '2023-10-10', 'Male', '2', '385510364_996745374876198_1520617944626592398_n.jpg', NULL);
+('0b8a9fb9-4be1-4768-baab-890555a82526', 'Leo', '2023-11-09', 'Male', '2.0', 'leo.jpg', 'Rehome'),
+('0f73b598-e88e-424b-9ec3-3e491ec34d6a', 'Totoro', '2022-11-24', 'Male', '1.9', 'totoro.jpg', 'Rehome'),
+('683c2003-b553-47f1-9bc1-db8186035acb', 'Petter', '2023-10-05', 'Male', '2.3', 'petter.jpg', NULL),
+('754328cd-f03d-43ed-93a0-176f849ca1b9', 'Pancake', '2000-12-05', 'Female', '2.3', 'Pancake.jpg', 'Rehome'),
+('7a6f5ef6-a93c-422f-b5d7-6bef9f598939', 'Lea', '2023-10-11', 'Male', '2.1', 'Lea.jpg', 'Rehome'),
+('9a0f5e9c-84ff-4c7c-b9cc-fc652ec08f83', 'Loki', '1999-05-26', 'Male', '3', 'Loki.jpg', NULL),
+('a2061718-3ca6-469e-b75b-a80c9a6d2241', 'Harrold', '2023-11-09', 'Male', '2.2', 'harold.jpg', 'Rehome'),
+('a4d5559f-1031-4c2d-a610-1d503c4bc206', 'Gerald', '2022-10-12', 'Male', '2.4', 'Gerald.jpg', 'Rehome'),
+('b042ac6c-a6de-4be4-b81e-05b6ea1aed18', 'George', '2023-10-31', 'Male', '2.1', 'george.jpg', 'Rehome');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `rabbit_sales`
+--
+
+CREATE TABLE `rabbit_sales` (
+  `id` int(11) NOT NULL,
+  `amount` int(255) NOT NULL,
+  `transaction_date` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `rabbit_sales`
+--
+
+INSERT INTO `rabbit_sales` (`id`, `amount`, `transaction_date`) VALUES
+(1, 300, '2023-11-08'),
+(2, 350, '2023-11-08'),
+(3, 250, '2023-11-09'),
+(4, 320, '2023-11-09'),
+(5, 300, '2023-11-10'),
+(6, 350, '2023-11-10'),
+(7, 280, '2023-11-10'),
+(8, 300, '2023-11-10'),
+(9, 280, '2023-07-10'),
+(10, 300, '2023-07-10'),
+(11, 280, '2023-08-10'),
+(12, 280, '2023-09-10');
 
 -- --------------------------------------------------------
 
@@ -163,10 +186,10 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `name`, `email`, `password`, `user_type`) VALUES
-('3d81570f-bfb9-42ad-ac67-dcf2e102fa03', 'Cynthia Lorio', 'cynthialorio@gmail.com', '1234', 'client'),
-('3ec3e8d7-aca4-49df-90d6-1c006f301017', 'Francis Bawag', 'francisbawag@gmail.com', '1234', 'client'),
-('7d58256c-c816-47e9-becd-63662989249a', 'Ivan Bengcolado', 'ivanpaglinawan0@gmail.com', '1234', 'client'),
-('d239ef1a-721e-11ee-b403-94de80265f1f', 'Leonardo Nogra', 'leonardo@gmail.com', 'admin', 'admin');
+('6226702d-125e-4c1d-973b-994c76bf52a3', 'Ivan Bengcolado', 'ivanpaglinawan0@gmail.com', '1234', 'client'),
+('d09a9d2d-0984-4fda-8476-52a56a6cf484', 'Leonardo Nogra', 'leonardo@gmail.com', 'admin', 'admin'),
+('f0a9b912-a774-4219-badd-c0a9c5317d5d', 'Francis Bawag', 'francisbawag@gmail.com', '1234', 'client'),
+('f75cbbc5-6479-4add-83e2-6ca52e93f882', 'Cynthia Lorio', 'cynthialorio@gmail.com', '1234', 'client');
 
 --
 -- Indexes for dumped tables
@@ -197,6 +220,12 @@ ALTER TABLE `rabbit`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `rabbit_sales`
+--
+ALTER TABLE `rabbit_sales`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `transaction`
 --
 ALTER TABLE `transaction`
@@ -216,13 +245,19 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `breeding_pair`
 --
 ALTER TABLE `breeding_pair`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `chat`
 --
 ALTER TABLE `chat`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `rabbit_sales`
+--
+ALTER TABLE `rabbit_sales`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

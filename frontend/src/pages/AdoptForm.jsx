@@ -9,14 +9,12 @@ import SecureStore from "react-secure-storage";
 import {
   getAllProvince,
   getAllCityByProvinceCode,
-  getAllBarangayByCityCodeList
+  getAllBarangayByCityCodeList,
 } from "./Api/camarinessur";
 
 function AdoptForm() {
-  // const [currentDate, setCurrentDate] = useState("");
   const { id, name } = useParams();
   const navigateTo = useNavigate();
-  const dateToday = new Date().toLocaleDateString();
   const user = SecureStore.getItem("userToken");
 
   const [prov, setProv] = useState([]);
@@ -24,6 +22,16 @@ function AdoptForm() {
   const [brgyOptions, setBrgyOptions] = useState([]);
   const [file, setFile] = useState();
   const [img, setImg] = useState();
+
+  function formatAsDate(date) {
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const year = date.getFullYear();
+    return `${year}-${month}-${day}`;
+  }
+  const currentDate = new Date();
+  const dateToday = formatAsDate(currentDate);
+  console.log(dateToday);
 
   useEffect(() => {
     getAllProvince((data) => {
@@ -50,7 +58,6 @@ function AdoptForm() {
   };
 
   const handleCityChange = (e) => {
-
     setValues((prev) => ({ ...prev, city: selectedCitymunCode }));
     const selectedCitymunCode = JSON.parse(e.target.value);
     if (selectedCitymunCode) {
@@ -62,34 +69,10 @@ function AdoptForm() {
     }
   };
 
-
-
-
   const onFileChange = (e) => {
     setImg(e.target.files[0]);
     setFile(URL.createObjectURL(e.target.files[0]));
   };
-
-  // useEffect(() => {
-  //   const today = new Date();
-  //   const monthNames = [
-  //     "January",
-  //     "February",
-  //     "March",
-  //     "April",
-  //     "May",
-  //     "June",
-  //     "July",
-  //     "August",
-  //     "September",
-  //     "October",
-  //     "November",
-  //     "December",
-  //   ];
-  //   const month = monthNames[today.getMonth()];
-  //   const formattedDate = `${month} ${today.getDate()}, ${today.getFullYear()}`;
-  //   setCurrentDate(formattedDate);
-  // }, []);
 
   const [values, setValues] = useState({
     id: uuidv4(),
@@ -132,7 +115,9 @@ function AdoptForm() {
       <Navbar />
       <div className="form-div">
         <form encType="multipart/form-data">
-          <h4>Adopt {name}</h4>
+          <h4>
+            Adopt {name} {dateToday}
+          </h4>
           <br />
           <label htmlFor="fullname" className="label-name">
             Full Name <span className="errmsg">*</span>

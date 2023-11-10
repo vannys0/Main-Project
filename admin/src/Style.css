@@ -78,7 +78,6 @@ body {
     gap: 20px;
     margin: 15px 0;
   }
-  
   .card {
     display: flex;
     flex-direction: column;

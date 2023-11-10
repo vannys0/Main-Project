@@ -52,7 +52,10 @@ function Login() {
       <div className="bg-image"></div>
       <div className="main-container">
         <div className="title-div">
-          <h4 className="text">Welcome back!</h4>
+          <h4 className="text">
+            Welcome back! <br />
+            to E-Leporidae
+          </h4>
         </div>
         <form onSubmit={handleSubmit}>
           <div className="inputs">
@@ -84,11 +87,8 @@ function Login() {
           <button type="submit" className="submit login-btn">
             Login
           </button>
-          <div className="forgot-password">
-            Forgot password? <Link>Reset password</Link>
-          </div>
-          <div className="signup-link">
-            Don't have an account? <Link to="/signup">Create one</Link>
+          <div className="signup-link my-2">
+            Don't have an account? <Link to="/signup">Sign up</Link>
           </div>
         </form>
       </div>

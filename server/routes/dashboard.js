@@ -101,4 +101,19 @@ router.get("/recent-rabbit", (req, res) => {
   });
 });
 
+// Clients
+router.get("/recent-adoption", (req, res) => {
+  db.query(
+    "SELECT fullname, adoption_date, transaction_status FROM adoption ORDER BY adoption_date DESC LIMIT 5",
+    (err, results) => {
+      if (err) {
+        console.error("Error fetching :", err);
+        res.status(500).json({ error: "Internal Server Error" });
+        return;
+      }
+      return res.json(results);
+    }
+  );
+});
+
 module.exports = router;
