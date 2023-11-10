@@ -187,6 +187,12 @@ body {
     width: 50%;
   }
 
+  /* RabbitList */
+  .search-filter-div {
+    display: flex;
+    justify-content: space-between;
+  }
+
   /* AdminProfile */
   .profile-div {
     display: grid;
@@ -289,5 +295,10 @@ body {
     }
     .grid-container > .main-container > .edit-div > .rabbit-form {
       width: 100%;
+    }
+    /* Rabbit List */
+    .search-filter-div {
+      gap: 10px;
+      flex-direction: column;
     }
   }

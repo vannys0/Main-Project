@@ -78,6 +78,26 @@ function RabbitList() {
     );
     setRecord(filteredRabbits);
   };
+
+  // Calculate the age
+  function calculateAge(dateOfBirth) {
+    const birthDate = new Date(dateOfBirth);
+    const currentDate = new Date();
+
+    // Calculate the difference in years and months
+    const years = currentDate.getFullYear() - birthDate.getFullYear();
+    const months = currentDate.getMonth() - birthDate.getMonth();
+
+    // Adjust for cases where the current date's month is earlier than the birth month
+    const adjustedMonths =
+      months + (currentDate.getDate() < birthDate.getDate() ? -1 : 0);
+
+    return {
+      years,
+      months: adjustedMonths < 0 ? 0 : adjustedMonths,
+    };
+  }
+
   // Table
   const columns = [
     {
@@ -96,11 +116,21 @@ function RabbitList() {
         />
       ),
     },
+    // {
+    //   title: "Date of Birth",
+    //   dataIndex: "date_of_birth",
+    //   key: "date_of_birth",
+    // },
     {
-      title: "Date of Birth",
+      title: "Age",
       dataIndex: "date_of_birth",
       key: "date_of_birth",
+      render: (dateOfBirth) => {
+        const age = calculateAge(dateOfBirth);
+        return `${age.years} years ${age.months} months`;
+      },
     },
+
     {
       title: "Sex",
       dataIndex: "sex",
@@ -112,7 +142,7 @@ function RabbitList() {
       key: "weight",
     },
     {
-      title: "Action",
+      title: "Actions",
       key: "action",
       render: (text, record) => (
         <Space>
@@ -167,7 +197,9 @@ function RabbitList() {
       <div className="main-container">
         <h3>Rabbit List</h3>
         <div className="search-filter-div">
-          <br />
+          <Button type="primary" onClick={() => navigateTo("/add-rabbit")}>
+            Add Rabbit
+          </Button>
           <Search
             style={{
               height: "40px",
@@ -182,12 +214,6 @@ function RabbitList() {
             size="large"
             onSearch={Filter}
           />
-        </div>
-
-        <div className="d-flex">
-          <Button type="primary" onClick={() => navigateTo("/add-rabbit")}>
-            Add Rabbit
-          </Button>
         </div>
         <div style={{ overflowX: "auto" }}>
           <Table

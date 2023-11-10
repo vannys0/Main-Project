@@ -106,12 +106,17 @@ function EditRabbit() {
             <label htmlFor="">Date of birth :</label>
             <input
               type="date"
-              name="dateOfbirth"
-              value={values.date_of_birth}
+              name="date_of_birth"
+              value={
+                values.date_of_birth
+                  ? new Date(values.date_of_birth).toISOString().split("T")[0]
+                  : ""
+              }
               className="form-control"
               onChange={handleInput}
               required
             />
+
             <br />
             <label htmlFor="">Sex :</label>
             <Form.Select
@@ -128,15 +133,17 @@ function EditRabbit() {
             <br />
             <label htmlFor="">Weight (klg/s) :</label>
             <input
-              type="text"
+              type="number"
               name="weight"
+              step="0.1"
+              maxLength={3}
               value={values.weight}
               className="form-control"
               onChange={handleInput}
               required
             />
             <br />
-            <div style={{ display: "flex", gap: "10px" }}>
+            <div className="actions justify-content-end">
               <Button
                 type="primary"
                 danger

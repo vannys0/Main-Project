@@ -33,7 +33,6 @@ function AddRabbit() {
 
   const handleInput = (e) => {
     setValues((prev) => ({ ...prev, [e.target.name]: [e.target.value] }));
-    console.log(e.target.value);
   };
 
   const handleSubmit = (e) => {
@@ -42,6 +41,7 @@ function AddRabbit() {
     formData.append("image", img);
     const postData = JSON.stringify(values);
     formData.append("values", postData);
+
     axios
       .post(BASE_URL + "/add-rabbit", formData)
       .then((res) => {
@@ -106,15 +106,17 @@ function AddRabbit() {
           <br />
           <label htmlFor="">Weight (klg/s) :</label>
           <input
-            type="text"
+            type="number"
             name="weight"
+            step="0.1"
+            maxLength={3}
             className="form-control"
             onChange={handleInput}
             required
           />
           <br />
 
-          <div className="actions">
+          <div className="actions justify-content-end">
             <Button
               type="primary"
               danger
