@@ -196,7 +196,6 @@ button {
 }
 
 /* Contact.jsx */
-
 .contact-div {
     padding: 100px 20px 20px 20px;
 }
@@ -216,7 +215,6 @@ button {
 }
 
 /* About.jsx */
-
 .about-div {
     padding: 50px 20px 20px 20px;
 }
@@ -239,6 +237,9 @@ button {
 }
 
 /* AdoptForm.jsx */
+.error {
+    color: #ff5757;
+}
 .main-div .form-div {
     position: relative;
     padding: 20px 20px 0px 20px;
@@ -262,7 +263,7 @@ button {
 .address {
     gap: 10px;
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: 1fr 1fr;
 }
 .cancel {
     margin-right: 20px;

@@ -5,6 +5,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { Form } from "react-bootstrap";
 import { v4 as uuidv4 } from "uuid";
 import { Button } from "antd";
+import Validation from "./Validation/AdoptFormValidation";
 import SecureStore from "react-secure-storage";
 import {
   getAllProvince,
@@ -16,7 +17,7 @@ function AdoptForm() {
   const { id, name } = useParams();
   const navigateTo = useNavigate();
   const user = SecureStore.getItem("userToken");
-
+  const [errors, setErrors] = useState({});
   const [prov, setProv] = useState([]);
   const [citymunOptions, setCitymunOptions] = useState([]);
   const [brgyOptions, setBrgyOptions] = useState([]);
@@ -96,11 +97,19 @@ function AdoptForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setErrors(Validation(values));
+
     const formData = new FormData();
     formData.append("image", img);
     const postData = JSON.stringify(values);
     formData.append("values", postData);
 
+    // if (
+    //   errors.email === "" &&
+    //   errors.name === "" &&
+    //   errors.phone === "" &&
+    //   errors.reason === ""
+    // ) {
     axios
       .post("http://localhost:8081/rabbitdata/" + id + "/adopt-form", formData)
       .then((res) => {
@@ -115,108 +124,107 @@ function AdoptForm() {
       <Navbar />
       <div className="form-div">
         <form encType="multipart/form-data">
-          <h4>
-            Adopt {name} {dateToday}
-          </h4>
+          <h4>Adopt {name}</h4>
           <br />
           <label htmlFor="fullname" className="label-name">
-            Full Name <span className="errmsg">*</span>
+            Full Name
           </label>
           <input
             type="text"
             name="fullname"
             className="form-control"
             value={user.name}
-            required
             onChange={handleInput}
           />
           <br />
-          <label htmlFor="email">
-            Email <span className="errmsg">*</span>
-          </label>
+          <label htmlFor="email">Email</label>
           <input
             type="email"
             name="email"
             inputMode="email"
             className="form-control"
             value={user.email}
-            required
             onChange={handleInput}
           />
           <br />
-          <label htmlFor="phone">
-            Phone <span className="errmsg">*</span>
-          </label>
+          <label htmlFor="phone">Phone</label>
           <input
             type="tel"
             name="phone"
             maxLength={11}
             className="form-control"
             inputMode="tel"
-            required
             onChange={handleInput}
           />
+          {errors.phone && <span className="error">{errors.phone}</span>}
           <br />
-          <label>
-            Address <span className="errmsg">*</span>
-          </label>
+          <label>Address</label>
           <div className="address">
-            <Form.Select
-              aria-label="Default select example"
-              onChange={handleProvinceChange}
-              name="province"
-              required
-            >
-              <option value="" hidden>
-                Province
-              </option>
-              {prov.map((option) => (
-                <option key={option.id} value={JSON.stringify(option)}>
-                  {option.provDesc}
+            <div>
+              <Form.Select
+                aria-label="Default select example"
+                onChange={handleProvinceChange}
+                name="province"
+              >
+                <option value="" hidden>
+                  Province
                 </option>
-              ))}
-            </Form.Select>
-            <Form.Select
-              name="city"
-              className="form-control"
-              onChange={handleCityChange}
-            >
-              <option value="" hidden>
-                City
-              </option>
-              {citymunOptions.map((option) => (
-                <option key={option.id} value={JSON.stringify(option)}>
-                  {option.citymunDesc}
+                {prov.map((option) => (
+                  <option key={option.id} value={JSON.stringify(option)}>
+                    {option.provDesc}
+                  </option>
+                ))}
+              </Form.Select>
+              {errors.province && (
+                <span className="error">{errors.province}</span>
+              )}
+            </div>
+            <div>
+              <Form.Select
+                name="city"
+                className="form-control"
+                onChange={handleCityChange}
+              >
+                <option value="" hidden>
+                  City
                 </option>
-              ))}
-            </Form.Select>
-            <Form.Select
-              name="barangay"
-              className="form-control"
-              onChange={handleInput}
-            >
-              <option value="" hidden>
-                Barangay
-              </option>
-              {brgyOptions.map((option) => (
-                <option key={option.id} value={option.brgyDesc}>
-                  {option.brgyDesc}
+                {citymunOptions.map((option) => (
+                  <option key={option.id} value={JSON.stringify(option)}>
+                    {option.citymunDesc}
+                  </option>
+                ))}
+              </Form.Select>
+              {errors.city && <span className="error">{errors.city}</span>}
+            </div>
+            <div>
+              <Form.Select
+                name="barangay"
+                className="form-control"
+                onChange={handleInput}
+              >
+                <option value="" hidden>
+                  Barangay
                 </option>
-              ))}
-            </Form.Select>
+                {brgyOptions.map((option) => (
+                  <option key={option.id} value={option.brgyDesc}>
+                    {option.brgyDesc}
+                  </option>
+                ))}
+              </Form.Select>
+              {errors.barangay && (
+                <span className="error">{errors.barangay}</span>
+              )}
+            </div>
           </div>
           <br />
           <hr />
           <br />
 
-          <label htmlFor="serviceoption">
-            Delivery Option <span className="errmsg">*</span>
-          </label>
+          <label htmlFor="serviceoption">Delivery Option</label>
           <Form.Select
             aria-label="Default select example"
             onChange={handleInput}
             name="serviceoption"
-            required
           >
             <option value="" hidden>
               Select
@@ -224,42 +232,43 @@ function AdoptForm() {
             <option value="Pick up">Pick up</option>
             <option value="Deliver">Deliver</option>
           </Form.Select>
+          {errors.serviceoption && (
+            <span className="error">{errors.serviceoption}</span>
+          )}
           <br />
 
-          <label htmlFor="environment">
-            Home environment <span className="errmsg">*</span>
-          </label>
+          <label htmlFor="environment">Home environment</label>
           <input
             type="file"
             name="image"
             className="form-control"
             id="image"
+            accept=".jpeg, .jpg, .png"
             onChange={onFileChange}
           />
           <br />
-          <label htmlFor="reason">
-            Reason for Adoption <span className="errmsg">*</span>
-            <textarea
-              name="reason"
-              rows={2}
-              cols={100}
-              className="form-control"
-              onChange={handleInput}
-              required
-            />
-          </label>
+          <label htmlFor="reason">Reason for Adoption</label>
+          <textarea
+            name="reason"
+            rows={2}
+            cols={100}
+            className="form-control"
+            onChange={handleInput}
+            required
+          />
+          {errors.reason && <span className="error">{errors.reason}</span>}
+
           <br />
-          <label htmlFor="otherpets">
-            Other pets
-            <textarea
-              name="otherpets"
-              rows={2}
-              cols={100}
-              className="form-control"
-              onChange={handleInput}
-              placeholder="If any"
-            />
-          </label>
+          <label htmlFor="otherpets">Other pets</label>
+          <textarea
+            name="otherpets"
+            rows={2}
+            cols={100}
+            className="form-control"
+            onChange={handleInput}
+            placeholder="Optional"
+          />
+
           <div className="d-flex justify-content-end gap-2 my-4">
             <Button type="primary" danger onClick={() => navigateTo("/adopt")}>
               Cancel

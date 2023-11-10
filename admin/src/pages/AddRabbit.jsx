@@ -66,6 +66,7 @@ function AddRabbit() {
             name="image"
             className="form-control"
             id="image"
+            accept=".jpeg, .jpg, .png"
             onChange={onFileChange}
           />
           <br />

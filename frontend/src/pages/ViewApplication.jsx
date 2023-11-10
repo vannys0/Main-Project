@@ -72,17 +72,13 @@ function ViewApplication({ data }) {
           <br />
           <label>Address</label>
           <div className="address">
-            <Form.Select
-              aria-label="Default select example"
+            <input
+              type="text"
               value={data.province}
               name="province"
+              className="form-control"
               readOnly
-            >
-              <option value="" hidden>
-                Province
-              </option>
-              <option value="Camarines Sur">Camarines Sur</option>
-            </Form.Select>
+            />
             <input
               type="text"
               value={data.city}
@@ -111,30 +107,27 @@ function ViewApplication({ data }) {
           />
           <br />
           <br />
-          <label htmlFor="reason">
-            Reason for Adoption
-            <textarea
-              value={data.reason_for_adoption}
-              name="reason"
-              rows={2}
-              cols={100}
-              className="form-control"
-              readOnly
-            />
-          </label>
+          <label htmlFor="reason">Reason for Adoption</label>
+          <textarea
+            value={data.reason_for_adoption}
+            name="reason"
+            rows={2}
+            cols={100}
+            className="form-control"
+            readOnly
+          />
+
           <br />
-          <label htmlFor="otherpets">
-            Other pets
-            <textarea
-              value={data.other_pets}
-              name="otherpets"
-              rows={2}
-              cols={100}
-              className="form-control"
-              readOnly
-              placeholder="If any"
-            />
-          </label>
+          <label htmlFor="otherpets">Other pets</label>
+          <textarea
+            value={data.other_pets}
+            name="otherpets"
+            rows={2}
+            cols={100}
+            className="form-control"
+            readOnly
+            placeholder="If any"
+          />
         </form>
       </Modal>
     </div>
