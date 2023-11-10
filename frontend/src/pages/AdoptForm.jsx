@@ -247,15 +247,32 @@ function AdoptForm() {
             onChange={onFileChange}
           />
           <br />
-          <label htmlFor="reason">Reason for Adoption</label>
-          <textarea
-            name="reason"
-            rows={2}
-            cols={100}
-            className="form-control"
+          <label htmlFor="reason">Why choose a rabbit?</label>
+          <Form.Select
+            aria-label="Default select example"
             onChange={handleInput}
-            required
-          />
+            name="reason"
+          >
+            <option value="" hidden>
+              Select
+            </option>
+            <option value="Quiet and gentle nature">
+              Quiet and gentle nature
+            </option>
+            <option value="Rabbits are inexpensive">
+              Rabbits are inexpensive
+            </option>
+            <option value="Rabbits are a great pet">
+              Rabbits are a great pet
+            </option>
+            <option value="Rabbits live a long time">
+              Rabbits live a long time
+            </option>
+            <option value="Adaptability to indoor living">
+              Adaptability to indoor living
+            </option>
+            <option value="Other">Other</option>
+          </Form.Select>
           {errors.reason && <span className="error">{errors.reason}</span>}
 
           <br />
