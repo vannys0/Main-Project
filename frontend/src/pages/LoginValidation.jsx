@@ -1,24 +1,28 @@
-import { toast } from "react-toastify";
+function validateEmail(email) {
+  const emailPattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+  return email === ""
+    ? "Email is required"
+    : emailPattern.test(email)
+    ? ""
+    : "Invalid email format";
+}
+
+function validatePassword(password) {
+  // const passwordPattern = /^(?=.*\d.*\D|\D.*\d)[a-zA-Z\d]{4,}$/;
+  return password === ""
+    ? "Password is required"
+    : // : passwordPattern.test(password)
+      // ? ""
+      "";
+}
 
 function Validation(values) {
-  let error = {};
-  const email_pattern = /^[^s@]+@[^\s@]+\.[^\s@]+$/;
-  const password_pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{8,}$/;
+  let errors = {};
 
-  if (values.email === "") {
-    toast.warning("Email field is required");
-    // } else if (!email_pattern.test(values.email)) {
-    //   toast.warning("Please enter a valid email");
-  } else {
-    error.email = "";
-  }
+  errors.email = validateEmail(values.email);
+  errors.password = validatePassword(values.password);
 
-  if (values.password === "") {
-    toast.warning("Password field is required");
-  } else {
-    error.password = "";
-  }
-  return error;
+  return errors;
 }
 
 export default Validation;
