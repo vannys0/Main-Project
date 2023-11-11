@@ -116,11 +116,6 @@ function RabbitList() {
         />
       ),
     },
-    // {
-    //   title: "Date of Birth",
-    //   dataIndex: "date_of_birth",
-    //   key: "date_of_birth",
-    // },
     {
       title: "Age",
       dataIndex: "date_of_birth",
@@ -196,7 +191,7 @@ function RabbitList() {
       />
       <div className="main-container">
         <h3>Rabbit List</h3>
-        <div className="search-filter-div">
+        <div className="d-flex align-items-center justify-content-between">
           <Button type="primary" onClick={() => navigateTo("/add-rabbit")}>
             Add Rabbit
           </Button>

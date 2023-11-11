@@ -33,7 +33,6 @@ function Sidebar({ openSidebarToggle, OpenSidebar }) {
       confirmButtonText: "Yes!",
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire("Logged out!", "You have been logout.", "success");
         authContext.signOut();
         navigateTo("/");
       }

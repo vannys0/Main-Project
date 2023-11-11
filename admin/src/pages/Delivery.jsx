@@ -56,7 +56,7 @@ function Delivery() {
       key: "address",
       render: (text, record) => (
         <span>
-          {record.barangay}, {record.city}
+          {record.barangay}, {record.city}, {record.province}
         </span>
       ),
     },

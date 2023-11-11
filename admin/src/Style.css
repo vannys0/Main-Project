@@ -12,6 +12,10 @@ body {
     gap: 10px;
   }
 
+  .error-message {
+    color: #ff5757;
+  }
+
   .filter-btn a {
     margin-right: 8px;
     text-decoration: none;
@@ -185,12 +189,6 @@ body {
   }
   .grid-container .main-container .edit-div > div {
     width: 50%;
-  }
-
-  /* RabbitList */
-  .search-filter-div {
-    display: flex;
-    justify-content: space-between;
   }
 
   /* AdminProfile */

@@ -7,6 +7,7 @@ import axios from "axios";
 import { Form } from "react-bootstrap";
 import { v4 as uuidv4 } from "uuid";
 import { Select, Button } from "antd";
+import Swal from "sweetalert2";
 import appConfig from "../../config.json";
 const BASE_URL = appConfig.apiBasePath; //e.g "http://localhost:8080/api"
 
@@ -18,6 +19,8 @@ function AddRabbit() {
   const navigateTo = useNavigate();
   const [file, setFile] = useState([]);
   const [img, setImg] = useState();
+  const [imgError, setImgError] = useState(null);
+  const [msgError, setMsgError] = useState({});
   const [values, setValues] = useState({
     id: uuidv4(),
     name: "",
@@ -29,25 +32,54 @@ function AddRabbit() {
     console.log(e.target.files[0]);
     setImg(e.target.files[0]);
     setFile(URL.createObjectURL(e.target.files[0]));
+    setImgError(null);
   };
 
   const handleInput = (e) => {
-    setValues((prev) => ({ ...prev, [e.target.name]: [e.target.value] }));
+    setValues((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append("image", img);
-    const postData = JSON.stringify(values);
-    formData.append("values", postData);
+    const validationError = {};
+    // if (!img) {
+    //   setImgError("No selected file");
+    //   return;
+    // }
+    if (!values.name.trim()) {
+      validationError.name = "Field is required";
+    }
+    if (!values.dateOfBirth.trim()) {
+      validationError.dateOfBirth = "Field is required";
+    }
+    if (!values.sex.trim()) {
+      validationError.sex = "Field is required";
+    }
+    if (!values.weight.trim()) {
+      validationError.weight = "Field is required";
+    }
 
-    axios
-      .post(BASE_URL + "/add-rabbit", formData)
-      .then((res) => {
-        navigateTo("/rabbits");
-      })
-      .catch((err) => console.log(err));
+    setMsgError(validationError);
+
+    if (Object.keys(validationError).length === 0) {
+      const formData = new FormData();
+      formData.append("image", img);
+      const postData = JSON.stringify(values);
+      formData.append("values", postData);
+      axios
+        .post(BASE_URL + "/add-rabbit", formData)
+        .then((res) => {
+          Swal.fire({
+            position: "top-center",
+            icon: "success",
+            title: "Successfully Added",
+            showConfirmButton: false,
+            timer: 3000,
+          });
+          navigateTo("/rabbits");
+        })
+        .catch((err) => console.log(err));
+    }
   };
 
   return (
@@ -69,6 +101,7 @@ function AddRabbit() {
             accept=".jpeg, .jpg, .png"
             onChange={onFileChange}
           />
+          {/* {imgError && <span className="error-message">{imgError}</span>} */}
           <br />
 
           <label htmlFor="">Name :</label>
@@ -79,6 +112,9 @@ function AddRabbit() {
             onChange={handleInput}
             required
           />
+          {msgError.name && (
+            <span className="error-message">{msgError.name}</span>
+          )}
           <br />
           <label htmlFor="">Date of birth :</label>
           <input
@@ -88,6 +124,9 @@ function AddRabbit() {
             onChange={handleInput}
             required
           />
+          {msgError.dateOfBirth && (
+            <span className="error-message">{msgError.dateOfBirth}</span>
+          )}
           <br />
           <label htmlFor="sex">Sex :</label>
           <Form.Select
@@ -103,6 +142,9 @@ function AddRabbit() {
             <option value="Female">Female</option>
             <option value="Other">Other</option>
           </Form.Select>
+          {msgError.sex && (
+            <span className="error-message">{msgError.sex}</span>
+          )}
           <br />
           <label htmlFor="">Weight (klg/s) :</label>
           <input
@@ -114,6 +156,9 @@ function AddRabbit() {
             onChange={handleInput}
             required
           />
+          {msgError.weight && (
+            <span className="error-message">{msgError.weight}</span>
+          )}
           <br />
 
           <div className="actions justify-content-end">
