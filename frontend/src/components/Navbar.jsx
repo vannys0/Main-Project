@@ -55,13 +55,13 @@ function Navbar() {
           <NavLink to="/home">Home</NavLink>
         </li>
         <li>
-          <NavLink to="/adopt">Adopt</NavLink>
+          <NavLink to="/adopt">Adopt a Rabbit</NavLink>
         </li>
         <li>
-          <NavLink to="/contact">Contact</NavLink>
+          <NavLink to="/contact">Contact Us</NavLink>
         </li>
         <li>
-          <NavLink to="/about">About</NavLink>
+          <NavLink to="/about">About Us</NavLink>
         </li>
         <li>
           <NavLink to="" className="to-hide">

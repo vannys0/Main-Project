@@ -46,7 +46,7 @@ function MyApplication() {
           {values.length > 0 && (
             <thead>
               <tr>
-                <th>Date</th>
+                <th>Adoption Date</th>
                 <th>Reason for adoption</th>
                 <th>Delivery Option</th>
                 <th>Status</th>

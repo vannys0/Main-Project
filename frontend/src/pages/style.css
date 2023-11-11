@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Monserrat', sans-serif;
 }
 html {
     font-size: 90%;
@@ -10,45 +10,8 @@ html {
 a {
     text-decoration: none;
 }
-button {
-    background-color: transparent;
-    border: none;
-}
-.primary {
-    color: #0d6efd;
-}
-.primary:hover {
-    color: #0b5ed7;
-}
-.secondary {
-    color: #6c757d;
-}
-.secondary:hover {
-    color: #5c636a;
-}
-.success {  
-    color: #198754;
-    
-}
-.success:hover {
-    color: #157347;
-}
-.danger {
-    color: #dc3545;  
- }
- .danger:hover {
-    color: #bb2d3b;
- }
-.warning {
-    color: #ffc107;
-    
-}
-.warning:hover {
-    color: #ffca2c;
-}
 
 /* Pages */
-
 .main-div {
     display: flex;
     flex-direction: column;
@@ -60,19 +23,26 @@ button {
 .about-div,
 .rabbit-data-div,
 .form-div {
-    width: 60%;
+    width: 50%;
     height: auto;
-    margin-bottom: 50px;
+    margin: 30px 0px;
     display: flex;
     flex-direction: column;
     overflow-x: hidden;
 }
 /* Home.jsx */
 .home-div {
-    width: 100vw;
+    width: 50%;
+    padding-top: 50px;
     display: flex;
     justify-content: center;
     flex-direction: column;
+}
+.home-div p {
+    font-size: 18px;
+}
+.home-div img {
+    width: 100%;
 }
 .brandname {
     margin-top: 100px;
@@ -84,36 +54,12 @@ button {
 .home-div .rabbit-home {
     width: 100%;
 }
-.rabbit-home {
-    background-image: url(../images/rabbit-home1.jpg);
-    width: 100%;
-    min-height: 100dvh;
-    background-size: 100%;
-    background-repeat: no-repeat;
-}
-.rabbit-home::after {
-    position: absolute;
-    content: '';
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-}
 .home-div a {
     text-decoration: none;
     font-size: 24px;
 }
-.floating {
-    position: absolute;
-    top: 20%;
-    left: 5%;
-    font-size: 4rem;
-    color: #EC7D20;
-    outline: #fff;
-}
+
 .home-div .adoptbtn {
-    position: absolute;
-    top: 86%;
-    left: 5%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -123,8 +69,14 @@ button {
     background-color: #EC7D20;
     color: #fff;
     border-radius: 50px;
-    margin: 50px 0px;
-
+    cursor: pointer;
+}
+.home-div .last-div {
+    display: flex;
+    flex-direction: column;
+}
+.home-div .last-div img {
+    width: 100%;
 }
 .home-div .adoptbtn:hover {
     background-color: #00828c;
@@ -132,17 +84,15 @@ button {
     border: 3px solid #00828c;
 }
 .home-body {
-    display: flex;
+    display: grid;
+    gap: 20px;
+    grid-template-columns: 1fr 1fr;
 }
-.home-body>div {
-    width: 50%;
-    padding: 70px;
-}
-.home-body>div>img {
+.home-body > div > img {
     width: 100%;
 }
 .haveQuestion {
-    padding: 70px;
+    padding: 50px 0px;
 }
 .email {
     color: #00828c;
@@ -152,8 +102,6 @@ button {
 .adopt-div {
     width: 50%;
     padding: 20px;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px
-  4px 0px, rgba(99, 99, 99, 0.1) 0px -2px 8px 0px;
 }
 .rehome-div h2 {
     margin-bottom: 50px;
@@ -197,43 +145,54 @@ button {
 
 /* Contact.jsx */
 .contact-div {
-    padding: 100px 20px 20px 20px;
+    padding: 50px 20px 0px 20px;
+}
+.contact-div > h2 {
+    font-weight: 600;
+}
+.contact-div > div > h2 {
+    font-weight: 600;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 .contact-div div {
     margin-bottom: 35px;
 }
 .main-div .rabbit-contact {
-    width: 500px;
-    height: 400px;
+
+    height: 300px;
     position: absolute;
-    top: 340px;
-    right: 100px;
-}
-.send-us {
-    align-self: center;
-    font-size: 4rem;
+    bottom: 60px;
+    right: 150px;
 }
 
 /* About.jsx */
+.main-div {
+    position: relative;
+}
 .about-div {
     padding: 50px 20px 20px 20px;
+}
+.about-div > h2 {
+    font-weight: 600;
+}
+.about-div > div > p {
+    font-size: 20px;
+}
+.about-div > div > h2 {
+    font-weight: 600;
+}
+.about-div > div > h4 {
+    font-weight: 600;
 }
 .about-div .content {
     display: flex;
     flex-direction: column;
 }
-.main-div .about-div .rabbit-about {
-    width: 300px;
-    height: 450px;
+.rabbit-about {
+    height: 350px;
     position: absolute;
-    right: 50px;
-    bottom: -60%;
-}
-.about-us,
-.our-goal,
-.visit-us {
-    align-self: center;
-    font-size: 2rem;
+    right: 300px;
+    bottom: 70px;
 }
 
 /* AdoptForm.jsx */
@@ -247,8 +206,6 @@ button {
     display: flex;
     justify-content: center;
     border: 2px solid #eaeaea;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px
-  4px 0px, rgba(99, 99, 99, 0.1) 0px -2px 8px 0px;
 }
 .main-div .form-div .label-name {
     margin-top: 20px;
@@ -273,7 +230,6 @@ button {
 }
 
 /* RabitData.jsx */
-
 .rabbit-data-div {
     display: flex;
     justify-content: center;
@@ -342,8 +298,6 @@ button {
 .application-div {
     width: 50%;
     padding: 20px;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px
-  4px 0px, rgba(99, 99, 99, 0.1) 0px -2px 8px 0px;
 }
 .application-div table {
     border: 2px solid #eaeaea;
@@ -379,7 +333,7 @@ button {
     display: flex;
     justify-content: center;
 }
-.image-div>img {
+.image-div > img {
     width: 60%;
 }
 
@@ -395,15 +349,13 @@ button {
     .about-div {
         gap: 0;
         width: 100%;
-    
-        padding: 30px;
+        padding: 20px;
         margin-top: 0;
         margin-bottom: 0;
     }
-
     /* Home */
     .home-div {
-        padding: 10px;
+        padding: 20px 10px 10px 10px;
     }
     .rabbit-home {
     }
@@ -437,7 +389,15 @@ button {
     .home-body>div>img {
         width: 100%;
     }
+    .home-div .last-div h5 {
+        align-self: self-start;
+    }
     /* Contact */
+    .contact-div {
+        height: 100vh;
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
     .contact-div h2 {
         font-size: 20px;
     }
