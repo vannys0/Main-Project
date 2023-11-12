@@ -45,6 +45,8 @@ function Request() {
     Swal.fire({
       title: "Are you sure?",
       text: "You want to decline this request?",
+      input: "text",
+      inputPlaceholder: "Comment",
       showCancelButton: true,
       confirmButtonColor: "#d50000",
       cancelButtonColor: "#797979",
@@ -53,7 +55,9 @@ function Request() {
       if (result.isConfirmed) {
         Swal.fire("Declined!", "Request has been declined.", "success");
         axios
-          .put(BASE_URL + "/decline-adoption/" + o.id)
+          .put(BASE_URL + "/decline-adoption/" + o.id, {
+            comment: result.value
+          })
           .then((res) => {
             window.location.reload();
           })
@@ -123,6 +127,7 @@ function Request() {
                 </span>
               )}
             />
+             <Table.Column title="Comment" dataIndex="comment" key="comment" />
             <Table.Column
               title="Action"
               key="action"

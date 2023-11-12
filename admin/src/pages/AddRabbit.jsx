@@ -145,6 +145,21 @@ function AddRabbit() {
           {msgError.sex && (
             <span className="error-message">{msgError.sex}</span>
           )}
+          <br/>
+          <label htmlFor="sex">By-Product :</label>
+          <Form.Select
+            aria-label="Default select example"
+            onChange={handleInput}
+            name="byproduct"
+            required
+          >
+            <option value="" hidden>
+              Select
+            </option>
+            <option value="For Meat">For Meat</option>
+            <option value="Other">Other</option>
+          </Form.Select>
+
           <br />
           <label htmlFor="">Weight (klg/s) :</label>
           <input

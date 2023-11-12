@@ -83,11 +83,13 @@ router.put("/approve-delivery/:id", (req, res) => {
 });
 
 router.put("/decline-adoption/:id", (req, res) => {
-  const sql = "UPDATE adoption SET `transaction_status` = ? WHERE id = ?";
+  const sql = "UPDATE adoption SET `transaction_status` = ?, `comment` = ?  WHERE id = ?";
   const values = ["Declined"];
   const id = req.params.id;
+  const comment = req.body.comment;
+  console.log(comment);
 
-  db.query(sql, [...values, id], (err, data) => {
+  db.query(sql, [...values, comment, id], (err, data) => {
     if (err) {
       return res.json("Error");
     }

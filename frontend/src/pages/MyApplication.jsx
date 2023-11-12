@@ -50,6 +50,7 @@ function MyApplication() {
                 <th>Reason for adoption</th>
                 <th>Delivery Option</th>
                 <th>Status</th>
+                <th>Comment</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -70,6 +71,7 @@ function MyApplication() {
                       <Tag color="success">{data.transaction_status}</Tag>
                     )}
                   </td>
+                  <td width={100}>{data.comment}</td>
                   <td className="d-flex gap-2">
                     <ViewApplication data={data} />
                     {data.transaction_status === "Pending" ? (
@@ -84,7 +86,8 @@ function MyApplication() {
                       <span style={{ color: "black" }}></span>
                     )}
                   </td>
-                </tr>
+                  
+                </tr> 
               ))
             ) : (
               <tr>
