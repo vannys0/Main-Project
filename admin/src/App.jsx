@@ -185,14 +185,14 @@ function App() {
     //   ),
     // },
 
-    {
-      path: "/rabbit-sales",
-      element: (
-        <div>
-            <RabbitSale />
-        </div>
-      ),
-    },
+    // {
+    //   path: "/rabbit-sales",
+    //   element: (
+    //     <div>
+    //         <RabbitSale />
+    //     </div>
+    //   ),
+    // },
   ]);
 
   const [state, dispatch] = useReducer(

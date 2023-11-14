@@ -55,7 +55,7 @@ router.get("/chart-adoption", (req, res) => {
 router.get("/chart-monthly-sales", (req, res) => {
   const currentYear = new Date().getFullYear();
   db.query(
-    "SELECT YEAR(transaction_date) AS year, MONTH(transaction_date) AS month, SUM(amount) AS sum FROM rabbit_sales WHERE YEAR(transaction_date) = ?  GROUP BY year, month",
+    "SELECT YEAR(adoption_date) AS year, MONTH(adoption_date) AS month, SUM(price) AS sum FROM adoption WHERE YEAR(adoption_date) = ?  GROUP BY year, month",
     [currentYear],
     (err, results) => {
       if (err) {
