@@ -66,7 +66,7 @@ function AboutRabbit({ data }) {
             key="adopt"
             type="primary"
             onClick={() =>
-              navigateTo(`/rabbitdata/${data.name}/${data.id}/adopt-form`)
+              navigateTo(`/rabbitdata/${JSON.stringify(data)}/${data.id}/adopt-form`)
             }
           >
             Adopt
@@ -88,6 +88,7 @@ function AboutRabbit({ data }) {
             <h6>Sex</h6>
             <h6>Age</h6>
             <h6>Weight</h6>
+            <h6>Price</h6>
           </div>
           <div>
             <h6>: {data.id}</h6>
@@ -97,6 +98,7 @@ function AboutRabbit({ data }) {
               : {age.years} years {age.months} months
             </h6>
             <h6>: {data.weight} klg</h6>
+            <h6>: {data.price}</h6>
           </div>
         </div>
       </Modal>

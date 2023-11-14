@@ -14,7 +14,7 @@ import {
 } from "./Api/camarinessur";
 
 function AdoptForm() {
-  const { id, name } = useParams();
+  const { name, id } = useParams();
   const navigateTo = useNavigate();
   const user = SecureStore.getItem("userToken");
   const [errors, setErrors] = useState({});
@@ -23,6 +23,7 @@ function AdoptForm() {
   const [brgyOptions, setBrgyOptions] = useState([]);
   const [file, setFile] = useState();
   const [img, setImg] = useState();
+  const [mopAgriculture, setmopAgriculture] = useState(false);
 
   function formatAsDate(date) {
     const day = String(date.getDate()).padStart(2, "0");
@@ -32,7 +33,6 @@ function AdoptForm() {
   }
   const currentDate = new Date();
   const dateToday = formatAsDate(currentDate);
-  console.log(dateToday);
 
   useEffect(() => {
     getAllProvince((data) => {
@@ -43,7 +43,6 @@ function AdoptForm() {
     //   setCitymunOptions(data);
     // });
   }, []);
-
   const handleProvinceChange = (e) => {
     setValues((prev) => ({ ...prev, province: selectedProvCode }));
     const selectedProvCode = JSON.parse(e.target.value); //object
@@ -70,6 +69,8 @@ function AdoptForm() {
     }
   };
 
+
+
   const onFileChange = (e) => {
     setImg(e.target.files[0]);
     setFile(URL.createObjectURL(e.target.files[0]));
@@ -79,8 +80,8 @@ function AdoptForm() {
     id: uuidv4(),
     rabbit_id: id,
     date: dateToday,
-    fullname: user.name,
-    email: user.email,
+    fullname: JSON.parse(name).name,
+    email: "",
     phone: "",
     province: "",
     city: "",
@@ -90,33 +91,47 @@ function AdoptForm() {
     user_id: user.id,
     transaction_status: "Pending",
     serviceoption: "",
+    mop: "",
+    price: JSON.parse(name).price,
+    agprod: null,
+    agprodprice: 0
   });
   const handleInput = (e) => {
     setValues((prev) => ({ ...prev, [e.target.name]: [e.target.value] }));
   };
 
+  const modeOfPaymentSelection = (e) => {
+    values.agprod = "";
+    values.agprodprice = 0;
+
+    setValues((prev) => ({ ...prev, mop: selected }));
+    const selected = e.target.value;
+    console.log(selected);
+    setmopAgriculture((selected === "Agriculture") ? true : false);
+
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors(Validation(values));
-
     const formData = new FormData();
     formData.append("image", img);
     const postData = JSON.stringify(values);
     formData.append("values", postData);
 
+    console.log(errors);
     // if (
-    //   errors.email === "" &&
-    //   errors.name === "" &&
-    //   errors.phone === "" &&
-    //   errors.reason === ""
-    // ) {
+    //   errors.province === "" &&
+    //   errors.city === "" &&
+    //   errors.phone === "") {
+    // }
     axios
-      .post("http://localhost:8081/rabbitdata/" + id + "/adopt-form", formData)
-      .then((res) => {
-        console.log(res);
-        navigateTo("/myapplication");
-      })
-      .catch((err) => console.log(err));
+    .post("http://localhost:8081/rabbitdata/" + id + "/adopt-form", formData)
+    .then((res) => { 
+      console.log(res);
+      navigateTo("/myapplication");
+    })
+    .catch((err) => console.log(err));
   };
 
   return (
@@ -124,7 +139,7 @@ function AdoptForm() {
       <Navbar />
       <div className="form-div">
         <form encType="multipart/form-data">
-          <h4>Adopt {name}</h4>
+          <h4>Adopt {JSON.parse(name).name  + " the price is: " + JSON.parse(name).price}</h4>
           <br />
           <label htmlFor="fullname" className="label-name">
             Full Name
@@ -156,7 +171,7 @@ function AdoptForm() {
             inputMode="tel"
             onChange={handleInput}
           />
-          {errors.phone && <span className="error">{errors.phone}</span>}
+          {errors.phone != "" && <span className="error">{errors.phone}</span>}
           <br />
           <label>Address</label>
           <div className="address">
@@ -234,6 +249,45 @@ function AdoptForm() {
           </Form.Select>
           {errors.serviceoption && (
             <span className="error">{errors.serviceoption}</span>
+          )}
+          <br />
+
+          <label htmlFor="serviceoption">Modes of Payment</label>
+          <Form.Select
+            aria-label="Default select example"
+            onChange={modeOfPaymentSelection}
+            name="serviceoption"
+          >
+            <option value="" hidden>
+              Select
+            </option>
+            <option value="Cash">Cash</option>
+            <option value="Agriculture">Agriculture</option>
+          </Form.Select>
+          {/* {errors.serviceoption && (
+            <span className="error">{errors.serviceoption}</span>
+          )} */}
+
+          {mopAgriculture && (
+            <div>
+              <label htmlFor="agprod" className="label-name">Ag. Product</label>
+              <input
+                type="text"
+                name="agprod"
+                className="form-control"
+                // value={user.name}
+                onChange={handleInput}
+              />
+
+              <label htmlFor="agprodprice" className="label-name">Ag. Produdct Price</label>
+              <input
+                type="number"
+                name="agprodprice"
+                className="form-control"
+                onChange={handleInput}
+              />
+            </div>
+
           )}
           <br />
 

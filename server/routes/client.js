@@ -148,10 +148,14 @@ router.post(
       result.transaction_status,
       req.file.filename,
       result.serviceoption,
+      result.price,
+      result.mop,
+      result.agprod,
+      result.agprodprice
     ];
 
     const sql =
-      "INSERT INTO adoption (`id`, `rabbit_id`, `adoption_date`, `fullname`, `email`, `phone`, `province`, `city`, `barangay`, `reason_for_adoption`, `other_pets`, `user_id`, `transaction_status`, `home_environment_image_path`, `service_option`) VALUES (?)";
+      "INSERT INTO adoption (`id`, `rabbit_id`, `adoption_date`, `fullname`, `email`, `phone`, `province`, `city`, `barangay`, `reason_for_adoption`, `other_pets`, `user_id`, `transaction_status`, `home_environment_image_path`, `service_option`, `price`, `mode_of_payment`, `agriculture_product`, `agriculture_product_price`) VALUES (?)";
     db.query(sql, [values], (error, results) => {
       if (error) {
         console.log(error);
