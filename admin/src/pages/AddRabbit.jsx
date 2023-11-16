@@ -28,18 +28,21 @@ function AddRabbit() {
     sex: "",
     weight: "",
   });
+  const [selectedFiles, setSelectedFiles] = useState(null);
   const onFileChange = (e) => {
-    console.log(e.target.files[0]);
-    setImg(e.target.files[0]);
-    setFile(URL.createObjectURL(e.target.files[0]));
-    setImgError(null);
+    const files = e.target.files;
+    setSelectedFiles(files);
+    console.log(e.target.files);
+    // setImg(e.target.files);
+    // setFile(URL.createObjectURL(file.Array.map()));
+    // setImgError(null);
   };
 
   const handleInput = (e) => {
     setValues((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const validationError = {};
     // if (!img) {
@@ -62,23 +65,20 @@ function AddRabbit() {
     setMsgError(validationError);
 
     if (Object.keys(validationError).length === 0) {
-      const formData = new FormData();
-      formData.append("image", img);
+      let formData = new FormData();
       const postData = JSON.stringify(values);
+      for (let i = 0; i < selectedFiles.length; i++) {
+        formData.append("files", selectedFiles[i]);
+      }
       formData.append("values", postData);
-      axios
-        .post(BASE_URL + "/add-rabbit", formData)
-        .then((res) => {
-          Swal.fire({
-            position: "top-center",
-            icon: "success",
-            title: "Successfully Added",
-            showConfirmButton: false,
-            timer: 3000,
-          });
-          navigateTo("/rabbits");
-        })
-        .catch((err) => console.log(err));
+
+      try {
+        const response = await axios.post(`${BASE_URL}/add-rabbit`, formData);
+        navigateTo("/rabbits");
+        console.log(response);
+      } catch (error) {
+        console.error("Error uploading files:", error);
+      }
     }
   };
 
@@ -95,12 +95,13 @@ function AddRabbit() {
           <label htmlFor="">Image :</label>
           <input
             type="file"
-            name="image"
+            name="files"
             className="form-control"
-            id="image"
-            accept=".jpeg, .jpg, .png"
+            multiple
+            accept="image/*"
             onChange={onFileChange}
           />
+          <img style={{ width: "100px" }} src={file} alt="" />
           {/* {imgError && <span className="error-message">{imgError}</span>} */}
           <br />
 
@@ -145,7 +146,7 @@ function AddRabbit() {
           {msgError.sex && (
             <span className="error-message">{msgError.sex}</span>
           )}
-          <br/>
+          <br />
           <label htmlFor="sex">By-Product :</label>
           <Form.Select
             aria-label="Default select example"

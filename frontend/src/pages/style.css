@@ -78,11 +78,6 @@ a {
 .home-div .last-div img {
     width: 100%;
 }
-.home-div .adoptbtn:hover {
-    background-color: #00828c;
-    color: #fff;
-    border: 3px solid #00828c;
-}
 .home-body {
     display: grid;
     gap: 20px;
@@ -377,10 +372,6 @@ a {
         width: 100%;
     }
     .home-div .adoptbtn {
-        top: 38%;
-        left: 7%;
-        width: 180px;
-        height: 40px;
         font-size: 18px;
     }
     .related-business {

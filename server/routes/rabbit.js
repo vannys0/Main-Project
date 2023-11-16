@@ -14,13 +14,12 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 //PostMapping
-router.post("/add-rabbit", upload.single("image"), (req, res) => {
-  console.log("add-rabbit");
-  console.log(req.file);
+router.post("/add-rabbit", upload.array("files", 5), (req, res) => {
+  const files = req.files;
   const result = JSON.parse(req.body.values);
   console.log(result);
-  console.log(req.file.filename);
-
+  const imagePaths = req.files.map((file) => file.filename);
+  console.log(imagePaths);
   const sql =
     "INSERT INTO rabbit (`id`, `name`, `date_of_birth`, `sex`, `weight`, `image_path`) VALUES (?)";
   const values = [
@@ -29,9 +28,49 @@ router.post("/add-rabbit", upload.single("image"), (req, res) => {
     result.dateOfBirth,
     result.sex,
     result.weight,
-    req.file.filename,
+    JSON.stringify(imagePaths),
   ];
 
+  db.query(sql, [values], (err, data) => {
+    if (err) {
+      console.log(err);
+      return res.json("Error");
+    }
+    return res.json(data);
+  });
+});
+
+// Try
+router.post("/file", upload.single("file"), (req, res) => {
+  const file = req.file;
+  const value = req.files.filename;
+  const sql = "INSERT INTO try (`try_image`) VALUES (?)";
+  if (file) {
+    res.json(file);
+  } else {
+    res.send("error");
+  }
+  db.query(sql, [value], (err, data) => {
+    if (err) {
+      console.log(err);
+      return res.json("Error");
+    }
+    return res.json(data);
+  });
+});
+// Multiple
+router.post("/multi", upload.array("files", 5), (req, res) => {
+  const files = req.files;
+  const result = JSON.parse(req.body.values);
+  const imagePaths = req.files.map((file) => file.filename);
+  const values = [result.fname, result.lname, JSON.stringify(imagePaths)];
+  const sql = "INSERT INTO try (`fname`, `lname`, `try_image`) VALUES (?)";
+  if (Array.isArray(files) && files.length > 0) {
+    const fileNames = files.map((file) => file.originalname);
+    res.json({ files: fileNames });
+  } else {
+    res.status(400).send("No files were uploaded");
+  }
   db.query(sql, [values], (err, data) => {
     if (err) {
       console.log(err);

@@ -1,14 +1,14 @@
 import React, { useEffect, useState, useContext, createContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "./login.css";
-import { AiOutlineMail } from "react-icons/ai";
-import { RiLockPasswordLine } from "react-icons/ri";
+import "./Login_Signup.css";
 import Axios from "axios";
 import * as UserController from "../controller/UserController.jsx";
 import { AuthContext } from "../App";
 import Swal from "sweetalert2";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import { Button, Input, Space } from "antd";
+import collaborators from "../images/collaborators.svg";
+import coding from "../images/coding.svg";
 import SecureStore from "react-secure-storage";
 import appConfig from "../../config.json";
 const BASE_URL = appConfig.apiBasePath; //e.g "http://localhost:8080/api";
@@ -16,10 +16,10 @@ const BASE_URL = appConfig.apiBasePath; //e.g "http://localhost:8080/api";
 function Login() {
   const authContext = useContext(AuthContext);
   const user = SecureStore.getItem("userToken");
+  const navigateTo = useNavigate();
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [loginUserName, setLoginUserName] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
-  const navigateTo = useNavigate();
   const [loginStatus, setLoginStatus] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
@@ -28,7 +28,7 @@ function Login() {
     e.preventDefault();
 
     if (!loginUserName.trim()) {
-      setEmailError("Email is required");
+      setEmailError("Please input your email");
       return;
     }
 
@@ -38,7 +38,7 @@ function Login() {
     }
 
     if (!loginPassword.trim()) {
-      setPasswordError("Password is required");
+      setPasswordError("Please input your password");
       return;
     }
 
@@ -101,15 +101,40 @@ function Login() {
     <div className="loginPage">
       <div className="container">
         <div className="welcome-div">
-          <h2>
-            <span className="welcome-span">Welcome back to</span>
-            <br />
-            E-LEPORIDAE
-          </h2>
+          <h2>E-LEPORIDAE</h2>
+          <img src={collaborators} alt="" />
         </div>
         <form className="form grid">
-          <h2 className="login-title">Login</h2>
-          <Space direction="vertical">
+          <h2 className="login-title">Welcome back!</h2>
+          <div className="coolinput">
+            <label htmlFor="input" className="text">
+              Email:
+            </label>
+            <input
+              type="text"
+              name="username"
+              id="username"
+              className="input"
+              onChange={handleEmailChange}
+            />
+            {emailError && <span className="error-message">{emailError}</span>}
+          </div>
+          <div className="coolinput">
+            <label htmlFor="input" className="text">
+              Password:
+            </label>
+            <input
+              type="password"
+              name="password"
+              id="password"
+              className="input"
+              onChange={handlePasswordChange}
+            />
+            {passwordError && (
+              <span className="error-message">{passwordError}</span>
+            )}
+          </div>
+          {/* <Space direction="vertical">
             <label htmlFor="username" className="email">
               Email
             </label>
@@ -137,14 +162,14 @@ function Login() {
             {passwordError && (
               <span className="error-message">{passwordError}</span>
             )}
-          </Space>
+          </Space> */}
           <Button
             style={{ margin: "20px 0px 0px 0px", height: "40px" }}
             type="primary"
             className="btn btn-primary"
             onClick={loginUser}
           >
-            <span>Login </span>
+            <span className="login-span">Login </span>
           </Button>
           <div>
             Don't have an account? <Link to="/register">Sign up</Link>

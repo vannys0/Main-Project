@@ -84,11 +84,9 @@ function RabbitList() {
     const birthDate = new Date(dateOfBirth);
     const currentDate = new Date();
 
-    // Calculate the difference in years and months
     const years = currentDate.getFullYear() - birthDate.getFullYear();
     const months = currentDate.getMonth() - birthDate.getMonth();
 
-    // Adjust for cases where the current date's month is earlier than the birth month
     const adjustedMonths =
       months + (currentDate.getDate() < birthDate.getDate() ? -1 : 0);
 
@@ -109,12 +107,15 @@ function RabbitList() {
       title: "Image",
       dataIndex: "image_path",
       key: "image_path",
-      render: (imagePath) => (
-        <Image
-          style={{ width: "25px", height: "25px" }}
-          src={`http://localhost:8081/uploads/${imagePath}`}
-        />
-      ),
+      render: (image_path) => {
+        // const filename = JSON.parse(image_path);
+        return (
+          <Image
+            style={{ width: "25px", height: "25px" }}
+            src={`http://localhost:8081/uploads/${image_path}`}
+          />
+        );
+      },
     },
     {
       title: "Age",

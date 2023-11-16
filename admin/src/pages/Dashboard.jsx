@@ -236,15 +236,17 @@ function Dashboard() {
             }}
           >
             <h6>Recent Added</h6>
-            <Table dataSource={rabbit} pagination={false}>
-              <Table.Column title="Rabbit name" dataIndex="name" key="name" />
-              <Table.Column title="Sex" dataIndex="sex" key="sex" />
-              <Table.Column
-                title="Date of birth"
-                dataIndex="date_of_birth"
-                key="dateOfBirth"
-              />
-            </Table>
+            <div style={{ overflowX: "auto" }}>
+              <Table dataSource={rabbit} pagination={false}>
+                <Table.Column title="Rabbit name" dataIndex="name" key="name" />
+                <Table.Column title="Sex" dataIndex="sex" key="sex" />
+                <Table.Column
+                  title="Date of birth"
+                  dataIndex="date_of_birth"
+                  key="dateOfBirth"
+                />
+              </Table>
+            </div>
           </div>
           <div
             className="recent-activity"
@@ -256,19 +258,25 @@ function Dashboard() {
             }}
           >
             <h6>Recent Adoption</h6>
-            <Table dataSource={clients} pagination={false}>
-              <Table.Column title=" User" dataIndex="fullname" key="fullname" />
-              <Table.Column
-                title="Date"
-                dataIndex="adoption_date"
-                key="adoption_date"
-              />
-              <Table.Column
-                title="Status"
-                dataIndex="transaction_status"
-                key="transaction_status"
-              />
-            </Table>
+            <div style={{ overflowX: "auto" }}>
+              <Table dataSource={clients} pagination={false}>
+                <Table.Column
+                  title=" User"
+                  dataIndex="fullname"
+                  key="fullname"
+                />
+                <Table.Column
+                  title="Date"
+                  dataIndex="adoption_date"
+                  key="adoption_date"
+                />
+                <Table.Column
+                  title="Status"
+                  dataIndex="transaction_status"
+                  key="transaction_status"
+                />
+              </Table>
+            </div>
           </div>
         </div>
       </main>

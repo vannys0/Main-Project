@@ -34,7 +34,6 @@ function Navbar() {
       confirmButtonText: "Yes!",
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire("Logged out!", "You have been logout.", "success");
         SecureStore.removeItem();
         authContext.signOut();
         navigateTo("/");

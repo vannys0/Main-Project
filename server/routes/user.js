@@ -30,7 +30,26 @@ router.post("/login", (req, res) => {
   );
 });
 
-// Clients
+// Sign up
+router.post("/register", (req, res) => {
+  const values = [
+    req.body.id,
+    req.body.fullname,
+    req.body.email,
+    req.body.password,
+    req.body.user_type,
+  ];
+  const sql =
+    "INSERT INTO user (`id`, `name`, `email`, `password`, `user_type`) VALUES (?)";
+  db.query(sql, [values], (err, result) => {
+    if (err) {
+      return err;
+    }
+    return res.json(result);
+  });
+});
+
+// Clients.jsx
 router.get("/clients", (req, res) => {
   db.query("SELECT * FROM user ORDER BY user_type", (err, results) => {
     if (err) {

@@ -6,7 +6,8 @@
     align-items: center;
     justify-content: space-between;
     padding: 0 30px 0 30px;
-    background-color: #eaeaea;
+    border-bottom: 2px solid #eaeaea;
+    background-color: #fff;
     color: #797979;
     box-shadow: 0px 0px 0px 2px #eaeaea;
     

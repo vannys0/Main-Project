@@ -74,8 +74,13 @@ function AboutRabbit({ data }) {
         ]}
       >
         <div className="image-div">
+          {/* {
+            let image_path = JSON.parse(data.image_path)
+          } */}
           <img
-            src={`http://localhost:8081/uploads/${data.image_path}`}
+            src={`http://localhost:8081/uploads/${
+              JSON.parse(data.image_path)[0]
+            }`}
             alt=""
           />
         </div>

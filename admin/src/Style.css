@@ -13,7 +13,7 @@ body {
   }
 
   .error-message {
-    color: #ff5757;
+    color: red;
   }
 
   .filter-btn a {

@@ -7,7 +7,8 @@
     grid-area: sidebar;
     width: 260px;
     height: 100%;
-    background-color: #eaeaea;
+    border-right: 2px solid #eaeaea;
+    background-color: #fff;
     overflow-y: auto;
     transition: all 0.5s;
     -webkit-transition: all 0.5s;
@@ -15,10 +16,8 @@
   }
   
   .active {
-    background-color: #fff;
-    color: #1e1e1e;
-    border-left: 8px solid blue;
-    
+    border-radius: 0 50px 50px 0;
+    background-color: #1677ff;
   }
 
   .admin-side {
@@ -45,12 +44,12 @@
   }
 
   ul .active {
-    color: #1e1e1e;
+    color: #fff;
   }
 
-  /* ul .active:hover {
+  ul .active:hover {
     color: #fff;
-  } */
+  }
   
   .sidebar-title {
     display: flex;

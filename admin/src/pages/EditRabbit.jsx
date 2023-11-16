@@ -5,7 +5,7 @@ import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import axios from "axios";
 import { Form } from "react-bootstrap";
-import { Image, Button, Space, Input, QRCode, Avatar } from "antd";
+import { Image, Button, Space, Input, QRCode, Avatar, Carousel } from "antd";
 import appConfig from "../../config.json";
 const BASE_URL = appConfig.apiBasePath; //e.g "http://localhost:8080/api"
 
@@ -75,22 +75,22 @@ function EditRabbit() {
         <h3>Edit rabbit</h3>
         <div className="edit-div">
           <Space align="center" direction="vertical">
-            <Avatar
-              style={{
-                width: "350px",
-                height: "350px",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-              shape="square"
-              src={
-                <Image
-                  src={`http://localhost:8081/uploads/${values.image_path}`}
-                  alt="avatar"
-                />
-              }
-            />
+            {values.image_path && (
+              <Avatar
+                style={{
+                  width: "350px",
+                  height: "350px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                shape="square"
+                src={`http://localhost:8081/uploads/${JSON.parse(
+                  values.image_path
+                )}`}
+                alt="avatar"
+              />
+            )}
           </Space>
           <form className="rabbit-form">
             <label htmlFor="">Name :</label>
@@ -130,21 +130,21 @@ function EditRabbit() {
               <option value="Male">Male</option>
               <option value="Female">Female</option>
             </Form.Select>
-            
-          <br/>
-          <label htmlFor="sex">By-Product :</label>
-          <Form.Select
-            aria-label="Default select example"
-            onChange={handleInput}
-            name="byproduct"
-            required
-          >
-            <option value="" hidden>
-              Select
-            </option>
-            <option value="For Meat">For Meat</option>
-            <option value="Other">Other</option>
-          </Form.Select>
+
+            <br />
+            <label htmlFor="sex">By-Product :</label>
+            <Form.Select
+              aria-label="Default select example"
+              onChange={handleInput}
+              name="byproduct"
+              required
+            >
+              <option value="" hidden>
+                Select
+              </option>
+              <option value="For Meat">For Meat</option>
+              <option value="Other">Other</option>
+            </Form.Select>
 
             <br />
             <label htmlFor="">Weight (klg/s) :</label>
