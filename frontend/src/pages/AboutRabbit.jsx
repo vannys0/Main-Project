@@ -1,7 +1,10 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import "./style.css";
 import { Button, Modal } from "antd";
 import { Link, useNavigate } from "react-router-dom";
+import { Carousel } from "react-bootstrap";
+import { Image } from "antd";
 
 function AboutRabbit({ data }) {
   const navigateTo = useNavigate();
@@ -66,23 +69,31 @@ function AboutRabbit({ data }) {
             key="adopt"
             type="primary"
             onClick={() =>
-              navigateTo(`/rabbitdata/${JSON.stringify(data)}/${data.id}/adopt-form`)
+              navigateTo(
+                `/rabbitdata/${JSON.stringify(data)}/${data.id}/adopt-form`
+              )
             }
           >
             Adopt
           </Button>,
         ]}
       >
-        <div className="image-div">
-          {/* {
-            let image_path = JSON.parse(data.image_path)
-          } */}
-          <img
-            src={`http://localhost:8081/uploads/${
-              JSON.parse(data.image_path)[0]
-            }`}
-            alt=""
-          />
+        <div className="image-div bg-dark">
+          <Carousel>
+            {data.image_path.split(",").map((image, index) => (
+              <Carousel.Item key={index}>
+                <Image
+                  style={{
+                    display: "block",
+                    margin: "auto",
+                    width: "65%",
+                  }}
+                  src={`http://localhost:8081/uploads/${image.trim()}`}
+                  alt=""
+                />
+              </Carousel.Item>
+            ))}
+          </Carousel>
         </div>
         <br />
         <p>Hi, my name is {data.name} and I am looking for a new home.</p>

@@ -7,12 +7,13 @@ import RabbitData from "./RabbitData.jsx";
 import Footer from "../components/footer.jsx";
 import { Input } from "antd";
 import AboutRabbit from "./AboutRabbit.jsx";
+import { Link, useNavigate } from "react-router-dom";
 
 function Adopt() {
   const [rabbits, setRabbits] = useState([]);
   const [record, setRecord] = useState([]);
   const photo = "http://localhost:8081/";
-
+  const navigateTo = useNavigate();
   useEffect(() => {
     axios
       .get("http://localhost:8081/adopt")
@@ -72,9 +73,9 @@ function Adopt() {
                     borderRadius: "0",
                   }}
                   variant="top"
-                  src={`http://localhost:8081/uploads/${
-                    JSON.parse(data.image_path)[0]
-                  }`}
+                  src={`http://localhost:8081/uploads/${data.image_path
+                    .split(",")[0]
+                    .trim()}`}
                   height={250}
                   alt="No Image"
                 />
