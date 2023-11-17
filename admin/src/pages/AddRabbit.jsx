@@ -7,7 +7,7 @@ import axios from "axios";
 import { Form } from "react-bootstrap";
 import { v4 as uuidv4 } from "uuid";
 import { Select, Button } from "antd";
-import Swal from "sweetalert2";
+import { breedType, rabbitColor } from "./API/RabbitApi";
 import appConfig from "../../config.json";
 const BASE_URL = appConfig.apiBasePath; //e.g "http://localhost:8080/api"
 
@@ -26,6 +26,9 @@ function AddRabbit() {
     name: "",
     dateOfBirth: "",
     sex: "",
+    breed: "",
+    color: "",
+    type: "",
     weight: "",
   });
   const [selectedFiles, setSelectedFiles] = useState(null);
@@ -40,26 +43,38 @@ function AddRabbit() {
 
   const handleInput = (e) => {
     setValues((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    console.log(e.target.value);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const validationError = {};
-    // if (!img) {
-    //   setImgError("No selected file");
-    //   return;
-    // }
+    if (!file) {
+      setImgError("No selected file");
+      return;
+    }
+    const errMessage = "This field is required";
+
     if (!values.name.trim()) {
-      validationError.name = "Field is required";
+      validationError.name = errMessage;
     }
     if (!values.dateOfBirth.trim()) {
-      validationError.dateOfBirth = "Field is required";
+      validationError.dateOfBirth = errMessage;
     }
     if (!values.sex.trim()) {
-      validationError.sex = "Field is required";
+      validationError.sex = errMessage;
+    }
+    if (!values.breed.trim()) {
+      validationError.breed = errMessage;
+    }
+    if (!values.color.trim()) {
+      validationError.color = errMessage;
+    }
+    if (!values.type.trim()) {
+      validationError.type = errMessage;
     }
     if (!values.weight.trim()) {
-      validationError.weight = "Field is required";
+      validationError.weight = errMessage;
     }
 
     setMsgError(validationError);
@@ -92,102 +107,159 @@ function AddRabbit() {
       <div className="main-container">
         <h3>Add rabbit</h3>
         <form className="form" encType="multipart/form-data">
-          <label htmlFor="">Image :</label>
-          <input
-            type="file"
-            name="files"
-            className="form-control"
-            multiple
-            accept="image/*"
-            onChange={onFileChange}
-          />
-          <img style={{ width: "100px" }} src={file} alt="" />
-          {/* {imgError && <span className="error-message">{imgError}</span>} */}
-          <br />
-
-          <label htmlFor="">Name :</label>
-          <input
-            type="text"
-            name="name"
-            className="form-control"
-            onChange={handleInput}
-            required
-          />
-          {msgError.name && (
-            <span className="error-message">{msgError.name}</span>
-          )}
-          <br />
-          <label htmlFor="">Date of birth :</label>
-          <input
-            type="date"
-            name="dateOfBirth"
-            className="form-control"
-            onChange={handleInput}
-            required
-          />
-          {msgError.dateOfBirth && (
-            <span className="error-message">{msgError.dateOfBirth}</span>
-          )}
-          <br />
-          <label htmlFor="sex">Sex :</label>
-          <Form.Select
-            aria-label="Default select example"
-            onChange={handleInput}
-            name="sex"
-            required
-          >
-            <option value="" hidden>
-              Select
-            </option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-            <option value="Other">Other</option>
-          </Form.Select>
-          {msgError.sex && (
-            <span className="error-message">{msgError.sex}</span>
-          )}
-          <br />
-          <label htmlFor="sex">By-Product :</label>
-          <Form.Select
-            aria-label="Default select example"
-            onChange={handleInput}
-            name="byproduct"
-            required
-          >
-            <option value="" hidden>
-              Select
-            </option>
-            <option value="For Meat">For Meat</option>
-            <option value="Other">Other</option>
-          </Form.Select>
-
-          <br />
-          <label htmlFor="">Weight (klg/s) :</label>
-          <input
-            type="number"
-            name="weight"
-            step="0.1"
-            maxLength={3}
-            className="form-control"
-            onChange={handleInput}
-            required
-          />
-          {msgError.weight && (
-            <span className="error-message">{msgError.weight}</span>
-          )}
-          <br />
-
-          <div className="actions justify-content-end">
-            <Button
-              type="primary"
-              danger
-              onClick={() => navigateTo("/rabbits")}
-            >
-              Cancel
-            </Button>
-            <Button type="primary" onClick={handleSubmit}>
-              Add
-            </Button>
+          <div>
+            <h6>Picture :</h6>
+            <div>
+              <input
+                type="file"
+                name="files"
+                className="form-control"
+                multiple
+                accept="image/*"
+                onChange={onFileChange}
+              />
+              {imgError && <span className="error-message">{imgError}</span>}
+            </div>
+          </div>
+          <div>
+            <h6>Name :</h6>
+            <div>
+              <input
+                type="text"
+                name="name"
+                className="form-control"
+                onChange={handleInput}
+                required
+              />
+              {msgError.name && (
+                <span className="error-message">{msgError.name}</span>
+              )}
+            </div>
+          </div>
+          <div>
+            <h6>Date of birth :</h6>
+            <div>
+              <input
+                type="date"
+                name="dateOfBirth"
+                className="form-control"
+                onChange={handleInput}
+                required
+              />
+              {msgError.dateOfBirth && (
+                <span className="error-message">{msgError.dateOfBirth}</span>
+              )}
+            </div>
+          </div>
+          <div>
+            <h6>Sex :</h6>
+            <div>
+              <Form.Select
+                aria-label="Default select example"
+                onChange={handleInput}
+                name="sex"
+                required
+              >
+                <option value="" hidden></option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+              </Form.Select>
+              {msgError.sex && (
+                <span className="error-message">{msgError.sex}</span>
+              )}
+            </div>
+          </div>
+          <div>
+            <h6>Breed Type :</h6>
+            <div>
+              <Form.Select
+                aria-label="Default select example"
+                onChange={handleInput}
+                name="breed"
+                required
+              >
+                <option value="" hidden></option>
+                {breedType.map((breed, index) => (
+                  <option key={index} value={breed}>
+                    {breed}
+                  </option>
+                ))}
+              </Form.Select>
+              {msgError.breed && (
+                <span className="error-message">{msgError.breed}</span>
+              )}
+            </div>
+          </div>
+          <div>
+            <h6>Color :</h6>
+            <div>
+              <Form.Select
+                aria-label="Default select example"
+                onChange={handleInput}
+                name="color"
+                required
+              >
+                <option value="" hidden></option>
+                {rabbitColor.map((color, i) => (
+                  <option key={i} value={color}>
+                    {color}
+                  </option>
+                ))}
+              </Form.Select>
+              {msgError.color && (
+                <span className="error-message">{msgError.color}</span>
+              )}
+            </div>
+          </div>
+          <div>
+            <h6>Rabbit Type :</h6>
+            <div>
+              <Form.Select
+                aria-label="Default select example"
+                onChange={handleInput}
+                name="type"
+                required
+              >
+                <option value="" hidden></option>
+                <option value="Pet rabbits">Pet rabbits</option>
+                <option value="Meat rabbits">Meat rabbits</option>
+              </Form.Select>
+              {msgError.type && (
+                <span className="error-message">{msgError.type}</span>
+              )}
+            </div>
+          </div>
+          <div>
+            <h6>Weight :</h6>
+            <div>
+              <input
+                type="number"
+                name="weight"
+                step="0.1"
+                maxLength={3}
+                className="form-control"
+                onChange={handleInput}
+                required
+              />
+              {msgError.weight && (
+                <span className="error-message">{msgError.weight}</span>
+              )}
+            </div>
+          </div>
+          <div className="d-flex justify-content-end">
+            <div className="actions">
+              <Button
+                type="primary"
+                danger
+                onClick={() => navigateTo("/rabbits")}
+              >
+                Cancel
+              </Button>
+              <Button type="primary" onClick={handleSubmit}>
+                Add
+              </Button>
+            </div>
           </div>
         </form>
       </div>

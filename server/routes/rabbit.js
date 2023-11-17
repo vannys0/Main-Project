@@ -19,12 +19,15 @@ router.post("/add-rabbit", upload.array("files", 5), (req, res) => {
   console.log(result);
   const imagePaths = req.files.map((file) => file.filename).join();
   const sql =
-    "INSERT INTO rabbit (`id`, `name`, `date_of_birth`, `sex`, `weight`, `image_path`) VALUES (?)";
+    "INSERT INTO rabbit (`id`, `name`, `date_of_birth`, `sex`, `rabbit_type`, `color`, `breed_type`,  `weight`, `image_path`) VALUES (?)";
   const values = [
     result.id,
     result.name,
     result.dateOfBirth,
     result.sex,
+    result.type,
+    result.color,
+    result.breed,
     result.weight,
     imagePaths,
   ];

@@ -1,7 +1,6 @@
 body {
     margin: 0;
     padding: 0;
-    color: #9e9ea4;
     font-family: 'Montserrat', sans-serif;
   }
 
@@ -119,8 +118,18 @@ body {
   }
 
 /* AddRabbit */
-.main-container form {
-  width: 50%;
+.grid-container > .main-container > .form {
+  gap: 20px;
+  padding: 20px 20px 0px 20px;
+  border: 2px solid #eaeaea;
+}
+.main-container .form > div{
+  margin-bottom: 30px;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+}
+.main-container .form > div > h6 {
+  color: rgba(0, 0, 0, 0.8);
 }
 
 /* Request */

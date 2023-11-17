@@ -68,7 +68,7 @@ function Sidebar({ openSidebarToggle, OpenSidebar }) {
           <BsPersonFill className="icon" /> Profile
         </NavLink>
         <NavLink to="/rabbits" className="sidebar-list-item">
-          <BsFillGrid3X3GapFill className="icon" /> Rabbit List
+          <BsFillGrid3X3GapFill className="icon" /> Rabbits
         </NavLink>
         <NavLink to="/breeding" className="sidebar-list-item">
           <BsListCheck className="icon" /> Breeding

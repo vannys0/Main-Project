@@ -55,13 +55,6 @@ function Login() {
         ) {
           SecureStore.setItem("userToken", user);
           authContext.signIn(user);
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "Successfully Login",
-            showConfirmButton: false,
-            timer: 3000,
-          });
           navigateTo("/dashboard");
         } else {
           Swal.fire({

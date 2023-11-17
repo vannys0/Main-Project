@@ -85,9 +85,7 @@ function EditRabbit() {
                   alignItems: "center",
                 }}
                 shape="square"
-                src={`http://localhost:8081/uploads/${JSON.parse(
-                  values.image_path
-                )}`}
+                src={`http://localhost:8081/uploads/${values.image_path}`}
                 alt="avatar"
               />
             )}

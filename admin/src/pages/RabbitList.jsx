@@ -109,15 +109,18 @@ function RabbitList() {
       key: "image_path",
       render: (image_path) => {
         const imagePaths = image_path.split(",");
+        // Get only the first image path
+        const firstImagePath = imagePaths[0]; // Accessing the first element
+
         return (
           <div>
-            {imagePaths.map((image, i) => (
+            {/* Render only the first image */}
+            {firstImagePath && (
               <Image
-                key={i}
                 style={{ width: "25px", height: "25px" }}
-                src={`http://localhost:8081/uploads/${image}`}
+                src={`http://localhost:8081/uploads/${firstImagePath}`}
               />
-            ))}
+            )}
           </div>
         );
       },
