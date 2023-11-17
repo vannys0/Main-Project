@@ -15,11 +15,9 @@ const upload = multer({ storage: storage });
 
 //PostMapping
 router.post("/add-rabbit", upload.array("files", 5), (req, res) => {
-  const files = req.files;
   const result = JSON.parse(req.body.values);
   console.log(result);
-  const imagePaths = req.files.map((file) => file.filename);
-  console.log(imagePaths);
+  const imagePaths = req.files.map((file) => file.filename).join();
   const sql =
     "INSERT INTO rabbit (`id`, `name`, `date_of_birth`, `sex`, `weight`, `image_path`) VALUES (?)";
   const values = [
@@ -28,7 +26,7 @@ router.post("/add-rabbit", upload.array("files", 5), (req, res) => {
     result.dateOfBirth,
     result.sex,
     result.weight,
-    JSON.stringify(imagePaths),
+    imagePaths,
   ];
 
   db.query(sql, [values], (err, data) => {

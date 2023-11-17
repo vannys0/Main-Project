@@ -108,12 +108,17 @@ function RabbitList() {
       dataIndex: "image_path",
       key: "image_path",
       render: (image_path) => {
-        // const filename = JSON.parse(image_path);
+        const imagePaths = image_path.split(",");
         return (
-          <Image
-            style={{ width: "25px", height: "25px" }}
-            src={`http://localhost:8081/uploads/${image_path}`}
-          />
+          <div>
+            {imagePaths.map((image, i) => (
+              <Image
+                key={i}
+                style={{ width: "25px", height: "25px" }}
+                src={`http://localhost:8081/uploads/${image}`}
+              />
+            ))}
+          </div>
         );
       },
     },
