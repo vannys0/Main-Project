@@ -10,7 +10,6 @@ import appConfig from "../../config.json";
 const BASE_URL = appConfig.apiBasePath;
 
 function RabbitList() {
-  // Responsive Sidebar
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false);
   const OpenSidebar = () => {
     setOpenSidebarToggle(!openSidebarToggle);
@@ -20,7 +19,7 @@ function RabbitList() {
   const [record, setRecord] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5);
-  // Rehome Rabbit
+
   const onRehome = (e, o) => {
     axios
       .put(BASE_URL + "/update-rehome/" + o.id, {
@@ -42,7 +41,7 @@ function RabbitList() {
       })
       .catch((err) => console.log(err));
   };
-  // Get
+
   useEffect(() => {
     axios
       .get(BASE_URL + "/rabbits")
@@ -52,7 +51,7 @@ function RabbitList() {
       })
       .catch((err) => console.log(err));
   }, []);
-  // Delete Rabbit
+
   const handleDelete = async (id) => {
     Swal.fire({
       title: "Confirm delete?",
@@ -69,7 +68,7 @@ function RabbitList() {
       }
     });
   };
-  // Search Function
+
   const { Search } = Input;
   const Filter = (value) => {
     const lowerCaseValue = value.toLowerCase();
@@ -79,7 +78,6 @@ function RabbitList() {
     setRecord(filteredRabbits);
   };
 
-  // Calculate the age
   function calculateAge(dateOfBirth) {
     const birthDate = new Date(dateOfBirth);
     const currentDate = new Date();
@@ -99,25 +97,18 @@ function RabbitList() {
   // Table
   const columns = [
     {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
-    },
-    {
       title: "Image",
       dataIndex: "image_path",
       key: "image_path",
       render: (image_path) => {
         const imagePaths = image_path.split(",");
-        // Get only the first image path
-        const firstImagePath = imagePaths[0]; // Accessing the first element
+        const firstImagePath = imagePaths[0];
 
         return (
           <div>
-            {/* Render only the first image */}
             {firstImagePath && (
               <Image
-                style={{ width: "25px", height: "25px" }}
+                style={{ width: "28px", height: "28px", borderRadius: "50%" }}
                 src={`http://localhost:8081/uploads/${firstImagePath}`}
               />
             )}
@@ -126,22 +117,31 @@ function RabbitList() {
       },
     },
     {
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+    },
+    {
       title: "Age",
       dataIndex: "date_of_birth",
       key: "date_of_birth",
       render: (dateOfBirth) => {
         const age = calculateAge(dateOfBirth);
-        return `${age.years} years ${age.months} months`;
+        return `${age.years} yrs ${age.months} mos`;
       },
     },
-
     {
       title: "Sex",
       dataIndex: "sex",
       key: "sex",
     },
     {
-      title: "Weight (klg/s)",
+      title: "Breed",
+      dataIndex: "breed_type",
+      key: "breed_type",
+    },
+    {
+      title: "Weight",
       dataIndex: "weight",
       key: "weight",
     },
@@ -180,7 +180,7 @@ function RabbitList() {
       ),
     },
   ];
-  // Pagination
+
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = record.slice(indexOfFirstItem, indexOfLastItem);
@@ -198,26 +198,25 @@ function RabbitList() {
         openSidebarToggle={openSidebarToggle}
         OpenSidebar={OpenSidebar}
       />
-      <div className="main-container">
-        <h3>Rabbit List</h3>
+      <div className="main-container bg-light">
         <div className="d-flex align-items-center justify-content-between">
-          <Button type="primary" onClick={() => navigateTo("/add-rabbit")}>
-            Add Rabbit
-          </Button>
+          <h3>Rabbit List</h3>
           <Search
             style={{
               height: "40px",
               fontSize: "16px",
               width: "400px",
-              marginBottom: "10px",
-              backgroundColor: "#eaeaea",
             }}
-            placeholder="Search rabbit by name"
+            placeholder="Search"
             allowClear
-            enterButton="Search"
             size="large"
             onSearch={Filter}
           />
+        </div>
+        <div className="d-flex align-items-center justify-content-end my-2">
+          <Button type="primary" onClick={() => navigateTo("/add-rabbit")}>
+            Add
+          </Button>
         </div>
         <div style={{ overflowX: "auto" }}>
           <Table

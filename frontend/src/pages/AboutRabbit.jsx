@@ -17,14 +17,14 @@ function AboutRabbit({ data }) {
     setIsModalOpen(false);
   };
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:8081/adopt")
-      .then((res) => {
-        setRabbit(res.data[0]);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get("http://localhost:8081/adopt")
+  //     .then((res) => {
+  //       setRabbit(res.data[0]);
+  //     })
+  //     .catch((err) => console.log(err));
+  // }, []);
 
   function calculateAge(dateOfBirth) {
     const birthDate = new Date(dateOfBirth);

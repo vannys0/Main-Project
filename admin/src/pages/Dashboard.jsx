@@ -120,10 +120,10 @@ function Dashboard() {
         openSidebarToggle={openSidebarToggle}
         OpenSidebar={OpenSidebar}
       />
-      <main className="main-container">
+      <main className="main-container bg-light">
         <h3>Dashboard</h3>
         <div className="main-cards">
-          <div className="card" onClick={(e) => navigateTo("/clients")}>
+          <div className="card-div" onClick={(e) => navigateTo("/clients")}>
             <div className="card-inner">
               <h5>Clients</h5>
               <div style={{ backgroundColor: "#1677ff" }}>
@@ -133,7 +133,7 @@ function Dashboard() {
             <h5>{userCount}</h5>
           </div>
 
-          <div className="card" onClick={() => navigateTo("/request")}>
+          <div className="card-div" onClick={() => navigateTo("/request")}>
             <div className="card-inner">
               <h5>Pending</h5>
               <div style={{ backgroundColor: "#faad14" }}>
@@ -142,7 +142,7 @@ function Dashboard() {
             </div>
             <h5>{pending}</h5>
           </div>
-          <div className="card" onClick={(e) => navigateTo("/rabbits")}>
+          <div className="card-div" onClick={(e) => navigateTo("/rabbits")}>
             <div className="card-inner">
               <h5>Rabbits</h5>
               <div style={{ backgroundColor: "#52c41a" }}>
@@ -151,7 +151,7 @@ function Dashboard() {
             </div>
             <h5>{rabbitCount}</h5>
           </div>
-          <div className="card">
+          <div className="card-div">
             <div className="card-inner">
               <h5>Upcoming</h5>
               <div style={{ backgroundColor: "#ff4d4f" }}>
@@ -170,7 +170,7 @@ function Dashboard() {
               boxShadow:
                 "rgba(99, 99, 99, 0.2) 0px 2px 4px 0px, rgba(99, 99, 99, 0.1) 0px -2px 8px 0px",
               padding: "10px",
-              borderRadius: "5px",
+              backgroundColor: "#fff",
             }}
             width={500}
             height={300}
@@ -199,7 +199,7 @@ function Dashboard() {
               boxShadow:
                 "rgba(99, 99, 99, 0.2) 0px 2px 4px 0px, rgba(99, 99, 99, 0.1) 0px -2px 8px 0px",
               padding: "10px",
-              borderRadius: "5px",
+              backgroundColor: "#fff",
             }}
             width={500}
             height={300}
@@ -232,7 +232,7 @@ function Dashboard() {
               boxShadow:
                 "rgba(99, 99, 99, 0.2) 0px 2px 4px 0px, rgba(99, 99, 99, 0.1) 0px -2px 8px 0px",
               padding: "10px",
-              borderRadius: "5px",
+              backgroundColor: "#fff",
             }}
           >
             <h6>Recent Added</h6>
@@ -254,7 +254,7 @@ function Dashboard() {
               boxShadow:
                 "rgba(99, 99, 99, 0.2) 0px 2px 4px 0px, rgba(99, 99, 99, 0.1) 0px -2px 8px 0px",
               padding: "10px",
-              borderRadius: "5px",
+              backgroundColor: "#fff",
             }}
           >
             <h6>Recent Adoption</h6>

@@ -91,7 +91,7 @@ function Login() {
   }
 
   return (
-    <div className="loginPage">
+    <div className="loginPage bg-light">
       <div className="container">
         <div className="welcome-div">
           <h2>E-LEPORIDAE</h2>

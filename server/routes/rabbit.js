@@ -143,11 +143,14 @@ router.get("/edit-rabbit/:id", (req, res) => {
 //PutMapping
 router.put("/update-rabbit/:id", (req, res) => {
   const sql =
-    "UPDATE rabbit SET `name` = ?, `date_of_birth` = ?, `sex` = ?, `weight` = ? WHERE id = ?";
+    "UPDATE rabbit SET `name` = ?, `date_of_birth` = ?, `sex` = ?, `breed_type` = ?, `color` = ?, `rabbit_type` = ?, `weight` = ? WHERE id = ?";
   const values = [
     req.body.name,
-    req.body.dateOfBirth,
+    req.body.date_of_birth,
     req.body.sex,
+    req.body.breed,
+    req.body.color,
+    req.body.type,
     req.body.weight,
   ];
   const id = req.params.id;

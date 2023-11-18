@@ -101,9 +101,8 @@ function Delivery() {
         openSidebarToggle={openSidebarToggle}
         OpenSidebar={OpenSidebar}
       />
-      <div className="main-container">
+      <div className="main-container bg-light">
         <h3>Delivery</h3>
-        <br />
         <div style={{ overflowX: "auto" }}>
           <Table
             columns={columns}

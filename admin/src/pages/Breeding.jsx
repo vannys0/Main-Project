@@ -3,7 +3,7 @@ import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import "../Style.css";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { Table, Button, Pagination } from "antd"; // Import Ant Design Table, Button, and Pagination
+import { Table, Button, Pagination, Input } from "antd"; // Import Ant Design Table, Button, and Pagination
 import axios from "axios";
 import BreedingDetails from "./BreedingDetails";
 import Swal from "sweetalert2";
@@ -18,6 +18,7 @@ function Breeding() {
   const navigateTo = useNavigate();
   const { id } = useParams();
   const [data, setData] = useState([]);
+  const [filtered, setFiltered] = useState([]);
   const [pageNumber, setPageNumber] = useState(1); // Ant Design Pagination starts from 1
   const itemsPerPage = 7;
 
@@ -86,6 +87,15 @@ function Breeding() {
     },
   ];
 
+  const { Search } = Input;
+  const Filter = (value) => {
+    const lowerCaseValue = value.toLowerCase().trim();
+    const filteredPair = data.filter((pair) =>
+      pair.id.toString().toLowerCase().includes(lowerCaseValue)
+    );
+    setData(filteredPair);
+  };
+
   return (
     <div className="grid-container">
       <Header OpenSidebar={OpenSidebar} />
@@ -93,12 +103,24 @@ function Breeding() {
         openSidebarToggle={openSidebarToggle}
         OpenSidebar={OpenSidebar}
       />
-      <div className="main-container">
-        <h3>Breeding List</h3>
-        <br />
-        <div className="d-flex">
+      <div className="main-container bg-light">
+        <div className="d-flex align-items-center justify-content-between">
+          <h3>Breeding List</h3>
+          <Search
+            style={{
+              height: "40px",
+              fontSize: "16px",
+              width: "400px",
+            }}
+            placeholder="Search"
+            allowClear
+            size="large"
+            onSearch={Filter}
+          />
+        </div>
+        <div className="d-flex justify-content-end my-2">
           <Button type="primary" onClick={() => navigateTo("/add-breed-pair")}>
-            Add Pair
+            Add
           </Button>
         </div>
         <div style={{ overflowX: "auto" }}>

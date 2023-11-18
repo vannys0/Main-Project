@@ -56,7 +56,7 @@ function Request() {
         Swal.fire("Declined!", "Request has been declined.", "success");
         axios
           .put(BASE_URL + "/decline-adoption/" + o.id, {
-            comment: result.value
+            comment: result.value,
           })
           .then((res) => {
             window.location.reload();
@@ -90,9 +90,8 @@ function Request() {
         openSidebarToggle={openSidebarToggle}
         OpenSidebar={OpenSidebar}
       />
-      <div className="main-container">
+      <div className="main-container bg-light">
         <h3>Adoption request</h3>
-        <br />
         <div style={{ overflowX: "auto" }}>
           <Table dataSource={getDisplayedData()} pagination={false}>
             <Table.Column title="Name" dataIndex="fullname" key="name" />
@@ -127,7 +126,7 @@ function Request() {
                 </span>
               )}
             />
-             <Table.Column title="Comment" dataIndex="comment" key="comment" />
+            <Table.Column title="Comment" dataIndex="comment" key="comment" />
             <Table.Column
               title="Action"
               key="action"

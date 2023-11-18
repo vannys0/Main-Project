@@ -104,8 +104,7 @@ function AddRabbit() {
         openSidebarToggle={openSidebarToggle}
         OpenSidebar={OpenSidebar}
       />
-      <div className="main-container">
-        <h3>Add rabbit</h3>
+      <div className="main-container bg-light">
         <form className="form" encType="multipart/form-data">
           <div>
             <h6>Picture :</h6>
@@ -222,8 +221,8 @@ function AddRabbit() {
                 required
               >
                 <option value="" hidden></option>
-                <option value="Pet rabbits">Pet rabbits</option>
-                <option value="Meat rabbits">Meat rabbits</option>
+                <option value="Pet rabbits">Pet rabbit</option>
+                <option value="Meat rabbits">Meat rabbit</option>
               </Form.Select>
               {msgError.type && (
                 <span className="error-message">{msgError.type}</span>

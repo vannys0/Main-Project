@@ -51,6 +51,7 @@ body {
       'sidebar main main main';
     height: 100vh;
     width: 100vw;
+    
     font-family: 'Montserrat', sans-serif;
   }
 
@@ -59,8 +60,6 @@ body {
     grid-area: main;
     overflow-y: auto;
     padding: 20px;
-    background-color: #fff;
-    color: #797979;
     font-family: 'Montserrat', sans-serif;
   }
   
@@ -81,14 +80,13 @@ body {
     gap: 20px;
     margin: 15px 0;
   }
-  .card {
+  .card-div {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    color: #eaeaea;
     padding: 8px 15px;
-    border-radius: 5px;
     cursor: pointer;
+    background-color: #fff;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px
   4px 0px, rgba(99, 99, 99, 0.1) 0px -2px 8px 0px;
   }
@@ -120,7 +118,8 @@ body {
 /* AddRabbit */
 .grid-container > .main-container > .form {
   gap: 20px;
-  padding: 20px 20px 0px 20px;
+  padding: 40px 40px 0px 40px;
+  background-color: #fff;
   border: 2px solid #eaeaea;
 }
 .main-container .form > div{
@@ -146,6 +145,7 @@ body {
   align-items: center;
   gap: 30px;
   padding: 30px;
+  background-color: #fff;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px
   4px 0px, rgba(99, 99, 99, 0.1) 0px -2px 8px 0px;
 }
@@ -189,17 +189,19 @@ body {
   /* EditRabbit */
   .grid-container .main-container .edit-div {
     width: 100%;
-    display: flex;
+    display: grid;
+    align-items: start;
+    grid-template-columns: 1fr 2fr;
     margin: 0;
+    background-color: #fff;
     overflow-x: hidden;
   }
-  .grid-container > .main-container > .edit-div > .rabbit-form {
-    width: 50%;
+  .grid-container > .main-container > .edit-div > .rabbit-form > div {
+    display: grid;
+    margin-bottom: 20px;
+    grid-template-columns: 1fr 2fr;
   }
-  .grid-container .main-container .edit-div > div {
-    width: 50%;
-  }
-
+  
   /* AdminProfile */
   .profile-div {
     display: grid;

@@ -91,23 +91,22 @@ function Clients() {
         openSidebarToggle={openSidebarToggle}
         OpenSidebar={OpenSidebar}
       />
-      <div className="main-container">
-        <h3>USERS</h3>
-        <br />
-        <Search
-          style={{
-            height: "40px",
-            fontSize: "16px",
-            width: "400px",
-            marginBottom: "10px",
-            backgroundColor: "#eaeaea",
-          }}
-          placeholder="Search user by name"
-          allowClear
-          enterButton="Search"
-          size="large"
-          onSearch={onSearch}
-        />
+      <div className="main-container bg-light">
+        <div className="d-flex justify-content-between">
+          <h3>Users</h3>
+          <Search
+            style={{
+              height: "40px",
+              fontSize: "16px",
+              width: "400px",
+              marginBottom: "10px",
+            }}
+            placeholder="Search"
+            allowClear
+            size="large"
+            onSearch={onSearch}
+          />
+        </div>
 
         <div style={{ overflowX: "auto" }}>
           <Table

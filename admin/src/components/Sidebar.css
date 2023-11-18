@@ -1,5 +1,7 @@
-
-  /* Sidebar  */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100&family=Nunito+Sans:opsz,wght@6..12,300&family=Poppins:wght@200;300;400;500;600&display=swap');
+* {
+  font-family: 'Poppins', sans-serif;
+}
   #sidebar {
     position: fixed;
     left: 0;
@@ -12,11 +14,9 @@
     overflow-y: auto;
     transition: all 0.5s;
     -webkit-transition: all 0.5s;
-    font-family: 'Montserrat', sans-serif;
   }
   
   .active {
-    border-radius: 0 50px 50px 0;
     background-color: #1677ff;
   }
 

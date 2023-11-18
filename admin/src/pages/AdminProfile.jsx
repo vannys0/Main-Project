@@ -23,7 +23,7 @@ function AdminProfile() {
         openSidebarToggle={openSidebarToggle}
         OpenSidebar={OpenSidebar}
       />
-      <div className="main-container">
+      <div className="main-container bg-light">
         <h3>Admin Profile</h3>
         <div className="client-profile">
           <Avatar
