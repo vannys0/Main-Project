@@ -156,7 +156,7 @@ function EditRabbit() {
                   name="breed"
                   required
                 >
-                  <option value="" hidden>
+                  <option value={values.breed_type} hidden>
                     {values.breed_type}
                   </option>
                   {breedType.map((breed, index) => (
@@ -202,7 +202,7 @@ function EditRabbit() {
                   name="type"
                   required
                 >
-                  <option value="" hidden>
+                  <option value={values.rabbit_type} hidden>
                     {values.rabbit_type}
                   </option>
                   <option value="Pet rabbits">Pet rabbit</option>

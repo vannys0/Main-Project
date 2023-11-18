@@ -165,8 +165,8 @@ router.put("/update-rabbit/:id", (req, res) => {
 
 router.put("/update-rehome/:id", (req, res) => {
   console.log(req.body);
-  const sql = "UPDATE rabbit SET `rehome_status` = ? WHERE id = ?";
-  const values = [req.body.rehome_status];
+  const sql = "UPDATE rabbit SET `rehome_status` = ?, `price` = ? WHERE id = ?";
+  const values = [req.body.rehome_status, req.body.price];
   const id = req.params.id;
 
   db.query(sql, [...values, id], (err, data) => {

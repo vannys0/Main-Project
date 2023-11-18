@@ -46,7 +46,6 @@ export const rabbitColor = [
   "Fawn",
   "Agouti",
   "Tan",
-  "Blue",
   "Chinchilla",
   "Sooty",
   "Other",

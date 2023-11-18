@@ -21,14 +21,28 @@ function RabbitList() {
   const [itemsPerPage] = useState(5);
 
   const onRehome = (e, o) => {
-    axios
-      .put(BASE_URL + "/update-rehome/" + o.id, {
-        rehome_status: "Rehome",
-      })
-      .then((res) => {
-        window.location.reload();
-      })
-      .catch((err) => console.log(err));
+    Swal.fire({
+      title: "Confirm?",
+      text: "When rehoming this rabbit, the adopter will have the opportunity to request an adoption.",
+      input: "number",
+      inputPlaceholder: "Please input the specific amount",
+      showCancelButton: true,
+      confirmButtonColor: "#2e7d32",
+      cancelButtonColor: "#797979",
+      confirmButtonText: "Rehome",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .put(BASE_URL + "/update-rehome/" + o.id, {
+            rehome_status: "Rehome",
+            price: result.value,
+          })
+          .then((res) => {
+            window.location.reload();
+          })
+          .catch((err) => console.log(err));
+      }
+    });
   };
 
   const onUnRehome = (e, o) => {
