@@ -155,9 +155,14 @@ function RabbitList() {
       key: "breed_type",
     },
     {
-      title: "Weight",
-      dataIndex: "weight",
-      key: "weight",
+      title: "Color",
+      dataIndex: "color",
+      key: "color",
+    },
+    {
+      title: "Type",
+      dataIndex: "rabbit_type",
+      key: "rabbit_type",
     },
     {
       title: "Actions",

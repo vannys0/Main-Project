@@ -148,9 +148,9 @@ router.put("/update-rabbit/:id", (req, res) => {
     req.body.name,
     req.body.date_of_birth,
     req.body.sex,
-    req.body.breed,
+    req.body.breed_type,
     req.body.color,
-    req.body.type,
+    req.body.rabbit_type,
     req.body.weight,
   ];
   const id = req.params.id;

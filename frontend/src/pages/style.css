@@ -1,8 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100&family=Nunito+Sans:opsz,wght@6..12,300&family=Poppins:wght@200;300;400;500;600&display=swap');
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Monserrat', sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
 html {
     font-size: 90%;

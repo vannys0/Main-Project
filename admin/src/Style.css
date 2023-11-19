@@ -12,7 +12,8 @@ body {
   }
 
   .error-message {
-    color: red;
+    color: #ff5757;
+    font-size: 14px;
   }
 
   .filter-btn a {

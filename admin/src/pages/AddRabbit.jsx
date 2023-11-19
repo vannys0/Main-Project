@@ -6,7 +6,8 @@ import Header from "../components/Header";
 import axios from "axios";
 import { Form } from "react-bootstrap";
 import { v4 as uuidv4 } from "uuid";
-import { Select, Button } from "antd";
+import { Input, DatePicker, Select, Button, Upload, InputNumber } from "antd";
+import ImgCrop from "antd-img-crop";
 import { breedType, rabbitColor } from "./API/RabbitApi";
 import appConfig from "../../config.json";
 const BASE_URL = appConfig.apiBasePath; //e.g "http://localhost:8080/api"
@@ -32,6 +33,7 @@ function AddRabbit() {
     weight: "",
   });
   const [selectedFiles, setSelectedFiles] = useState(null);
+
   const onFileChange = (e) => {
     const files = e.target.files;
     setSelectedFiles(files);
@@ -43,37 +45,46 @@ function AddRabbit() {
 
   const handleInput = (e) => {
     setValues((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-    console.log(e.target.value);
+    setImgError("");
+  };
+
+  const handleInputSelect = (name, value) => {
+    setValues({ ...values, [name]: value });
+    console.log(value);
+  };
+
+  const handleDateChange = (name, value) => {
+    setValues({ ...values, [name]: value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const validationError = {};
-    if (!file) {
+    if (selectedFiles === null) {
       setImgError("No selected file");
-      return;
     }
     const errMessage = "This field is required";
 
-    if (!values.name.trim()) {
+    if (values.name === "") {
       validationError.name = errMessage;
     }
-    if (!values.dateOfBirth.trim()) {
+    if (values.dateOfBirth === "") {
       validationError.dateOfBirth = errMessage;
     }
-    if (!values.sex.trim()) {
+    if (values.sex == "") {
       validationError.sex = errMessage;
     }
-    if (!values.breed.trim()) {
+    if (values.breed === "") {
       validationError.breed = errMessage;
     }
-    if (!values.color.trim()) {
+    if (values.color === "") {
       validationError.color = errMessage;
     }
-    if (!values.type.trim()) {
+    if (values.type === "") {
       validationError.type = errMessage;
     }
-    if (!values.weight.trim()) {
+    if (values.weight === "") {
       validationError.weight = errMessage;
     }
 
@@ -107,7 +118,7 @@ function AddRabbit() {
       <div className="main-container bg-light">
         <form className="form" encType="multipart/form-data">
           <div>
-            <h6>Picture :</h6>
+            <label>Picture :</label>
             <div>
               <input
                 type="file"
@@ -121,14 +132,13 @@ function AddRabbit() {
             </div>
           </div>
           <div>
-            <h6>Name :</h6>
+            <label>Name :</label>
             <div>
-              <input
-                type="text"
+              <Input
                 name="name"
-                className="form-control"
+                style={{ fontFamily: "Poppins" }}
                 onChange={handleInput}
-                required
+                placeholder="Name"
               />
               {msgError.name && (
                 <span className="error-message">{msgError.name}</span>
@@ -136,13 +146,13 @@ function AddRabbit() {
             </div>
           </div>
           <div>
-            <h6>Date of birth :</h6>
+            <label>Date of birth :</label>
             <div>
-              <input
-                type="date"
+              <DatePicker
+                className="w-100"
                 name="dateOfBirth"
-                className="form-control"
-                onChange={handleInput}
+                onChange={(value) => handleDateChange("dateOfBirth", value)}
+                placeholder="Date of Birth"
                 required
               />
               {msgError.dateOfBirth && (
@@ -151,88 +161,90 @@ function AddRabbit() {
             </div>
           </div>
           <div>
-            <h6>Sex :</h6>
+            <label>Sex :</label>
             <div>
-              <Form.Select
-                aria-label="Default select example"
-                onChange={handleInput}
-                name="sex"
-                required
+              <Select
+                style={{ width: "100%" }}
+                placeholder="Sex"
+                onChange={(value) => handleInputSelect("sex", value)}
               >
-                <option value="" hidden></option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-                <option value="Other">Other</option>
-              </Form.Select>
+                <Select.Option value="Male">Male</Select.Option>
+                <Select.Option value="Female">Female</Select.Option>
+                <Select.Option value="Other">Other</Select.Option>
+              </Select>
               {msgError.sex && (
                 <span className="error-message">{msgError.sex}</span>
               )}
             </div>
           </div>
           <div>
-            <h6>Breed Type :</h6>
+            <label>Breed Type :</label>
             <div>
-              <Form.Select
-                aria-label="Default select example"
-                onChange={handleInput}
-                name="breed"
-                required
+              <Select
+                style={{ width: "100%" }}
+                placeholder="Breed"
+                onChange={(value) => handleInputSelect("breed", value)}
               >
-                <option value="" hidden></option>
                 {breedType.map((breed, index) => (
-                  <option key={index} value={breed}>
+                  <Select.Option key={index} value={breed}>
                     {breed}
-                  </option>
+                  </Select.Option>
                 ))}
-              </Form.Select>
+              </Select>
               {msgError.breed && (
                 <span className="error-message">{msgError.breed}</span>
               )}
             </div>
           </div>
           <div>
-            <h6>Color :</h6>
+            <label>Color :</label>
             <div>
-              <Form.Select
-                aria-label="Default select example"
-                onChange={handleInput}
-                name="color"
-                required
+              <Select
+                style={{ width: "100%" }}
+                placeholder="Color"
+                onChange={(value) => handleInputSelect("color", value)}
               >
-                <option value="" hidden></option>
-                {rabbitColor.map((color, i) => (
-                  <option key={i} value={color}>
+                {rabbitColor.map((color, index) => (
+                  <Select.Option key={index} value={color}>
                     {color}
-                  </option>
+                  </Select.Option>
                 ))}
-              </Form.Select>
+              </Select>
               {msgError.color && (
                 <span className="error-message">{msgError.color}</span>
               )}
             </div>
           </div>
           <div>
-            <h6>Rabbit Type :</h6>
+            <label>Rabbit Type :</label>
             <div>
-              <Form.Select
-                aria-label="Default select example"
-                onChange={handleInput}
-                name="type"
-                required
+              <Select
+                style={{ width: "100%" }}
+                placeholder="Type"
+                onChange={(value) => handleInputSelect("type", value)}
               >
-                <option value="" hidden></option>
-                <option value="Pet rabbits">Pet rabbit</option>
-                <option value="Meat rabbits">Meat rabbit</option>
-              </Form.Select>
+                <Select.Option value="Pet rabbit">Pet rabbit</Select.Option>
+                <Select.Option value="Meat rabbit">Meat rabbit</Select.Option>
+              </Select>
               {msgError.type && (
                 <span className="error-message">{msgError.type}</span>
               )}
             </div>
           </div>
           <div>
-            <h6>Weight :</h6>
+            <label>Weight :</label>
             <div>
-              <input
+              <InputNumber
+                style={{
+                  width: "100%",
+                }}
+                min={1}
+                type="number"
+                step={0.1}
+                placeholder="kilograms"
+                onChange={(value) => handleInputSelect("weight", value)}
+              />
+              {/* <input
                 type="number"
                 name="weight"
                 step="0.1"
@@ -240,7 +252,7 @@ function AddRabbit() {
                 className="form-control"
                 onChange={handleInput}
                 required
-              />
+              /> */}
               {msgError.weight && (
                 <span className="error-message">{msgError.weight}</span>
               )}

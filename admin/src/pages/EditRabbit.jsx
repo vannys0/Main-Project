@@ -4,8 +4,18 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import axios from "axios";
+import moment from "moment";
 import { Form, Carousel } from "react-bootstrap";
-import { Image, Button, Space, Input, QRCode, Avatar } from "antd";
+import {
+  Image,
+  Button,
+  Select,
+  Space,
+  Input,
+  InputNumber,
+  Avatar,
+  DatePicker,
+} from "antd";
 import { breedType, rabbitColor } from "./API/RabbitApi";
 import Swal from "sweetalert2";
 import RabbitQr from "./RabbitQr";
@@ -24,9 +34,9 @@ function EditRabbit() {
     name: "",
     date_of_birth: "",
     sex: "",
-    breed: "",
+    breed_type: "",
     color: "",
-    type: "",
+    rabbit_type: "",
     weight: "",
   });
 
@@ -44,6 +54,15 @@ function EditRabbit() {
     setValues((prev) => ({ ...prev, [e.target.name]: [e.target.value] }));
   };
 
+  const handleDateChange = (date, dateString) => {
+    setValues((prev) => ({ ...prev, date_of_birth: dateString }));
+  };
+
+  const handleInputSelect = (name, value) => {
+    setValues({ ...values, [name]: value });
+    console.log(value);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -55,7 +74,7 @@ function EditRabbit() {
           icon: "success",
           title: "Updated",
           showConfirmButton: false,
-          timer: 3000,
+          timer: 1500,
         });
         navigateTo("/rabbits");
       })
@@ -99,22 +118,32 @@ function EditRabbit() {
           </div>
           <form className="rabbit-form">
             <div>
-              <h6>Name :</h6>
+              <label>Name :</label>
               <div>
-                <input
-                  type="text"
+                <Input
                   name="name"
+                  style={{ fontFamily: "Poppins" }}
                   value={values.name}
-                  className="form-control"
                   onChange={handleInput}
-                  required
+                  placeholder="Name"
                 />
               </div>
             </div>
             <div>
-              <h6>Date of birth :</h6>
+              <label>Date of birth :</label>
               <div>
-                <input
+                <DatePicker
+                  className="w-100"
+                  value={
+                    values.date_of_birth ? moment(values.date_of_birth) : null
+                  }
+                  onChange={(date, dateString) =>
+                    handleDateChange(date, dateString)
+                  }
+                  required
+                />
+
+                {/* <input
                   type="date"
                   name="date_of_birth"
                   value={
@@ -127,104 +156,101 @@ function EditRabbit() {
                   className="form-control"
                   onChange={handleInput}
                   required
-                />
+                /> */}
               </div>
             </div>
             <div>
-              <h6>Sex :</h6>
+              <label>Sex :</label>
               <div>
-                <Form.Select
-                  aria-label="Default select example"
-                  onChange={handleInput}
+                <Select
+                  style={{ width: "100%" }}
                   name="sex"
+                  value={values.sex}
+                  onChange={(value) => handleInputSelect("sex", value)}
                 >
-                  <option value="" hidden>
-                    {values.sex}
-                  </option>
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                </Form.Select>
+                  <Select.Option value="Male">Male</Select.Option>
+                  <Select.Option value="Female">Female</Select.Option>
+                  <Select.Option value="Other">Other</Select.Option>
+                </Select>
               </div>
             </div>
 
             <div>
-              <h6>Breed Type :</h6>
+              <label>Breed Type :</label>
               <div>
-                <Form.Select
-                  aria-label="Default select example"
-                  onChange={handleInput}
-                  name="breed"
-                  required
+                <Select
+                  style={{ width: "100%" }}
+                  name="breed_type"
+                  value={values.breed_type}
+                  onChange={(value) => handleInputSelect("breed_type", value)}
                 >
-                  <option value={values.breed_type} hidden>
+                  {/* <Select.Option value={values.breed_type} hidden>
                     {values.breed_type}
-                  </option>
+                  </Select.Option> */}
                   {breedType.map((breed, index) => (
-                    <option key={index} value={breed}>
+                    <Select.Option key={index} value={breed}>
                       {breed}
-                    </option>
+                    </Select.Option>
                   ))}
-                </Form.Select>
+                </Select>
                 {msgError.breed && (
                   <span className="error-message">{msgError.breed}</span>
                 )}
               </div>
             </div>
             <div>
-              <h6>Color :</h6>
+              <label>Color :</label>
               <div>
-                <Form.Select
-                  aria-label="Default select example"
-                  onChange={handleInput}
+                <Select
+                  style={{ width: "100%" }}
                   name="color"
-                  required
+                  value={values.color}
+                  onChange={(value) => handleInputSelect("color", value)}
                 >
-                  <option value={values.color} hidden>
+                  <Select.Option value={values.color} hidden>
                     {values.color}
-                  </option>
-                  {rabbitColor.map((color, i) => (
-                    <option key={i} value={color}>
+                  </Select.Option>
+                  {rabbitColor.map((color, index) => (
+                    <Select.Option key={index} value={color}>
                       {color}
-                    </option>
+                    </Select.Option>
                   ))}
-                </Form.Select>
+                </Select>
                 {msgError.color && (
                   <span className="error-message">{msgError.color}</span>
                 )}
               </div>
             </div>
             <div>
-              <h6>Rabbit Type :</h6>
+              <label>Rabbit Type :</label>
               <div>
-                <Form.Select
-                  aria-label="Default select example"
-                  onChange={handleInput}
-                  name="type"
-                  required
+                <Select
+                  style={{ width: "100%" }}
+                  name="rabbit_type"
+                  value={values.rabbit_type}
+                  onChange={(value) => handleInputSelect("rabbit_type", value)}
                 >
-                  <option value={values.rabbit_type} hidden>
-                    {values.rabbit_type}
-                  </option>
-                  <option value="Pet rabbits">Pet rabbit</option>
-                  <option value="Meat rabbits">Meat rabbit</option>
-                </Form.Select>
+                  <Select.Option value="Pet rabbit">Pet rabbit</Select.Option>
+                  <Select.Option value="Meat rabbit">Meat rabbit</Select.Option>
+                  <Select.Option value="Breeding rabbit">
+                    Breeding rabbit
+                  </Select.Option>
+                </Select>
                 {msgError.type && (
                   <span className="error-message">{msgError.type}</span>
                 )}
               </div>
             </div>
             <div>
-              <h6>Weight :</h6>
+              <label>Weight :</label>
               <div>
-                <input
+                <InputNumber
+                  style={{ width: "100%" }}
+                  min={1}
                   type="number"
-                  name="weight"
-                  step="0.1"
-                  maxLength={3}
+                  step={0.1}
                   value={values.weight}
-                  className="form-control"
-                  onChange={handleInput}
-                  required
+                  onChange={(value) => handleInputSelect("weight", value)}
                 />
               </div>
             </div>
