@@ -6,6 +6,7 @@ import { Form } from "react-bootstrap";
 import { Html5QrcodeScanner } from "html5-qrcode";
 import axios from "axios";
 import { Button } from "antd";
+import { v4 as uuidv4 } from "uuid";
 import appConfig from "../../config.json";
 import { useNavigate } from "react-router-dom";
 const BASE_URL = appConfig.apiBasePath;
@@ -16,29 +17,12 @@ function BreedPair() {
     setOpenSidebarToggle(!openSidebarToggle);
   };
   const navigateTo = useNavigate();
+  const [scanResult, setScanResult] = useState();
+  const [scanResult1, setScanResult1] = useState();
   const [maleRabbits, setMaleRabbits] = useState([]);
   const [femaleRabbits, setFemaleRabbits] = useState([]);
 
-  useEffect(() => {
-    axios
-      .get(BASE_URL + "/rabbit/male")
-      .then((res) => {
-        setMaleRabbits(res.data);
-      })
-      .catch((err) => console.log(err));
-  }, []);
-
-  useEffect(() => {
-    axios
-      .get(BASE_URL + "/rabbit/female")
-      .then((res) => {
-        setFemaleRabbits(res.data);
-      })
-      .catch((err) => console.log(err));
-  }, []);
-
-  const [scanResult, setScanResult] = useState();
-  const [scanResult1, setScanResult1] = useState();
+  const currentDate = new Date();
 
   useEffect(() => {
     const scanner = new Html5QrcodeScanner("reader", {
@@ -86,8 +70,10 @@ function BreedPair() {
   const onPair = (e) => {
     axios
       .post(BASE_URL + "/pair-rabbit", {
-        male_rabbit_id: scanResult.substring(4, scanResult.indexOf(",")),
-        female_rabbit_id: scanResult1.substring(4, scanResult1.indexOf(",")),
+        id: uuidv4(),
+        male_rabbit_id: scanResult,
+        female_rabbit_id: scanResult1,
+        date: currentDate,
       })
       .then((res) => {
         console.log(res);
@@ -97,6 +83,15 @@ function BreedPair() {
     console.log("onpair");
   };
 
+  const readerStyle = {
+    border: "2px solid #333",
+    borderRadius: "8px",
+    margin: "20px",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  };
+
   return (
     <div className="grid-container">
       <Header OpenSidebar={OpenSidebar} />
@@ -104,53 +99,29 @@ function BreedPair() {
         openSidebarToggle={openSidebarToggle}
         OpenSidebar={OpenSidebar}
       />
-      <div className="main-container">
-        <h3>Add Rabbit Pair</h3>
+      <div className="main-container bg-light">
+        <h3>Add Breeding Pair</h3>
         <br />
         <div className="breed-ground">
           <div className="ground">
-            Male
-            <Form.Select aria-label="Default select example">
-              <option value="" hidden>
-                Select rabbit
-              </option>
-              {maleRabbits.map((data, i) => (
-                <option key={i} value={data.name}>
-                  {data.name}
-                </option>
-              ))}
-            </Form.Select>
-            <span>or</span>
             {scanResult ? (
-              <div>Result: {scanResult}</div>
+              <span>ID: {scanResult}</span>
             ) : (
               <div id="reader"></div>
             )}
           </div>
-          <div className="center-ground">Matching result</div>
+          <div className="d-flex justify-content-center">
+            <h6> Matching result</h6>
+          </div>
           <div className="ground">
-            Female
-            <Form.Select aria-label="Default select example">
-              <option value="" hidden>
-                Select rabbit
-              </option>
-              {femaleRabbits.map((data, i) => (
-                <option key={i} value={data.name}>
-                  {data.name}
-                </option>
-              ))}
-            </Form.Select>
-            <span>or</span>
             {scanResult1 ? (
-              <div>Result: {scanResult1}</div>
+              <span>ID: {scanResult1}</span>
             ) : (
               <div id="reader1"></div>
             )}
           </div>
         </div>
-        <br />
-        <br />
-        <div className="actions">
+        <div className="actions d-flex justify-content-end my-2">
           <Button
             type="primary"
             danger

@@ -15,7 +15,7 @@ function Clients() {
   const navigateTo = useNavigate();
   const [clients, setClients] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
-  const clientsPerPage = 7;
+  const clientsPerPage = 6;
   const [searchedClients, setSearchedClients] = useState([]); // State for searched clients
 
   useEffect(() => {
@@ -108,7 +108,7 @@ function Clients() {
           />
         </div>
 
-        <div style={{ overflowX: "auto" }}>
+        <div className="tables">
           <Table
             columns={columns}
             dataSource={displayedClients}

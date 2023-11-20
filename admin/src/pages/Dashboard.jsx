@@ -187,7 +187,7 @@ function Dashboard() {
             <YAxis />
             <Tooltip />
             <Legend />
-            <Bar dataKey="Adopt" fill="#8884d8" />
+            <Bar dataKey="Adopt" fill="#1677ff" />
           </BarChart>
         </ResponsiveContainer>
 
@@ -219,7 +219,7 @@ function Dashboard() {
             <Line
               type="monotone"
               dataKey="Sales"
-              stroke="#8884d8"
+              stroke="#1677ff"
               activeDot={{ r: 8 }}
             />
           </LineChart>
@@ -241,10 +241,11 @@ function Dashboard() {
                 <Table.Column title="Rabbit name" dataIndex="name" key="name" />
                 <Table.Column title="Sex" dataIndex="sex" key="sex" />
                 <Table.Column
-                  title="Date of birth"
-                  dataIndex="date_of_birth"
-                  key="dateOfBirth"
+                  title="Breed"
+                  dataIndex="breed_type"
+                  key="breed_type"
                 />
+                <Table.Column title="Color" dataIndex="color" key="color" />
               </Table>
             </div>
           </div>
@@ -266,7 +267,7 @@ function Dashboard() {
                   key="fullname"
                 />
                 <Table.Column
-                  title="Date"
+                  title="Adoption Date"
                   dataIndex="adoption_date"
                   key="adoption_date"
                 />

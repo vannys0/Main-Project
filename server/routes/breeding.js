@@ -15,11 +15,12 @@ router.get("/breeding", (req, res) => {
 
 router.post("/pair-rabbit", (req, res) => {
   const sql =
-    "INSERT INTO breeding_pair (`buck_id`, `doe_id`, `pairing_date` ) VALUES (?)";
+    "INSERT INTO breeding_pair (`id`, `buck_id`, `doe_id`, `pairing_date` ) VALUES (?)";
   const values = [
+    req.body.id,
     req.body.male_rabbit_id,
     req.body.female_rabbit_id,
-    new Date().toLocaleDateString(),
+    req.body.date,
   ];
   db.query(sql, [values], (err, data) => {
     if (err) {

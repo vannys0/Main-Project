@@ -8,6 +8,7 @@ import { Form } from "react-bootstrap";
 import { v4 as uuidv4 } from "uuid";
 import { Input, DatePicker, Select, Button, Upload, InputNumber } from "antd";
 import ImgCrop from "antd-img-crop";
+import Swal from "sweetalert2";
 import { breedType, rabbitColor } from "./API/RabbitApi";
 import appConfig from "../../config.json";
 const BASE_URL = appConfig.apiBasePath; //e.g "http://localhost:8080/api"
@@ -101,6 +102,13 @@ function AddRabbit() {
       try {
         const response = await axios.post(`${BASE_URL}/add-rabbit`, formData);
         navigateTo("/rabbits");
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Added",
+          showConfirmButton: false,
+          timer: 1500,
+        });
         console.log(response);
       } catch (error) {
         console.error("Error uploading files:", error);

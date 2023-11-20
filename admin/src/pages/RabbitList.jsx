@@ -18,7 +18,7 @@ function RabbitList() {
   const [rabbits, setRabbits] = useState([]);
   const [record, setRecord] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(5);
+  const [itemsPerPage] = useState(6);
 
   const onRehome = (e, o) => {
     Swal.fire({
@@ -237,7 +237,7 @@ function RabbitList() {
             Add
           </Button>
         </div>
-        <div style={{ overflowX: "auto" }}>
+        <div className="tables">
           <Table
             columns={columns}
             dataSource={currentItems}

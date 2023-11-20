@@ -15,7 +15,7 @@ function Delivery() {
 
   const [values, setValues] = useState([]);
   const [pageNumber, setPageNumber] = useState(1); // Ant Design Pagination starts from 1
-  const itemsPerPage = 7;
+  const itemsPerPage = 6;
 
   const pagesVisited = (pageNumber - 1) * itemsPerPage;
   const displayedValues = values.slice(
@@ -84,11 +84,11 @@ function Delivery() {
       render: (text, record) =>
         record.delivery_status === "Approved" ? (
           <Button type="primary" disabled>
-            Approve
+            Deliver
           </Button>
         ) : (
           <Button type="primary" onClick={(e) => onApprove(e, record)}>
-            Approve
+            Deliver
           </Button>
         ),
     },
@@ -103,7 +103,7 @@ function Delivery() {
       />
       <div className="main-container bg-light">
         <h3>Delivery</h3>
-        <div style={{ overflowX: "auto" }}>
+        <div className="tables">
           <Table
             columns={columns}
             dataSource={displayedValues}

@@ -92,7 +92,7 @@ function Request() {
       />
       <div className="main-container bg-light">
         <h3>Adoption request</h3>
-        <div style={{ overflowX: "auto" }}>
+        <div className="tables">
           <Table dataSource={getDisplayedData()} pagination={false}>
             <Table.Column title="Name" dataIndex="fullname" key="name" />
             <Table.Column

@@ -20,7 +20,7 @@ function Breeding() {
   const [data, setData] = useState([]);
   const [filtered, setFiltered] = useState([]);
   const [pageNumber, setPageNumber] = useState(1); // Ant Design Pagination starts from 1
-  const itemsPerPage = 7;
+  const itemsPerPage = 6;
 
   const pagesVisited = (pageNumber - 1) * itemsPerPage;
   const displayedData = data.slice(pagesVisited, pagesVisited + itemsPerPage);
@@ -50,7 +50,13 @@ function Breeding() {
       confirmButtonText: "Yes, cancel it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire("Cancelled!", "You have been cancel this list.", "success");
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Cancelled!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
         axios.delete(BASE_URL + "/cancel_breeding/" + id);
         window.location.reload();
       }
@@ -123,7 +129,7 @@ function Breeding() {
             Add
           </Button>
         </div>
-        <div style={{ overflowX: "auto" }}>
+        <div className="tables">
           <Table
             columns={columns}
             dataSource={displayedData}

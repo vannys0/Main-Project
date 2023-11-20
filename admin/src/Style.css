@@ -42,7 +42,7 @@ body {
     cursor: pointer;
   }
 
-  /* All */
+  /* ALL */
   .grid-container {
     display: grid;
     grid-template-columns: 260px 1fr 1fr 1fr;
@@ -52,9 +52,16 @@ body {
       'sidebar main main main';
     height: 100vh;
     width: 100vw;
-    
     font-family: 'Montserrat', sans-serif;
   }
+  .tables {
+    overflow-x: auto;
+    padding: 20px;
+    border: 2px solid #eaeaea;
+    background-color: #fff;
+  }
+
+  /* END OF ALL */
 
   /* Main  */  
   .main-container {
@@ -117,9 +124,10 @@ body {
   }
 
 /* AddRabbit */
+
 .grid-container > .main-container > .form {
   gap: 20px;
-  padding: 40px 40px 0px 40px;
+  padding: 20px 20px 0px 20px;
   background-color: #fff;
   border: 2px solid #eaeaea;
 }
@@ -133,12 +141,14 @@ body {
 }
 
 /* Request */
+
 .active {
   color: #007bff;
 }
 
 /* Client Profile and Admin Profile*/
-.client-profile,
+
+/* .client-profile,
 .admin-profile,
 .edit-div {
   width: 100%;
@@ -152,9 +162,10 @@ body {
 }
 .client-data {
   color: #1e1e1e;
-}
+} */
 
 /* Pagination Styles */
+
 .pagination {
   display: flex;
   justify-content: flex-end;
@@ -187,13 +198,17 @@ body {
   opacity: 0.5;
 }
 
-  /* EditRabbit */
+  /* EDIT RABBIT */
+
   .grid-container .main-container .edit-div {
     width: 100%;
+    gap: 20px;
+    padding: 20px;
     display: grid;
     align-items: start;
     grid-template-columns: 1fr 2fr;
     margin: 0;
+    border: 2px solid #eaeaea;
     background-color: #fff;
     overflow-x: hidden;
   }
@@ -203,28 +218,41 @@ body {
     grid-template-columns: 1fr 2fr;
   }
   
-  /* AdminProfile */
-  .profile-div {
-    display: grid;
-    width: 50%;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    padding: 20px;
-    border-radius: 5px;
-    color: #1e1e1e;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px
+  /* PROFILE */
+.main-container .client-profile {
+  display: grid;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  grid-template-columns: 1fr 4fr;
+  padding: 30px 20px;
+  background-color: #fff;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px
   4px 0px, rgba(99, 99, 99, 0.1) 0px -2px 8px 0px;
-  }
-  .icon-div {
-    display: flex;
-    justify-content: center;
-    grid-column: span 2;
-    margin-bottom: 20px;
-  }
-  .profile-icon {
-    font-size: 5rem;
-    color: #9e9ea4;
-  }
+}
+.main-container .client-profile .client-data > div {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+}
+
+
+  /* ADD BREEDING */
+
+.breed-ground {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  padding: 40px;
+  border: 2px solid #eaeaea;
+  background-color: #fff;
+}
+
+/* BREEDING DETAILS */
+
+.details-div > div {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+}
   
   /* Medium <= 992px */
     

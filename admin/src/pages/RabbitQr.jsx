@@ -10,21 +10,39 @@ function RabbitQr({ values }) {
   const showModal = () => {
     setIsModalOpen(true);
   };
+  const [downloaded, setDownloaded] = useState(false);
   const handleCancel = () => {
     setIsModalOpen(false);
   };
 
   const downloadQRCode = () => {
-    const canvas = document.getElementById("myqrcode")?.querySelector("canvas");
-    if (canvas) {
-      const url = canvas.toDataURL();
-      const a = document.createElement("a");
-      a.download = `${values.name}_QRCode.png`;
-      a.href = url;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
+    const canvas = document.createElement("canvas");
+    const qrCodeContainer = document.getElementById("myqrcode");
+
+    if (qrCodeContainer) {
+      const qrCodeCanvas = qrCodeContainer.querySelector("canvas");
+
+      if (qrCodeCanvas) {
+        const ctx = canvas.getContext("2d");
+        const padding = 20;
+
+        canvas.width = qrCodeCanvas.width + padding * 2;
+        canvas.height = qrCodeCanvas.height + padding * 2;
+
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(qrCodeCanvas, padding, padding);
+
+        const url = canvas.toDataURL();
+        const a = document.createElement("a");
+        a.download = `${values.name}_QRCode.png`;
+        a.href = url;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      }
     }
+    setDownloaded(true);
   };
 
   return (
@@ -58,9 +76,16 @@ function RabbitQr({ values }) {
               }}
             />
           </div>
-          <Button type="primary" onClick={downloadQRCode}>
-            Download QR Code
-          </Button>
+
+          {!downloaded ? (
+            <Button type="primary" onClick={downloadQRCode}>
+              Download QR Code
+            </Button>
+          ) : (
+            <Button type="primary" className="w-100">
+              Downloaded
+            </Button>
+          )}
         </div>
       </Modal>
     </div>

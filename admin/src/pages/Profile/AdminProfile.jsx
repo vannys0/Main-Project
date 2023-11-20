@@ -1,32 +1,21 @@
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import axios from "axios";
+import { useState } from "react";
 import Sidebar from "../../components/Sidebar";
 import Header from "../../components/Header";
 import "../../Style.css";
+import { UserOutlined, UploadOutlined } from "@ant-design/icons";
+import { Upload, Button, Avatar, message } from "antd";
+import {} from "@ant-design/icons";
 import appConfig from "../../../config.json";
-import { UserOutlined } from "@ant-design/icons";
-import { Avatar } from "antd";
 const BASE_URL = appConfig.apiBasePath;
 import SecureStore from "react-secure-storage";
+import UploadProfile from "./UploadProfile";
 
-function ClientProfile() {
+function AdminProfile() {
   const user = SecureStore.getItem("userToken");
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false);
   const OpenSidebar = () => {
     setOpenSidebarToggle(!openSidebarToggle);
   };
-  const { id } = useParams();
-  const [clients, setClients] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get(BASE_URL + "/client-profile/" + id)
-      .then((res) => {
-        setClients(res.data[0]);
-      })
-      .catch((err) => console.log(err));
-  }, []);
 
   return (
     <div className="grid-container">
@@ -35,10 +24,10 @@ function ClientProfile() {
         openSidebarToggle={openSidebarToggle}
         OpenSidebar={OpenSidebar}
       />
-      <div className="main-container">
-        <h3>Client Profile</h3>
+      <div className="main-container bg-light">
+        <h3>Admin Profile</h3>
         <div className="client-profile">
-          <div className="d-flex align-items-center justify-content-center">
+          <div className="d-flex flex-column gap-4 align-items-center justify-content-center">
             <Avatar
               style={{
                 fontSize: "70px",
@@ -50,6 +39,7 @@ function ClientProfile() {
               }}
               icon={<UserOutlined />}
             />
+            <UploadProfile />
           </div>
           <div className="client-data">
             <div>
@@ -75,4 +65,4 @@ function ClientProfile() {
   );
 }
 
-export default ClientProfile;
+export default AdminProfile;
