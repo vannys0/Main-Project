@@ -264,7 +264,7 @@ function EditRabbit() {
                   Cancel
                 </Button>
                 <Button type="primary" onClick={handleSubmit}>
-                  Update
+                  Save changes
                 </Button>
               </div>
             </div>

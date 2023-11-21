@@ -223,8 +223,7 @@ body {
   display: grid;
   gap: 20px;
   justify-content: center;
-  align-items: center;
-  grid-template-columns: 1fr 4fr;
+  grid-template-columns: 1fr 3fr;
   padding: 30px 20px;
   background-color: #fff;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px
@@ -233,6 +232,13 @@ body {
 .main-container .client-profile .client-data > div {
   display: grid;
   grid-template-columns: 1fr 2fr;
+}
+.upload-button {
+  width: 200px;
+  height: 30px;
+  color: #eaeaea;
+  border: 2px dashed #eaeaea;
+  background-color: transparent;
 }
 
 

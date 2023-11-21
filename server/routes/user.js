@@ -1,6 +1,17 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../config/db");
+const multer = require("multer");
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads/");
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  },
+});
+const upload = multer({ storage: storage });
 
 router.get("/users", (req, res) => {
   db.query("SELECT * FROM user", (err, results) => {
@@ -72,5 +83,27 @@ router.get("/client-profile/:id", (req, res) => {
     return res.json(results);
   });
 });
+
+router.post(
+  "/upload-profile-picture/:id",
+  upload.single("file"),
+  (req, res) => {
+    const id = req.params.id;
+    const file = req.file; // Access the uploaded file from req.file
+
+    if (!file) {
+      return res.status(400).send("No file uploaded.");
+    }
+
+    db.query(
+      "UPDATE user SET `profile` = ? WHERE `id` = ?",
+      [file.filename, id], // Assuming 'file.filename' contains the file name
+      (err, result) => {
+        if (err) return res.status(500).send(err);
+        else return res.status(200).send(result);
+      }
+    );
+  }
+);
 
 module.exports = router;

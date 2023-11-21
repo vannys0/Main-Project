@@ -24,7 +24,8 @@ import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 import SecureStore from "react-secure-storage";
 import axios from "axios";
-import { Table, Col, Row, Statistic, Space } from "antd";
+import { UserOutlined, UploadOutlined } from "@ant-design/icons";
+import { Table, Col, Row, Statistic, Space, Avatar } from "antd";
 import appConfig from "../../config.json";
 const BASE_URL = appConfig.apiBasePath;
 
@@ -262,7 +263,30 @@ function Dashboard() {
             <div style={{ overflowX: "auto" }}>
               <Table dataSource={clients} pagination={false}>
                 <Table.Column
-                  title=" User"
+                  title="Profile"
+                  dataIndex="profile"
+                  key="profile"
+                  render={(profile) => (
+                    <div>
+                      {profile ? (
+                        <Avatar
+                          src={`http://localhost:8081/uploads/${profile}`}
+                        />
+                      ) : (
+                        <Avatar
+                          style={{
+                            color: "#fff",
+                            backgroundColor: "#eaeaea",
+                          }}
+                          icon={<UserOutlined />}
+                        />
+                      )}
+                    </div>
+                  )}
+                />
+
+                <Table.Column
+                  title=" Name"
                   dataIndex="fullname"
                   key="fullname"
                 />

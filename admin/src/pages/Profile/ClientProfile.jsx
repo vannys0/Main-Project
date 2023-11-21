@@ -35,38 +35,56 @@ function ClientProfile() {
         openSidebarToggle={openSidebarToggle}
         OpenSidebar={OpenSidebar}
       />
-      <div className="main-container">
+      <div className="main-container bg-light">
         <h3>Client Profile</h3>
         <div className="client-profile">
           <div className="d-flex align-items-center justify-content-center">
-            <Avatar
-              style={{
-                fontSize: "70px",
-                padding: "80px",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                backgroundColor: "#87d068",
-              }}
-              icon={<UserOutlined />}
-            />
+            {clients.profile ? (
+              <Avatar
+                style={{
+                  width: "168px",
+                  height: "168px",
+                  border: "5px solid #eaeaea",
+                }}
+                src={
+                  <img
+                    src={`http://localhost:8081/uploads/${clients.profile}`}
+                    alt=""
+                    style={{ width: "100%" }}
+                  />
+                }
+              />
+            ) : (
+              <Avatar
+                style={{
+                  color: "#fff",
+                  fontSize: "70px",
+                  padding: "82px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  backgroundColor: "#eaeaea",
+                }}
+                icon={<UserOutlined />}
+              />
+            )}
           </div>
           <div className="client-data">
             <div>
               <p>User Type</p>
-              <p>: {user.user_type}</p>
+              <p>: {clients.user_type}</p>
             </div>
             <div>
               <p>User ID</p>
-              <p>: {user.id}</p>
+              <p>: {clients.id}</p>
             </div>
             <div>
               <p>Name</p>
-              <p>: {user.name}</p>
+              <p>: {clients.name}</p>
             </div>
             <div>
               <p>Email</p>
-              <p>: {user.email}</p>
+              <p>: {clients.email}</p>
             </div>
           </div>
         </div>

@@ -15,6 +15,8 @@ import { NavLink, Link, useNavigate } from "react-router-dom";
 import { AiOutlineClose } from "react-icons/ai";
 import "./Sidebar.css";
 import { AuthContext } from "../App";
+import { Avatar } from "antd";
+import { UserOutlined, UploadOutlined } from "@ant-design/icons";
 import Swal from "sweetalert2";
 import SecureStore from "react-secure-storage";
 
@@ -22,6 +24,7 @@ function Sidebar({ openSidebarToggle, OpenSidebar }) {
   const user = SecureStore.getItem("userToken");
   const authContext = useContext(AuthContext);
   const navigateTo = useNavigate();
+  const hasProfileImage = user && user.profile;
 
   function onLogout() {
     Swal.fire({
@@ -52,9 +55,36 @@ function Sidebar({ openSidebarToggle, OpenSidebar }) {
       </div>
 
       <ul className="sidebar-list">
-        <div className="admin-side" onClick={() => navigateTo("/profile")}>
+        <div className="admin-side" onClick={() => navigateTo("/profile/:id")}>
           <div>
-            <BsPersonCircle className="icons" />
+            {hasProfileImage ? (
+              <Avatar
+                style={{
+                  width: "40px",
+                  height: "40px",
+                }}
+                src={
+                  <img
+                    src={`http://localhost:8081/uploads/${user.profile}`}
+                    alt=""
+                    style={{ width: "100%" }}
+                  />
+                }
+              />
+            ) : (
+              <Avatar
+                style={{
+                  width: "40px",
+                  height: "40px",
+                  color: "#fff",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  backgroundColor: "#eaeaea",
+                }}
+                icon={<UserOutlined />}
+              />
+            )}
           </div>
           <div className="admin-user">
             <h5>{user.name}</h5>
@@ -64,7 +94,7 @@ function Sidebar({ openSidebarToggle, OpenSidebar }) {
         <NavLink to="/dashboard" className="sidebar-list-item">
           <BsGrid1X2Fill className="icon" /> Dashboard
         </NavLink>
-        <NavLink to="/profile" className="sidebar-list-item">
+        <NavLink to={`/profile/${user.id}`} className="sidebar-list-item">
           <BsPersonFill className="icon" /> Profile
         </NavLink>
         <NavLink to="/rabbits" className="sidebar-list-item">

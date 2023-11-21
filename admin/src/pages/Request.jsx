@@ -30,10 +30,16 @@ function Request() {
       confirmButtonText: "Yes, approve it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire("Approved!", "Request has been approved.", "success");
         axios
           .put(BASE_URL + "/approve-adoption/" + o.id)
           .then((res) => {
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: "Approved",
+              showConfirmButton: false,
+              timer: 1500,
+            });
             window.location.reload();
           })
           .catch((err) => console.log(err));

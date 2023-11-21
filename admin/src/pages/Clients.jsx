@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
-import { Input, Table, Pagination, Space, Button } from "antd"; // Import Ant Design Table and Pagination
+import { Input, Table, Pagination, Space, Button, Avatar, Image } from "antd";
 import axios from "axios";
+import { UserOutlined, UploadOutlined } from "@ant-design/icons";
 import appConfig from "../../config.json";
 import { useNavigate } from "react-router-dom";
 const BASE_URL = appConfig.apiBasePath;
@@ -16,7 +17,7 @@ function Clients() {
   const [clients, setClients] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
   const clientsPerPage = 6;
-  const [searchedClients, setSearchedClients] = useState([]); // State for searched clients
+  const [searchedClients, setSearchedClients] = useState([]);
 
   useEffect(() => {
     axios
@@ -28,7 +29,7 @@ function Clients() {
   }, []);
 
   useEffect(() => {
-    setSearchedClients(clients); // Initialize searchedClients with all clients
+    setSearchedClients(clients);
   }, [clients]);
 
   const pagesVisited = (pageNumber - 1) * clientsPerPage;
@@ -44,6 +45,30 @@ function Clients() {
   };
 
   const columns = [
+    {
+      title: "Profile",
+      dataIndex: "profile",
+      key: "profile",
+      render: (profile) => {
+        return (
+          <div>
+            {profile ? (
+              <Avatar
+                src={<img src={`http://localhost:8081/uploads/${profile}`} />}
+              />
+            ) : (
+              <Avatar
+                style={{
+                  color: "#fff",
+                  backgroundColor: "#eaeaea",
+                }}
+                icon={<UserOutlined />}
+              />
+            )}
+          </div>
+        );
+      },
+    },
     {
       title: "Name",
       dataIndex: "name",

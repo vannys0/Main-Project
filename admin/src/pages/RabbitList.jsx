@@ -4,7 +4,16 @@ import "../Style.css";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import { Link, useNavigate } from "react-router-dom";
-import { Button, Input, Table, Tag, Space, Pagination, Image } from "antd";
+import {
+  Button,
+  Input,
+  Table,
+  Tag,
+  Space,
+  Pagination,
+  Avatar,
+  Image,
+} from "antd";
 import Swal from "sweetalert2";
 import appConfig from "../../config.json";
 const BASE_URL = appConfig.apiBasePath;
@@ -121,9 +130,12 @@ function RabbitList() {
         return (
           <div>
             {firstImagePath && (
-              <Image
-                style={{ width: "28px", height: "28px", borderRadius: "50%" }}
-                src={`http://localhost:8081/uploads/${firstImagePath}`}
+              <Avatar
+                src={
+                  <img
+                    src={`http://localhost:8081/uploads/${firstImagePath}`}
+                  />
+                }
               />
             )}
           </div>
