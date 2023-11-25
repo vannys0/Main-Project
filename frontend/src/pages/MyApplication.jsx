@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
-import { Table } from "react-bootstrap";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import ViewApplication from "./ViewApplication";
-import { Button, Tag } from "antd";
+import { Button, Tag, Table } from "antd"; // Import Table from antd
 import Swal from "sweetalert2";
 import SecureStore from "react-secure-storage";
 
@@ -37,65 +36,74 @@ function MyApplication() {
     });
   };
 
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString();
+  }
+
+  const columns = [
+    {
+      title: "Date",
+      dataIndex: "adoption_date",
+      key: "adoption_date",
+      render: (text) => formatDate(text),
+    },
+    {
+      title: "Delivery Option",
+      dataIndex: "service_option",
+      key: "service_option",
+    },
+    {
+      title: "Status",
+      dataIndex: "transaction_status",
+      key: "transaction_status",
+      render: (text) => {
+        let color = "";
+        if (text === "Pending") color = "warning";
+        else if (text === "Declined") color = "error";
+        else color = "success";
+        return <Tag color={color}>{text}</Tag>;
+      },
+    },
+    {
+      title: "Comment",
+      dataIndex: "comment",
+      key: "comment",
+      width: 100,
+    },
+    {
+      title: "Action",
+      key: "action",
+      render: (text, record) => (
+        <div className="d-flex gap-2">
+          <ViewApplication data={record} />
+          {record.transaction_status === "Pending" ? (
+            <Button
+              type="primary"
+              danger
+              onClick={() => handleDelete(record.id)}
+            >
+              Cancel
+            </Button>
+          ) : (
+            <span style={{ color: "black" }}></span>
+          )}
+        </div>
+      ),
+    },
+  ];
+
   return (
     <div className="main-div">
       <Navbar />
       <div className="application-div">
-        <h4>My application</h4>
-        <Table striped hover responsive="sm">
-          {values.length > 0 && (
-            <thead>
-              <tr>
-                <th>Adoption Date</th>
-                <th>Reason for adoption</th>
-                <th>Delivery Option</th>
-                <th>Status</th>
-                <th>Comment</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-          )}
-          <tbody>
-            {values.length > 0 ? (
-              values.map((data, i) => (
-                <tr key={i}>
-                  <td width={100}>{data.adoption_date}</td>
-                  <td>{data.reason_for_adoption}</td>
-                  <td width={100}>{data.service_option}</td>
-                  <td width={100}>
-                    {data.transaction_status === "Pending" ? (
-                      <Tag color="warning">{data.transaction_status}</Tag>
-                    ) : data.transaction_status === "Declined" ? (
-                      <Tag color="error">{data.transaction_status}</Tag>
-                    ) : (
-                      <Tag color="success">{data.transaction_status}</Tag>
-                    )}
-                  </td>
-                  <td width={100}>{data.comment}</td>
-                  <td className="d-flex gap-2">
-                    <ViewApplication data={data} />
-                    {data.transaction_status === "Pending" ? (
-                      <Button
-                        type="primary"
-                        danger
-                        onClick={(e) => handleDelete(data.id)}
-                      >
-                        Cancel
-                      </Button>
-                    ) : (
-                      <span style={{ color: "black" }}></span>
-                    )}
-                  </td>
-                  
-                </tr> 
-              ))
-            ) : (
-              <tr>
-                <td colSpan="5">No application found</td>
-              </tr>
-            )}
-          </tbody>
-        </Table>
+        <h4>Recent Adoption</h4>
+        <br />
+        <Table
+          dataSource={values}
+          columns={columns}
+          rowKey={(record) => record.id}
+        />
       </div>
     </div>
   );

@@ -63,7 +63,7 @@ function Navbar() {
           <NavLink to="/about">About Us</NavLink>
         </li>
         <li>
-          <NavLink to="" className="to-hide">
+          <NavLink to={`/user_profile/${user.id}`} className="to-hide">
             My Profile
           </NavLink>
         </li>

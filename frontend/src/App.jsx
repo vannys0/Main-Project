@@ -11,6 +11,7 @@ import { ToastContainer } from "react-toastify";
 import AdoptForm from "./pages/AdoptForm.jsx";
 import RabbitData from "./pages/RabbitData.jsx";
 import AboutRabbit from "./pages/AboutRabbit.jsx";
+import Profile from "./pages/Profile.jsx";
 import NewForm from "./pages/NewForm.jsx";
 import {
   createContext,
@@ -88,6 +89,16 @@ function App() {
         <div>
           <PrivateRoute>
             <MyApplication />
+          </PrivateRoute>
+        </div>
+      ),
+    },
+    {
+      path: "/user_profile/:id",
+      element: (
+        <div>
+          <PrivateRoute>
+            <Profile />
           </PrivateRoute>
         </div>
       ),

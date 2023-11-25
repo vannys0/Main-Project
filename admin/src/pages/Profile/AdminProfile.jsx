@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Sidebar from "../../components/Sidebar";
 import Header from "../../components/Header";
 import "../../Style.css";
@@ -21,9 +21,19 @@ function AdminProfile() {
   const OpenSidebar = () => {
     setOpenSidebarToggle(!openSidebarToggle);
   };
+  const [userInfo, setUserInfo] = useState([]);
   const [image, setImage] = useState("");
   const inputRef = useRef(null);
-  const hasProfileImage = user && user.profile;
+  const hasProfileImage = userInfo && userInfo.profile;
+
+  useEffect(() => {
+    axios
+      .get(`${BASE_URL}/get_user_info/${id}`)
+      .then((res) => {
+        setUserInfo(res.data[0]);
+      })
+      .catch();
+  }, [id]);
 
   const handleUpload = () => {
     inputRef.current.click();
@@ -95,10 +105,10 @@ function AdminProfile() {
       <div className="main-container bg-light">
         <h3>Admin Profile</h3>
         <div className="client-profile">
-          <div className="d-flex flex-column gap-4 align-items-center justify-content-center">
+          <div className="d-flex flex-column gap-2 align-items-center justify-content-center">
             <div>
               {image ? (
-                <div className="d-flex flex-column gap-4 align-items-center justify-content-center">
+                <div className="d-flex flex-column gap-2 align-items-center justify-content-center">
                   <Avatar
                     style={{
                       width: "168px",
@@ -116,7 +126,7 @@ function AdminProfile() {
                   <Button onClick={handleUploadProfile}>Upload profile</Button>
                 </div>
               ) : hasProfileImage ? (
-                <div className="d-flex flex-column gap-4 align-items-center justify-content-center">
+                <div className="d-flex flex-column gap-2 align-items-center justify-content-center">
                   <Avatar
                     style={{
                       width: "168px",
@@ -125,7 +135,7 @@ function AdminProfile() {
                     }}
                     src={
                       <img
-                        src={`http://localhost:8081/uploads/${user.profile}`}
+                        src={`http://localhost:8081/uploads/${userInfo.profile}`}
                         alt=""
                         style={{ width: "100%" }}
                       />
@@ -134,7 +144,7 @@ function AdminProfile() {
                   <Button onClick={handleUpload}>Change profile</Button>
                 </div>
               ) : (
-                <div className="d-flex flex-column gap-4 align-items-center justify-content-center">
+                <div className="d-flex flex-column gap-2 align-items-center justify-content-center">
                   <Avatar
                     style={{
                       color: "#fff",

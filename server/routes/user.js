@@ -89,7 +89,7 @@ router.post(
   upload.single("file"),
   (req, res) => {
     const id = req.params.id;
-    const file = req.file; // Access the uploaded file from req.file
+    const file = req.file;
 
     if (!file) {
       return res.status(400).send("No file uploaded.");
@@ -97,7 +97,7 @@ router.post(
 
     db.query(
       "UPDATE user SET `profile` = ? WHERE `id` = ?",
-      [file.filename, id], // Assuming 'file.filename' contains the file name
+      [file.filename, id],
       (err, result) => {
         if (err) return res.status(500).send(err);
         else return res.status(200).send(result);
@@ -105,5 +105,18 @@ router.post(
     );
   }
 );
+
+// ADMIN PROFILE
+router.get("/get_user_info/:id", (req, res) => {
+  const id = req.params.id;
+  db.query("SELECT * FROM user WHERE id = ?", [id], (err, results) => {
+    if (err) {
+      console.error("Error fetching :", err);
+      res.status(500).json({ error: "Internal Server Error" });
+      return;
+    }
+    return res.json(results);
+  });
+});
 
 module.exports = router;

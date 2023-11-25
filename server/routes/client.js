@@ -27,17 +27,14 @@ router.post("/signup", (req, res) => {
     req.body.user_type,
   ];
 
-  // Check if the email already exists
   db.query(checkEmailQuery, [email], (err, result) => {
     if (err) {
       return res.status(500).json("Error");
     }
 
     if (result.length > 0) {
-      // Email already exists, return an error response
       return res.status(400).json("Email already exists");
     } else {
-      // Email is unique, insert the new user
       db.query(insertUserQuery, [values], (err, data) => {
         if (err) {
           return res.status(500).json("Error");
@@ -56,8 +53,6 @@ router.post("/login-client", (req, res) => {
       return res.json({ Message: "Error" });
     }
     if (data.length > 0) {
-      // User is authenticated, generate a JWT token
-
       const result = JSON.parse(JSON.stringify(data));
       const o = result[0];
       const user = {
@@ -67,7 +62,6 @@ router.post("/login-client", (req, res) => {
         Message: "Success",
       };
 
-      // const token = jwt.sign(user, secretKey, { expiresIn: "1h" }); // Token expires in 1 hour
       return res.json(user);
     }
     return res.json({ Message: "Failed" });
@@ -151,7 +145,7 @@ router.post(
       result.price,
       result.mop,
       result.agprod,
-      result.agprodprice
+      result.agprodprice,
     ];
 
     const sql =
@@ -210,6 +204,35 @@ router.delete("/delete_application/:id", (req, res) => {
       console.log(err);
     }
     res.json(result);
+  });
+});
+
+router.post("/upload_profile/:id", upload.single("file"), (req, res) => {
+  const id = req.params.id;
+  const file = req.file;
+
+  if (!file) {
+    return res.status(400).send("No file uploaded.");
+  }
+
+  db.query(
+    "UPDATE user SET `profile` = ? WHERE `id` = ?",
+    [file.filename, id],
+    (err, result) => {
+      if (err) return res.status(500).send(err);
+      else return res.status(200).send(result);
+    }
+  );
+});
+
+// Get user
+router.get("/get_user/:id", (req, res) => {
+  const id = req.params.id;
+  db.query("SELECT * FROM user WHERE `id` = ?", [id], (err, result) => {
+    if (err) {
+      res.send(err);
+    }
+    res.send(result);
   });
 });
 

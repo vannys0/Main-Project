@@ -5,6 +5,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { Form } from "react-bootstrap";
 import { v4 as uuidv4 } from "uuid";
 import { Button } from "antd";
+import Swal from "sweetalert2";
 import Validation from "./Validation/AdoptFormValidation";
 import SecureStore from "react-secure-storage";
 import {
@@ -69,8 +70,6 @@ function AdoptForm() {
     }
   };
 
-
-
   const onFileChange = (e) => {
     setImg(e.target.files[0]);
     setFile(URL.createObjectURL(e.target.files[0]));
@@ -94,7 +93,7 @@ function AdoptForm() {
     mop: "",
     price: JSON.parse(name).price,
     agprod: null,
-    agprodprice: 0
+    agprodprice: 0,
   });
   const handleInput = (e) => {
     setValues((prev) => ({ ...prev, [e.target.name]: [e.target.value] }));
@@ -107,9 +106,8 @@ function AdoptForm() {
     setValues((prev) => ({ ...prev, mop: selected }));
     const selected = e.target.value;
     console.log(selected);
-    setmopAgriculture((selected === "Agriculture") ? true : false);
-
-  }
+    setmopAgriculture(selected === "Agriculture" ? true : false);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -126,12 +124,19 @@ function AdoptForm() {
     //   errors.phone === "") {
     // }
     axios
-    .post("http://localhost:8081/rabbitdata/" + id + "/adopt-form", formData)
-    .then((res) => { 
-      console.log(res);
-      navigateTo("/myapplication");
-    })
-    .catch((err) => console.log(err));
+      .post("http://localhost:8081/rabbitdata/" + id + "/adopt-form", formData)
+      .then((res) => {
+        console.log(res);
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Sent",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        navigateTo("/myapplication");
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -139,7 +144,10 @@ function AdoptForm() {
       <Navbar />
       <div className="form-div">
         <form encType="multipart/form-data">
-          <h4>Adopt {JSON.parse(name).name  + " the price is: " + JSON.parse(name).price}</h4>
+          <h4>
+            Adopt{" "}
+            {JSON.parse(name).name + " the price is: " + JSON.parse(name).price}
+          </h4>
           <br />
           <label htmlFor="fullname" className="label-name">
             Full Name
@@ -270,7 +278,9 @@ function AdoptForm() {
 
           {mopAgriculture && (
             <div>
-              <label htmlFor="agprod" className="label-name">Ag. Product</label>
+              <label htmlFor="agprod" className="label-name">
+                Ag. Product
+              </label>
               <input
                 type="text"
                 name="agprod"
@@ -279,7 +289,9 @@ function AdoptForm() {
                 onChange={handleInput}
               />
 
-              <label htmlFor="agprodprice" className="label-name">Ag. Produdct Price</label>
+              <label htmlFor="agprodprice" className="label-name">
+                Ag. Produdct Price
+              </label>
               <input
                 type="number"
                 name="agprodprice"
@@ -287,7 +299,6 @@ function AdoptForm() {
                 onChange={handleInput}
               />
             </div>
-
           )}
           <br />
 

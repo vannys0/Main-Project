@@ -54,7 +54,7 @@ function Home() {
           <h5>Rice Farming</h5>
           <img src={Img1} alt="" />
         </div>
-        <div className="haveQuestion">
+        <div className="my-4">
           <h5>
             Have questions or need help? Email us at
             <span className="email"> eleporidae@gmail.com</span> and we'll be

@@ -13,12 +13,13 @@ a {
     text-decoration: none;
 }
 
-/* Pages */
+/* MAIN */
 .main-div {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-color: #eaeaea;
 }
 .adopt-div,
 .contact-div,
@@ -27,18 +28,19 @@ a {
 .form-div {
     width: 50%;
     height: auto;
-    margin: 30px 0px;
     display: flex;
     flex-direction: column;
     overflow-x: hidden;
+    background-color: #fff;
 }
-/* Home.jsx */
+/* HOME */
 .home-div {
     width: 50%;
-    padding-top: 50px;
+    padding: 40px 20px 20px 20px;
     display: flex;
     justify-content: center;
     flex-direction: column;
+    background-color: #fff;
 }
 .home-div p {
     font-size: 18px;
@@ -60,7 +62,6 @@ a {
     text-decoration: none;
     font-size: 24px;
 }
-
 .home-div .adoptbtn {
     display: flex;
     align-items: center;
@@ -88,17 +89,14 @@ a {
 .home-body > div > img {
     width: 100%;
 }
-.haveQuestion {
-    padding: 50px 0px;
-}
 .email {
     color: #00828c;
 }
 
-/* Adopt.jsx */
+/* ADOPT */
 .adopt-div {
     width: 50%;
-    padding: 20px;
+    padding: 40px 20px 20px 20px;
 }
 .rehome-div h2 {
     margin-bottom: 50px;
@@ -140,9 +138,10 @@ a {
     border: 2px solid #fff;
 }
 
-/* Contact.jsx */
+/* CONTACT */
 .contact-div {
-    padding: 50px 20px 0px 20px;
+    height: 90vh;
+    padding: 40px 20px 0px 20px;
 }
 .contact-div > h2 {
     font-weight: 600;
@@ -162,18 +161,18 @@ a {
     right: 150px;
 }
 
-/* About.jsx */
+/* ABOUT */
 .main-div {
     position: relative;
 }
 .about-div {
-    padding: 50px 20px 20px 20px;
+    padding: 40px 20px 20px 20px;
 }
 .about-div > h2 {
     font-weight: 600;
 }
 .about-div > div > p {
-    font-size: 20px;
+    font-size: 18px;
 }
 .about-div > div > h2 {
     font-weight: 600;
@@ -192,7 +191,7 @@ a {
     bottom: 70px;
 }
 
-/* AdoptForm.jsx */
+/* ADOPT FORM */
 .error {
     color: #ff5757;
 }
@@ -226,7 +225,7 @@ a {
     color: red;
 }
 
-/* RabitData.jsx */
+/* ABOUT RABBIT */
 .rabbit-data-div {
     display: flex;
     justify-content: center;
@@ -291,10 +290,11 @@ a {
     width: 25%;
 }
 
-/* My Application */
+/* APPLICATION */
 .application-div {
     width: 50%;
-    padding: 20px;
+    padding: 40px 20px 20px 20px;
+    background-color: #fff;
 }
 .application-div table {
     border: 2px solid #eaeaea;
@@ -309,29 +309,26 @@ a {
 .action-btn button {
     margin-right: 8px;
 }
-/* .application-div table thead tr th {
-    background-color: #00828c;
-    color: #fff;
-} */
-/* .input-photo {
-    display: none;
-} */
-/* .uploadFile {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100px;
-    height: 35px;
-    border-radius: 5px;
-    border: 1px dashed #00828c;
-    cursor: pointer;
-} */
 .image-div {
     display: flex;
     justify-content: center;
 }
 .image-div > img {
     width: 60%;
+}
+ /* PROFILE */
+ .profile-div {
+    width: 50%;
+    height: 100vh;
+    padding: 40px 20px 20px 20px;
+    background-color: #fff;
+}
+.profile-div .client-info {
+    margin-top: 40px;
+}
+.profile-div .client-info div {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
 }
 
 

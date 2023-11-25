@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   BsCart3,
   BsGrid1X2Fill,
@@ -11,7 +11,7 @@ import {
   BsPersonFill,
   BsPersonCircle,
 } from "react-icons/bs";
-import { NavLink, Link, useNavigate } from "react-router-dom";
+import { NavLink, Link, useNavigate, useParams } from "react-router-dom";
 import { AiOutlineClose } from "react-icons/ai";
 import "./Sidebar.css";
 import { AuthContext } from "../App";
@@ -19,12 +19,25 @@ import { Avatar } from "antd";
 import { UserOutlined, UploadOutlined } from "@ant-design/icons";
 import Swal from "sweetalert2";
 import SecureStore from "react-secure-storage";
+import axios from "axios";
+import appConfig from "../../config.json";
+const BASE_URL = appConfig.apiBasePath;
 
 function Sidebar({ openSidebarToggle, OpenSidebar }) {
   const user = SecureStore.getItem("userToken");
   const authContext = useContext(AuthContext);
   const navigateTo = useNavigate();
-  const hasProfileImage = user && user.profile;
+  const [userInfo, setUserInfo] = useState([]);
+  const hasProfileImage = userInfo && userInfo.profile;
+
+  useEffect(() => {
+    axios
+      .get(`${BASE_URL}/get_user_info/${user.id}`)
+      .then((res) => {
+        setUserInfo(res.data[0]);
+      })
+      .catch();
+  }, [user.id]);
 
   function onLogout() {
     Swal.fire({
@@ -55,7 +68,10 @@ function Sidebar({ openSidebarToggle, OpenSidebar }) {
       </div>
 
       <ul className="sidebar-list">
-        <div className="admin-side" onClick={() => navigateTo("/profile/:id")}>
+        <div
+          className="admin-side"
+          onClick={() => navigateTo(`/profile/${user.id}`)}
+        >
           <div>
             {hasProfileImage ? (
               <Avatar
@@ -65,7 +81,7 @@ function Sidebar({ openSidebarToggle, OpenSidebar }) {
                 }}
                 src={
                   <img
-                    src={`http://localhost:8081/uploads/${user.profile}`}
+                    src={`http://localhost:8081/uploads/${userInfo.profile}`}
                     alt=""
                     style={{ width: "100%" }}
                   />
@@ -88,7 +104,7 @@ function Sidebar({ openSidebarToggle, OpenSidebar }) {
           </div>
           <div className="admin-user">
             <h5>{user.name}</h5>
-            <h6>Admin</h6>
+            <h6>{user.user_type}</h6>
           </div>
         </div>
         <NavLink to="/dashboard" className="sidebar-list-item">

@@ -24,7 +24,6 @@ function DropdownMenu() {
       confirmButtonText: "Yes!",
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire("Logged out!", "You have been logout.", "success");
         SecureStore.removeItem();
         authContext.signOut();
         navigateTo("/");
@@ -35,7 +34,7 @@ function DropdownMenu() {
     <div className="dropdown">
       <ul className="">
         <h4>{user.name}</h4>
-        <Link>
+        <Link to={`/user_profile/${user.id}`}>
           <AiOutlineForm className="icon icons" />
           My Profile
         </Link>
