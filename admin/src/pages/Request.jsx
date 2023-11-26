@@ -56,15 +56,21 @@ function Request() {
       showCancelButton: true,
       confirmButtonColor: "#d50000",
       cancelButtonColor: "#797979",
-      confirmButtonText: "Yes, decline it!",
+      confirmButtonText: "Decline",
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire("Declined!", "Request has been declined.", "success");
         axios
           .put(BASE_URL + "/decline-adoption/" + o.id, {
             comment: result.value,
           })
           .then((res) => {
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: "Declined",
+              showConfirmButton: false,
+              timer: 1500,
+            });
             window.location.reload();
           })
           .catch((err) => console.log(err));
@@ -134,7 +140,7 @@ function Request() {
             />
             <Table.Column title="Comment" dataIndex="comment" key="comment" />
             <Table.Column
-              title="Action"
+              title="Actions"
               key="action"
               render={(text, record) => (
                 <Space>

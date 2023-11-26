@@ -22,8 +22,6 @@ function BreedPair() {
   const [maleRabbits, setMaleRabbits] = useState([]);
   const [femaleRabbits, setFemaleRabbits] = useState([]);
 
-  const currentDate = new Date();
-
   useEffect(() => {
     const scanner = new Html5QrcodeScanner("reader", {
       qrbox: {
@@ -68,12 +66,17 @@ function BreedPair() {
   }, []);
 
   const onPair = (e) => {
+    const currentDate = new Date();
+    const futureDate = new Date();
+    futureDate.setDate(currentDate.getDate() + 32);
+
     axios
       .post(BASE_URL + "/pair-rabbit", {
         id: uuidv4(),
         male_rabbit_id: scanResult,
         female_rabbit_id: scanResult1,
-        date: currentDate,
+        date: currentDate.toISOString(),
+        expected_due: futureDate.toISOString(),
       })
       .then((res) => {
         console.log(res);

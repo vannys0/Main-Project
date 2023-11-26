@@ -9,6 +9,11 @@ function BreedingDetails({ data }) {
     setIsModalOpen(false);
   };
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString();
+  };
+
   return (
     <>
       <div className="d-flex justify-content-center">
@@ -44,7 +49,11 @@ function BreedingDetails({ data }) {
           </div>
           <div>
             <p>Pairing Date :</p>
-            <p>{data.pairing_date}</p>
+            <p>{formatDate(data.pairing_date)}</p>
+          </div>
+          <div>
+            <p>Estimated Due Date :</p>
+            <p>{formatDate(data.expected_due_date)}</p>
           </div>
         </div>
       </Modal>

@@ -3,7 +3,7 @@ import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import "../Style.css";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { Table, Button, Pagination, Input } from "antd"; // Import Ant Design Table, Button, and Pagination
+import { Table, Button, Pagination, Input } from "antd";
 import axios from "axios";
 import BreedingDetails from "./BreedingDetails";
 import Swal from "sweetalert2";
@@ -19,7 +19,7 @@ function Breeding() {
   const { id } = useParams();
   const [data, setData] = useState([]);
   const [filtered, setFiltered] = useState([]);
-  const [pageNumber, setPageNumber] = useState(1); // Ant Design Pagination starts from 1
+  const [pageNumber, setPageNumber] = useState(1);
   const itemsPerPage = 6;
 
   const pagesVisited = (pageNumber - 1) * itemsPerPage;
@@ -47,13 +47,13 @@ function Breeding() {
       showCancelButton: true,
       confirmButtonColor: "#d50000",
       cancelButtonColor: "#797979",
-      confirmButtonText: "Yes, cancel it!",
+      confirmButtonText: "Yes",
     }).then((result) => {
       if (result.isConfirmed) {
         Swal.fire({
           position: "center",
           icon: "success",
-          title: "Cancelled!",
+          title: "Cancelled",
           showConfirmButton: false,
           timer: 1500,
         });
@@ -78,9 +78,22 @@ function Breeding() {
       title: "Pairing date",
       dataIndex: "pairing_date",
       key: "pairing_date",
+      render: (pairingDate) => {
+        const formattedPairingDate = new Date(pairingDate).toLocaleDateString();
+        return <span>{formattedPairingDate}</span>;
+      },
     },
     {
-      title: "Action",
+      title: "Expected due",
+      dataIndex: "expected_due_date",
+      key: "expected_due_date",
+      render: (dueDate) => {
+        const formattedDueDate = new Date(dueDate).toLocaleDateString();
+        return <span>{formattedDueDate}</span>;
+      },
+    },
+    {
+      title: "Actions",
       key: "action",
       render: (text, record) => (
         <div className="actions">

@@ -79,7 +79,7 @@ function AdoptForm() {
     id: uuidv4(),
     rabbit_id: id,
     date: dateToday,
-    fullname: JSON.parse(name).name,
+    fullname: user.name,
     email: "",
     phone: "",
     province: "",

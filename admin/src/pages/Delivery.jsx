@@ -79,7 +79,12 @@ function Delivery() {
       ),
     },
     {
-      title: "Action",
+      title: "Remarks",
+      dataIndex: "",
+      key: "",
+    },
+    {
+      title: "Actions",
       key: "action",
       render: (text, record) =>
         record.delivery_status === "Approved" ? (

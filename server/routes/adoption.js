@@ -31,7 +31,7 @@ router.get("/adoptions", (req, res) => {
 // Adoption Request Deliver Option
 router.get("/adoptions-deliver", (req, res) => {
   db.query(
-    "SELECT * FROM adoption WHERE transaction_status = 'Approved' AND service_option = 'Deliver'",
+    "SELECT * FROM adoption WHERE transaction_status = 'Approved' AND service_option = 'Deliver' ORDER BY adoption_date",
     (err, results) => {
       if (err) {
         console.error("Error fetching :", err);
@@ -83,7 +83,8 @@ router.put("/approve-delivery/:id", (req, res) => {
 });
 
 router.put("/decline-adoption/:id", (req, res) => {
-  const sql = "UPDATE adoption SET `transaction_status` = ?, `comment` = ?  WHERE id = ?";
+  const sql =
+    "UPDATE adoption SET `transaction_status` = ?, `comment` = ?  WHERE id = ?";
   const values = ["Declined"];
   const id = req.params.id;
   const comment = req.body.comment;

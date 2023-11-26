@@ -114,6 +114,11 @@ function Dashboard() {
 
   const navigateTo = useNavigate();
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString();
+  };
+
   return (
     <div className="grid-container">
       <Header OpenSidebar={OpenSidebar} />
@@ -263,29 +268,6 @@ function Dashboard() {
             <div style={{ overflowX: "auto" }}>
               <Table dataSource={clients} pagination={false}>
                 <Table.Column
-                  title="Profile"
-                  dataIndex="profile"
-                  key="profile"
-                  render={(profile) => (
-                    <div>
-                      {profile ? (
-                        <Avatar
-                          src={`http://localhost:8081/uploads/${profile}`}
-                        />
-                      ) : (
-                        <Avatar
-                          style={{
-                            color: "#fff",
-                            backgroundColor: "#eaeaea",
-                          }}
-                          icon={<UserOutlined />}
-                        />
-                      )}
-                    </div>
-                  )}
-                />
-
-                <Table.Column
                   title=" Name"
                   dataIndex="fullname"
                   key="fullname"
@@ -294,6 +276,7 @@ function Dashboard() {
                   title="Adoption Date"
                   dataIndex="adoption_date"
                   key="adoption_date"
+                  render={(date) => formatDate(date)}
                 />
                 <Table.Column
                   title="Status"
