@@ -79,8 +79,6 @@ function AdoptForm() {
     id: uuidv4(),
     rabbit_id: id,
     date: dateToday,
-    fullname: user.name,
-    email: "",
     phone: "",
     province: "",
     city: "",
@@ -149,26 +147,6 @@ function AdoptForm() {
             {JSON.parse(name).name + " the price is: " + JSON.parse(name).price}
           </h4>
           <br />
-          <label htmlFor="fullname" className="label-name">
-            Full Name
-          </label>
-          <input
-            type="text"
-            name="fullname"
-            className="form-control"
-            value={user.name}
-            onChange={handleInput}
-          />
-          <br />
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            name="email"
-            inputMode="email"
-            className="form-control"
-            value={user.email}
-            onChange={handleInput}
-          />
           <br />
           <label htmlFor="phone">Phone</label>
           <input

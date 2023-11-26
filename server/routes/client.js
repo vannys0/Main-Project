@@ -130,8 +130,6 @@ router.post(
       result.id,
       result.rabbit_id,
       result.date,
-      result.fullname,
-      result.email,
       result.phone,
       result.province.provDesc,
       result.city.citymunDesc,
@@ -149,7 +147,7 @@ router.post(
     ];
 
     const sql =
-      "INSERT INTO adoption (`id`, `rabbit_id`, `adoption_date`, `fullname`, `email`, `phone`, `province`, `city`, `barangay`, `reason_for_adoption`, `other_pets`, `user_id`, `transaction_status`, `home_environment_image_path`, `service_option`, `price`, `mode_of_payment`, `agriculture_product`, `agriculture_product_price`) VALUES (?)";
+      "INSERT INTO adoption (`id`, `rabbit_id`, `adoption_date`, `phone`, `province`, `city`, `barangay`, `reason_for_adoption`, `other_pets`, `user_id`, `transaction_status`, `home_environment_image_path`, `service_option`, `price`, `mode_of_payment`, `agriculture_product`, `agriculture_product_price`) VALUES (?)";
     db.query(sql, [values], (error, results) => {
       if (error) {
         console.log(error);

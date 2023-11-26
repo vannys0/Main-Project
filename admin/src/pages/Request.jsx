@@ -106,7 +106,7 @@ function Request() {
         <h3>Adoption request</h3>
         <div className="tables">
           <Table dataSource={getDisplayedData()} pagination={false}>
-            <Table.Column title="Name" dataIndex="fullname" key="name" />
+            <Table.Column title="Adoption ID" dataIndex="id" key="id" />
             <Table.Column
               title="Address"
               key="address"

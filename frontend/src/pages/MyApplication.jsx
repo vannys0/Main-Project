@@ -11,6 +11,7 @@ function MyApplication() {
   const { id } = useParams();
   const [values, setValues] = useState([]);
   const user = SecureStore.getItem("userToken");
+  const itemPerPage = 6;
 
   useEffect(() => {
     axios
@@ -26,10 +27,16 @@ function MyApplication() {
       showCancelButton: true,
       confirmButtonColor: "#d50000",
       cancelButtonColor: "#797979",
-      confirmButtonText: "Yes!",
+      confirmButtonText: "Yes",
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire("Successful!", "You have cancelled the request", "success");
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Cancelled",
+          showConfirmButton: false,
+          timer: 1500,
+        });
         axios.delete("http://localhost:8081/delete_application/" + id);
         window.location.reload();
       }
@@ -103,6 +110,9 @@ function MyApplication() {
           dataSource={values}
           columns={columns}
           rowKey={(record) => record.id}
+          pagination={{
+            pageSize: itemPerPage,
+          }}
         />
       </div>
     </div>
