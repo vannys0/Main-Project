@@ -181,10 +181,7 @@ function RabbitList() {
       key: "action",
       render: (text, record) => (
         <Space>
-          <Button
-            type="text"
-            onClick={() => navigateTo(`/edit-rabbit/${record.id}`)}
-          >
+          <Button onClick={() => navigateTo(`/edit-rabbit/${record.id}`)}>
             Edit
           </Button>
           {record.rehome_status === "Rehome" ? (

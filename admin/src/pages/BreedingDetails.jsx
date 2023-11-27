@@ -17,7 +17,7 @@ function BreedingDetails({ data }) {
   return (
     <>
       <div className="d-flex justify-content-center">
-        <Button type="text" className="w-100" onClick={showModal}>
+        <Button className="w-100" onClick={showModal}>
           View
         </Button>
       </div>
@@ -29,7 +29,7 @@ function BreedingDetails({ data }) {
         open={isModalOpen}
         onCancel={handleCancel}
         footer={[
-          <Button key="cancel" type="text" onClick={handleCancel}>
+          <Button key="cancel" onClick={handleCancel}>
             Close
           </Button>,
         ]}

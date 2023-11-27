@@ -18,9 +18,7 @@ function ReviewRequest({ data }) {
 
   return (
     <>
-      <Button type="text" onClick={showModal}>
-        View
-      </Button>
+      <Button onClick={showModal}>View</Button>
       <Modal
         title="Details"
         style={{
@@ -29,7 +27,7 @@ function ReviewRequest({ data }) {
         open={isModalOpen}
         onCancel={handleCancel}
         footer={[
-          <Button key="cancel" type="text" onClick={handleCancel}>
+          <Button key="cancel" onClick={handleCancel}>
             Close
           </Button>,
         ]}

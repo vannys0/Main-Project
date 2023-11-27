@@ -48,7 +48,7 @@ function RabbitQr({ values }) {
   return (
     <div>
       <div className="d-flex justify-content-center">
-        <Button type="primary" className="w-100" onClick={showModal}>
+        <Button className="w-100" onClick={showModal}>
           Generate QR Code
         </Button>
       </div>

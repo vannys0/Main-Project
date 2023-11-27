@@ -267,11 +267,7 @@ function Dashboard() {
             <h6>Recent Adoption</h6>
             <div style={{ overflowX: "auto" }}>
               <Table dataSource={clients} pagination={false}>
-                <Table.Column
-                  title=" Name"
-                  dataIndex="fullname"
-                  key="fullname"
-                />
+                <Table.Column title=" ID" dataIndex="id" key="id" />
                 <Table.Column
                   title="Adoption Date"
                   dataIndex="adoption_date"

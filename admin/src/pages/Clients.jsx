@@ -89,10 +89,7 @@ function Clients() {
       key: "action",
       render: (text, client) => (
         <Space>
-          <Button
-            type="text"
-            onClick={() => navigateTo(`/client-profile/${client.id}`)}
-          >
+          <Button onClick={() => navigateTo(`/client-profile/${client.id}`)}>
             View
           </Button>
         </Space>
