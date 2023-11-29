@@ -14,6 +14,7 @@ import {
 import { NavLink, Link, useNavigate, useParams } from "react-router-dom";
 import { AiOutlineClose } from "react-icons/ai";
 import "./Sidebar.css";
+import Logo from "../images/logo.png";
 import { AuthContext } from "../App";
 import { Avatar } from "antd";
 import { UserOutlined, UploadOutlined } from "@ant-design/icons";
@@ -46,7 +47,7 @@ function Sidebar({ openSidebarToggle, OpenSidebar }) {
       showCancelButton: true,
       confirmButtonColor: "#d50000",
       cancelButtonColor: "#797979",
-      confirmButtonText: "Yes!",
+      confirmButtonText: "Yes",
     }).then((result) => {
       if (result.isConfirmed) {
         authContext.signOut();
@@ -61,12 +62,13 @@ function Sidebar({ openSidebarToggle, OpenSidebar }) {
       className={openSidebarToggle ? "sidebar-responsive" : ""}
     >
       <div className="sidebar-title">
-        <div className="sidebar-brand">E-Leporidae</div>
+        <div className="sidebar-brand">
+          <img src={Logo} alt="" />
+        </div>
         <span className="icon close_icon" onClick={OpenSidebar}>
           <AiOutlineClose />
         </span>
       </div>
-
       <ul className="sidebar-list">
         <div
           className="admin-side"

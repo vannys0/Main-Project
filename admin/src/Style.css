@@ -63,7 +63,7 @@ body {
 
   /* END OF ALL */
 
-  /* Main  */  
+  /* MAIN  */  
   .main-container {
     grid-area: main;
     overflow-y: auto;
@@ -80,7 +80,11 @@ body {
     color: #1e1e1e;
   }
 
-  /* Dashboard */
+  /* DASHBOARD */
+  
+  .sidebar-title .sidebar-brand img {
+    width: 100%;
+  }
   .main-cards {
     height: 120px;
     display: grid;
@@ -123,7 +127,7 @@ body {
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
   }
 
-/* AddRabbit */
+/* ADD RABBIT */
 
 .grid-container > .main-container > .form {
   gap: 20px;

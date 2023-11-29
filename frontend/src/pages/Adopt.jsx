@@ -47,9 +47,8 @@ function Adopt() {
               marginBottom: "20px",
               backgroundColor: "#eaeaea",
             }}
-            placeholder="Search rabbit by name"
+            placeholder="Search"
             allowClear
-            enterButton="Search"
             size="large"
             onSearch={Filter}
           />
@@ -80,7 +79,6 @@ function Adopt() {
                   alt="No Image"
                 />
                 <Card.Body>
-                  <Card.Title>{data.name}</Card.Title>
                   <Card.Text></Card.Text>
                   <AboutRabbit data={data} />
                 </Card.Body>

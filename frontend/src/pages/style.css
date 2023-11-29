@@ -15,6 +15,7 @@ a {
 
 /* MAIN */
 .main-div {
+    gap: 20px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -32,6 +33,7 @@ a {
     flex-direction: column;
     overflow-x: hidden;
     background-color: #fff;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
 /* HOME */
 .home-div {
@@ -148,7 +150,6 @@ a {
 }
 .contact-div > div > h2 {
     font-weight: 600;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 .contact-div div {
     margin-bottom: 35px;
@@ -338,10 +339,14 @@ a {
 
 
 @media (max-width: 480px) {
+    .main-div {
+        gap: 10px;
+    }
     .home-div,
     .adopt-div,
     .contact-div,
-    .about-div {
+    .about-div,
+    .profile-div {
         gap: 0;
         width: 100%;
         padding: 20px;
@@ -458,6 +463,11 @@ a {
         width: 100vw;
         padding: 10px;
         margin-top: 0;
+    }
+    /* Profile */
+    .profile-div > .client-info > div {
+        display: flex;
+        flex-direction: column;
     }
 
 }

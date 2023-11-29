@@ -50,8 +50,8 @@ function AboutRabbit({ data }) {
   return (
     <>
       <div className="d-flex justify-content-center">
-        <Button type="primary" className="w-100" onClick={showModal}>
-          Details
+        <Button className="w-100" onClick={showModal}>
+          {data.name}
         </Button>
       </div>
       <Modal

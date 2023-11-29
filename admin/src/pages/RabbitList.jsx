@@ -82,10 +82,16 @@ function RabbitList() {
       showCancelButton: true,
       confirmButtonColor: "#d50000",
       cancelButtonColor: "#797979",
-      confirmButtonText: "Yes, delete it!",
+      confirmButtonText: "Yes",
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire("Deleted!", "Successfully deleted.", "success");
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Deleted",
+          showConfirmButton: false,
+          timer: 1500,
+        });
         axios.delete(BASE_URL + "/delete-rabbit/" + id);
         window.location.reload();
       }

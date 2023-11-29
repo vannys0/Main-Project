@@ -8,6 +8,7 @@ import { MdAccountCircle } from "react-icons/md";
 import Button from "react-bootstrap/Button";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownMenu from "./DropdownMenu.jsx";
+import Logo from "../images/Logo.png";
 import { BsJustify } from "react-icons/bs";
 import Swal from "sweetalert2";
 import SecureStore from "react-secure-storage";
@@ -44,7 +45,7 @@ function Navbar() {
   return (
     <nav>
       <Link to="/home" className="title">
-        <h2 className="brand">e-Leporidae</h2>
+        <img src={Logo} alt="" />
       </Link>
       <div className="menu" onClick={() => setMenuOpen(!menuOpen)}>
         <BsJustify className="icons menu-icon" />
