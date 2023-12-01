@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
+import Footer from "../components/footer";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Form } from "react-bootstrap";
 import { v4 as uuidv4 } from "uuid";
@@ -141,14 +142,15 @@ function AdoptForm() {
     <div className="main-div">
       <Navbar />
       <div className="form-div">
+        <div className="thumbnail">
+          <h4>Adoption Application</h4>
+        </div>
         <form encType="multipart/form-data">
-          <h4>
-            Adopt{" "}
+          {/* <h4>
+            Adopt
             {JSON.parse(name).name + " the price is: " + JSON.parse(name).price}
-          </h4>
-          <br />
-          <br />
-          <label htmlFor="phone">Phone</label>
+          </h4> */}
+          <label htmlFor="phone">Phone Number</label>
           <input
             type="tel"
             name="phone"
@@ -339,6 +341,7 @@ function AdoptForm() {
           </div>
         </form>
       </div>
+      <Footer />
     </div>
   );
 }

@@ -74,7 +74,9 @@ function Profile() {
     <div className="main-div">
       <Navbar />
       <div className="profile-div">
-        <h2>Profile</h2>
+        <div className="thumbnail">
+          <h4>Profile</h4>
+        </div>
         <div className="d-flex justify-content-center">
           {image ? (
             <div className="d-flex flex-column gap-4 align-items-center justify-content-center">
@@ -139,26 +141,32 @@ function Profile() {
           />
         </div>
         <div className="client-info">
+          <hr style={{ height: "2px solid black", width: "100%" }} />
           <div>
             <h6>User ID</h6>
             <p>{user.id}</p>
           </div>
+          <hr style={{ height: "2px solid black", width: "100%" }} />
           <div>
             <h6>Full Name</h6>
             <p>{user.name}</p>
           </div>
+          <hr style={{ height: "2px solid black", width: "100%" }} />
           <div>
             <h6>Email</h6>
             <p>{user.email}</p>
           </div>
+          <hr style={{ height: "2px solid black", width: "100%" }} />
           <div>
             <h6>Phone number</h6>
             <p>Phone</p>
           </div>
+          <hr style={{ height: "2px solid black", width: "100%" }} />
           <div>
             <h6>Address</h6>
             <p>Address</p>
           </div>
+          <hr style={{ height: "2px solid black", width: "100%" }} />
         </div>
       </div>
       <Footer />

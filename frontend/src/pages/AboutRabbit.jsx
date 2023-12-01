@@ -62,7 +62,7 @@ function AboutRabbit({ data }) {
         open={isModalOpen}
         onCancel={handleCancel}
         footer={[
-          <Button key="cancel" type="text" onClick={handleCancel}>
+          <Button key="cancel" onClick={handleCancel}>
             Close
           </Button>,
           <Button
@@ -106,28 +106,38 @@ function AboutRabbit({ data }) {
         </div>
         <br />
         <p>Hi, my name is {data.name} and I am looking for a new home.</p>
-        <div className="d-flex">
-          <div className="w-25">
+        <div className="d-flex flex-column">
+          <div className="d-flex justify-content-between">
             <p>Rabbit Id</p>
-            <p>Sex</p>
-            <p>Breed</p>
-            <p>Age</p>
-            <p>Color</p>
-            <p>Weight</p>
-            <p>Type</p>
-            <p>Adoption Fee</p>
+            <p>{data.id}</p>
           </div>
-          <div>
-            <p> {data.id}</p>
-            <p> {data.sex}</p>
-            <p> {data.breed_type}</p>
+          <div className="d-flex justify-content-between">
+            <p>Sex</p>
+            <p>{data.sex}</p>
+          </div>
+          <div className="d-flex justify-content-between">
+            <p>Breed</p> <p>{data.breed_type}</p>
+          </div>
+          <div className="d-flex justify-content-between">
+            <p>Age</p>
             <p>
               {age.years} years {age.months} months
             </p>
-            <p> {data.color}</p>
-            <p> {data.weight} klg</p>
-            <p> {data.rabbit_type}</p>
-            <p> P{data.price}</p>
+          </div>
+          <div className="d-flex justify-content-between">
+            <p>Color</p>
+            <p>{data.color}</p>
+          </div>
+          <div className="d-flex justify-content-between">
+            <p>Weight</p>
+            <p>{data.weight} klg</p>
+          </div>
+          <div className="d-flex justify-content-between">
+            <p>Type</p>
+            <p>{data.rabbit_type}</p>
+          </div>
+          <div className="d-flex justify-content-between">
+            <p>Adoption Fee</p> <p> P{data.price}</p>
           </div>
         </div>
       </Modal>

@@ -104,8 +104,9 @@ function MyApplication() {
     <div className="main-div">
       <Navbar />
       <div className="application-div">
-        <h4>Recent Adoption</h4>
-        <br />
+        <div className="thumbnail">
+          <h5>Recent Adoption</h5>
+        </div>
         <Table
           dataSource={values}
           columns={columns}

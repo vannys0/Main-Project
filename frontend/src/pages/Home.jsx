@@ -15,8 +15,9 @@ function Home() {
     <div className="main-div">
       <Navbar />
       <div className="home-div">
-        <h2 className="align-self-center">Welcome to e-Leporidae!</h2>
-        <br />
+        <div className="thumbnail">
+          <h4>Welcome to e-Leporidae!</h4>
+        </div>
         <img src={RabbitHome} alt="" />
         <br />
         <div className="d-flex justify-content-between align-items-center">

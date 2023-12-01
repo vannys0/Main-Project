@@ -37,15 +37,13 @@ function Adopt() {
     <div className="main-div">
       <Navbar />
       <div className="adopt-div">
-        <div className="d-flex justify-content-between">
-          <h2>Adoptable Rabbits</h2>
+        <div className="d-flex justify-content-between thumbnail">
+          <h5>Adoptable Rabbits</h5>
           <Search
             style={{
-              height: "40px",
               fontSize: "16px",
-              width: "300px",
-              marginBottom: "20px",
-              backgroundColor: "#eaeaea",
+              width: "200px",
+              marginBottom: "10px",
             }}
             placeholder="Search"
             allowClear
@@ -91,6 +89,7 @@ function Adopt() {
           )}
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

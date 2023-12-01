@@ -4,7 +4,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Gothic', sans-serif;
 }
 a {
     text-decoration: none;
@@ -30,19 +30,32 @@ a {
     flex-direction: column;
     overflow-x: hidden;
     background-color: #fff;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
 /* HOME */
 .home-div {
+    position: relative;
     width: 50%;
-    padding: 40px 20px 20px 20px;
+    padding: 120px 20px 20px 20px;
     display: flex;
     justify-content: center;
     flex-direction: column;
     background-color: #fff;
 }
+.home-div .thumbnail {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    color: #fff;
+    background-color: #0669AC;
+}
 .home-div img {
     width: 100%;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 }
 .brandname {
     margin-top: 100px;
@@ -86,13 +99,27 @@ a {
     width: 100%;
 }
 .email {
-    color: #00828c;
+    color: #0669AC;
 }
 
 /* ADOPT */
 .adopt-div {
+    position: relative;
     width: 50%;
-    padding: 40px 20px 20px 20px;
+    padding: 120px 20px 20px 20px;
+}
+.adopt-div .thumbnail {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100px;
+    top: 0;
+    left: 0;
+    padding: 0 20px;
+    color: #fff;
+    background-color: #0669AC;
 }
 .rehome-div h2 {
     margin-bottom: 50px;
@@ -136,17 +163,42 @@ a {
 
 /* CONTACT */
 .contact-div {
-    height: 80vh;
-    padding: 40px 20px 0px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    padding: 120px 20px 0px 20px;
+}
+.contact-div .thumbnail {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-size: fit;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100px;
+    background-color: #0669AC;
+    color: #fff;
+}
+.contact-div .farm_img img {
+    width: 60%;
+}
+.contact-div > div > h4 {
+    color: #0669AC;
+}
+.contact-div > div > h5 > span {
+    color: #0669AC;
+}
+.contact-div > div > div > h5 > span {
+    color: #0669AC;
 }
 .contact-div > h2 {
     font-weight: 600;
 }
 .contact-div > div > h2 {
     font-weight: 600;
-}
-.contact-div div {
-    margin-bottom: 35px;
 }
 .main-div .rabbit-contact {
     height: 200px;
@@ -160,18 +212,30 @@ a {
     position: relative;
 }
 .about-div {
-    padding: 40px 20px 20px 20px;
+    position: relative;
+    padding: 120px 20px 20px 20px;
 }
-
+.about-div .thumbnail {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100px;
+    color: #fff;
+    background-color: #0669AC;
+}
 .about-div .content {
     display: flex;
     flex-direction: column;
 }
 .rabbit-about {
-    height: 280px;
+    height: 220px;
     position: absolute;
-    right: 320px;
-    bottom: 50px;
+    right: 0;
+    bottom: 0;
 }
 
 /* ADOPT FORM */
@@ -180,11 +244,23 @@ a {
 }
 .main-div .form-div {
     position: relative;
-    padding: 20px 20px 0px 20px;
+    padding: 120px 20px 0px 20px;
     width: 50%;
     display: flex;
     justify-content: center;
     border: 2px solid #eaeaea;
+}
+.form-div .thumbnail {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100px;
+    color: #fff;
+    background-color: #0669AC;
 }
 .main-div .form-div .label-name {
     margin-top: 20px;
@@ -275,10 +351,23 @@ a {
 
 /* APPLICATION */
 .application-div {
+    position: relative;
     width: 50%;
     height: 90vh;
-    padding: 40px 20px 20px 20px;
+    padding: 120px 20px 20px 20px;
     background-color: #fff;
+}
+.application-div .thumbnail {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100px;
+    color: #fff;
+    background-color: #0669AC;
 }
 .application-div table {
     border: 2px solid #eaeaea;
@@ -302,10 +391,24 @@ a {
 }
  /* PROFILE */
  .profile-div {
+    position: relative;
     width: 50%;
     height: 100vh;
-    padding: 50px;
+    padding: 85px 50px 50px 50px;
     background-color: #fff;
+}
+.profile-div .thumbnail {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    padding: 20px;
+    width: 100%;
+    height: 170px;
+    color: #fff;
+    background-color: #0669AC;
 }
 .profile-div .client-info {
     margin-top: 40px;

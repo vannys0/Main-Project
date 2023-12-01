@@ -10,8 +10,9 @@ function About() {
     <div className="main-div">
       <Navbar />
       <div className="about-div">
-        <h2>About Us</h2>
-        <br />
+        <div className="thumbnail">
+          <h5>About Us</h5>
+        </div>
         <div className="content">
           <p>
             At e-Leporidae, we are driven by a simple but powerful mission: to{" "}
