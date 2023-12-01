@@ -65,14 +65,14 @@ function Breeding() {
 
   const columns = [
     {
-      title: "Male",
-      dataIndex: "buck_id",
-      key: "buck_id",
+      title: "ID",
+      dataIndex: "id",
+      key: "id",
     },
     {
-      title: "Female",
-      dataIndex: "doe_id",
-      key: "doe_id",
+      title: "Note",
+      dataIndex: "note",
+      key: "note",
     },
     {
       title: "Pairing date",
@@ -84,7 +84,7 @@ function Breeding() {
       },
     },
     {
-      title: "Expected due",
+      title: "Estimated due",
       dataIndex: "expected_due_date",
       key: "expected_due_date",
       render: (dueDate) => {

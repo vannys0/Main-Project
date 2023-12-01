@@ -7,6 +7,7 @@ import { Html5QrcodeScanner } from "html5-qrcode";
 import axios from "axios";
 import { Button } from "antd";
 import { v4 as uuidv4 } from "uuid";
+import Swal from "sweetalert2";
 import appConfig from "../../config.json";
 import { useNavigate } from "react-router-dom";
 const BASE_URL = appConfig.apiBasePath;
@@ -66,22 +67,66 @@ function BreedPair() {
   }, []);
 
   const onPair = (e) => {
+    if (!scanResult && !scanResult1) {
+      Swal.fire({
+        position: "center",
+        icon: "info",
+        title: "Oops...",
+        text: "No QR code has been scanned",
+      });
+      return;
+    }
+
+    if (scanResult === scanResult1) {
+      Swal.fire({
+        icon: "error",
+        title: "Failed",
+        text: "Scanned codes must be different for pairing.",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+      window.location.reload();
+      return;
+    }
+
     const currentDate = new Date();
     const futureDate = new Date();
     futureDate.setDate(currentDate.getDate() + 32);
 
-    axios
-      .post(BASE_URL + "/pair-rabbit", {
-        id: uuidv4(),
-        male_rabbit_id: scanResult,
-        female_rabbit_id: scanResult1,
-        date: currentDate.toISOString(),
-        expected_due: futureDate.toISOString(),
-      })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => console.log(err));
+    Swal.fire({
+      title: "Confirm?",
+      text: "Add a note for this pair",
+      input: "text",
+      inputPlaceholder: "Add a note",
+      showCancelButton: true,
+      confirmButtonColor: "#2e7d32",
+      cancelButtonColor: "#797979",
+      confirmButtonText: "Confirm",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .post(BASE_URL + "/pair-rabbit", {
+            id: uuidv4(),
+            male_rabbit_id: scanResult,
+            female_rabbit_id: scanResult1,
+            note: result.value,
+            date: currentDate.toISOString(),
+            expected_due: futureDate.toISOString(),
+          })
+          .then((res) => {
+            Swal.fire({
+              position: "center",
+              icon: "success",
+              title: "Successful",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            navigateTo("/breeding");
+            console.log(res);
+          })
+          .catch((err) => console.log(err));
+      }
+    });
 
     console.log("onpair");
   };
@@ -107,18 +152,14 @@ function BreedPair() {
         <br />
         <div className="breed-ground">
           <div className="ground">
-            {scanResult ? (
-              <span>ID: {scanResult}</span>
-            ) : (
-              <div id="reader"></div>
-            )}
+            {scanResult ? <span>{scanResult}</span> : <div id="reader"></div>}
           </div>
           <div className="d-flex justify-content-center">
             <h6> Matching result</h6>
           </div>
           <div className="ground">
             {scanResult1 ? (
-              <span>ID: {scanResult1}</span>
+              <span>{scanResult1}</span>
             ) : (
               <div id="reader1"></div>
             )}
@@ -138,7 +179,6 @@ function BreedPair() {
             type="primary"
             to="/breeding"
             onClick={(e) => {
-              navigateTo("/breeding");
               onPair(e);
             }}
           >
