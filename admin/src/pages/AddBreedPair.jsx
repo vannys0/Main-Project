@@ -110,7 +110,7 @@ function BreedPair() {
             male_rabbit_id: scanResult,
             female_rabbit_id: scanResult1,
             note: result.value,
-            date: currentDate.toISOString(),
+            date: currentDate.toISOString(), 
             expected_due: futureDate.toISOString(),
           })
           .then((res) => {

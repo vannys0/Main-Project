@@ -25,9 +25,9 @@ function About() {
           <br />
         </div>
         <div className="content">
-          <h2>Our Goal</h2>
+          <h4>Our Goal</h4>
           <br />
-          <h4>Find a happy home for rabbits.</h4>
+          <h5>Find a happy home for rabbits.</h5>
           <p>
             The goal is to secure a contented and suitable residence for
             rabbits. This entails locating environments where these animals can
@@ -41,7 +41,7 @@ function About() {
             owners on how to create a harmonious and enriching habitat for their
             rabbit companions.
           </p>
-          <h4>Educate rabbit owners on responsible care.</h4>
+          <h5>Educate rabbit owners on responsible care.</h5>
           <p>
             The core objective here is to inform and guide rabbit owners in the
             practice of responsible care for these beloved pets. This
@@ -56,7 +56,7 @@ function About() {
             community of informed and responsible rabbit owners who can offer
             their furry companions the best possible quality of life.
           </p>
-          <h4>Create a supportive rabbit-loving community.</h4>
+          <h5>Create a supportive rabbit-loving community.</h5>
           <p>
             Our primary aim is to establish a nurturing and inclusive community
             of individuals who share a profound love for rabbits. We believe
@@ -75,10 +75,10 @@ function About() {
           <br />
         </div>
         <div className="content">
-          <h2 className="visit-us">Visit Us</h2>
+          <h4 className="visit-us">Visit Us</h4>
           <br />
-          <h4>Visit our farm at:</h4>
-          <h4>Concepcion, Libmanan, Camarines Sur, Philippines</h4>
+          <h5>Visit our farm at:</h5>
+          <h5>Concepcion, Libmanan, Camarines Sur, Philippines</h5>
           <p>Look for Mr. Leonardo Nogra</p>
         </div>
         <img src={Rabbit} alt="" className="rabbit-about" />

@@ -1,18 +1,17 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import "./Navbar.css";
-import { AiOutlineHome, AiOutlineContacts } from "react-icons/ai";
-import { GiRabbit } from "react-icons/gi";
-import { FcAbout } from "react-icons/fc";
 import { MdAccountCircle } from "react-icons/md";
 import Button from "react-bootstrap/Button";
-import Dropdown from "react-bootstrap/Dropdown";
 import DropdownMenu from "./DropdownMenu.jsx";
 import Logo from "../images/Logo.png";
 import { BsJustify } from "react-icons/bs";
 import Swal from "sweetalert2";
+import { UserOutlined, DownOutlined } from "@ant-design/icons";
+import { Dropdown, Space, Avatar } from "antd";
 import SecureStore from "react-secure-storage";
 import { AuthContext } from "../App";
+import axios from "axios";
 
 function Navbar() {
   const user = SecureStore.getItem("userToken");
@@ -24,6 +23,16 @@ function Navbar() {
   };
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdown, setDropdown] = useState(false);
+  const [userInfo, setUserInfo] = useState([]);
+  const hasProfileImage = userInfo && userInfo.profile;
+  useEffect(() => {
+    axios
+      .get("http://localhost:8081/get_user/" + user.id)
+      .then((res) => {
+        setUserInfo(res.data[0]);
+      })
+      .catch((err) => console.log(err));
+  });
 
   const handleLogout = () => {
     Swal.fire({
@@ -32,7 +41,7 @@ function Navbar() {
       showCancelButton: true,
       confirmButtonColor: "#d50000",
       cancelButtonColor: "#797979",
-      confirmButtonText: "Yes!",
+      confirmButtonText: "Yes",
     }).then((result) => {
       if (result.isConfirmed) {
         SecureStore.removeItem();
@@ -41,6 +50,28 @@ function Navbar() {
       }
     });
   };
+
+  const items = [
+    {
+      label: <h4>{user.name}</h4>,
+      key: "0",
+    },
+    {
+      label: <Link to={`/user_profile/${user.id}`}>Profile</Link>,
+      key: "1",
+    },
+    {
+      label: <Link to="/myapplication">Application</Link>,
+      key: "2",
+    },
+    {
+      type: "divider",
+    },
+    {
+      label: <Link onClick={handleLogout}>Logout</Link>,
+      key: "3",
+    },
+  ];
 
   return (
     <nav>
@@ -64,6 +95,43 @@ function Navbar() {
           <NavLink to="/about">About Us</NavLink>
         </li>
         <li>
+          <Dropdown
+            menu={{
+              items,
+            }}
+            trigger={["click"]}
+          >
+            <a
+              style={{ cursor: "pointer" }}
+              onClick={(e) => e.preventDefault()}
+            >
+              <Space>
+                {hasProfileImage ? (
+                  <Avatar
+                    size={30}
+                    src={
+                      <img
+                        src={`http://localhost:8081/uploads/${userInfo.profile}`}
+                        alt=""
+                        style={{ width: "100%" }}
+                      />
+                    }
+                  />
+                ) : (
+                  <Avatar
+                    style={{
+                      backgroundColor: "#eaeaea",
+                    }}
+                    size={30}
+                    icon={<UserOutlined />}
+                  />
+                )}
+                <DownOutlined />
+              </Space>
+            </a>
+          </Dropdown>
+        </li>
+        <li>
           <NavLink to={`/user_profile/${user.id}`} className="to-hide">
             My Profile
           </NavLink>
@@ -78,11 +146,6 @@ function Navbar() {
             Logout
           </NavLink>
         </li>
-        <div onClick={() => setDropdown((prev) => !prev)}>
-          <MdAccountCircle className="profile" />
-        </div>
-
-        {dropdown && <DropdownMenu />}
       </ul>
     </nav>
   );

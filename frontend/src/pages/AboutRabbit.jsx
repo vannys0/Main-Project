@@ -4,7 +4,7 @@ import "./style.css";
 import { Button, Modal } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { Carousel } from "react-bootstrap";
-import { Image } from "antd";
+import { Image, Avatar } from "antd";
 
 function AboutRabbit({ data }) {
   const navigateTo = useNavigate();
@@ -78,11 +78,20 @@ function AboutRabbit({ data }) {
           </Button>,
         ]}
       >
-        <div className="image-div bg-dark">
+        <div className="image-div">
           <Carousel>
             {data.image_path.split(",").map((image, index) => (
               <Carousel.Item key={index}>
-                <Image
+                <Avatar
+                  shape="square"
+                  size={300}
+                  src={
+                    <Image
+                      src={`http://localhost:8081/uploads/${image.trim()}`}
+                    />
+                  }
+                />
+                {/* <img
                   style={{
                     display: "block",
                     margin: "auto",
@@ -90,7 +99,7 @@ function AboutRabbit({ data }) {
                   }}
                   src={`http://localhost:8081/uploads/${image.trim()}`}
                   alt=""
-                />
+                /> */}
               </Carousel.Item>
             ))}
           </Carousel>
@@ -99,22 +108,26 @@ function AboutRabbit({ data }) {
         <p>Hi, my name is {data.name} and I am looking for a new home.</p>
         <div className="d-flex">
           <div className="w-25">
-            <h6>Rabbit Id</h6>
-            <h6>Breed</h6>
-            <h6>Sex</h6>
-            <h6>Age</h6>
-            <h6>Weight</h6>
-            <h6>Price</h6>
+            <p>Rabbit Id</p>
+            <p>Sex</p>
+            <p>Breed</p>
+            <p>Age</p>
+            <p>Color</p>
+            <p>Weight</p>
+            <p>Type</p>
+            <p>Adoption Fee</p>
           </div>
           <div>
-            <h6>: {data.id}</h6>
-            <h6>: {data.breed} Other</h6>
-            <h6>: {data.sex}</h6>
-            <h6>
-              : {age.years} years {age.months} months
-            </h6>
-            <h6>: {data.weight} klg</h6>
-            <h6>: {data.price}</h6>
+            <p> {data.id}</p>
+            <p> {data.sex}</p>
+            <p> {data.breed_type}</p>
+            <p>
+              {age.years} years {age.months} months
+            </p>
+            <p> {data.color}</p>
+            <p> {data.weight} klg</p>
+            <p> {data.rabbit_type}</p>
+            <p> P{data.price}</p>
           </div>
         </div>
       </Modal>

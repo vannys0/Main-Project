@@ -15,16 +15,16 @@ function Home() {
     <div className="main-div">
       <Navbar />
       <div className="home-div">
-        <h1 className="align-self-center">Welcome to e-Leporidae!</h1>
+        <h2 className="align-self-center">Welcome to e-Leporidae!</h2>
         <br />
         <img src={RabbitHome} alt="" />
         <br />
         <div className="d-flex justify-content-between align-items-center">
-          <h2>
+          <h3>
             Creating a better future <br /> for all rabbits.
-          </h2>
+          </h3>
           <Link to="/adopt" className="adoptbtn">
-            Adopt rabbit now!
+            Adopt now!
           </Link>
         </div>
         <br />
@@ -38,28 +38,28 @@ function Home() {
           our determination to ensure a better tomorrow for them in every
           possible way.
         </p>
-        <h4 className="related-business">Related Businessess:</h4>
+        <h5 className="related-business">Related Businesses:</h5>
         <div className="home-body">
           <div>
-            <h5>Santol Plants</h5>
+            <h6>Santol Plants</h6>
             <img src={Img2} alt="" />
           </div>
           <div>
-            <h5>Banana Plants</h5>
+            <h6>Banana Plants</h6>
             <img src={Img3} alt="" />
           </div>
         </div>
         <br />
         <div className="d-flex align-items-center justify-content-center last-div">
-          <h5>Rice Farming</h5>
+          <h6>Rice Farming</h6>
           <img src={Img1} alt="" />
         </div>
         <div className="my-4">
-          <h5>
+          <h6>
             Have questions or need help? Email us at
             <span className="email"> eleporidae@gmail.com</span> and we'll be
             happy to talk more with you!
-          </h5>
+          </h6>
         </div>
       </div>
       <Footer />

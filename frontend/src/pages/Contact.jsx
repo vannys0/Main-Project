@@ -12,22 +12,22 @@ function Contact() {
         <h2>Send us a message</h2>
         <br />
         <div>
-          <h4>
+          <p>
             Want to get in touch with us? Make an offer now! <br /> Here are the
             details.
-          </h4>
+          </p>
         </div>
         <div>
-          <h4>Email us at:</h4>
-          <h2>eleporidae@gmail.com</h2>
+          <p>Email us at:</p>
+          <h4>eleporidae@gmail.com</h4>
         </div>
         <div>
-          <h4>Call us at:</h4>
-          <h2>09564758842</h2>
+          <p>Call us at:</p>
+          <h4>09564758842</h4>
         </div>
         <div>
-          <h4>Write us on:</h4>
-          <h2>Concepcion, Libmanan, Camarines Sur</h2>
+          <p>Write us on:</p>
+          <h4>Concepcion, Libmanan, Camarines Sur</h4>
         </div>
       </div>
       <Footer />
