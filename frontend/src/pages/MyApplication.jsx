@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
+import Footer from "../components/footer";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import ViewApplication from "./ViewApplication";
@@ -79,7 +80,7 @@ function MyApplication() {
       width: 100,
     },
     {
-      title: "Action",
+      title: "Actions",
       key: "action",
       render: (text, record) => (
         <div className="d-flex gap-2">
@@ -107,15 +108,18 @@ function MyApplication() {
         <div className="thumbnail">
           <h5>Recent Adoption</h5>
         </div>
-        <Table
-          dataSource={values}
-          columns={columns}
-          rowKey={(record) => record.id}
-          pagination={{
-            pageSize: itemPerPage,
-          }}
-        />
+        <div style={{ overflowX: "auto" }}>
+          <Table
+            dataSource={values}
+            columns={columns}
+            rowKey={(record) => record.id}
+            pagination={{
+              pageSize: itemPerPage,
+            }}
+          />
+        </div>
       </div>
+      <Footer />
     </div>
   );
 }

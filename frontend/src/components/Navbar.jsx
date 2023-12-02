@@ -131,21 +131,6 @@ function Navbar() {
             </a>
           </Dropdown>
         </li>
-        <li>
-          <NavLink to={`/user_profile/${user.id}`} className="to-hide">
-            My Profile
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/myapplication" className="to-hide">
-            Application
-          </NavLink>
-        </li>
-        <li>
-          <NavLink className="to-hide" onClick={handleLogout}>
-            Logout
-          </NavLink>
-        </li>
       </ul>
     </nav>
   );
