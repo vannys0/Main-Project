@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/footer";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import ViewApplication from "./ViewApplication";
-import { Button, Tag, Table } from "antd"; // Import Table from antd
+import { Button, Tag, Table, Dropdown, Space } from "antd";
+import { DownOutlined } from "@ant-design/icons";
 import Swal from "sweetalert2";
 import SecureStore from "react-secure-storage";
 
@@ -12,14 +13,20 @@ function MyApplication() {
   const { id } = useParams();
   const [values, setValues] = useState([]);
   const user = SecureStore.getItem("userToken");
-  const itemPerPage = 6;
+  const itemPerPage = 7;
+
+  const [filteredValues, setFilteredValues] = useState([]);
+  const [selectedStatus, setSelectedStatus] = useState("All");
 
   useEffect(() => {
     axios
       .get("http://localhost:8081/myapplication/" + user.id)
-      .then((res) => setValues(res.data))
+      .then((res) => {
+        setValues(res.data);
+        setFilteredValues(res.data);
+      })
       .catch((err) => console.log(err));
-  }, []);
+  }, [user.id]);
 
   const handleDelete = async (id) => {
     Swal.fire({
@@ -101,6 +108,47 @@ function MyApplication() {
     },
   ];
 
+  const handleStatusFilter = (status) => {
+    setSelectedStatus(status);
+    if (status === "All") {
+      setFilteredValues(values);
+    } else {
+      const filtered = values.filter(
+        (item) => item.transaction_status === status
+      );
+      setFilteredValues(filtered);
+    }
+  };
+
+  const items = [
+    {
+      label: <Link onClick={() => handleStatusFilter("All")}>All</Link>,
+      key: "0",
+    },
+    {
+      label: <Link onClick={() => handleStatusFilter("Pending")}>Pending</Link>,
+      key: "1",
+    },
+    {
+      label: (
+        <Link onClick={() => handleStatusFilter("Approved")}>Approved</Link>
+      ),
+      key: "2",
+    },
+    {
+      label: (
+        <Link onClick={() => handleStatusFilter("Declined")}>Declined</Link>
+      ),
+      key: "3",
+    },
+    {
+      label: (
+        <Link onClick={() => handleStatusFilter("Cancelled")}>Cancelled</Link>
+      ),
+      key: "4",
+    },
+  ];
+
   return (
     <div className="main-div">
       <Navbar />
@@ -108,9 +156,23 @@ function MyApplication() {
         <div className="thumbnail">
           <h5>Recent Adoption</h5>
         </div>
+        <Dropdown
+          menu={{
+            items,
+          }}
+          trigger={["click"]}
+        >
+          <a onClick={(e) => e.preventDefault()}>
+            <Space>
+              Filter
+              <DownOutlined />
+            </Space>
+          </a>
+        </Dropdown>
+        <span> {selectedStatus}</span>
         <div style={{ overflowX: "auto" }}>
           <Table
-            dataSource={values}
+            dataSource={filteredValues}
             columns={columns}
             rowKey={(record) => record.id}
             pagination={{

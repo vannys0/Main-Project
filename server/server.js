@@ -19,6 +19,9 @@ app.use("/api", rabbit);
 const adoption = require("./routes/adoption");
 app.use("/api", adoption);
 
+const delivery = require("./routes/delivery");
+app.use("/api", delivery);
+
 const breeding = require("./routes/breeding");
 app.use("/api", breeding);
 

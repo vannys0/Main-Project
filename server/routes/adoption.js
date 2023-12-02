@@ -16,7 +16,7 @@ router.get("/adoption", (req, res) => {
 // All Adoption Request
 router.get("/adoptions", (req, res) => {
   db.query(
-    "SELECT * FROM adoption ORDER BY transaction_status DESC, adoption_date DESC",
+    "SELECT * FROM adoption ORDER BY adoption_status DESC, adoption_date DESC",
     (err, results) => {
       if (err) {
         console.error("Error fetching :", err);
@@ -31,7 +31,7 @@ router.get("/adoptions", (req, res) => {
 // Adoption Request Deliver Option
 router.get("/adoptions-deliver", (req, res) => {
   db.query(
-    "SELECT * FROM adoption WHERE transaction_status = 'Approved' AND service_option = 'Deliver' ORDER BY adoption_date",
+    "SELECT * FROM adoption WHERE adoption_status = 'Approved' AND service_option = 'Deliver' ORDER BY adoption_date",
     (err, results) => {
       if (err) {
         console.error("Error fetching :", err);
@@ -43,20 +43,9 @@ router.get("/adoptions-deliver", (req, res) => {
   );
 });
 
-// router.get("/myapplication", (req, res) => {
-//   db.query("SELECT * FROM adoption", (err, results) => {
-//     if (err) {
-//       console.error("Error fetching :", err);
-//       res.status(500).json({ error: "Internal Server Error" });
-//       return;
-//     }
-//     return res.json(results);
-//   });
-// });
-
 // Approve Adoption
 router.put("/approve-adoption/:id", (req, res) => {
-  const sql = "UPDATE adoption SET `transaction_status` = ? WHERE id = ?";
+  const sql = "UPDATE adoption SET `adoption_status` = ? WHERE id = ?";
   const values = ["Approved"];
   const id = req.params.id;
 
@@ -84,7 +73,7 @@ router.put("/approve-delivery/:id", (req, res) => {
 
 router.put("/decline-adoption/:id", (req, res) => {
   const sql =
-    "UPDATE adoption SET `transaction_status` = ?, `comment` = ?  WHERE id = ?";
+    "UPDATE adoption SET `adoption_status` = ?, `comment` = ?  WHERE id = ?";
   const values = ["Declined"];
   const id = req.params.id;
   const comment = req.body.comment;

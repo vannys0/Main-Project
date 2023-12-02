@@ -39,7 +39,7 @@ router.get("/userCount", (req, res) => {
 
 router.get("/pending-adoption", (req, res) => {
   db.query(
-    "SELECT count(*) as pending FROM adoption where transaction_status = 'PENDING'",
+    "SELECT count(*) as pending FROM adoption where adoption_status = 'PENDING'",
     (err, results) => {
       if (err) {
         console.error("Error fetching :", err);
@@ -78,7 +78,7 @@ router.get("/pairCount", (req, res) => {
 
 router.get("/approveCount", (req, res) => {
   db.query(
-    "SELECT count(*) as approveCount FROM adoption WHERE transaction_status = 'APPROVE'",
+    "SELECT count(*) as approveCount FROM adoption WHERE adoption_status = 'Approved'",
     (err, results) => {
       if (err) {
         console.error("Error fetching :", err);
@@ -104,7 +104,7 @@ router.get("/recent-rabbit", (req, res) => {
 // Clients
 router.get("/recent-adoption", (req, res) => {
   db.query(
-    "SELECT id, adoption_date, transaction_status FROM adoption ORDER BY adoption_date DESC LIMIT 5",
+    "SELECT id, adoption_date, adoption_status FROM adoption ORDER BY adoption_date DESC LIMIT 5",
     (err, results) => {
       if (err) {
         console.error("Error fetching :", err);

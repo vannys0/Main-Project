@@ -5,7 +5,8 @@ import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import ReviewRequest from "./ReviewRequest";
 import { Link, useNavigate } from "react-router-dom";
-import { Button, Input, Table, Tag, Space, Pagination } from "antd";
+import { DownOutlined } from "@ant-design/icons";
+import { Button, Input, Table, Tag, Space, Pagination, Dropdown } from "antd";
 import Swal from "sweetalert2";
 import appConfig from "../../config.json";
 const BASE_URL = appConfig.apiBasePath;
@@ -19,6 +20,9 @@ function Request() {
   const [values, setValues] = useState([]);
   const [pageNumber, setPageNumber] = useState(1);
   const itemsPerPage = 6;
+
+  const [filteredValues, setFilteredValues] = useState([]);
+  const [selectedStatus, setSelectedStatus] = useState("All");
 
   const onApprove = (e, o) => {
     Swal.fire({
@@ -81,7 +85,10 @@ function Request() {
   useEffect(() => {
     axios
       .get(BASE_URL + "/adoptions")
-      .then((res) => setValues(res.data))
+      .then((res) => {
+        setValues(res.data);
+        setFilteredValues(res.data);
+      })
       .catch((err) => console.log(err));
   }, []);
 
@@ -95,6 +102,114 @@ function Request() {
     return values.slice(startIndex, endIndex);
   };
 
+  const columns = [
+    {
+      title: "Adoption ID",
+      dataIndex: "id",
+      key: "id",
+    },
+    {
+      title: "Address",
+      key: "address",
+      render: (text, record) => (
+        <span>
+          {record.barangay}, {record.city}, {record.province}
+        </span>
+      ),
+    },
+    {
+      title: "Date",
+      dataIndex: "adoption_date",
+      key: "date",
+    },
+    {
+      title: "Mode of Delivery",
+      dataIndex: "service_option",
+      key: "service_option",
+    },
+    {
+      title: "Status",
+      dataIndex: "adoption_status",
+      key: "adoption_status",
+      render: (text, record) => (
+        <span>
+          {record.adoption_status === "Pending" ? (
+            <Tag color="warning">{record.adoption_status}</Tag>
+          ) : record.adoption_status === "Declined" ? (
+            <Tag color="error">{record.adoption_status}</Tag>
+          ) : (
+            <Tag color="success">{record.adoption_status}</Tag>
+          )}
+        </span>
+      ),
+    },
+    {
+      title: "Comment",
+      dataIndex: "comment",
+      key: "comment",
+    },
+    {
+      title: "Actions",
+      key: "action",
+      render: (text, record) => (
+        <Space>
+          <ReviewRequest data={record} />
+          {record.transaction_status === "Pending" ? (
+            <Button type="primary" onClick={(e) => onApprove(e, record)}>
+              Approve
+            </Button>
+          ) : (
+            <Button type="primary" disabled>
+              Approve
+            </Button>
+          )}
+          {record.transaction_status === "Pending" ? (
+            <Button type="primary" danger onClick={(e) => onDecline(e, record)}>
+              Decline
+            </Button>
+          ) : (
+            <Button type="primary" disabled>
+              Decline
+            </Button>
+          )}
+        </Space>
+      ),
+    },
+  ];
+
+  const handleStatusFilter = (status) => {
+    setSelectedStatus(status);
+    if (status === "All") {
+      setFilteredValues(values);
+    } else {
+      const filtered = values.filter((item) => item.adoption_status === status);
+      setFilteredValues(filtered);
+    }
+  };
+
+  const items = [
+    {
+      label: <span onClick={() => handleStatusFilter("All")}>All</span>,
+      key: "0",
+    },
+    {
+      label: <span onClick={() => handleStatusFilter("Pending")}>Pending</span>,
+      key: "1",
+    },
+    {
+      label: (
+        <span onClick={() => handleStatusFilter("Approved")}>Approved</span>
+      ),
+      key: "2",
+    },
+    {
+      label: (
+        <span onClick={() => handleStatusFilter("Declined")}>Declined</span>
+      ),
+      key: "3",
+    },
+  ];
+
   return (
     <div className="grid-container">
       <Header OpenSidebar={OpenSidebar} />
@@ -104,88 +219,30 @@ function Request() {
       />
       <div className="main-container bg-light">
         <h3>Adoption request</h3>
-        <div className="tables">
-          <Table dataSource={getDisplayedData()} pagination={false}>
-            <Table.Column title="Adoption ID" dataIndex="id" key="id" />
-            <Table.Column
-              title="Address"
-              key="address"
-              render={(text, record) => (
-                <span>
-                  {record.barangay}, {record.city}, {record.province}
-                </span>
-              )}
-            />
-            <Table.Column title="Date" dataIndex="adoption_date" key="date" />
-            <Table.Column
-              title="Mode of Delivery"
-              dataIndex="service_option"
-              key="service_option"
-            />
-            <Table.Column
-              title="Status"
-              dataIndex="transaction_status"
-              key="transaction_status"
-              render={(text, record) => (
-                <span>
-                  {record.transaction_status === "Pending" ? (
-                    <Tag color="warning">{record.transaction_status}</Tag>
-                  ) : record.transaction_status === "Declined" ? (
-                    <Tag color="error">{record.transaction_status}</Tag>
-                  ) : (
-                    <Tag color="success">{record.transaction_status}</Tag>
-                  )}
-                </span>
-              )}
-            />
-            <Table.Column title="Comment" dataIndex="comment" key="comment" />
-            <Table.Column
-              title="Actions"
-              key="action"
-              render={(text, record) => (
-                <Space>
-                  <ReviewRequest data={record} />
-                  {record.transaction_status === "Pending" ? (
-                    <Button
-                      type="primary"
-                      onClick={(e) => onApprove(e, record)}
-                    >
-                      Approve
-                    </Button>
-                  ) : (
-                    <Button type="primary" disabled>
-                      Approve
-                    </Button>
-                  )}
-                  {record.transaction_status === "Pending" ? (
-                    <Button
-                      type="primary"
-                      danger
-                      onClick={(e) => onDecline(e, record)}
-                    >
-                      Decline
-                    </Button>
-                  ) : (
-                    <Button type="primary" disabled>
-                      Decline
-                    </Button>
-                  )}
-                </Space>
-              )}
-            />
-          </Table>
-        </div>
-        <Pagination
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "flex-end",
+        <Dropdown
+          menu={{
+            items,
           }}
-          current={pageNumber}
-          pageSize={itemsPerPage}
-          total={values.length}
-          onChange={handlePageChange}
-        />
+          trigger={["click"]}
+        >
+          <a onClick={(e) => e.preventDefault()}>
+            <Space>
+              <span>Filter</span>
+              <DownOutlined />
+            </Space>
+          </a>
+        </Dropdown>
+        <span> {selectedStatus}</span>
+
+        <div className="tables">
+          <Table
+            dataSource={filteredValues}
+            columns={columns}
+            pagination={{
+              pageSize: itemsPerPage,
+            }}
+          />
+        </div>
       </div>
     </div>
   );

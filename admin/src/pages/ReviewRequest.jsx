@@ -32,23 +32,30 @@ function ReviewRequest({ data }) {
           </Button>,
         ]}
       >
-        <div className="d-flex">
-          <div className="w-50">
+        <div className="d-flex flex-column">
+          <div className="d-flex justify-content-between">
             <p>Fullname</p>
+            <p>{data.fullname}</p>
+          </div>
+          <div className="d-flex justify-content-between">
             <p>Phone number</p>
+            <p>{data.phone}</p>
+          </div>
+          <div className="d-flex justify-content-between">
             <p>Address</p>
-            <p>Reason to Adopt</p>
-            <p>Other Pets</p>
-          </div>
-          <div>
-            <p>: {data.fullname}</p>
-            <p>: {data.phone}</p>
             <p>
-              : {data.province}, {data.city}, {data.barangay}
+              {data.province}, {data.city}, {data.barangay}
             </p>
-            <p>: {data.reason_for_adoption}</p>
-            <p>: {data.other_pets}</p>
           </div>
+          <div className="d-flex justify-content-between">
+            <p>Reason to Adopt</p>
+            <p>{data.reason_for_adoption}</p>
+          </div>
+          <div className="d-flex justify-content-between">
+            <p>Other Pets</p>{" "}
+            <p>{data.other_pets ? data.other_pets : "None"}</p>
+          </div>
+          <div></div>
         </div>
         <div>
           <p>Home Environment</p>
