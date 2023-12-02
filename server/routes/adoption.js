@@ -31,10 +31,10 @@ router.get("/adoptions", (req, res) => {
 // Adoption Request Deliver Option
 router.get("/adoptions-deliver", (req, res) => {
   db.query(
-    "SELECT * FROM adoption WHERE adoption_status = 'Approved' AND service_option = 'Deliver' ORDER BY adoption_date",
+    "SELECT a.*, u.name AS user_name FROM adoption AS a LEFT JOIN user AS u ON a.user_id = u.id WHERE a.id NOT IN (SELECT adoption_id FROM transaction) ORDER BY delivery_status DESC",
     (err, results) => {
       if (err) {
-        console.error("Error fetching :", err);
+        console.error("Error fetching:", err);
         res.status(500).json({ error: "Internal Server Error" });
         return;
       }

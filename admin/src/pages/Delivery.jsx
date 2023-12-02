@@ -77,9 +77,19 @@ function Delivery() {
 
   const columns = [
     {
+      title: "Adoption ID",
+      dataIndex: "id",
+      key: "id",
+    },
+    {
       title: "Name",
-      dataIndex: "fullname",
-      key: "fullname",
+      dataIndex: "user_name",
+      key: "user_name",
+    },
+    {
+      title: "Contact number",
+      dataIndex: "phone",
+      key: "phone",
     },
     {
       title: "Address",
@@ -89,11 +99,6 @@ function Delivery() {
           {record.barangay}, {record.city}, {record.province}
         </span>
       ),
-    },
-    {
-      title: "Date",
-      dataIndex: "adoption_date",
-      key: "adoption_date",
     },
     {
       title: "Delivery Status",
