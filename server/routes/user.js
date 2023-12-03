@@ -3,6 +3,41 @@ const router = express.Router();
 const db = require("../config/db");
 const multer = require("multer");
 
+const EMAIL_FROM = "noreply.movaflex@gmail.com";
+
+//nodemailer sending email
+const nodemailer = require("nodemailer");
+const transporter = nodemailer.createTransport({
+  host: "smtp.gmail.com",
+  port: 587,
+  secure: false,
+  auth: {
+    user: EMAIL_FROM,
+    pass: "nbnn ellt jxck zlbt",
+  },
+});
+
+router.post("/send-email", (req, res) => {
+  const { email, subject, message } = req.body;
+  console.log(email, subject, message);
+
+  var mailOption = {
+    from:EMAIL_FROM,
+    to:email,
+    subject:subject,
+    text:message,
+  };
+  // transporter.sendMail(mailOption); //without callback
+  transporter.sendMail(mailOption, function(error,info) {
+  if(error){
+    console.log(error);
+  }else{
+    console.log(info);
+  }
+  });
+});
+// end of nodemailer sending email
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "uploads/");

@@ -75,6 +75,23 @@ function Login() {
       });
   }
 
+  function sendEmail(e){
+    e.preventDefault();
+
+    Axios.post(BASE_URL + "/send-email", {
+      email: "ivanpaglinawan0@gmail.com",
+      subject: "OTP SUBJECT",
+      message: "Here the value for the generated OTP"
+    })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error("Error during login:", error);
+
+      });
+  }
+
   function validateEmail(email) {
     const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
     return emailRegex.test(email);
@@ -164,6 +181,14 @@ function Login() {
           >
             <span className="login-span">Login </span>
           </Button>
+
+          
+          <Button
+            style={{ margin: "20px 0px 0px 0px", height: "40px" }}
+            type="primary"
+            className="btn btn-primary"
+            onClick={sendEmail}
+          >Send Email</Button>
           <div>
             Don't have an account? <Link to="/register">Sign up</Link>
           </div>
