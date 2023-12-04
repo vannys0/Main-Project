@@ -14,6 +14,7 @@ import RabbitData from "./pages/RabbitData.jsx";
 import AboutRabbit from "./pages/AboutRabbit.jsx";
 import Profile from "./pages/Profile.jsx";
 import NewForm from "./pages/NewForm.jsx";
+import EmailVerification from "./pages/EmailVerification.jsx";
 import {
   createContext,
   useMemo,
@@ -41,6 +42,14 @@ function App() {
       element: (
         <div>
           <Signup />
+        </div>
+      ),
+    },
+    {
+      path: "/signup/verify_account",
+      element: (
+        <div>
+          <EmailVerification />
         </div>
       ),
     },

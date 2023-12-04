@@ -14,35 +14,124 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
+// Email From
+const EMAIL_FROM = "noreply.movaflex@gmail.com";
+
+//nodemailer sending email
+const nodemailer = require("nodemailer");
+const transporter = nodemailer.createTransport({
+  host: "smtp.gmail.com",
+  port: 587,
+  secure: false,
+  auth: {
+    user: EMAIL_FROM,
+    pass: "nbnn ellt jxck zlbt",
+  },
+  tls: {
+    rejectUnauthorized: false,
+  },
+});
+
+// router.post("/send-email", (req, res) => {
+//   const { email, subject, message } = req.body;
+//   console.log(email, subject, message);
+
+//   var mailOption = {
+//     from: EMAIL_FROM,
+//     to: email,
+//     subject: subject,
+//     text: message,
+//   };
+//   // transporter.sendMail(mailOption); //without callback
+//   transporter.sendMail(mailOption, function (error, info) {
+//     if (error) {
+//       console.log(error);
+//     } else {
+//       console.log(info);
+//     }
+//   });
+// });
+// end of nodemailer sending email
+
 router.post("/signup", (req, res) => {
-  const email = req.body.email;
-  const checkEmailQuery = "SELECT * FROM user WHERE email = ?";
-  const insertUserQuery =
-    "INSERT INTO user (`id`, `name`, `email`, `password`, `user_type`) VALUES (?)";
-  const values = [
-    req.body.id,
-    req.body.name,
-    email,
-    req.body.password,
-    req.body.user_type,
-  ];
+  const { email, subject, id, name, password, user_type } = req.body;
 
-  db.query(checkEmailQuery, [email], (err, result) => {
-    if (err) {
-      return res.status(500).json("Error");
-    }
+  const otp = Math.floor(Math.random() * 9000) + 1000;
 
-    if (result.length > 0) {
-      return res.status(400).json("Email already exists");
+  const mailOptions = {
+    from: EMAIL_FROM,
+    to: email,
+    subject: subject,
+    text: `Your verification code is ${otp}`,
+  };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.log(error);
+      return res.status(500).json("Error sending email verification");
     } else {
-      db.query(insertUserQuery, [values], (err, data) => {
+      console.log("Email sent: " + info.response);
+
+      const insertUserQuery =
+        "INSERT INTO user (`id`, `name`, `email`, `password`, `user_type`, `otp`, `is_verified`) VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+      const values = [id, name, email, password, user_type, otp, false];
+
+      db.query(insertUserQuery, values, (err, data) => {
         if (err) {
           return res.status(500).json("Error");
         }
+
         return res.json(data);
       });
     }
   });
+});
+
+const getStoredVerificationCode = (verificationCode) => {
+  return new Promise((resolve, reject) => {
+    db.query(
+      "SELECT id, otp FROM user WHERE otp = ?",
+      [verificationCode],
+      (error, results) => {
+        if (error) {
+          reject(error);
+        } else {
+          if (results.length > 0) {
+            resolve(results[0]);
+          } else {
+            reject(new Error("Verification code not found"));
+          }
+        }
+      }
+    );
+  });
+};
+// Verify OTP
+router.post("/verify-otp", async (req, res) => {
+  const { verificationCode } = req.body;
+
+  try {
+    const userWithVerificationCode = await getStoredVerificationCode(
+      verificationCode
+    );
+    const userId = userWithVerificationCode.id;
+
+    db.query(
+      "UPDATE user SET is_verified = true WHERE id = ?",
+      [userId],
+      (error, result) => {
+        if (error) {
+          return res
+            .status(500)
+            .json("Error updating user verification status");
+        }
+        return res.status(200).json("User verified successfully");
+      }
+    );
+  } catch (error) {
+    return res.status(404).json(error.message);
+  }
 });
 
 router.post("/login-client", (req, res) => {

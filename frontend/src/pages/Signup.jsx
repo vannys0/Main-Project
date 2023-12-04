@@ -8,7 +8,10 @@ import { RiLockPasswordLine } from "react-icons/ri";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
+
 function Login() {
+  const navigate = useNavigate();
+  const [errors, setErrors] = useState({});
   const [values, setValues] = useState({
     id: uuidv4(),
     name: "",
@@ -17,46 +20,57 @@ function Login() {
     user_type: "client",
   });
 
-  const navigate = useNavigate();
-
-  const [errors, setErrors] = useState({});
-
   const handleInput = (e) => {
     setValues((prev) => ({ ...prev, [e.target.name]: [e.target.value] }));
   };
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   setErrors(Validation(values));
-
-  //   if (errors.name === "" && errors.email === "" && errors.password === "") {
-  //     axios
-  //       .post("http://localhost:8081/signup", values)
-  //       .then((res) => {
-  //         toast.success("Account created");
-  //         navigate("/");
-  //       })
-  //       .catch((err) => console.log(err));
-  //   }
-  // };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:8081/signup", values)
+      .post("http://localhost:8081/signup", {
+        email: values.email,
+        subject: "Verify your account",
+        message: "Your verification code is required from the server.",
+        id: values.id,
+        name: values.name,
+        password: values.password,
+        user_type: values.user_type,
+      })
       .then((res) => {
         toast.success("Account created");
-        navigate("/");
+        navigate("/signup/verify_account");
       })
       .catch((err) => {
         if (err.response && err.response.status === 400) {
-          // Handle the "Email already exists" error
           toast.error("Email already exists");
         } else {
           console.log(err);
         }
       });
   };
+
+  function getRandomFourDigitNumber() {
+    return Math.floor(Math.random() * 9000) + 1000;
+  }
+
+  function sendEmail(e) {
+    e.preventDefault();
+
+    const randomFourDigitNumber = getRandomFourDigitNumber();
+
+    axios
+      .post(BASE_URL + "/send-email", {
+        email: "ivanbengcolado@gmail.com",
+        subject: "Verify your account",
+        message: `Your verification code is ${randomFourDigitNumber}`,
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error("Error during login:", error);
+      });
+  }
 
   return (
     <div className="LoginSignup-div">
