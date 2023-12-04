@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 02, 2023 at 08:25 AM
+-- Generation Time: Dec 04, 2023 at 04:21 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.10
 
@@ -54,17 +54,9 @@ CREATE TABLE `adoption` (
 --
 
 INSERT INTO `adoption` (`id`, `user_id`, `rabbit_id`, `adoption_date`, `phone`, `province`, `city`, `barangay`, `reason_for_adoption`, `other_pets`, `adoption_status`, `home_environment_image_path`, `service_option`, `delivery_status`, `comment`, `price`, `mode_of_payment`, `agriculture_product`, `agriculture_product_price`) VALUES
-('0a63e94d-c92b-435c-be19-c4c2daa387fe', 'f75cbbc5-6479-4add-83e2-6ca52e93f882', '05adc176-a5ec-4547-b1a4-8a9bead9cc62', '2023-11-27', '09123456789', 'CAMARINES SUR', 'SIPOCOT', 'South Centro (Pob.)', 'Adaptability to indoor living', '', 'Approved', 'Gantt chart - eLeporidae (2).png', 'Deliver', 'Approved', NULL, 350, 'Cash', '', 0),
-('0e6485ad-5341-46b3-b516-cfe76b326e07', '6226702d-125e-4c1d-973b-994c76bf52a3', '3abe5868-49fe-49cc-a691-17e5dc0ffa15', '2023-11-27', '09482048756', 'CAMARINES SUR', 'CABUSAO', 'Santa Cruz', 'Quiet and gentle nature', '', 'Approved', 'Gantt chart - eLeporidae (2).png', 'Deliver', 'Approved', NULL, 0, 'Cash', '', 0),
-('11aca217-d7aa-48a5-9474-c361109eca3e', 'f75cbbc5-6479-4add-83e2-6ca52e93f882', 'f8c9097c-5117-450e-bb69-760d3fb249dd', '2023-11-27', '09874561236', 'CAMARINES SUR', 'SIPOCOT', 'South Centro (Pob.)', 'Rabbits are a great pet', '', 'Approved', 'Gantt chart - eLeporidae (2).png', 'Deliver', 'Approved', NULL, 350, 'Cash', '', 0),
-('18a60d32-a850-496a-8077-34b4359163db', '6226702d-125e-4c1d-973b-994c76bf52a3', '27e434e0-2763-4f11-ad74-1a97b362a75a', '2023-12-02', '09222225151', 'CAMARINES SUR', 'CABUSAO', 'Santa Cruz', 'Other', '', 'Pending', 'IMG_20190918_171058.jpg', 'Deliver', NULL, NULL, 300, 'Cash', '', 0),
-('2c80b670-6ee8-4dc7-8f7a-4725f20bb735', '6226702d-125e-4c1d-973b-994c76bf52a3', 'efe375f0-4e11-4265-9cd3-e1511cdfb4b7', '2023-11-27', '09482048756', 'CAMARINES SUR', 'CABUSAO', 'Santa Cruz', 'Rabbits are a great pet', '', 'Approved', 'Gantt chart - eLeporidae (2).png', 'Pick up', NULL, NULL, 250, 'Cash', '', 0),
-('4b1657e8-2525-437a-a33f-1fc76d827ff8', '6226702d-125e-4c1d-973b-994c76bf52a3', 'cb9e8d58-2fd5-4921-9b75-bb47a7aa13fe', '2023-12-02', '09484845132', 'CAMARINES SUR', 'CABUSAO', 'Santa Cruz', 'Adaptability to indoor living', '', 'Pending', 'IMG_20190918_171058.jpg', 'Deliver', NULL, NULL, 300, 'Cash', '', 0),
-('57a791f5-89f5-4375-ab62-3737da38ce67', '6226702d-125e-4c1d-973b-994c76bf52a3', '27e434e0-2763-4f11-ad74-1a97b362a75a', '2023-12-02', '09482048756', 'CAMARINES SUR', 'CABUSAO', 'Santa Cruz', 'Other', '', 'Pending', 'IMG_20190918_171058.jpg', 'Deliver', NULL, NULL, 300, 'Cash', '', 0),
-('96af9d55-2b13-4921-aba1-1a018bdd3f01', 'f0a9b912-a774-4219-badd-c0a9c5317d5d', '27e434e0-2763-4f11-ad74-1a97b362a75a', '2023-11-27', '09486571335', 'CAMARINES SUR', 'SIPOCOT', 'Impig', 'Quiet and gentle nature', 'none', 'Declined', 'Gantt chart - eLeporidae (2).png', 'Deliver', NULL, 'Incomplete', 300, 'Cash', '', 0),
-('bc41d7f9-dc86-4d6c-8e48-eb00b0184f88', '6226702d-125e-4c1d-973b-994c76bf52a3', '4bde3adb-0370-4724-9b42-25be2c25a64b', '2023-11-27', '09815808362', 'CAMARINES SUR', 'CABUSAO', 'Santa Cruz', 'Rabbits are inexpensive', '', 'Declined', 'Gantt chart - eLeporidae (2).png', 'Deliver', NULL, 'Incomplete', 350, 'Agriculture', 'Palay', 300),
-('cefaa5f4-0434-40bc-b2a2-9eb31069973c', '6226702d-125e-4c1d-973b-994c76bf52a3', '27e434e0-2763-4f11-ad74-1a97b362a75a', '2023-12-02', '09484848484', 'CAMARINES SUR', 'CABUSAO', 'Santa Cruz', 'Quiet and gentle nature', '', 'Pending', 'IMG_20190918_171058.jpg', 'Deliver', NULL, NULL, 300, 'Cash', '', 0),
-('fe8834c1-ca6b-48a5-84e4-791b1f40c815', 'f0a9b912-a774-4219-badd-c0a9c5317d5d', 'cc9d8b5f-d8dc-4928-a34c-698f44125a0e', '2023-11-27', '09810251123', 'CAMARINES SUR', 'SIPOCOT', 'Impig', 'Rabbits are a great pet', '', 'Pending', 'Gantt chart - eLeporidae (2).png', 'Deliver', NULL, NULL, 0, 'Agriculture', 'Palay', 348);
+('0e9a0505-1a87-41fe-b976-b1e10c3cf236', '6226702d-125e-4c1d-973b-994c76bf52a3', 'a55a0de6-c9b7-4ebb-bba1-5ee445ba980c', '2023-12-04', '09483251236', 'CAMARINES SUR', 'CABUSAO', 'Santa Cruz', 'Quiet and gentle nature', '', 'Pending', 'Gantt chart - eLeporidae (2).png', 'Deliver', NULL, NULL, 300, 'Cash', '', 0),
+('311f2cf6-1697-4126-b947-859f6e44568c', '6226702d-125e-4c1d-973b-994c76bf52a3', '4bde3adb-0370-4724-9b42-25be2c25a64b', '2023-12-04', '09456516546', 'CAMARINES SUR', 'CABUSAO', 'Santa Cruz', 'Rabbits are inexpensive', '', 'Declined', 'Gantt chart - eLeporidae (2).png', 'Deliver', NULL, 'Incomplete', 350, 'Cash', '', 0),
+('327372c3-b207-4b9a-a40d-42aa8455e151', '6226702d-125e-4c1d-973b-994c76bf52a3', '27e434e0-2763-4f11-ad74-1a97b362a75a', '2023-12-04', '09482048756', 'CAMARINES SUR', 'CABUSAO', 'Santa Cruz', 'Quiet and gentle nature', '', 'Approved', 'Gantt chart - eLeporidae (2).png', 'Deliver', 'Approved', NULL, 300, 'Cash', '', 0);
 
 -- --------------------------------------------------------
 
@@ -156,7 +148,7 @@ CREATE TABLE `transaction` (
   `id` varchar(255) NOT NULL,
   `adoption_id` varchar(255) NOT NULL,
   `transaction_date` date NOT NULL,
-  `transaction_status` varchar(255) NOT NULL
+  `transaction_status` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -164,9 +156,10 @@ CREATE TABLE `transaction` (
 --
 
 INSERT INTO `transaction` (`id`, `adoption_id`, `transaction_date`, `transaction_status`) VALUES
-('4390a0db-8d7f-40ee-a9d6-84db56dc16df', '11aca217-d7aa-48a5-9474-c361109eca3e', '2023-12-02', 'Completed'),
-('d58a88a8-682f-497c-be5c-54f8eedd5c0a', '0e6485ad-5341-46b3-b516-cfe76b326e07', '2023-12-02', 'Completed'),
-('f6ef0298-246b-49fe-8755-5715ec171c64', '11aca217-d7aa-48a5-9474-c361109eca3e', '2023-12-02', 'Completed');
+('3eb2c70f-34a9-42ce-b09e-eadd89bbbd76', 'fe8834c1-ca6b-48a5-84e4-791b1f40c815', '2023-12-02', 'Completed'),
+('94c3b646-0dfb-4b18-b2b2-0784160e5dc4', '0e6485ad-5341-46b3-b516-cfe76b326e07', '2023-12-02', 'Completed'),
+('a91bcb07-dd0e-41d6-8081-ed1d17916748', '11aca217-d7aa-48a5-9474-c361109eca3e', '2023-12-02', 'Completed'),
+('eb03ed08-1499-4991-86c3-d8227af1d097', '0a63e94d-c92b-435c-be19-c4c2daa387fe', '2023-12-02', 'Completed');
 
 -- --------------------------------------------------------
 
@@ -180,20 +173,24 @@ CREATE TABLE `user` (
   `email` varchar(50) NOT NULL,
   `password` varchar(20) NOT NULL,
   `user_type` varchar(255) NOT NULL,
-  `profile` varchar(255) DEFAULT NULL
+  `profile` varchar(255) DEFAULT NULL,
+  `otp` int(255) DEFAULT NULL,
+  `is_verified` tinyint(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `name`, `email`, `password`, `user_type`, `profile`) VALUES
-('6226702d-125e-4c1d-973b-994c76bf52a3', 'Ivan Bengcolado', 'ivanpaglinawan0@gmail.com', '1234', 'client', 'IMG20200115132650.jpg'),
-('d09a9d2d-0984-4fda-8476-52a56a6cf484', 'Leonardo Nogra', 'leonardo@gmail.com', 'admin', 'admin', 'IMG_20190918_171058.jpg'),
-('d68cd68d-887f-4896-a46c-88a639550cc7', 'Ivan Paglinawan', 'ivanbeng@gmail.com', '1234', 'admin', NULL),
-('dc63f09f-f4c6-4bce-b73b-f83d64746ee1', 'Ivan', 'ivanpaglinawan00@gmail.com', 'zsdcas', 'client', NULL),
-('f0a9b912-a774-4219-badd-c0a9c5317d5d', 'Francis Bawag', 'francisbawag@gmail.com', '1234', 'client', NULL),
-('f75cbbc5-6479-4add-83e2-6ca52e93f882', 'Cynthia Lorio', 'cynthialorio@gmail.com', '1234', 'client', NULL);
+INSERT INTO `user` (`id`, `name`, `email`, `password`, `user_type`, `profile`, `otp`, `is_verified`) VALUES
+('6226702d-125e-4c1d-973b-994c76bf52a3', 'Ivan Bengcolado', 'ivanpaglinawan0@gmail.com', '1234', 'client', 'âPngtreeârabbit_3644555.png', 5420, 1),
+('81a1feee-b100-4750-850c-1ff3cdba7676', 'Ivan', 'ivanbengcolado@gmail.com', '1234', 'client', NULL, 2741, 0),
+('d09a9d2d-0984-4fda-8476-52a56a6cf484', 'Leonardo Nogra', 'leonardo@gmail.com', 'admin', 'admin', 'IMG_20190918_171058.jpg', NULL, 0),
+('d68cd68d-887f-4896-a46c-88a639550cc7', 'Ivan Paglinawan', 'ivanbeng@gmail.com', '1234', 'admin', NULL, NULL, 0),
+('dc63f09f-f4c6-4bce-b73b-f83d64746ee1', 'Ivan', 'ivanpaglinawan00@gmail.com', 'zsdcas', 'client', NULL, NULL, 0),
+('f0a9b912-a774-4219-badd-c0a9c5317d5d', 'Francis Bawag', 'francisbawag@gmail.com', '1234', 'client', NULL, NULL, 0),
+('f335a672-864a-40e5-9158-1c8e32fd7c10', 'Lorio', 'lorioj@gmail.com', '1234', 'client', NULL, 5307, 0),
+('f75cbbc5-6479-4add-83e2-6ca52e93f882', 'Cynthia Lorio', 'cynthialorio@gmail.com', '1234', 'client', NULL, NULL, 0);
 
 --
 -- Indexes for dumped tables
