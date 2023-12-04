@@ -87,7 +87,7 @@ function AdoptForm() {
     reason: "",
     otherpets: "",
     user_id: user.id,
-    transaction_status: "Pending",
+    adoption_status: "Pending",
     serviceoption: "",
     mop: "",
     price: JSON.parse(name).price,
@@ -146,10 +146,9 @@ function AdoptForm() {
           <h4>Adoption Application</h4>
         </div>
         <form encType="multipart/form-data">
-          {/* <h4>
-            Adopt
-            {JSON.parse(name).name + " the price is: " + JSON.parse(name).price}
-          </h4> */}
+          <p>
+            Note: Adoption requires an adoption fee of P{JSON.parse(name).price}
+          </p>
           <label htmlFor="phone">Phone Number</label>
           <input
             type="tel"
@@ -259,7 +258,7 @@ function AdoptForm() {
           {mopAgriculture && (
             <div>
               <label htmlFor="agprod" className="label-name">
-                Ag. Product
+                Agricultural Product (Please specify)
               </label>
               <input
                 type="text"
@@ -270,7 +269,7 @@ function AdoptForm() {
               />
 
               <label htmlFor="agprodprice" className="label-name">
-                Ag. Produdct Price
+                Product estimated amount
               </label>
               <input
                 type="number"

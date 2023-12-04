@@ -154,7 +154,7 @@ function Request() {
       render: (text, record) => (
         <Space>
           <ReviewRequest data={record} />
-          {record.transaction_status === "Pending" ? (
+          {record.adoption_status === "Pending" ? (
             <Button type="primary" onClick={(e) => onApprove(e, record)}>
               Approve
             </Button>
@@ -163,7 +163,7 @@ function Request() {
               Approve
             </Button>
           )}
-          {record.transaction_status === "Pending" ? (
+          {record.adoption_status === "Pending" ? (
             <Button type="primary" danger onClick={(e) => onDecline(e, record)}>
               Decline
             </Button>

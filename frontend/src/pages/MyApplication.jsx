@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/footer";
+import "./style.css";
 import axios from "axios";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import ViewApplication from "./ViewApplication";
 import { Button, Tag, Table, Dropdown, Space } from "antd";
 import { DownOutlined } from "@ant-design/icons";
@@ -10,10 +11,17 @@ import Swal from "sweetalert2";
 import SecureStore from "react-secure-storage";
 
 function MyApplication() {
+  const navigateTo = useNavigate();
   const { id } = useParams();
   const [values, setValues] = useState([]);
   const user = SecureStore.getItem("userToken");
   const itemPerPage = 7;
+
+  const handleClick = (rowData) => {
+    navigateTo(`/myapplication/application/${rowData.id}`, {
+      state: { rowData },
+    });
+  };
 
   const [filteredValues, setFilteredValues] = useState([]);
   const [selectedStatus, setSelectedStatus] = useState("All");
@@ -70,8 +78,8 @@ function MyApplication() {
     },
     {
       title: "Status",
-      dataIndex: "transaction_status",
-      key: "transaction_status",
+      dataIndex: "adoption_status",
+      key: "adoption_status",
       render: (text) => {
         let color = "";
         if (text === "Pending") color = "warning";
@@ -91,8 +99,10 @@ function MyApplication() {
       key: "action",
       render: (text, record) => (
         <div className="d-flex gap-2">
-          <ViewApplication data={record} />
-          {record.transaction_status === "Pending" ? (
+          <Button type="text" onClick={() => handleClick(record)}>
+            View
+          </Button>
+          {record.adoption_status === "Pending" ? (
             <Button
               type="primary"
               danger
@@ -113,9 +123,7 @@ function MyApplication() {
     if (status === "All") {
       setFilteredValues(values);
     } else {
-      const filtered = values.filter(
-        (item) => item.transaction_status === status
-      );
+      const filtered = values.filter((item) => item.adoption_status === status);
       setFilteredValues(filtered);
     }
   };

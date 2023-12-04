@@ -6,6 +6,7 @@ import Adopt from "./pages/Adopt.jsx";
 import Contact from "./pages/Contact.jsx";
 import About from "./pages/About.jsx";
 import MyApplication from "./pages/MyApplication.jsx";
+import Application from "./pages/Application.jsx";
 import "./App.css";
 import { ToastContainer } from "react-toastify";
 import AdoptForm from "./pages/AdoptForm.jsx";
@@ -89,6 +90,16 @@ function App() {
         <div>
           <PrivateRoute>
             <MyApplication />
+          </PrivateRoute>
+        </div>
+      ),
+    },
+    {
+      path: "/myapplication/application/:id",
+      element: (
+        <div>
+          <PrivateRoute>
+            <Application />
           </PrivateRoute>
         </div>
       ),
