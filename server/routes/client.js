@@ -91,7 +91,7 @@ router.post("/signup", (req, res) => {
 const getStoredVerificationCode = (verificationCode) => {
   return new Promise((resolve, reject) => {
     db.query(
-      "SELECT id, otp FROM user WHERE otp = ?",
+      "SELECT * FROM user WHERE otp = ?",
       [verificationCode],
       (error, results) => {
         if (error) {
@@ -116,7 +116,6 @@ router.post("/verify-otp", async (req, res) => {
       verificationCode
     );
     const userId = userWithVerificationCode.id;
-
     db.query(
       "UPDATE user SET is_verified = true WHERE id = ?",
       [userId],
@@ -126,7 +125,8 @@ router.post("/verify-otp", async (req, res) => {
             .status(500)
             .json("Error updating user verification status");
         }
-        return res.status(200).json("User verified successfully");
+        userWithVerificationCode.is_verified = 1; //update user is_verified from 0 to 1
+        return res.json(userWithVerificationCode);
       }
     );
   } catch (error) {
@@ -141,7 +141,7 @@ router.post("/login-client", (req, res) => {
     if (err) {
       return res.json({ Message: "Error" });
     }
-    if (data.length > 0) {
+    if (data.length > 0 && data[0].is_verified) {
       const result = JSON.parse(JSON.stringify(data));
       const o = result[0];
       const user = {

@@ -16,11 +16,10 @@ function Login() {
       const response = await axios.post("http://localhost:8081/verify-otp", {
         verificationCode: verificationCode,
       });
-
-      if (response.data.message === "OTP verified") {
-        const token = response.data.token; // Assuming the token is sent from the backend upon successful verification
+      if (response.data.is_verified) {
+        const user = response.data; // token are all fields of user
         authContext.signIn(user);
-        SecureStore.setItem("userToken", token); // Set the token in SecureStore
+        SecureStore.setItem("userToken", user); // Set the token in SecureStore
         navigate("/home"); // Navigate to the home page after verification
       }
     } catch (error) {
