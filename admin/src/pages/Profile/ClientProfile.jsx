@@ -7,6 +7,7 @@ import "../../Style.css";
 import appConfig from "../../../config.json";
 import { UserOutlined } from "@ant-design/icons";
 import { Avatar } from "antd";
+import Default from "../../images/default-profile.png";
 const BASE_URL = appConfig.apiBasePath;
 import SecureStore from "react-secure-storage";
 
@@ -57,15 +58,11 @@ function ClientProfile() {
             ) : (
               <Avatar
                 style={{
-                  color: "#fff",
-                  fontSize: "70px",
-                  padding: "82px",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  backgroundColor: "#eaeaea",
+                  width: "168px",
+                  height: "168px",
+                  border: "5px solid #eaeaea",
                 }}
-                icon={<UserOutlined />}
+                src={<img src={Default} alt="" />}
               />
             )}
           </div>

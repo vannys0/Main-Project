@@ -7,6 +7,8 @@ import {
   BsPeopleFill,
   BsFillBellFill,
 } from "react-icons/bs";
+import { LuUsers, LuBell } from "react-icons/lu";
+import { CiCircleList } from "react-icons/ci";
 import {
   BarChart,
   Bar,
@@ -26,6 +28,8 @@ import SecureStore from "react-secure-storage";
 import axios from "axios";
 import { UserOutlined, UploadOutlined } from "@ant-design/icons";
 import { Table, Col, Row, Statistic, Space, Avatar } from "antd";
+import { RiPassPendingLine } from "react-icons/ri";
+import Video from "../videos/video.mp4";
 import appConfig from "../../config.json";
 const BASE_URL = appConfig.apiBasePath;
 
@@ -128,47 +132,44 @@ function Dashboard() {
       />
       <main className="main-container bg-light">
         <h3>Dashboard</h3>
+        {/* <div className="videoDiv">
+          <video src={Video} autoPlay loop muted></video>
+        </div> */}
         <div className="main-cards">
           <div className="card-div" onClick={(e) => navigateTo("/clients")}>
             <div className="card-inner">
               <h5>Clients</h5>
-              <div style={{ backgroundColor: "#1677ff" }}>
-                <BsPeopleFill className="card_icon " />
-              </div>
+
+              <LuUsers className="card_icon " />
             </div>
             <h5>{userCount}</h5>
           </div>
-
           <div className="card-div" onClick={() => navigateTo("/request")}>
             <div className="card-inner">
               <h5>Pending</h5>
-              <div style={{ backgroundColor: "#faad14" }}>
-                <BsFillGrid3X3GapFill className="card_icon" />
-              </div>
+
+              <RiPassPendingLine className="card_icon" />
             </div>
             <h5>{pending}</h5>
           </div>
           <div className="card-div" onClick={(e) => navigateTo("/rabbits")}>
             <div className="card-inner">
               <h5>Rabbits</h5>
-              <div style={{ backgroundColor: "#52c41a" }}>
-                <BsFillArchiveFill className="card_icon" />
-              </div>
+
+              <CiCircleList className="card_icon" />
             </div>
             <h5>{rabbitCount}</h5>
           </div>
           <div className="card-div">
             <div className="card-inner">
               <h5>Upcoming</h5>
-              <div style={{ backgroundColor: "#ff4d4f" }}>
-                <BsFillBellFill className="card_icon" />
-              </div>
+
+              <LuBell className="card_icon" />
             </div>
             <h5>42</h5>
           </div>
         </div>
 
-        <h4>Adoption</h4>
         <ResponsiveContainer width="100%" height="75%">
           <BarChart
             className="bar-chart"
@@ -198,7 +199,6 @@ function Dashboard() {
         </ResponsiveContainer>
 
         <br />
-        <h4>Sales</h4>
         <ResponsiveContainer width="100%" height="75%">
           <LineChart
             style={{

@@ -66,9 +66,6 @@ function Header({ OpenSidebar }) {
             </Space>
           </Dropdown>
         </Badge>
-        <Badge count={0}>
-          <BsFillEnvelopeFill className="icon" />
-        </Badge>
       </div>
     </header>
   );

@@ -11,6 +11,8 @@ import {
   BsPersonFill,
   BsPersonCircle,
 } from "react-icons/bs";
+import { LuUsers, LuUser, LuLayoutDashboard } from "react-icons/lu";
+import { CiCircleList } from "react-icons/ci";
 import { NavLink, Link, useNavigate, useParams } from "react-router-dom";
 import { AiOutlineClose } from "react-icons/ai";
 import "./Sidebar.css";
@@ -18,7 +20,9 @@ import Logo from "../images/logo.png";
 import { AuthContext } from "../App";
 import { Avatar } from "antd";
 import { UserOutlined, UploadOutlined } from "@ant-design/icons";
+import { RiPassPendingLine } from "react-icons/ri";
 import Swal from "sweetalert2";
+import Default from "../images/default-profile.png";
 import SecureStore from "react-secure-storage";
 import axios from "axios";
 import appConfig from "../../config.json";
@@ -94,13 +98,8 @@ function Sidebar({ openSidebarToggle, OpenSidebar }) {
                 style={{
                   width: "40px",
                   height: "40px",
-                  color: "#fff",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  backgroundColor: "#eaeaea",
                 }}
-                icon={<UserOutlined />}
+                src={<img src={Default} alt="" />}
               />
             )}
           </div>
@@ -110,30 +109,27 @@ function Sidebar({ openSidebarToggle, OpenSidebar }) {
           </div>
         </div>
         <NavLink to="/dashboard" className="sidebar-list-item">
-          <BsGrid1X2Fill className="icon" /> Dashboard
+          <LuLayoutDashboard className="icon" /> Dashboard
         </NavLink>
         <NavLink to={`/profile/${user.id}`} className="sidebar-list-item">
-          <BsPersonFill className="icon" /> Profile
+          <LuUser className="icon" /> Profile
         </NavLink>
         <NavLink to="/rabbits" className="sidebar-list-item">
-          <BsFillGrid3X3GapFill className="icon" /> Rabbits
+          <CiCircleList className="icon" /> Rabbits
         </NavLink>
         <NavLink to="/breeding" className="sidebar-list-item">
           <BsListCheck className="icon" /> Breeding
         </NavLink>
 
         <NavLink to="/request" className="sidebar-list-item">
-          <BsFillCollectionFill className="icon" /> Request
+          <RiPassPendingLine className="icon" /> Request
         </NavLink>
 
         <NavLink to="/delivery" className="sidebar-list-item">
           <BsTruck className="icon" /> Delivery
         </NavLink>
-        {/* <NavLink to="/rabbit-sales" className="sidebar-list-item">
-          <BsPeopleFill className="icon" /> Rabbit Sales
-        </NavLink> */}
         <NavLink to="/clients" className="sidebar-list-item">
-          <BsPeopleFill className="icon" /> Users
+          <LuUsers className="icon" /> Users
         </NavLink>
         <Link to="" onClick={onLogout} className="sidebar-list-item">
           <BsBoxArrowLeft className="icon" /> Logout

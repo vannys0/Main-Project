@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import { Input, Table, Pagination, Space, Button, Avatar, Image } from "antd";
 import axios from "axios";
 import { UserOutlined, UploadOutlined } from "@ant-design/icons";
+import Default from "../images/default-profile.png";
 import appConfig from "../../config.json";
 import { useNavigate } from "react-router-dom";
 const BASE_URL = appConfig.apiBasePath;
@@ -62,7 +63,7 @@ function Clients() {
                   color: "#fff",
                   backgroundColor: "#eaeaea",
                 }}
-                icon={<UserOutlined />}
+                src={<img src={Default} alt="" />}
               />
             )}
           </div>

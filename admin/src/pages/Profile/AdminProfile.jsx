@@ -10,6 +10,7 @@ import appConfig from "../../../config.json";
 const BASE_URL = appConfig.apiBasePath;
 import SecureStore from "react-secure-storage";
 import UploadProfile from "./UploadProfile";
+import Default from "../../images/default-profile.png";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { useParams } from "react-router-dom";
@@ -147,15 +148,11 @@ function AdminProfile() {
                 <div className="d-flex flex-column gap-2 align-items-center justify-content-center">
                   <Avatar
                     style={{
-                      color: "#fff",
-                      fontSize: "70px",
-                      padding: "82px",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      backgroundColor: "#eaeaea",
+                      width: "168px",
+                      height: "168px",
+                      border: "5px solid #eaeaea",
                     }}
-                    icon={<UserOutlined />}
+                    src={<img src={Default} alt="" />}
                   />
                   <Button onClick={handleUpload}>Upload profile</Button>
                 </div>
