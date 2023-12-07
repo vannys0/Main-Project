@@ -29,6 +29,8 @@ function RabbitList() {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(6);
 
+  const [slaughter, setSlaughter] = useState("1 yrs 1 mos"); // default value if not present in table.
+
   const onRehome = (e, o) => {
     Swal.fire({
       title: "Confirm?",
@@ -73,6 +75,16 @@ function RabbitList() {
         setRecord(res.data);
       })
       .catch((err) => console.log(err));
+
+      axios
+      .get(BASE_URL + "/config/rabbit.age.slaughter")
+      .then((res) => {
+        if(res.data.length > 0){
+          setSlaughter(res.data[0].value);
+        }
+      })
+      .catch((err) => console.log(err));
+
   }, []);
 
   const handleDelete = async (id) => {
@@ -112,15 +124,14 @@ function RabbitList() {
     const currentDate = new Date();
 
     const years = currentDate.getFullYear() - birthDate.getFullYear();
-    const months = currentDate.getMonth() - birthDate.getMonth();
+    var months = currentDate.getMonth() - birthDate.getMonth();
 
-    const adjustedMonths =
-      months + (currentDate.getDate() < birthDate.getDate() ? -1 : 0);
+    const adjustedMonths = months + (currentDate.getDate() < birthDate.getDate() ? -1 : 0);
 
-    return {
-      years,
-      months: adjustedMonths < 0 ? 0 : adjustedMonths,
-    };
+
+    months =  adjustedMonths < 0 ? 0 : adjustedMonths;
+
+    return years + " yrs " + months + " mos";
   }
 
   // Table
@@ -158,8 +169,9 @@ function RabbitList() {
       dataIndex: "date_of_birth",
       key: "date_of_birth",
       render: (dateOfBirth) => {
-        const age = calculateAge(dateOfBirth);
-        return `${age.years} yrs ${age.months} mos`;
+        // const age = calculateAge(dateOfBirth);
+        // return `${age.years} yrs ${age.months} mos`;
+        return calculateAge(dateOfBirth);
       },
     },
     {
@@ -181,6 +193,17 @@ function RabbitList() {
       title: "Type",
       dataIndex: "rabbit_type",
       key: "rabbit_type",
+    },
+    {
+      title: "Slaughter",
+      render: (o) => {
+        if(o.rabbit_type === "Meat rabbit"){
+          const age = calculateAge(o.date_of_birth);
+          return age.localeCompare(slaughter) >= 0 ? "YES" : "NO"; // slaughtere from config
+        }
+
+        return null;
+      },
     },
     {
       title: "Actions",
@@ -214,6 +237,8 @@ function RabbitList() {
       ),
     },
   ];
+
+
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
