@@ -104,11 +104,6 @@ function Request() {
 
   const columns = [
     {
-      title: "Adoption ID",
-      dataIndex: "id",
-      key: "id",
-    },
-    {
       title: "Address",
       key: "address",
       render: (text, record) => (

@@ -77,11 +77,6 @@ function Delivery() {
 
   const columns = [
     {
-      title: "Adoption ID",
-      dataIndex: "id",
-      key: "id",
-    },
-    {
       title: "Name",
       dataIndex: "user_name",
       key: "user_name",

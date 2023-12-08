@@ -48,6 +48,10 @@ function BreedingDetails({ data }) {
             <p>{data.doe_id}</p>
           </div>
           <div>
+            <p>Note :</p>
+            <p>{data.note}</p>
+          </div>
+          <div>
             <p>Pairing Date :</p>
             <p>{formatDate(data.pairing_date)}</p>
           </div>

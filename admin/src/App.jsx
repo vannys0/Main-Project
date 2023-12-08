@@ -28,6 +28,7 @@ import Request from "./pages/Request";
 import AddRabbit from "./pages/AddRabbit";
 import EditRabbit from "./pages/EditRabbit";
 import AddBreedPair from "./pages/AddBreedPair";
+import AddBreedingChild from "./pages/AddBreedingChild";
 import Clients from "./pages/Clients";
 import Calendar from "./pages/Calendar";
 import AdminProfile from "./pages/Profile/AdminProfile";
@@ -139,6 +140,16 @@ function App() {
         <div>
           <PrivateRoute>
             <AddBreedPair />
+          </PrivateRoute>
+        </div>
+      ),
+    },
+    {
+      path: "/add_breeding_child/:id",
+      element: (
+        <div>
+          <PrivateRoute>
+            <AddBreedingChild />
           </PrivateRoute>
         </div>
       ),

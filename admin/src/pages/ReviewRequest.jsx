@@ -35,26 +35,67 @@ function ReviewRequest({ data }) {
         <div className="d-flex flex-column">
           <div className="d-flex justify-content-between">
             <p>Fullname</p>
-            <p>{data.fullname}</p>
+            <p>
+              <b>{data.name}</b>
+            </p>
           </div>
           <div className="d-flex justify-content-between">
             <p>Phone number</p>
-            <p>{data.phone}</p>
+            <p>
+              <b>{data.phone}</b>
+            </p>
+          </div>
+          <div className="d-flex justify-content-between">
+            <p>Email</p>
+            <p>
+              <b>{data.email}</b>
+            </p>
           </div>
           <div className="d-flex justify-content-between">
             <p>Address</p>
             <p>
-              {data.province}, {data.city}, {data.barangay}
+              <b>
+                {data.province}, {data.city}, {data.barangay}
+              </b>
+            </p>
+          </div>
+          <div className="d-flex justify-content-between">
+            <p>Adoption Date</p>
+            <p>
+              <b>{data.adoption_date}</b>
             </p>
           </div>
           <div className="d-flex justify-content-between">
             <p>Reason to Adopt</p>
-            <p>{data.reason_for_adoption}</p>
+            <p>
+              <b>{data.reason_for_adoption}</b>
+            </p>
           </div>
           <div className="d-flex justify-content-between">
-            <p>Other Pets</p>{" "}
-            <p>{data.other_pets ? data.other_pets : "None"}</p>
+            <p>Other Pets</p>
+            <p>
+              <b>{data.other_pets ? data.other_pets : "None"}</b>
+            </p>
           </div>
+          <div className="d-flex justify-content-between">
+            <p>Mode of payment</p>
+            <p>
+              <b>{data.mode_of_payment}</b>
+            </p>
+          </div>
+          {data.mode_of_payment === "Agriculture" ? (
+            <div className="d-flex justify-content-between">
+              <p>Agricultural Product</p>
+              <p>
+                <b>
+                  {data.agriculture_product} Amount(P
+                  {data.agriculture_product_price})
+                </b>
+              </p>
+            </div>
+          ) : (
+            ""
+          )}
           <div></div>
         </div>
         <div>

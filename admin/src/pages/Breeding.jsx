@@ -63,12 +63,52 @@ function Breeding() {
     });
   };
 
+  const renderActions = (text, record) => {
+    const estimatedDueDate = new Date(record.expected_due_date);
+    const today = new Date();
+
+    const differenceInDays = Math.floor(
+      (estimatedDueDate - today) / (1000 * 60 * 60 * 24)
+    );
+
+    if (differenceInDays <= 0) {
+      return (
+        <div className="actions">
+          <BreedingDetails data={record} />
+          <Button
+            onClick={() => navigateTo(`/add_breeding_child/${record.id}`)}
+          >
+            Add Litters
+          </Button>
+          <Button
+            type="primary"
+            danger
+            onClick={() => handleDelete(record.id)}
+            disabled
+          >
+            Cancel
+          </Button>
+        </div>
+      );
+    } else {
+      return (
+        <div className="actions">
+          <BreedingDetails data={record} />
+          <Button
+            onClick={() => navigateTo(`/add_breeding_child/${record.id}`)}
+            disabled
+          >
+            Add Litters
+          </Button>
+          <Button type="primary" danger onClick={() => handleDelete(record.id)}>
+            Cancel
+          </Button>
+        </div>
+      );
+    }
+  };
+
   const columns = [
-    {
-      title: "ID",
-      dataIndex: "id",
-      key: "id",
-    },
     {
       title: "Note",
       dataIndex: "note",
@@ -95,14 +135,7 @@ function Breeding() {
     {
       title: "Actions",
       key: "action",
-      render: (text, record) => (
-        <div className="actions">
-          <BreedingDetails data={record} />
-          <Button type="primary" danger onClick={() => handleDelete(record.id)}>
-            Cancel
-          </Button>
-        </div>
-      ),
+      render: renderActions,
     },
   ];
 

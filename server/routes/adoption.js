@@ -16,7 +16,7 @@ router.get("/adoption", (req, res) => {
 // All Adoption Request
 router.get("/adoptions", (req, res) => {
   db.query(
-    "SELECT * FROM adoption ORDER BY adoption_status DESC, adoption_date DESC",
+    "SELECT a.*, u.name, u.email FROM adoption AS a LEFT JOIN user AS u ON a.user_id = u.id ORDER BY adoption_status DESC, adoption_date DESC",
     (err, results) => {
       if (err) {
         console.error("Error fetching :", err);
