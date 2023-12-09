@@ -19,7 +19,7 @@ router.post("/add-rabbit", upload.array("files", 5), (req, res) => {
   console.log(result);
   const imagePaths = req.files.map((file) => file.filename).join();
   const sql =
-    "INSERT INTO rabbit (`id`, `name`, `date_of_birth`, `sex`, `rabbit_type`, `color`, `breed_type`,  `weight`, `image_path`) VALUES (?)";
+    "INSERT INTO rabbit (`id`, `name`, `date_of_birth`, `sex`, `rabbit_type`, `color`, `breed_type`,  `weight`, `image_path`, `breeding_pair_id`) VALUES (?)";
   const values = [
     result.id,
     result.name,
@@ -30,6 +30,7 @@ router.post("/add-rabbit", upload.array("files", 5), (req, res) => {
     result.breed,
     result.weight,
     imagePaths,
+    result.breeding_pair_id
   ];
 
   db.query(sql, [values], (err, data) => {
@@ -82,16 +83,16 @@ router.post("/multi", upload.array("files", 5), (req, res) => {
 });
 
 //GetMapping
-router.get("/rabbit", (req, res) => {
-  db.query("SELECT * FROM rabbit where id = 1", (err, results) => {
-    if (err) {
-      console.error("Error fetching rabbit:", err);
-      res.status(500).json({ error: "Internal Server Error" });
-      return;
-    }
-    return res.json(results);
-  });
-});
+// router.get("/rabbit", (req, res) => {
+//   db.query("SELECT * FROM rabbit where id = 1", (err, results) => {
+//     if (err) {
+//       console.error("Error fetching rabbit:", err);
+//       res.status(500).json({ error: "Internal Server Error" });
+//       return;
+//     }
+//     return res.json(results);
+//   });
+// });
 
 router.get("/rabbits", (req, res) => {
   db.query("SELECT * FROM rabbit ORDER BY name", (err, results) => {
@@ -226,5 +227,16 @@ router.get("/get_sex", (req, res) => {
 //     return res.json(results);
 //   });
 // });
+
+
+router.get("/rabbit/:id", (req, res) => {
+  const id = req.params.id;
+  db.query("SELECT * FROM rabbit WHERE id = ?", [id], (err, results) => {
+    if (err) {
+      return err;
+    }
+    return res.json(results);
+  });
+});
 
 module.exports = router;

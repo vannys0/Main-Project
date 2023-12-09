@@ -144,6 +144,21 @@ function Request() {
       key: "comment",
     },
     {
+      title: "SGA",
+      render: (o) => {
+        if(o.adoption_status !== "Pending"){
+          return null;
+        }
+
+        
+        if(o.mode_of_payment === "Agriculture" && o.agriculture_product_price >= o.price){
+          return "Yes";
+        }
+
+        return "No";
+      },
+    },
+    {
       title: "Actions",
       key: "action",
       render: (text, record) => (

@@ -9,7 +9,7 @@ import BreedingDetails from "./BreedingDetails";
 import Swal from "sweetalert2";
 import appConfig from "../../config.json";
 const BASE_URL = appConfig.apiBasePath;
-
+import { breedType } from "./API/RabbitApi";
 function Breeding() {
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false);
   const OpenSidebar = () => {
@@ -76,7 +76,9 @@ function Breeding() {
         <div className="actions">
           <BreedingDetails data={record} />
           <Button
-            onClick={() => navigateTo(`/add_breeding_child/${record.id}`)}
+            onClick={async () => {
+              return navigateTo(`/add_breeding_child/${record.id}`, { state: await stateValue(record) });
+            }}
           >
             Add Litters
           </Button>
@@ -95,7 +97,7 @@ function Breeding() {
         <div className="actions">
           <BreedingDetails data={record} />
           <Button
-            onClick={() => navigateTo(`/add_breeding_child/${record.id}`)}
+            onClick={() => navigateTo(`/add_breeding_child/${record.id}`, { state: record })}
             disabled
           >
             Add Litters
@@ -107,6 +109,34 @@ function Breeding() {
       );
     }
   };
+
+  async function stateValue(record){
+    const rabbit = await fetchBreedPair(record);
+    console.log(rabbit);
+
+    const combineBreedType = rabbit.buck.breed_type + "-" + rabbit.doe.breed_type;
+    const breeds = [...breedType, combineBreedType];
+
+    const state = {
+      adoption: record,
+      breedTypes: breeds,
+      currentBreed: combineBreedType
+    }
+
+    return state;
+  }
+
+  const fetchBreedPair = async (record) => {
+    let buck = await axios.get(BASE_URL + "/rabbit/" + record.buck_id);
+    let doe = await axios.get(BASE_URL + "/rabbit/" + record.doe_id);
+
+    const rabbitPair = {
+      buck: buck.data[0],
+      doe: doe.data[0]
+    }
+  
+    return rabbitPair;
+  }
 
   const columns = [
     {

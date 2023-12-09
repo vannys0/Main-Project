@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../Style.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams, useLocation } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import axios from "axios";
@@ -9,11 +9,15 @@ import { v4 as uuidv4 } from "uuid";
 import { Input, DatePicker, Select, Button, Upload, InputNumber } from "antd";
 import ImgCrop from "antd-img-crop";
 import Swal from "sweetalert2";
-import { breedType, rabbitColor } from "./API/RabbitApi";
 import appConfig from "../../config.json";
 const BASE_URL = appConfig.apiBasePath; //e.g "http://localhost:8080/api"
+import { rabbitColor } from "./API/RabbitApi";
 
 function AddBreedingChild() {
+
+  const { id } = useParams();
+  const state = useLocation().state;
+
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false);
   const OpenSidebar = () => {
     setOpenSidebarToggle(!openSidebarToggle);
@@ -28,12 +32,15 @@ function AddBreedingChild() {
     name: "",
     dateOfBirth: "",
     sex: "",
-    breed: "",
+    breed: state.currentBreed,
     color: "",
     type: "",
     weight: "",
+    breeding_pair_id: state.adoption.id
   });
+
   const [selectedFiles, setSelectedFiles] = useState(null);
+
 
   const onFileChange = (e) => {
     const files = e.target.files;
@@ -152,6 +159,8 @@ function AddBreedingChild() {
                 <span className="error-message">{msgError.name}</span>
               )}
             </div>
+
+            
           </div>
           <div>
             <label>Date of birth :</label>
@@ -188,16 +197,19 @@ function AddBreedingChild() {
           <div>
             <label>Breed Type :</label>
             <div>
+      
               <Select
                 style={{ width: "100%" }}
                 placeholder="Breed"
                 onChange={(value) => handleInputSelect("breed", value)}
+                defaultValue={state.currentBreed}
               >
-                {breedType.map((breed, index) => (
+                {state.breedTypes.map((breed, index) => (
                   <Select.Option key={index} value={breed}>
                     {breed}
                   </Select.Option>
                 ))}
+             
               </Select>
               {msgError.breed && (
                 <span className="error-message">{msgError.breed}</span>
