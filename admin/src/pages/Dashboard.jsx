@@ -29,7 +29,6 @@ import axios from "axios";
 import { UserOutlined, UploadOutlined } from "@ant-design/icons";
 import { Table, Col, Row, Statistic, Space, Avatar } from "antd";
 import { RiPassPendingLine } from "react-icons/ri";
-import Video from "../videos/video.mp4";
 import appConfig from "../../config.json";
 const BASE_URL = appConfig.apiBasePath;
 

@@ -201,4 +201,30 @@ router.post("/upload-file", upload.single("image"), (req, res) => {
   // });
 });
 
+//Get Sex scanResult
+router.get("/get_sex", (req, res) => {
+  const id = req.query.id;
+  db.query("SELECT sex FROM rabbit WHERE id = ?", [id], (err, results) => {
+    if (err) {
+      console.error("Error fetching rabbit:", err);
+      res.status(500).json({ error: "Internal Server Error" });
+      return;
+    }
+    return res.json(results);
+  });
+});
+
+// Get Sex scanResult1
+// router.get("/get_sex", (req, res) => {
+//   const id = req.query.id;
+//   db.query("SELECT sex FROM rabbit WHERE id = ?", [id], (err, results) => {
+//     if (err) {
+//       console.error("Error fetching rabbit:", err);
+//       res.status(500).json({ error: "Internal Server Error" });
+//       return;
+//     }
+//     return res.json(results);
+//   });
+// });
+
 module.exports = router;

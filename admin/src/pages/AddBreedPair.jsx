@@ -10,6 +10,7 @@ import { v4 as uuidv4 } from "uuid";
 import Swal from "sweetalert2";
 import appConfig from "../../config.json";
 import { useNavigate } from "react-router-dom";
+import { RiContactsBookLine } from "react-icons/ri";
 const BASE_URL = appConfig.apiBasePath;
 
 function BreedPair() {
@@ -20,6 +21,8 @@ function BreedPair() {
   const navigateTo = useNavigate();
   const [scanResult, setScanResult] = useState();
   const [scanResult1, setScanResult1] = useState();
+  const [sex, setSex] = useState();
+  const [sex1, setSex1] = useState();
   const [maleRabbits, setMaleRabbits] = useState([]);
   const [femaleRabbits, setFemaleRabbits] = useState([]);
 
@@ -36,8 +39,24 @@ function BreedPair() {
 
     function success(result) {
       scanner.clear();
-      setScanResult(result);
-      console.log(result);
+      axios
+        .get(`${BASE_URL}/get_sex?id=${result}`)
+        .then((res) => {
+          const scannedSex = res.data[0].sex;
+          if (scannedSex === "Male") {
+            setScanResult(result);
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "Invalid Rabbit",
+              text: "Please scan a male rabbit at this reader.",
+              showConfirmButton: false,
+              timer: 2000,
+            });
+            window.location.reload();
+          }
+        })
+        .catch((err) => console.log(err));
     }
 
     function error(err) {
@@ -58,7 +77,24 @@ function BreedPair() {
 
     function success(result) {
       scanner1.clear();
-      setScanResult1(result);
+      axios
+        .get(`${BASE_URL}/get_sex?id=${result}`)
+        .then((res) => {
+          const scannedSex = res.data[0].sex;
+          if (scannedSex === "Female") {
+            setScanResult1(result);
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "Invalid Rabbit",
+              text: "Please scan a female rabbit at this reader.",
+              showConfirmButton: false,
+              timer: 2000,
+            });
+            window.location.reload();
+          }
+        })
+        .catch((err) => console.log(err));
     }
 
     function error(err) {
@@ -89,6 +125,18 @@ function BreedPair() {
       return;
     }
 
+    if (sex && sex1 && sex.sex === sex1.sex) {
+      Swal.fire({
+        icon: "error",
+        title: "Failed",
+        text: "Rabbits of the same sex cannot be paired.",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+      window.location.reload();
+      return;
+    }
+
     const currentDate = new Date();
     const futureDate = new Date();
     futureDate.setDate(currentDate.getDate() + 32);
@@ -110,7 +158,7 @@ function BreedPair() {
             male_rabbit_id: scanResult,
             female_rabbit_id: scanResult1,
             note: result.value,
-            date: currentDate.toISOString(), 
+            date: currentDate.toISOString(),
             expected_due: futureDate.toISOString(),
           })
           .then((res) => {
@@ -152,12 +200,14 @@ function BreedPair() {
         <br />
         <div className="breed-ground">
           <div className="ground">
+            <h6>Male</h6>
             {scanResult ? <span>{scanResult}</span> : <div id="reader"></div>}
           </div>
           <div className="d-flex justify-content-center">
             <h6> Matching result</h6>
           </div>
           <div className="ground">
+            <h6>Female</h6>
             {scanResult1 ? (
               <span>{scanResult1}</span>
             ) : (
