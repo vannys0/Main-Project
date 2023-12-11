@@ -13,7 +13,9 @@ import {
   Pagination,
   Avatar,
   Image,
+  Dropdown,
 } from "antd";
+import { SlOptionsVertical } from "react-icons/sl";
 import Swal from "sweetalert2";
 import appConfig from "../../config.json";
 const BASE_URL = appConfig.apiBasePath;
@@ -24,6 +26,7 @@ function RabbitList() {
     setOpenSidebarToggle(!openSidebarToggle);
   };
   const navigateTo = useNavigate();
+  const toEdit = navigateTo;
   const [rabbits, setRabbits] = useState([]);
   const [record, setRecord] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -76,15 +79,14 @@ function RabbitList() {
       })
       .catch((err) => console.log(err));
 
-      axios
+    axios
       .get(BASE_URL + "/config/rabbit.age.slaughter")
       .then((res) => {
-        if(res.data.length > 0){
+        if (res.data.length > 0) {
           setSlaughter(res.data[0].value);
         }
       })
       .catch((err) => console.log(err));
-
   }, []);
 
   const handleDelete = async (id) => {
@@ -126,13 +128,42 @@ function RabbitList() {
     const years = currentDate.getFullYear() - birthDate.getFullYear();
     var months = currentDate.getMonth() - birthDate.getMonth();
 
-    const adjustedMonths = months + (currentDate.getDate() < birthDate.getDate() ? -1 : 0);
+    const adjustedMonths =
+      months + (currentDate.getDate() < birthDate.getDate() ? -1 : 0);
 
-
-    months =  adjustedMonths < 0 ? 0 : adjustedMonths;
+    months = adjustedMonths < 0 ? 0 : adjustedMonths;
 
     return years + " yrs " + months + " mos";
   }
+
+  //Dropdown
+  const items = (record) => [
+    {
+      label: (
+        <span onClick={() => navigateTo(`/edit-rabbit/${record.id}`)}>
+          Edit
+        </span>
+      ),
+      key: "0",
+    },
+    {
+      label:
+        record.rehome_status === "Rehome" ? (
+          <span type="primary" onClick={(e) => onUnRehome(e, record)}>
+            Cancel rehome
+          </span>
+        ) : (
+          <span type="primary" onClick={(e) => onRehome(e, record)}>
+            Rehome
+          </span>
+        ),
+    },
+    {
+      label: <span onClick={(e) => handleDelete(record.id)}>Delete</span>,
+      key: "3",
+      danger: true,
+    },
+  ];
 
   // Table
   const columns = [
@@ -197,7 +228,7 @@ function RabbitList() {
     {
       title: "Slaughter",
       render: (o) => {
-        if(o.rabbit_type === "Meat rabbit"){
+        if (o.rabbit_type === "Meat rabbit") {
           const age = calculateAge(o.date_of_birth);
           return age.localeCompare(slaughter) >= 0 ? "YES" : "NO"; // slaughtere from config
         }
@@ -209,36 +240,47 @@ function RabbitList() {
       title: "Actions",
       key: "action",
       render: (text, record) => (
-        <Space>
-          <Button onClick={() => navigateTo(`/edit-rabbit/${record.id}`)}>
-            Edit
-          </Button>
-          {record.rehome_status === "Rehome" ? (
-            <Button
-              disabled
-              type="primary"
-              onClick={(e) => onUnRehome(e, record)}
-            >
-              Rehome
-            </Button>
-          ) : (
-            <Button type="primary" onClick={(e) => onRehome(e, record)}>
-              Rehome
-            </Button>
-          )}
-          <Button
-            type="primary"
-            danger
-            onClick={(e) => handleDelete(record.id)}
-          >
-            Delete
-          </Button>
-        </Space>
+        <Dropdown
+          menu={{
+            items: items(record),
+          }}
+          trigger={["click"]}
+          placement="bottomLeft"
+        >
+          <a onClick={(e) => e.preventDefault()}>
+            <SlOptionsVertical style={{ color: "#1e1e1e" }} />
+          </a>
+        </Dropdown>
       ),
+      // render: (text, record) => (
+      //   <Space>
+      //     <Button onClick={() => navigateTo(`/edit-rabbit/${record.id}`)}>
+      //       Edit
+      //     </Button>
+      //     {record.rehome_status === "Rehome" ? (
+      //       <Button
+      //         disabled
+      //         type="primary"
+      //         onClick={(e) => onUnRehome(e, record)}
+      //       >
+      //         Rehome
+      //       </Button>
+      //     ) : (
+      //       <Button type="primary" onClick={(e) => onRehome(e, record)}>
+      //         Rehome
+      //       </Button>
+      //     )}
+      //     <Button
+      //       type="primary"
+      //       danger
+      //       onClick={(e) => handleDelete(record.id)}
+      //     >
+      //       Delete
+      //     </Button>
+      //   </Space>
+      // ),
     },
   ];
-
-
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;

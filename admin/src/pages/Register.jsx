@@ -83,56 +83,6 @@ const Register = () => {
               onChange={handleInput}
             />
           </div>
-          <div className="coolinput">
-            <label htmlFor="input" className="text">
-              Confirm Password:
-            </label>
-            <input type="password" className="input" />
-          </div>
-          {/* <div className="inputDiv">
-            <div className="input flex">
-              <BiUser className="icons page-icon" />
-              <input
-                type="text"
-                id="username"
-                autoComplete="on"
-                placeholder="Enter your name"
-                onChange={(event) => {
-                  setUserName(event.target.value);
-                }}
-              />
-            </div>
-          </div>
-          <div className="inputDiv">
-            <div className="input flex">
-              <AiOutlineMail className="icons page-icon" />
-              <input
-                type="email"
-                id="email"
-                autoComplete="on"
-                placeholder="Enter your email"
-                onChange={(event) => {
-                  setEmail(event.target.value);
-                }}
-              />
-            </div>
-          </div>
-
-          <div className="inputDiv">
-            <div className="input flex">
-              <RiLockPasswordLine className="icons page-icon" />
-              <input
-                type="password"
-                id="password"
-                autoComplete="on"
-                placeholder="Enter your password"
-                onChange={(event) => {
-                  setPassword(event.target.value);
-                }}
-              />
-            </div>
-          </div> */}
-
           <Button
             style={{ margin: "20px 0px 0px 0px", height: "40px" }}
             type="primary"

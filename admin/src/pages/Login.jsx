@@ -75,20 +75,19 @@ function Login() {
       });
   }
 
-  function sendEmail(e){
+  function sendEmail(e) {
     e.preventDefault();
 
     Axios.post(BASE_URL + "/send-email", {
       email: "ivanpaglinawan0@gmail.com",
       subject: "OTP SUBJECT",
-      message: "Here the value for the generated OTP"
+      message: "Here the value for the generated OTP",
     })
       .then((response) => {
         console.log(response);
       })
       .catch((error) => {
         console.error("Error during login:", error);
-
       });
   }
 
@@ -182,13 +181,12 @@ function Login() {
             <span className="login-span">Login </span>
           </Button>
 
-          
-          <Button
+          {/* <Button
             style={{ margin: "20px 0px 0px 0px", height: "40px" }}
             type="primary"
             className="btn btn-primary"
             onClick={sendEmail}
-          >Send Email</Button>
+          >Send Email</Button> */}
           <div>
             Don't have an account? <Link to="/register">Sign up</Link>
           </div>

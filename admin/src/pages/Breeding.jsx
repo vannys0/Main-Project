@@ -3,7 +3,8 @@ import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import "../Style.css";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { Table, Button, Pagination, Input } from "antd";
+import { Table, Button, Pagination, Input, Dropdown, Space } from "antd";
+import { SlOptionsVertical } from "react-icons/sl";
 import axios from "axios";
 import BreedingDetails from "./BreedingDetails";
 import Swal from "sweetalert2";
@@ -43,7 +44,7 @@ function Breeding() {
   const handleDelete = async (id) => {
     Swal.fire({
       title: "Are you sure?",
-      text: "You want to cancel this?",
+      text: "You want to cancel this breeding pair?",
       showCancelButton: true,
       confirmButtonColor: "#d50000",
       cancelButtonColor: "#797979",
@@ -63,65 +64,86 @@ function Breeding() {
     });
   };
 
-  const renderActions = (text, record) => {
-    const estimatedDueDate = new Date(record.expected_due_date);
-    const today = new Date();
+  // function addLitters(record) {
+  //   const today = new Date();
+  //   const dueDate = new Date(record.expected_due_date);
 
+  //   // Remove time for comparison (compare date without considering time)
+  //   const formattedToday = new Date(
+  //     today.getFullYear(),
+  //     today.getMonth(),
+  //     today.getDate()
+  //   );
+  //   const formattedDueDate = new Date(
+  //     dueDate.getFullYear(),
+  //     dueDate.getMonth(),
+  //     dueDate.getDate()
+  //   );
+
+  //   if (formattedToday.getTime() === formattedDueDate.getTime()) {
+  //     return (
+  //       <span onClick={() => navigateTo(`/add_breeding_child/${record.id}`)}>
+  //         Add litters
+  //       </span>
+  //     );
+  //   } else {
+  //     <span>Add </span>;
+  //   }
+  // }
+
+  const renderActions = (text, record) => {
+    const pairingDate = new Date(record.pairing_date);
+    const today = new Date();
     const differenceInDays = Math.floor(
-      (estimatedDueDate - today) / (1000 * 60 * 60 * 24)
+      (today - pairingDate) / (1000 * 60 * 60 * 24)
     );
 
-    if (differenceInDays <= 0) {
+    if (differenceInDays > 30) {
       return (
-        <div className="actions">
-          <BreedingDetails data={record} />
-          <Button
-            onClick={async () => {
-              return navigateTo(`/add_breeding_child/${record.id}`, { state: await stateValue(record) });
-            }}
-          >
-            Add Litters
-          </Button>
-          <Button
-            type="primary"
-            danger
-            onClick={() => handleDelete(record.id)}
-            disabled
-          >
-            Cancel
-          </Button>
-        </div>
+        <a
+          onClick={async () => {
+            return navigateTo(`/add_breeding_child/${record.id}`, {
+              state: await stateValue(record),
+            });
+          }}
+        >
+          Add Litters
+        </a>
       );
     } else {
-      return (
-        <div className="actions">
-          <BreedingDetails data={record} />
-          <Button
-            onClick={() => navigateTo(`/add_breeding_child/${record.id}`, { state: record })}
-            disabled
-          >
-            Add Litters
-          </Button>
-          <Button type="primary" danger onClick={() => handleDelete(record.id)}>
-            Cancel
-          </Button>
-        </div>
-      );
+      return <a disabled>Add Litters</a>;
     }
   };
 
-  async function stateValue(record){
+  const items = (record) => [
+    {
+      label: <BreedingDetails data={record} />,
+      key: "0",
+    },
+    {
+      label: renderActions(null, record),
+      key: "1",
+    },
+    {
+      label: <span onClick={() => handleDelete(record.id)}>Cancel</span>,
+      key: "2",
+      danger: true,
+    },
+  ];
+
+  async function stateValue(record) {
     const rabbit = await fetchBreedPair(record);
     console.log(rabbit);
 
-    const combineBreedType = rabbit.buck.breed_type + "-" + rabbit.doe.breed_type;
+    const combineBreedType =
+      rabbit.buck.breed_type + "-" + rabbit.doe.breed_type;
     const breeds = [...breedType, combineBreedType];
 
     const state = {
       adoption: record,
       breedTypes: breeds,
-      currentBreed: combineBreedType
-    }
+      currentBreed: combineBreedType,
+    };
 
     return state;
   }
@@ -132,11 +154,11 @@ function Breeding() {
 
     const rabbitPair = {
       buck: buck.data[0],
-      doe: doe.data[0]
-    }
-  
+      doe: doe.data[0],
+    };
+
     return rabbitPair;
-  }
+  };
 
   const columns = [
     {
@@ -165,7 +187,20 @@ function Breeding() {
     {
       title: "Actions",
       key: "action",
-      render: renderActions,
+      // render: renderActions,
+      render: (text, record) => (
+        <Dropdown
+          menu={{
+            items: items(record),
+          }}
+          trigger={["click"]}
+          placement="bottomLeft"
+        >
+          <a onClick={(e) => e.preventDefault()}>
+            <SlOptionsVertical style={{ color: "#1e1e1e" }} />
+          </a>
+        </Dropdown>
+      ),
     },
   ];
 

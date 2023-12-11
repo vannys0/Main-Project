@@ -7,9 +7,12 @@ import {
   BsSearch,
   BsJustify,
 } from "react-icons/bs";
+import { DownOutlined } from "@ant-design/icons";
 import "./Header.css";
 import SecureStore from "react-secure-storage";
-import { Badge, Space, Typography, Dropdown } from "antd";
+import { Badge, Space, Typography, Dropdown, Avatar } from "antd";
+import Default from "../images/default-profile.png";
+import Swal from "sweetalert2";
 import axios from "axios";
 import appConfig from "../../config.json";
 const BASE_URL = appConfig.apiBasePath;
@@ -18,6 +21,18 @@ function Header({ OpenSidebar }) {
   const user = SecureStore.getItem("userToken");
   const navigateTo = useNavigate();
   const [pending, setPending] = useState();
+  const [userInfo, setUserInfo] = useState([]);
+  const hasProfileImage = userInfo && userInfo.profile;
+
+  useEffect(() => {
+    axios
+      .get(`${BASE_URL}/get_user_info/${user.id}`)
+      .then((res) => {
+        setUserInfo(res.data[0]);
+      })
+      .catch();
+  }, [user.id]);
+
   useEffect(() => {
     axios
       .get(BASE_URL + "/pending-adoption")
@@ -45,6 +60,42 @@ function Header({ OpenSidebar }) {
     },
   ];
 
+  const admin = [
+    {
+      label: <h5>{user.name}</h5>,
+      key: "0",
+    },
+    {
+      label: (
+        <span onClick={() => navigateTo(`/profile/${user.id}`)}>Profile</span>
+      ),
+      key: "1",
+    },
+    {
+      type: "divider",
+    },
+    {
+      label: <span onClick={onLogout}>Logout</span>,
+      key: "2",
+    },
+  ];
+
+  function onLogout() {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You want to logout?",
+      showCancelButton: true,
+      confirmButtonColor: "#d50000",
+      cancelButtonColor: "#797979",
+      confirmButtonText: "Yes",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        authContext.signOut();
+        navigateTo("/");
+      }
+    });
+  }
+
   return (
     <header className="header">
       <div className="menu-icon">
@@ -53,19 +104,47 @@ function Header({ OpenSidebar }) {
       <div className="header-left">
         <h5></h5>
       </div>
-      <div className="header-right">
-        <Badge count={pending}>
+      <div className="d-flex align-items-center justify-content-center gap-4">
+        <Badge count={pending} dot>
           <Dropdown
             menu={{
               items,
-              selectable: true,
             }}
+            trigger={["click"]}
+            placement="bottomCenter"
           >
             <Space>
               <BsFillBellFill className="icon" />
             </Space>
           </Dropdown>
         </Badge>
+        <Dropdown
+          menu={{
+            items: admin,
+          }}
+          trigger={["click"]}
+          placement="bottomLeft"
+        >
+          <div className="d-flex align-items-center gap-1">
+            <span>
+              {hasProfileImage ? (
+                <Avatar
+                  src={
+                    <img
+                      src={`http://localhost:8081/uploads/${userInfo.profile}`}
+                      alt=""
+                      style={{ width: "100%" }}
+                    />
+                  }
+                />
+              ) : (
+                <Avatar src={<img src={Default} alt="" />} />
+              )}
+            </span>
+            <span>{user.name}</span>
+            <DownOutlined style={{ color: "#1e1e1e" }} />
+          </div>
+        </Dropdown>
       </div>
     </header>
   );

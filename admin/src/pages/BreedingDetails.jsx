@@ -17,9 +17,9 @@ function BreedingDetails({ data }) {
   return (
     <>
       <div className="d-flex justify-content-center">
-        <Button className="w-100" onClick={showModal}>
+        <span className="w-100" onClick={showModal}>
           View
-        </Button>
+        </span>
       </div>
       <Modal
         title={`Details`}

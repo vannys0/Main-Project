@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import "../Style.css";
-import { Table, Button, Pagination, Tag } from "antd";
+import { SlOptionsVertical } from "react-icons/sl";
+import { Table, Button, Pagination, Tag, Dropdown, Space } from "antd";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { v4 as uuidv4 } from "uuid";
@@ -75,6 +76,29 @@ function Delivery() {
     });
   };
 
+  const items = (record) => [
+    record.delivery_status === "Approved"
+      ? {
+          label: <span>Deliver</span>,
+          key: "0",
+          disabled: true,
+        }
+      : {
+          label: <span onClick={(e) => onApprove(e, record)}>Deliver</span>,
+          key: "0",
+        },
+    record.delivery_status === "Approved"
+      ? {
+          label: <span onClick={() => onDelivered(record.id)}>Delivered</span>,
+          key: "1",
+        }
+      : {
+          label: <span>Delivered</span>,
+          key: "1",
+          disabled: true,
+        },
+  ];
+
   const columns = [
     {
       title: "Name",
@@ -111,26 +135,40 @@ function Delivery() {
     {
       title: "Actions",
       key: "action",
-      render: (text, record) =>
-        record.delivery_status === "Approved" ? (
-          <div className="d-flex gap-2">
-            <Button type="primary" disabled>
-              Deliver
-            </Button>
-            <Button type="primary" onClick={() => onDelivered(record.id)}>
-              Delivered
-            </Button>
-          </div>
-        ) : (
-          <div className="d-flex gap-2">
-            <Button type="primary" onClick={(e) => onApprove(e, record)}>
-              Deliver
-            </Button>
-            <Button type="primary" disabled>
-              Delivered
-            </Button>
-          </div>
-        ),
+      render: (text, record) => (
+        <Dropdown
+          menu={{
+            items: items(record),
+          }}
+          trigger={["click"]}
+        >
+          <a onClick={(e) => e.preventDefault()}>
+            <Space>
+              <SlOptionsVertical style={{ color: "#1e1e1e" }} />
+            </Space>
+          </a>
+        </Dropdown>
+      ),
+      // render: (text, record) =>
+      //   record.delivery_status === "Approved" ? (
+      //     <div className="d-flex gap-2">
+      //       <Button type="primary" disabled>
+      //         Deliver
+      //       </Button>
+      //       <Button type="primary" onClick={() => onDelivered(record.id)}>
+      //         Delivered
+      //       </Button>
+      //     </div>
+      //   ) : (
+      //     <div className="d-flex gap-2">
+      //       <Button type="primary" onClick={(e) => onApprove(e, record)}>
+      //         Deliver
+      //       </Button>
+      //       <Button type="primary" disabled>
+      //         Delivered
+      //       </Button>
+      //     </div>
+      //   ),
     },
   ];
 

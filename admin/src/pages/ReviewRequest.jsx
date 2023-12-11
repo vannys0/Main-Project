@@ -18,7 +18,7 @@ function ReviewRequest({ data }) {
 
   return (
     <>
-      <Button onClick={showModal}>View</Button>
+      <span onClick={showModal}>View</span>
       <Modal
         title="Details"
         style={{

@@ -6,6 +6,7 @@ import Header from "../components/Header";
 import ReviewRequest from "./ReviewRequest";
 import { Link, useNavigate } from "react-router-dom";
 import { DownOutlined } from "@ant-design/icons";
+import { SlOptionsVertical } from "react-icons/sl";
 import { Button, Input, Table, Tag, Space, Pagination, Dropdown } from "antd";
 import Swal from "sweetalert2";
 import appConfig from "../../config.json";
@@ -31,7 +32,7 @@ function Request() {
       showCancelButton: true,
       confirmButtonColor: "#2e7d32",
       cancelButtonColor: "#797979",
-      confirmButtonText: "Yes, approve it!",
+      confirmButtonText: "Approve",
     }).then((result) => {
       if (result.isConfirmed) {
         axios
@@ -102,6 +103,62 @@ function Request() {
     return values.slice(startIndex, endIndex);
   };
 
+  const listItems = (record) => [
+    {
+      label: <ReviewRequest data={record} />,
+      key: "0",
+    },
+    record.adoption_status === "Pending"
+      ? {
+          label: <span onClick={(e) => onApprove(e, record)}>Approve</span>,
+          key: "1",
+        }
+      : {
+          label: <span>Approve</span>,
+          key: "1",
+          disabled: true,
+        },
+    // {
+    //   label:
+    //     record.adoption_status === "Pending" ? (
+    //       <a onClick={(e) => onApprove(e, record)}>Approve</a>
+    //     ) : (
+    //       <a disabled>Approve</a>
+    //     ),
+    //   key: "1",
+    // },
+    record.adoption_status === "Pending"
+      ? {
+          label: (
+            <span type="primary" danger onClick={(e) => onDecline(e, record)}>
+              Decline
+            </span>
+          ),
+          key: "2",
+          danger: true,
+        }
+      : {
+          label: <span>Decline</span>,
+          key: "2",
+          disabled: true,
+          danger: true,
+        },
+    // {
+    //   label:
+    //     record.adoption_status === "Pending" ? (
+    //       <a type="primary" danger onClick={(e) => onDecline(e, record)}>
+    //         Decline
+    //       </a>
+    //     ) : (
+    //       <a type="primary" disabled>
+    //         Decline
+    //       </a>
+    //     ),
+    //   key: "3",
+    //   danger: true,
+    // },
+  ];
+
   const columns = [
     {
       title: "Address",
@@ -146,12 +203,14 @@ function Request() {
     {
       title: "SGA",
       render: (o) => {
-        if(o.adoption_status !== "Pending"){
+        if (o.adoption_status !== "Pending") {
           return null;
         }
 
-        
-        if(o.mode_of_payment === "Agriculture" && o.agriculture_product_price >= o.price){
+        if (
+          o.mode_of_payment === "Agriculture" &&
+          o.agriculture_product_price >= o.price
+        ) {
           return "Yes";
         }
 
@@ -162,27 +221,39 @@ function Request() {
       title: "Actions",
       key: "action",
       render: (text, record) => (
-        <Space>
-          <ReviewRequest data={record} />
-          {record.adoption_status === "Pending" ? (
-            <Button type="primary" onClick={(e) => onApprove(e, record)}>
-              Approve
-            </Button>
-          ) : (
-            <Button type="primary" disabled>
-              Approve
-            </Button>
-          )}
-          {record.adoption_status === "Pending" ? (
-            <Button type="primary" danger onClick={(e) => onDecline(e, record)}>
-              Decline
-            </Button>
-          ) : (
-            <Button type="primary" disabled>
-              Decline
-            </Button>
-          )}
-        </Space>
+        <Dropdown
+          menu={{
+            items: listItems(record),
+          }}
+          trigger={["click"]}
+        >
+          <a onClick={(e) => e.preventDefault()}>
+            <Space>
+              <SlOptionsVertical style={{ color: "#1e1e1e" }} />
+            </Space>
+          </a>
+        </Dropdown>
+        // <Space>
+        //   <ReviewRequest data={record} />
+        //   {record.adoption_status === "Pending" ? (
+        //     <Button type="primary" onClick={(e) => onApprove(e, record)}>
+        //       Approve
+        //     </Button>
+        //   ) : (
+        //     <Button type="primary" disabled>
+        //       Approve
+        //     </Button>
+        //   )}
+        //   {record.adoption_status === "Pending" ? (
+        //     <Button type="primary" danger onClick={(e) => onDecline(e, record)}>
+        //       Decline
+        //     </Button>
+        //   ) : (
+        //     <Button type="primary" disabled>
+        //       Decline
+        //     </Button>
+        //   )}
+        // </Space>
       ),
     },
   ];
@@ -235,12 +306,15 @@ function Request() {
           }}
           trigger={["click"]}
         >
-          <a onClick={(e) => e.preventDefault()}>
+          <span
+            style={{ color: "#1e1e1e" }}
+            onClick={(e) => e.preventDefault()}
+          >
             <Space>
               <span>Filter</span>
               <DownOutlined />
             </Space>
-          </a>
+          </span>
         </Dropdown>
         <span> {selectedStatus}</span>
 
