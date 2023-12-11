@@ -59,13 +59,6 @@ function ViewApplication({ data }) {
             <p>Delivery Option</p>
             <p>{data.service_option}</p>
           </div>
-          {/* <div>
-            <p>Home Environment</p>
-            <img
-              src={`http://localhost:8081/uploads/${data.home_environment_image_path}`}
-              alt=""
-            />
-          </div> */}
           <div className="d-flex justify-content-between">
             <p>Rabbit ID</p>
             <p>{data.rabbit_id}</p>

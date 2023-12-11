@@ -27,7 +27,7 @@ app.use("/api", breeding);
 
 //most of the api of the frontend project.
 const client = require("./routes/client");
-app.use("", client);
+app.use("/api", client);
 
 const dashbard = require("./routes/dashboard");
 app.use("/api", dashbard);
@@ -37,6 +37,3 @@ app.use("/api", chartutil);
 
 const config = require("./routes/config");
 app.use("/api", config);
-
-
-

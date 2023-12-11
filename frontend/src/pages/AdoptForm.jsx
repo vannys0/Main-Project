@@ -14,6 +14,8 @@ import {
   getAllCityByProvinceCode,
   getAllBarangayByCityCodeList,
 } from "./Api/camarinessur";
+import appConfig from "../../config.json";
+const BASE_URL = appConfig.apiBasePath;
 
 function AdoptForm() {
   const { name, id } = useParams();
@@ -117,13 +119,9 @@ function AdoptForm() {
     formData.append("values", postData);
 
     console.log(errors);
-    // if (
-    //   errors.province === "" &&
-    //   errors.city === "" &&
-    //   errors.phone === "") {
-    // }
+
     axios
-      .post("http://localhost:8081/rabbitdata/" + id + "/adopt-form", formData)
+      .post(`${BASE_URL}/rabbitdata/${id}/adopt-form`, formData)
       .then((res) => {
         console.log(res);
         Swal.fire({
@@ -251,10 +249,6 @@ function AdoptForm() {
             <option value="Cash">Cash</option>
             <option value="Agriculture">Agriculture</option>
           </Form.Select>
-          {/* {errors.serviceoption && (
-            <span className="error">{errors.serviceoption}</span>
-          )} */}
-
           {mopAgriculture && (
             <div>
               <label htmlFor="agprod" className="label-name">
@@ -264,7 +258,6 @@ function AdoptForm() {
                 type="text"
                 name="agprod"
                 className="form-control"
-                // value={user.name}
                 onChange={handleInput}
               />
 

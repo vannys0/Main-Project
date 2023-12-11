@@ -8,6 +8,8 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import SecureStore from "react-secure-storage";
 import { AuthContext } from "../App";
+import appConfig from "../../config.json";
+const BASE_URL = appConfig.apiBasePath;
 
 function Login() {
   const authContext = useContext(AuthContext);
@@ -24,14 +26,9 @@ function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:8081/login-client", values)
+      .post(`${BASE_URL}/login-client`, values)
       .then((res) => {
         if (res.data.Message === "Success") {
-          // Assuming the server responds with a 'token' field upon successful login
-          // const token = res.data.token;
-          // Store the JWT token securely (e.g., in localStorage)
-          // localStorage.setItem("token", res.data.email);
-
           const user = res.data;
           SecureStore.setItem("userToken", user);
           authContext.signIn(user);

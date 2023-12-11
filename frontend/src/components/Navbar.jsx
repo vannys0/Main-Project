@@ -1,9 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import "./Navbar.css";
-import { MdAccountCircle } from "react-icons/md";
 import Button from "react-bootstrap/Button";
-import DropdownMenu from "./DropdownMenu.jsx";
 import Logo from "../images/Logo.png";
 import { BsJustify } from "react-icons/bs";
 import Swal from "sweetalert2";
@@ -12,10 +10,12 @@ import { Dropdown, Space, Avatar } from "antd";
 import SecureStore from "react-secure-storage";
 import { AuthContext } from "../App";
 import axios from "axios";
+import appConfig from "../../config.json";
+const BASE_URL = appConfig.apiBasePath;
 
 function Navbar() {
   const user = SecureStore.getItem("userToken");
-  const navigateTo = useState();
+  const navigateTo = useNavigate();
   const authContext = useContext(AuthContext);
   const [open, setOpen] = useState(false);
   const handleToggle = () => {
@@ -27,7 +27,7 @@ function Navbar() {
   const hasProfileImage = userInfo && userInfo.profile;
   useEffect(() => {
     axios
-      .get("http://localhost:8081/get_user/" + user.id)
+      .get(`${BASE_URL}/get_user/${user.id}`)
       .then((res) => {
         setUserInfo(res.data[0]);
       })
@@ -53,22 +53,28 @@ function Navbar() {
 
   const items = [
     {
-      label: <h4>{user.name}</h4>,
+      label: <h4>{userInfo.name}</h4>,
       key: "0",
     },
     {
-      label: <Link to={`/user_profile/${user.id}`}>Profile</Link>,
+      label: (
+        <span onClick={() => navigateTo(`/user_profile/${user.id}`)}>
+          Profile
+        </span>
+      ),
       key: "1",
     },
     {
-      label: <Link to="/myapplication">Application</Link>,
+      label: (
+        <span onClick={() => navigateTo("/myapplication")}>Application</span>
+      ),
       key: "2",
     },
     {
       type: "divider",
     },
     {
-      label: <Link onClick={handleLogout}>Logout</Link>,
+      label: <span onClick={handleLogout}>Logout</span>,
       key: "3",
     },
   ];

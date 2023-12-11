@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../App";
 import SecureStore from "react-secure-storage";
+import appConfig from "../../config.json";
+const BASE_URL = appConfig.apiBasePath;
 
 function Login() {
   const authContext = useContext(AuthContext);
@@ -13,7 +15,7 @@ function Login() {
     const verificationCode = document.getElementById("verificationCode").value;
 
     try {
-      const response = await axios.post("http://localhost:8081/verify-otp", {
+      const response = await axios.post(`${BASE_URL}/verify-otp`, {
         verificationCode: verificationCode,
       });
       if (response.data.is_verified) {

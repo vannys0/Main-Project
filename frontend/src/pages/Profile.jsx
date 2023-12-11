@@ -8,6 +8,8 @@ import { Avatar, Button } from "antd";
 import Swal from "sweetalert2";
 import { UserOutlined } from "@ant-design/icons";
 import SecureStore from "react-secure-storage";
+import appConfig from "../../config.json";
+const BASE_URL = appConfig.apiBasePath;
 
 function Profile() {
   const user = SecureStore.getItem("userToken");
@@ -19,7 +21,7 @@ function Profile() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8081/get_user/" + id)
+      .get(`${BASE_URL}/get_user/${id}`)
       .then((res) => {
         setUsers(res.data[0]);
       })
@@ -43,7 +45,7 @@ function Profile() {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .post(`http://localhost:8081/upload_profile/${id}`, formData, {
+          .post(`${BASE_URL}/upload_profile/${id}`, formData, {
             headers: {
               "Content-Type": "multipart/form-data",
             },

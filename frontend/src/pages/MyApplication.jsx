@@ -9,6 +9,8 @@ import { Button, Tag, Table, Dropdown, Space } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 import Swal from "sweetalert2";
 import SecureStore from "react-secure-storage";
+import appConfig from "../../config.json";
+const BASE_URL = appConfig.apiBasePath;
 
 function MyApplication() {
   const navigateTo = useNavigate();
@@ -28,7 +30,7 @@ function MyApplication() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8081/myapplication/" + user.id)
+      .get(`${BASE_URL}/myapplication/${user.id}`)
       .then((res) => {
         setValues(res.data);
         setFilteredValues(res.data);
@@ -53,7 +55,7 @@ function MyApplication() {
           showConfirmButton: false,
           timer: 1500,
         });
-        axios.delete("http://localhost:8081/delete_application/" + id);
+        axios.delete(`${BASE_URL}/delete_application/${id}`);
         window.location.reload();
       }
     });

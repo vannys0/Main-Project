@@ -8,6 +8,8 @@ import { RiLockPasswordLine } from "react-icons/ri";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
+import appConfig from "../../config.json";
+const BASE_URL = appConfig.apiBasePath;
 
 function Login() {
   const navigate = useNavigate();
@@ -27,7 +29,7 @@ function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:8081/signup", {
+      .post(`${BASE_URL}/signup`, {
         email: values.email,
         subject: "Verify your account",
         message: "Your verification code is required from the server.",
@@ -48,29 +50,6 @@ function Login() {
         }
       });
   };
-
-  function getRandomFourDigitNumber() {
-    return Math.floor(Math.random() * 9000) + 1000;
-  }
-
-  function sendEmail(e) {
-    e.preventDefault();
-
-    const randomFourDigitNumber = getRandomFourDigitNumber();
-
-    axios
-      .post(BASE_URL + "/send-email", {
-        email: "ivanbengcolado@gmail.com",
-        subject: "Verify your account",
-        message: `Your verification code is ${randomFourDigitNumber}`,
-      })
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.error("Error during login:", error);
-      });
-  }
 
   return (
     <div className="LoginSignup-div">

@@ -13,7 +13,6 @@ import AdoptForm from "./pages/AdoptForm.jsx";
 import RabbitData from "./pages/RabbitData.jsx";
 import AboutRabbit from "./pages/AboutRabbit.jsx";
 import Profile from "./pages/Profile.jsx";
-import NewForm from "./pages/NewForm.jsx";
 import EmailVerification from "./pages/EmailVerification.jsx";
 import {
   createContext,
@@ -129,16 +128,6 @@ function App() {
         <div>
           <PrivateRoute>
             <AdoptForm />
-          </PrivateRoute>
-        </div>
-      ),
-    },
-    {
-      path: "/newform",
-      element: (
-        <div>
-          <PrivateRoute>
-            <NewForm />
           </PrivateRoute>
         </div>
       ),

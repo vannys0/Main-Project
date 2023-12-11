@@ -5,6 +5,8 @@ import { Button, Modal } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { Carousel } from "react-bootstrap";
 import { Image, Avatar } from "antd";
+import appConfig from "../../config.json";
+const BASE_URL = appConfig.apiBasePath;
 
 function AboutRabbit({ data }) {
   const navigateTo = useNavigate();
@@ -16,15 +18,6 @@ function AboutRabbit({ data }) {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
-
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost:8081/adopt")
-  //     .then((res) => {
-  //       setRabbit(res.data[0]);
-  //     })
-  //     .catch((err) => console.log(err));
-  // }, []);
 
   function calculateAge(dateOfBirth) {
     const birthDate = new Date(dateOfBirth);
@@ -91,15 +84,6 @@ function AboutRabbit({ data }) {
                     />
                   }
                 />
-                {/* <img
-                  style={{
-                    display: "block",
-                    margin: "auto",
-                    width: "65%",
-                  }}
-                  src={`http://localhost:8081/uploads/${image.trim()}`}
-                  alt=""
-                /> */}
               </Carousel.Item>
             ))}
           </Carousel>

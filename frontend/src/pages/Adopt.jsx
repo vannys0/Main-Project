@@ -8,22 +8,24 @@ import Footer from "../components/footer.jsx";
 import { Input } from "antd";
 import AboutRabbit from "./AboutRabbit.jsx";
 import { Link, useNavigate } from "react-router-dom";
+import appConfig from "../../config.json";
+const BASE_URL = appConfig.apiBasePath;
 
 function Adopt() {
   const [rabbits, setRabbits] = useState([]);
   const [record, setRecord] = useState([]);
-  const photo = "http://localhost:8081/";
   const navigateTo = useNavigate();
+
   useEffect(() => {
     axios
-      .get("http://localhost:8081/adopt")
+      .get(`${BASE_URL}/adopt`)
       .then((res) => {
         setRabbits(res.data);
         setRecord(res.data);
       })
       .catch((err) => console.log(err));
   }, []);
-  // Search Filter
+
   const { Search } = Input;
   const Filter = (value) => {
     const lowerCaseValue = value.toLowerCase();

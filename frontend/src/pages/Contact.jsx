@@ -68,31 +68,6 @@ function Contact() {
           </div>
         </div>
         <hr style={{ height: "2px solid black", width: "100%" }} />
-        {/* <div className="contact_thumbnail">
-          <h2>Send us a message</h2>
-        </div>
-        <br />
-        <div>
-          <p>
-            Want to get in touch with us? Make an offer now! <br /> Here are the
-            details.
-          </p>
-        </div>
-        <hr style={{ height: "2px solid black", width: "100%" }} />
-        <div>
-          <p>Email us at:</p>
-          <h5>eleporidae@gmail.com</h5>
-        </div>
-        <hr style={{ height: "2px solid black", width: "100%" }} />
-        <div>
-          <p>Call us at:</p>
-          <h5>09564758842</h5>
-        </div>
-        <hr style={{ height: "2px solid black", width: "100%" }} />
-        <div>
-          <p>Write us on:</p>
-          <h5>Concepcion, Libmanan, Camarines Sur</h5>
-        </div> */}
       </div>
       <Footer />
       <img src={Rabbit} alt="" className="rabbit-contact" />
