@@ -127,7 +127,7 @@ function AdoptForm() {
         Swal.fire({
           position: "center",
           icon: "success",
-          title: "Sent",
+          title: "Application Sent",
           showConfirmButton: false,
           timer: 1500,
         });

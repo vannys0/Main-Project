@@ -8,10 +8,11 @@ import { RiLockPasswordLine } from "react-icons/ri";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
+import Swal from "sweetalert2";
 import appConfig from "../../config.json";
 const BASE_URL = appConfig.apiBasePath;
 
-function Login() {
+function Signup() {
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
   const [values, setValues] = useState({
@@ -32,19 +33,22 @@ function Login() {
       .post(`${BASE_URL}/signup`, {
         email: values.email,
         subject: "Verify your account",
-        message: "Your verification code is required from the server.",
         id: values.id,
         name: values.name,
         password: values.password,
         user_type: values.user_type,
       })
       .then((res) => {
-        toast.success("Account created");
         navigate("/signup/verify_account");
       })
       .catch((err) => {
         if (err.response && err.response.status === 400) {
-          toast.error("Email already exists");
+          Swal.fire({
+            position: "center",
+            icon: "error",
+            title: "Failed",
+            text: "Email already exist",
+          });
         } else {
           console.log(err);
         }
@@ -103,4 +107,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Signup;

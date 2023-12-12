@@ -65,24 +65,35 @@ router.post("/signup", (req, res) => {
     text: `Your verification code is ${otp}`,
   };
 
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      console.log(error);
-      return res.status(500).json("Error sending email verification");
+  const checkEmailQuery = "SELECT * FROM user WHERE email = ?";
+  db.query(checkEmailQuery, [email], (err, result) => {
+    if (err) {
+      return res.status(500).json("Error checking email");
+    }
+
+    if (result.length > 0) {
+      return res.status(400).json("Email already exists");
     } else {
-      console.log("Email sent: " + info.response);
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.log(error);
+          return res.status(500).json("Error sending email verification");
+        } else {
+          console.log("Email sent: " + info.response);
 
-      const insertUserQuery =
-        "INSERT INTO user (`id`, `name`, `email`, `password`, `user_type`, `otp`, `is_verified`) VALUES (?, ?, ?, ?, ?, ?, ?)";
+          const insertUserQuery =
+            "INSERT INTO user (`id`, `name`, `email`, `password`, `user_type`, `otp`, `is_verified`) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-      const values = [id, name, email, password, user_type, otp, false];
+          const values = [id, name, email, password, user_type, otp, false];
 
-      db.query(insertUserQuery, values, (err, data) => {
-        if (err) {
-          return res.status(500).json("Error");
+          db.query(insertUserQuery, values, (err, data) => {
+            if (err) {
+              return res.status(500).json("Error creating user");
+            }
+
+            return res.json(data);
+          });
         }
-
-        return res.json(data);
       });
     }
   });
@@ -107,6 +118,7 @@ const getStoredVerificationCode = (verificationCode) => {
     );
   });
 };
+
 // Verify OTP
 router.post("/verify-otp", async (req, res) => {
   const { verificationCode } = req.body;
@@ -136,7 +148,7 @@ router.post("/verify-otp", async (req, res) => {
 
 router.post("/login-client", (req, res) => {
   const sql =
-    "SELECT * FROM user WHERE `email` = ? AND `password` = ? AND user_type='client'";
+    "SELECT * FROM user WHERE `email` = ? AND `password` = ? AND user_type='client' AND is_verified = true";
   db.query(sql, [req.body.email, req.body.password], (err, data) => {
     if (err) {
       return res.json({ Message: "Error" });

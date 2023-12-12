@@ -8,6 +8,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import SecureStore from "react-secure-storage";
 import { AuthContext } from "../App";
+import Swal from "sweetalert2";
 import appConfig from "../../config.json";
 const BASE_URL = appConfig.apiBasePath;
 
@@ -35,7 +36,12 @@ function Login() {
 
           navigate("/home");
         } else {
-          toast.error("Incorrect Email or Password");
+          Swal.fire({
+            position: "center",
+            icon: "error",
+            title: "Login Failed",
+            text: "Incorrect email or password",
+          });
         }
       })
       .catch((err) => {

@@ -52,6 +52,7 @@ function MyApplication() {
           position: "center",
           icon: "success",
           title: "Cancelled",
+          text: "your application has been cancelled",
           showConfirmButton: false,
           timer: 1500,
         });
