@@ -22,18 +22,18 @@ router.post("/send-email", (req, res) => {
   console.log(email, subject, message);
 
   var mailOption = {
-    from:EMAIL_FROM,
-    to:email,
-    subject:subject,
-    text:message,
+    from: EMAIL_FROM,
+    to: email,
+    subject: subject,
+    text: message,
   };
   // transporter.sendMail(mailOption); //without callback
-  transporter.sendMail(mailOption, function(error,info) {
-  if(error){
-    console.log(error);
-  }else{
-    console.log(info);
-  }
+  transporter.sendMail(mailOption, function (error, info) {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log(info);
+    }
   });
 });
 // end of nodemailer sending email
@@ -47,6 +47,18 @@ const storage = multer.diskStorage({
   },
 });
 const upload = multer({ storage: storage });
+
+router.get("/user/:id", (req, res) => {
+  const id = req.params.id;
+  db.query("SELECT * FROM user WHERE id = ?", [id], (err, results) => {
+    if (err) {
+      console.error("Error fetching :", err);
+      res.status(500).json({ error: "Internal Server Error" });
+      return;
+    }
+    return res.json(results);
+  });
+});
 
 router.get("/users", (req, res) => {
   db.query("SELECT * FROM user", (err, results) => {

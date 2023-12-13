@@ -25,31 +25,55 @@ function Request() {
   const [filteredValues, setFilteredValues] = useState([]);
   const [selectedStatus, setSelectedStatus] = useState("All");
 
+  const fetchUserData = async (values) => {
+    try {
+      const user = await axios.get(`${BASE_URL}/user/${values.user_id}`);
+      const userData = {
+        userName: user.data[0].name,
+        userEmail: user.data[0].email,
+      };
+      return userData;
+    } catch (error) {
+      console.error(error);
+      throw new Error("Error fetching user data");
+    }
+  };
+
   const onApprove = (e, o) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You want to approved this request?",
-      showCancelButton: true,
-      confirmButtonColor: "#2e7d32",
-      cancelButtonColor: "#797979",
-      confirmButtonText: "Approve",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        axios
-          .put(BASE_URL + "/approve-adoption/" + o.id)
-          .then((res) => {
-            Swal.fire({
-              position: "center",
-              icon: "success",
-              title: "Approved",
-              showConfirmButton: false,
-              timer: 1500,
-            });
-            window.location.reload();
-          })
-          .catch((err) => console.log(err));
-      }
-    });
+    fetchUserData(o) // Fetch userData within onApprove function
+      .then((userData) => {
+        Swal.fire({
+          title: "Are you sure?",
+          text: "You want to approve this request?",
+          showCancelButton: true,
+          confirmButtonColor: "#2e7d32",
+          cancelButtonColor: "#797979",
+          confirmButtonText: "Approve",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            axios
+              .put(`${BASE_URL}/approve-adoption/${o.id}`, {
+                user_name: userData.userName,
+                user_email: userData.userEmail,
+                rabbit_id: o.rabbit_id,
+              })
+              .then((res) => {
+                Swal.fire({
+                  position: "center",
+                  icon: "success",
+                  title: "Approved",
+                  showConfirmButton: false,
+                  timer: 1500,
+                });
+                window.location.reload();
+              })
+              .catch((err) => console.log(err));
+          }
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   const onDecline = (e, o) => {
@@ -118,15 +142,6 @@ function Request() {
           key: "1",
           disabled: true,
         },
-    // {
-    //   label:
-    //     record.adoption_status === "Pending" ? (
-    //       <a onClick={(e) => onApprove(e, record)}>Approve</a>
-    //     ) : (
-    //       <a disabled>Approve</a>
-    //     ),
-    //   key: "1",
-    // },
     record.adoption_status === "Pending"
       ? {
           label: (
@@ -143,20 +158,6 @@ function Request() {
           disabled: true,
           danger: true,
         },
-    // {
-    //   label:
-    //     record.adoption_status === "Pending" ? (
-    //       <a type="primary" danger onClick={(e) => onDecline(e, record)}>
-    //         Decline
-    //       </a>
-    //     ) : (
-    //       <a type="primary" disabled>
-    //         Decline
-    //       </a>
-    //     ),
-    //   key: "3",
-    //   danger: true,
-    // },
   ];
 
   const columns = [
@@ -233,27 +234,6 @@ function Request() {
             </Space>
           </a>
         </Dropdown>
-        // <Space>
-        //   <ReviewRequest data={record} />
-        //   {record.adoption_status === "Pending" ? (
-        //     <Button type="primary" onClick={(e) => onApprove(e, record)}>
-        //       Approve
-        //     </Button>
-        //   ) : (
-        //     <Button type="primary" disabled>
-        //       Approve
-        //     </Button>
-        //   )}
-        //   {record.adoption_status === "Pending" ? (
-        //     <Button type="primary" danger onClick={(e) => onDecline(e, record)}>
-        //       Decline
-        //     </Button>
-        //   ) : (
-        //     <Button type="primary" disabled>
-        //       Decline
-        //     </Button>
-        //   )}
-        // </Space>
       ),
     },
   ];
