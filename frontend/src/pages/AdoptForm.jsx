@@ -18,9 +18,10 @@ import appConfig from "../../config.json";
 const BASE_URL = appConfig.apiBasePath;
 
 function AdoptForm() {
+  const user = SecureStore.getItem("userToken");
+  const USER_NAME = user.name;
   const { name, id } = useParams();
   const navigateTo = useNavigate();
-  const user = SecureStore.getItem("userToken");
   const [errors, setErrors] = useState({});
   const [prov, setProv] = useState([]);
   const [citymunOptions, setCitymunOptions] = useState([]);
@@ -80,6 +81,10 @@ function AdoptForm() {
 
   const [values, setValues] = useState({
     id: uuidv4(),
+    // Access to backend only
+    user_name: user.name,
+    user_email: user.email,
+    // End
     rabbit_id: id,
     date: dateToday,
     phone: "",
@@ -96,6 +101,7 @@ function AdoptForm() {
     agprod: null,
     agprodprice: 0,
   });
+
   const handleInput = (e) => {
     setValues((prev) => ({ ...prev, [e.target.name]: [e.target.value] }));
   };
@@ -141,7 +147,7 @@ function AdoptForm() {
       <Navbar />
       <div className="form-div">
         <div className="thumbnail">
-          <h4>Adoption Application</h4>
+          <h4>Adoption Application </h4>
         </div>
         <form encType="multipart/form-data">
           <p>

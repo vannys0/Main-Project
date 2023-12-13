@@ -14,6 +14,9 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
+// Random ID
+const randomID = Math.floor(100000 + Math.random() * 900000);
+
 // Email From
 const EMAIL_FROM = "noreply.movaflex@gmail.com";
 
@@ -226,6 +229,32 @@ router.post(
     console.log(req.file);
     const result = JSON.parse(req.body.values);
     console.log(result);
+
+    const adoption_id = `adoption${randomID}`;
+
+    const userName = result.user_name;
+    const userEmail = result.user_email;
+
+    const emailOptions = {
+      from: EMAIL_FROM,
+      to: userEmail,
+      subject: "Pending Adoption Request Status Inquiry",
+      text: `Hi Admin,
+      \n\nA new adoption request requires your attention. ${userName} has submitted an adoption request for rabbit Id ${result.rabbit_id}. Please review the details and progress accordingly.
+      \n\nBest regards,
+      \nE-Leporidae`,
+    };
+
+    transporter.sendMail(emailOptions, (error, info) => {
+      if (error) {
+        console.log(error);
+        return res.json("Error sending confirmation email");
+      } else {
+        console.log("Confirmation Email sent: " + info.response);
+        console.log("Successfully inserted.");
+        return res.json(results);
+      }
+    });
 
     const values = [
       result.id,
