@@ -98,6 +98,10 @@ function Application() {
               <p>{rowData.id}</p>
             </div>
             <div className="d-flex justify-content-between">
+              <p>Rabbit ID</p>
+              <p>{rowData.rabbit_id}</p>
+            </div>
+            <div className="d-flex justify-content-between">
               <p>Adoption Date</p>
               <p>{rowData.adoption_date}</p>
             </div>
@@ -120,9 +124,21 @@ function Application() {
               <p>{rowData.service_option}</p>
             </div>
             <div className="d-flex justify-content-between">
-              <p>Rabbit ID</p>
-              <p>{rowData.rabbit_id}</p>
+              <p>Mode of payment</p>
+              <p>{rowData.mode_of_payment}</p>
             </div>
+            {rowData.mode_of_payment === "Agriculture" ? (
+              <>
+                <div className="d-flex justify-content-between">
+                  <p>Agricultural Product</p>
+                  <p>{rowData.agriculture_product}</p>
+                </div>
+                <div className="d-flex justify-content-between">
+                  <p>Product price</p>
+                  <p>{rowData.agriculture_product_price}</p>
+                </div>
+              </>
+            ) : null}
             <div className="d-flex justify-content-between">
               <p>Adoption Fee</p>
               <p>{rowData.price}</p>

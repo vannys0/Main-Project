@@ -116,14 +116,37 @@ router.put("/approve-delivery/:id", (req, res) => {
 });
 
 router.put("/decline-adoption/:id", (req, res) => {
-  const sql =
-    "UPDATE adoption SET `adoption_status` = ?, `comment` = ?  WHERE id = ?";
+  const sql = "UPDATE adoption SET `adoption_status` = ? WHERE id = ?";
   const values = ["Declined"];
   const id = req.params.id;
-  const comment = req.body.comment;
-  console.log(comment);
+  const user_name = req.body.user_name;
+  const user_email = req.body.user_email;
+  const declineReason =
+    "We are sorry, but your adoption request has been declined.";
+  const someText = "Please contact us for further information or to reapply.";
 
-  db.query(sql, [...values, comment, id], (err, data) => {
+  const emailOptions = {
+    from: EMAIL_FROM,
+    to: user_email,
+    subject: "Application Declined",
+    text: `Hi ${user_name},
+    \n\n${declineReason} ${someText}
+    \n\nThank you,
+    \nE-Leporidae`,
+  };
+
+  transporter.sendMail(emailOptions, (error, info) => {
+    if (error) {
+      console.log(error);
+      return res.json("Error sending confirmation email");
+    } else {
+      console.log("Confirmation Email sent: " + info.response);
+      console.log("Successfully inserted.");
+      return res.json(results);
+    }
+  });
+
+  db.query(sql, [...values, id], (err, data) => {
     if (err) {
       return res.json("Error");
     }

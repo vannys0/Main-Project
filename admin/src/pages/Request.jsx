@@ -40,7 +40,7 @@ function Request() {
   };
 
   const onApprove = (e, o) => {
-    fetchUserData(o) // Fetch userData within onApprove function
+    fetchUserData(o)
       .then((userData) => {
         Swal.fire({
           title: "Are you sure?",
@@ -77,34 +77,37 @@ function Request() {
   };
 
   const onDecline = (e, o) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You want to decline this request?",
-      input: "text",
-      inputPlaceholder: "Comment",
-      showCancelButton: true,
-      confirmButtonColor: "#d50000",
-      cancelButtonColor: "#797979",
-      confirmButtonText: "Decline",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        axios
-          .put(BASE_URL + "/decline-adoption/" + o.id, {
-            comment: result.value,
-          })
-          .then((res) => {
-            Swal.fire({
-              position: "center",
-              icon: "success",
-              title: "Declined",
-              showConfirmButton: false,
-              timer: 1500,
-            });
-            window.location.reload();
-          })
-          .catch((err) => console.log(err));
-      }
-    });
+    fetchUserData(o)
+      .then((userData) => {
+        Swal.fire({
+          title: "Are you sure?",
+          text: "You want to decline this request?",
+          showCancelButton: true,
+          confirmButtonColor: "#d50000",
+          cancelButtonColor: "#797979",
+          confirmButtonText: "Decline",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            axios
+              .put(`${BASE_URL}/decline-adoption/${o.id}`, {
+                user_name: userData.userName,
+                user_email: userData.userEmail,
+              })
+              .then((res) => {
+                Swal.fire({
+                  position: "center",
+                  icon: "success",
+                  title: "Declined",
+                  showConfirmButton: false,
+                  timer: 1500,
+                });
+                window.location.reload();
+              })
+              .catch((err) => console.log(err));
+          }
+        });
+      })
+      .catch((error) => console.log(error));
   };
 
   useEffect(() => {
@@ -145,7 +148,7 @@ function Request() {
     record.adoption_status === "Pending"
       ? {
           label: (
-            <span type="primary" danger onClick={(e) => onDecline(e, record)}>
+            <span danger onClick={(e) => onDecline(e, record)}>
               Decline
             </span>
           ),
