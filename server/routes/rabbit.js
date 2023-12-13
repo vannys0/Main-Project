@@ -30,7 +30,7 @@ router.post("/add-rabbit", upload.array("files", 5), (req, res) => {
     result.breed,
     result.weight,
     imagePaths,
-    result.breeding_pair_id
+    result.breeding_pair_id,
   ];
 
   db.query(sql, [values], (err, data) => {
@@ -42,24 +42,6 @@ router.post("/add-rabbit", upload.array("files", 5), (req, res) => {
   });
 });
 
-// Try
-router.post("/file", upload.single("file"), (req, res) => {
-  const file = req.file;
-  const value = req.files.filename;
-  const sql = "INSERT INTO try (`try_image`) VALUES (?)";
-  if (file) {
-    res.json(file);
-  } else {
-    res.send("error");
-  }
-  db.query(sql, [value], (err, data) => {
-    if (err) {
-      console.log(err);
-      return res.json("Error");
-    }
-    return res.json(data);
-  });
-});
 // Multiple
 router.post("/multi", upload.array("files", 5), (req, res) => {
   const files = req.files;
@@ -82,27 +64,18 @@ router.post("/multi", upload.array("files", 5), (req, res) => {
   });
 });
 
-//GetMapping
-// router.get("/rabbit", (req, res) => {
-//   db.query("SELECT * FROM rabbit where id = 1", (err, results) => {
-//     if (err) {
-//       console.error("Error fetching rabbit:", err);
-//       res.status(500).json({ error: "Internal Server Error" });
-//       return;
-//     }
-//     return res.json(results);
-//   });
-// });
-
 router.get("/rabbits", (req, res) => {
-  db.query("SELECT * FROM rabbit ORDER BY name", (err, results) => {
-    if (err) {
-      console.error("Error fetching rabbit:", err);
-      res.status(500).json({ error: "Internal Server Error" });
-      return;
+  db.query(
+    "SELECT * FROM rabbit WHERE is_adopted = false ORDER BY rehome_status",
+    (err, results) => {
+      if (err) {
+        console.error("Error fetching rabbit:", err);
+        res.status(500).json({ error: "Internal Server Error" });
+        return;
+      }
+      return res.json(results);
     }
-    return res.json(results);
-  });
+  );
 });
 
 // Get male rabbit
@@ -227,7 +200,6 @@ router.get("/get_sex", (req, res) => {
 //     return res.json(results);
 //   });
 // });
-
 
 router.get("/rabbit/:id", (req, res) => {
   const id = req.params.id;

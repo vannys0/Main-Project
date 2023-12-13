@@ -14,9 +14,25 @@ router.put("/delivered", (req, res) => {
       if (err) {
         console.error(err);
         return res.status(500).send(err);
+      } else {
+        const is_adopted = true;
+        const rabbit_id = req.body.rabbit_id;
+
+        db.query(
+          "UPDATE rabbit SET is_adopted = ? WHERE id = ?",
+          [is_adopted, rabbit_id],
+          (err, result) => {
+            if (err) {
+              return res.send(err);
+            }
+
+            console.log("Inserted into database:", result);
+            return res
+              .status(200)
+              .json({ message: "Transaction updated successfully!", result });
+          }
+        );
       }
-      console.log("Inserted into database:", result);
-      return res.status(200).send("Inserted successfully");
     }
   );
 });

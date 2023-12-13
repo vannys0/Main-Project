@@ -48,14 +48,14 @@ function Delivery() {
       .catch((err) => console.log(err));
   };
 
-  const onDelivered = (id) => {
+  const onDelivered = (id, rabbit_id) => {
     const payload = {
       id: uuidv4(),
       adoption_id: id,
       transaction_date: new Date().toISOString(),
       transaction_status: "Completed",
+      rabbit_id: rabbit_id,
     };
-
     Swal.fire({
       title: "Are you sure?",
       text: "you want to confirm delivery?",
@@ -89,7 +89,11 @@ function Delivery() {
         },
     record.delivery_status === "Approved"
       ? {
-          label: <span onClick={() => onDelivered(record.id)}>Delivered</span>,
+          label: (
+            <span onClick={() => onDelivered(record.id, record.rabbit_id)}>
+              Delivered
+            </span>
+          ),
           key: "1",
         }
       : {
@@ -149,26 +153,6 @@ function Delivery() {
           </a>
         </Dropdown>
       ),
-      // render: (text, record) =>
-      //   record.delivery_status === "Approved" ? (
-      //     <div className="d-flex gap-2">
-      //       <Button type="primary" disabled>
-      //         Deliver
-      //       </Button>
-      //       <Button type="primary" onClick={() => onDelivered(record.id)}>
-      //         Delivered
-      //       </Button>
-      //     </div>
-      //   ) : (
-      //     <div className="d-flex gap-2">
-      //       <Button type="primary" onClick={(e) => onApprove(e, record)}>
-      //         Deliver
-      //       </Button>
-      //       <Button type="primary" disabled>
-      //         Delivered
-      //       </Button>
-      //     </div>
-      //   ),
     },
   ];
 

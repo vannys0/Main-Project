@@ -151,7 +151,10 @@ function AdoptForm() {
         </div>
         <form encType="multipart/form-data">
           <p>
-            Note: Adoption requires an adoption fee of P{JSON.parse(name).price}
+            <em>
+              Note: Adoption requires an adoption fee of P
+              {JSON.parse(name).price}
+            </em>
           </p>
           <label htmlFor="phone">Phone Number</label>
           <input
@@ -258,7 +261,7 @@ function AdoptForm() {
           {mopAgriculture && (
             <div>
               <label htmlFor="agprod" className="label-name">
-                Agricultural Product (Please specify)
+                Agricultural Product <em>(Please specify)</em>
               </label>
               <input
                 type="text"
@@ -268,7 +271,7 @@ function AdoptForm() {
               />
 
               <label htmlFor="agprodprice" className="label-name">
-                Product estimated amount
+                Product estimated amount <em>(Php)</em>
               </label>
               <input
                 type="number"
@@ -319,14 +322,15 @@ function AdoptForm() {
           {errors.reason && <span className="error">{errors.reason}</span>}
 
           <br />
-          <label htmlFor="otherpets">Other pets</label>
+          <label htmlFor="otherpets">
+            Other pets <em>(Optional)</em>
+          </label>
           <textarea
             name="otherpets"
             rows={2}
             cols={100}
             className="form-control"
             onChange={handleInput}
-            placeholder="Optional"
           />
 
           <div className="d-flex justify-content-end gap-2 my-4">

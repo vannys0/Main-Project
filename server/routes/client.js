@@ -198,7 +198,7 @@ function verifyToken(req, res, next) {
 // Adopt
 router.get("/adopt", (req, res) => {
   db.query(
-    "SELECT * FROM rabbit WHERE rehome_status = 'Rehome'",
+    "SELECT * FROM rabbit WHERE rehome_status = 'Rehome' AND is_adopted = false",
     (err, results) => {
       if (err) {
         console.error("Error fetching rabbits:", err);
