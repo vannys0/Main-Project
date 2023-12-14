@@ -17,7 +17,6 @@ import { NavLink, Link, useNavigate, useParams } from "react-router-dom";
 import { AiOutlineClose } from "react-icons/ai";
 import "./Sidebar.css";
 import Logo from "../images/logo.png";
-import { AuthContext } from "../App";
 import { Avatar } from "antd";
 import { UserOutlined, UploadOutlined } from "@ant-design/icons";
 import { RiPassPendingLine } from "react-icons/ri";
@@ -30,7 +29,6 @@ const BASE_URL = appConfig.apiBasePath;
 
 function Sidebar({ openSidebarToggle, OpenSidebar }) {
   const user = SecureStore.getItem("userToken");
-  const authContext = useContext(AuthContext);
   const navigateTo = useNavigate();
   const [userInfo, setUserInfo] = useState([]);
   const hasProfileImage = userInfo && userInfo.profile;

@@ -5,7 +5,6 @@ const multer = require("multer");
 
 const EMAIL_FROM = "noreply.movaflex@gmail.com";
 
-//nodemailer sending email
 const nodemailer = require("nodemailer");
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
@@ -27,7 +26,6 @@ router.post("/send-email", (req, res) => {
     subject: subject,
     text: message,
   };
-  // transporter.sendMail(mailOption); //without callback
   transporter.sendMail(mailOption, function (error, info) {
     if (error) {
       console.log(error);
@@ -36,7 +34,6 @@ router.post("/send-email", (req, res) => {
     }
   });
 });
-// end of nodemailer sending email
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -88,10 +85,11 @@ router.post("/login", (req, res) => {
   );
 });
 
-// Sign up
 router.post("/register", (req, res) => {
+  let randomID = Math.floor(100000 + Math.random() * 900000);
+  const id = `user${randomID}`;
   const values = [
-    req.body.id,
+    id,
     req.body.fullname,
     req.body.email,
     req.body.password,
@@ -107,7 +105,6 @@ router.post("/register", (req, res) => {
   });
 });
 
-// Clients.jsx
 router.get("/clients", (req, res) => {
   db.query("SELECT * FROM user ORDER BY user_type", (err, results) => {
     if (err) {
@@ -153,7 +150,6 @@ router.post(
   }
 );
 
-// ADMIN PROFILE
 router.get("/get_user_info/:id", (req, res) => {
   const id = req.params.id;
   db.query("SELECT * FROM user WHERE id = ?", [id], (err, results) => {

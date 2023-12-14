@@ -4,7 +4,6 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/footer";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Form } from "react-bootstrap";
-import { v4 as uuidv4 } from "uuid";
 import { Button } from "antd";
 import Swal from "sweetalert2";
 import Validation from "./Validation/AdoptFormValidation";
@@ -50,7 +49,7 @@ function AdoptForm() {
   }, []);
   const handleProvinceChange = (e) => {
     setValues((prev) => ({ ...prev, province: selectedProvCode }));
-    const selectedProvCode = JSON.parse(e.target.value); //object
+    const selectedProvCode = JSON.parse(e.target.value);
     console.log(selectedProvCode);
 
     if (selectedProvCode) {
@@ -80,7 +79,6 @@ function AdoptForm() {
   };
 
   const [values, setValues] = useState({
-    id: uuidv4(),
     // Access to backend only
     user_name: user.name,
     user_email: user.email,

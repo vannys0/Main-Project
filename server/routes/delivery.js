@@ -3,13 +3,14 @@ const router = express.Router();
 const db = require("../config/db");
 
 router.put("/delivered", (req, res) => {
-  const { id, adoption_id, transaction_date, transaction_status } = req.body;
-
+  let randomID = Math.floor(100000 + Math.random() * 900000);
+  const id = `transaction${randomID}`;
+  const { adoption_id, transaction_date, transaction_status } = req.body;
   const values = [id, adoption_id, transaction_date, transaction_status];
 
   db.query(
-    "INSERT INTO transaction (`id`, `adoption_id`, `transaction_date`, `transaction_status`) VALUES (?, ?, ?, ?)",
-    values,
+    "INSERT INTO transaction (`id`, `adoption_id`, `transaction_date`, `transaction_status`) VALUES (?)",
+    [values],
     (err, result) => {
       if (err) {
         console.error(err);
@@ -23,7 +24,7 @@ router.put("/delivered", (req, res) => {
           [is_adopted, rabbit_id],
           (err, result) => {
             if (err) {
-              return res.send(err);
+              return res.status(500).send(err);
             }
 
             console.log("Inserted into database:", result);

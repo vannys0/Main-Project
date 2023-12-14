@@ -2,10 +2,8 @@ const express = require("express");
 const router = express.Router();
 const db = require("../config/db");
 
-// Email From
 const EMAIL_FROM = "noreply.movaflex@gmail.com";
 
-//nodemailer sending email
 const nodemailer = require("nodemailer");
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
@@ -32,7 +30,6 @@ router.get("/adoption/:id", (req, res) => {
   });
 });
 
-// All Adoption Request
 router.get("/adoptions", (req, res) => {
   db.query(
     "SELECT a.*, u.name, u.email FROM adoption AS a LEFT JOIN user AS u ON a.user_id = u.id ORDER BY adoption_status DESC, adoption_date DESC",
@@ -47,10 +44,9 @@ router.get("/adoptions", (req, res) => {
   );
 });
 
-// Adoption Request Deliver Option
 router.get("/adoptions-deliver", (req, res) => {
   db.query(
-    "SELECT a.*, u.name AS user_name FROM adoption AS a LEFT JOIN user AS u ON a.user_id = u.id WHERE a.id NOT IN (SELECT adoption_id FROM transaction) ORDER BY delivery_status DESC",
+    "SELECT a.*, u.name AS user_name FROM adoption AS a LEFT JOIN user AS u ON a.user_id = u.id WHERE a.id NOT IN (SELECT adoption_id FROM transaction) AND a.adoption_status = 'Approved' ORDER BY delivery_status DESC",
     (err, results) => {
       if (err) {
         console.error("Error fetching:", err);
@@ -62,7 +58,6 @@ router.get("/adoptions-deliver", (req, res) => {
   );
 });
 
-// Approve Adoption
 router.put("/approve-adoption/:id", (req, res) => {
   const sql = "UPDATE adoption SET `adoption_status` = ? WHERE id = ?";
   const values = ["Approved"];
@@ -101,7 +96,6 @@ router.put("/approve-adoption/:id", (req, res) => {
   });
 });
 
-// Approver Deliver
 router.put("/approve-delivery/:id", (req, res) => {
   const sql = "UPDATE adoption SET `delivery_status` = ? WHERE id = ?";
   const values = ["Approved"];

@@ -165,6 +165,11 @@ function Request() {
 
   const columns = [
     {
+      title: "Adoption Id",
+      dataIndex: "id",
+      key: "id",
+    },
+    {
       title: "Address",
       key: "address",
       render: (text, record) => (
@@ -198,11 +203,6 @@ function Request() {
           )}
         </span>
       ),
-    },
-    {
-      title: "Comment",
-      dataIndex: "comment",
-      key: "comment",
     },
     {
       title: "SGA",

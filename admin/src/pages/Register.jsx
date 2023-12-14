@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import "./Login_Signup.css";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { v4 as uuidv4 } from "uuid";
 import { Button } from "antd";
 import personalization from "../images/personalization.svg";
 import appConfig from "../../config.json";
@@ -11,7 +10,6 @@ const BASE_URL = appConfig.apiBasePath;
 const Register = () => {
   const navigateTo = useNavigate();
   const [values, setValues] = useState({
-    id: uuidv4(),
     fullname: "",
     email: "",
     password: "",

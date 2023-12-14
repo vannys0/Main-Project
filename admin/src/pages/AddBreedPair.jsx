@@ -6,7 +6,6 @@ import { Form } from "react-bootstrap";
 import { Html5QrcodeScanner } from "html5-qrcode";
 import axios from "axios";
 import { Button } from "antd";
-import { v4 as uuidv4 } from "uuid";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { RiContactsBookLine } from "react-icons/ri";
@@ -154,7 +153,6 @@ function BreedPair() {
       if (result.isConfirmed) {
         axios
           .post(BASE_URL + "/pair-rabbit", {
-            id: uuidv4(),
             male_rabbit_id: scanResult,
             female_rabbit_id: scanResult1,
             note: result.value,

@@ -4,17 +4,13 @@ import { Link, useNavigate, useParams, useLocation } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import axios from "axios";
-import { Form } from "react-bootstrap";
-import { v4 as uuidv4 } from "uuid";
-import { Input, DatePicker, Select, Button, Upload, InputNumber } from "antd";
-import ImgCrop from "antd-img-crop";
+import { Input, DatePicker, Select, Button, InputNumber } from "antd";
 import Swal from "sweetalert2";
-import appConfig from "../../config.json";
-const BASE_URL = appConfig.apiBasePath; //e.g "http://localhost:8080/api"
 import { rabbitColor } from "./API/RabbitApi";
+import appConfig from "../../config.json";
+const BASE_URL = appConfig.apiBasePath;
 
 function AddBreedingChild() {
-
   const { id } = useParams();
   const state = useLocation().state;
 
@@ -28,7 +24,6 @@ function AddBreedingChild() {
   const [imgError, setImgError] = useState(null);
   const [msgError, setMsgError] = useState({});
   const [values, setValues] = useState({
-    id: uuidv4(),
     name: "",
     dateOfBirth: "",
     sex: "",
@@ -36,11 +31,10 @@ function AddBreedingChild() {
     color: "",
     type: "",
     weight: "",
-    breeding_pair_id: state.adoption.id
+    breeding_pair_id: state.adoption.id,
   });
 
   const [selectedFiles, setSelectedFiles] = useState(null);
-
 
   const onFileChange = (e) => {
     const files = e.target.files;
@@ -159,8 +153,6 @@ function AddBreedingChild() {
                 <span className="error-message">{msgError.name}</span>
               )}
             </div>
-
-            
           </div>
           <div>
             <label>Date of birth :</label>
@@ -197,7 +189,6 @@ function AddBreedingChild() {
           <div>
             <label>Breed Type :</label>
             <div>
-      
               <Select
                 style={{ width: "100%" }}
                 placeholder="Breed"
@@ -209,7 +200,6 @@ function AddBreedingChild() {
                     {breed}
                   </Select.Option>
                 ))}
-             
               </Select>
               {msgError.breed && (
                 <span className="error-message">{msgError.breed}</span>
@@ -264,15 +254,6 @@ function AddBreedingChild() {
                 placeholder="kilograms"
                 onChange={(value) => handleInputSelect("weight", value)}
               />
-              {/* <input
-                type="number"
-                name="weight"
-                step="0.1"
-                maxLength={3}
-                className="form-control"
-                onChange={handleInput}
-                required
-              /> */}
               {msgError.weight && (
                 <span className="error-message">{msgError.weight}</span>
               )}

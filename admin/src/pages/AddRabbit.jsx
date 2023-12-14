@@ -4,14 +4,11 @@ import { Link, useNavigate } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import axios from "axios";
-import { Form } from "react-bootstrap";
-import { v4 as uuidv4 } from "uuid";
 import { Input, DatePicker, Select, Button, Upload, InputNumber } from "antd";
-import ImgCrop from "antd-img-crop";
 import Swal from "sweetalert2";
 import { breedType, rabbitColor } from "./API/RabbitApi";
 import appConfig from "../../config.json";
-const BASE_URL = appConfig.apiBasePath; //e.g "http://localhost:8080/api"
+const BASE_URL = appConfig.apiBasePath;
 
 function AddRabbit() {
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false);
@@ -24,7 +21,6 @@ function AddRabbit() {
   const [imgError, setImgError] = useState(null);
   const [msgError, setMsgError] = useState({});
   const [values, setValues] = useState({
-    id: uuidv4(),
     name: "",
     dateOfBirth: "",
     sex: "",
@@ -252,15 +248,6 @@ function AddRabbit() {
                 placeholder="kilograms"
                 onChange={(value) => handleInputSelect("weight", value)}
               />
-              {/* <input
-                type="number"
-                name="weight"
-                step="0.1"
-                maxLength={3}
-                className="form-control"
-                onChange={handleInput}
-                required
-              /> */}
               {msgError.weight && (
                 <span className="error-message">{msgError.weight}</span>
               )}

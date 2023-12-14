@@ -13,15 +13,16 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-//PostMapping
 router.post("/add-rabbit", upload.array("files", 5), (req, res) => {
   const result = JSON.parse(req.body.values);
   console.log(result);
   const imagePaths = req.files.map((file) => file.filename).join();
   const sql =
     "INSERT INTO rabbit (`id`, `name`, `date_of_birth`, `sex`, `rabbit_type`, `color`, `breed_type`,  `weight`, `image_path`, `breeding_pair_id`) VALUES (?)";
+  let randomID = Math.floor(100000 + Math.random() * 900000);
+  const id = `rabbit${randomID}`;
   const values = [
-    result.id,
+    id,
     result.name,
     result.dateOfBirth,
     result.sex,
@@ -42,7 +43,6 @@ router.post("/add-rabbit", upload.array("files", 5), (req, res) => {
   });
 });
 
-// Multiple
 router.post("/multi", upload.array("files", 5), (req, res) => {
   const files = req.files;
   const result = JSON.parse(req.body.values);
@@ -78,30 +78,6 @@ router.get("/rabbits", (req, res) => {
   );
 });
 
-// Get male rabbit
-router.get("/rabbit/male", (req, res) => {
-  db.query(`SELECT * FROM rabbit WHERE sex = "male"`, (err, results) => {
-    if (err) {
-      console.error("Error fetching rabbit:", err);
-      res.status(500).json({ error: "Internal Server Error" });
-      return;
-    }
-    return res.json(results);
-  });
-});
-
-// Get female rabbit
-router.get("/rabbit/female", (req, res) => {
-  db.query(`SELECT * FROM rabbit WHERE sex = "female"`, (err, results) => {
-    if (err) {
-      console.error("Error fetching rabbit:", err);
-      res.status(500).json({ error: "Internal Server Error" });
-      return;
-    }
-    return res.json(results);
-  });
-});
-
 router.get("/edit-rabbit/:id", (req, res) => {
   const id = req.params.id;
   db.query("SELECT * FROM rabbit WHERE id = ?", [id], (err, results) => {
@@ -114,7 +90,6 @@ router.get("/edit-rabbit/:id", (req, res) => {
   });
 });
 
-//PutMapping
 router.put("/update-rabbit/:id", (req, res) => {
   const sql =
     "UPDATE rabbit SET `name` = ?, `date_of_birth` = ?, `sex` = ?, `breed_type` = ?, `color` = ?, `rabbit_type` = ?, `weight` = ? WHERE id = ?";
@@ -151,7 +126,6 @@ router.put("/update-rehome/:id", (req, res) => {
   });
 });
 
-//DeleteMapping
 router.delete("/delete-rabbit/:id", (req, res) => {
   const id = req.params.id;
   db.query("DELETE FROM rabbit WHERE id = ?", [id], (err, result) => {
@@ -162,20 +136,6 @@ router.delete("/delete-rabbit/:id", (req, res) => {
   });
 });
 
-router.post("/upload-file", upload.single("image"), (req, res) => {
-  console.log(req.file.filename);
-  // const sql = "INSERT INTO upload (`image`) VALUES (?)";
-  // const values = [req.file.filename];
-
-  // db.query(sql, [values], (err, data) => {
-  //   if (err) {
-  //     return res.json("Error");
-  //   }
-  //   return res.json(data);
-  // });
-});
-
-//Get Sex scanResult
 router.get("/get_sex", (req, res) => {
   const id = req.query.id;
   db.query("SELECT sex FROM rabbit WHERE id = ?", [id], (err, results) => {
@@ -187,19 +147,6 @@ router.get("/get_sex", (req, res) => {
     return res.json(results);
   });
 });
-
-// Get Sex scanResult1
-// router.get("/get_sex", (req, res) => {
-//   const id = req.query.id;
-//   db.query("SELECT sex FROM rabbit WHERE id = ?", [id], (err, results) => {
-//     if (err) {
-//       console.error("Error fetching rabbit:", err);
-//       res.status(500).json({ error: "Internal Server Error" });
-//       return;
-//     }
-//     return res.json(results);
-//   });
-// });
 
 router.get("/rabbit/:id", (req, res) => {
   const id = req.params.id;

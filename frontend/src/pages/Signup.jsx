@@ -5,9 +5,7 @@ import Validation from "./SignupValidation.jsx";
 import { HiOutlineUser } from "react-icons/hi";
 import { AiOutlineMail } from "react-icons/ai";
 import { RiLockPasswordLine } from "react-icons/ri";
-import { toast } from "react-toastify";
 import axios from "axios";
-import { v4 as uuidv4 } from "uuid";
 import Swal from "sweetalert2";
 import appConfig from "../../config.json";
 const BASE_URL = appConfig.apiBasePath;
@@ -16,7 +14,6 @@ function Signup() {
   const navigate = useNavigate();
   const [errors, setErrors] = useState({});
   const [values, setValues] = useState({
-    id: uuidv4(),
     name: "",
     email: "",
     Password: "",

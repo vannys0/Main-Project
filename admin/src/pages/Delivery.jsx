@@ -6,7 +6,6 @@ import { SlOptionsVertical } from "react-icons/sl";
 import { Table, Button, Pagination, Tag, Dropdown, Space } from "antd";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { v4 as uuidv4 } from "uuid";
 import appConfig from "../../config.json";
 const BASE_URL = appConfig.apiBasePath;
 
@@ -50,7 +49,6 @@ function Delivery() {
 
   const onDelivered = (id, rabbit_id) => {
     const payload = {
-      id: uuidv4(),
       adoption_id: id,
       transaction_date: new Date().toISOString(),
       transaction_status: "Completed",
@@ -58,7 +56,7 @@ function Delivery() {
     };
     Swal.fire({
       title: "Are you sure?",
-      text: "you want to confirm delivery?",
+      text: "Do you want to confirm delivery?",
       showCancelButton: true,
       confirmButtonColor: "#1677ff",
       cancelButtonColor: "#797979",
@@ -104,6 +102,11 @@ function Delivery() {
   ];
 
   const columns = [
+    {
+      title: "Adoption Id",
+      dataIndex: "id",
+      key: "id",
+    },
     {
       title: "Name",
       dataIndex: "user_name",

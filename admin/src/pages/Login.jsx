@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext, createContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Login_Signup.css";
-import Axios from "axios";
+import axios from "axios";
 import * as UserController from "../controller/UserController.jsx";
 import { AuthContext } from "../App";
 import Swal from "sweetalert2";
@@ -11,13 +11,12 @@ import collaborators from "../images/collaborators.svg";
 import coding from "../images/coding.svg";
 import SecureStore from "react-secure-storage";
 import appConfig from "../../config.json";
-const BASE_URL = appConfig.apiBasePath; //e.g "http://localhost:8080/api";
+const BASE_URL = appConfig.apiBasePath;
 
 function Login() {
   const authContext = useContext(AuthContext);
   const user = SecureStore.getItem("userToken");
   const navigateTo = useNavigate();
-  const [passwordVisible, setPasswordVisible] = useState(false);
   const [loginUserName, setLoginUserName] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
   const [loginStatus, setLoginStatus] = useState("");
@@ -42,10 +41,11 @@ function Login() {
       return;
     }
 
-    Axios.post(BASE_URL + "/login", {
-      LoginUserName: loginUserName,
-      LoginPassword: loginPassword,
-    })
+    axios
+      .post(BASE_URL + "/login", {
+        LoginUserName: loginUserName,
+        LoginPassword: loginPassword,
+      })
       .then((response) => {
         const user = response.data[0];
         if (
@@ -72,22 +72,6 @@ function Login() {
           title: "Oops...",
           text: "An error occurred during login. Please try again later.",
         });
-      });
-  }
-
-  function sendEmail(e) {
-    e.preventDefault();
-
-    Axios.post(BASE_URL + "/send-email", {
-      email: "ivanpaglinawan0@gmail.com",
-      subject: "OTP SUBJECT",
-      message: "Here the value for the generated OTP",
-    })
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.error("Error during login:", error);
       });
   }
 
@@ -143,35 +127,6 @@ function Login() {
               <span className="error-message">{passwordError}</span>
             )}
           </div>
-          {/* <Space direction="vertical">
-            <label htmlFor="username" className="email">
-              Email
-            </label>
-            <Input
-              style={{ height: "40px", fontSize: "16px" }}
-              type="text"
-              id="username"
-              name="username"
-              onChange={handleEmailChange}
-            />
-            {emailError && <span className="error-message">{emailError}</span>}
-          </Space>
-          <Space direction="vertical">
-            <label htmlFor="password">Password</label>
-            <Input.Password
-              style={{ display: "flex", height: "40px", fontSize: "16px" }}
-              type="password"
-              id="password"
-              name="password"
-              iconRender={(visible) =>
-                visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-              }
-              onChange={handlePasswordChange}
-            />
-            {passwordError && (
-              <span className="error-message">{passwordError}</span>
-            )}
-          </Space> */}
           <Button
             style={{ margin: "20px 0px 0px 0px", height: "40px" }}
             type="primary"
@@ -180,13 +135,6 @@ function Login() {
           >
             <span className="login-span">Login </span>
           </Button>
-
-          {/* <Button
-            style={{ margin: "20px 0px 0px 0px", height: "40px" }}
-            type="primary"
-            className="btn btn-primary"
-            onClick={sendEmail}
-          >Send Email</Button> */}
           <div>
             Don't have an account? <Link to="/register">Sign up</Link>
           </div>

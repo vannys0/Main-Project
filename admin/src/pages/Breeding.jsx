@@ -162,6 +162,11 @@ function Breeding() {
 
   const columns = [
     {
+      title: "Pair Id",
+      dataIndex: "id",
+      key: "id",
+    },
+    {
       title: "Note",
       dataIndex: "note",
       key: "note",

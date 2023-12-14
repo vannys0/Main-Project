@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   BsFillBellFill,
@@ -9,16 +9,18 @@ import {
 } from "react-icons/bs";
 import { DownOutlined } from "@ant-design/icons";
 import "./Header.css";
-import SecureStore from "react-secure-storage";
 import { Badge, Space, Typography, Dropdown, Avatar } from "antd";
 import Default from "../images/default-profile.png";
 import Swal from "sweetalert2";
 import axios from "axios";
+import SecureStore from "react-secure-storage";
+import { AuthContext } from "../App";
 import appConfig from "../../config.json";
 const BASE_URL = appConfig.apiBasePath;
 
 function Header({ OpenSidebar }) {
   const user = SecureStore.getItem("userToken");
+  const authContext = useContext(AuthContext);
   const navigateTo = useNavigate();
   const [pending, setPending] = useState();
   const [userInfo, setUserInfo] = useState([]);

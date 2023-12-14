@@ -11,16 +11,10 @@ const storage = multer.diskStorage({
     cb(null, file.originalname);
   },
 });
-
 const upload = multer({ storage: storage });
 
-// Random ID
-const randomID = Math.floor(100000 + Math.random() * 900000);
-
-// Email From
 const EMAIL_FROM = "noreply.movaflex@gmail.com";
 
-//nodemailer sending email
 const nodemailer = require("nodemailer");
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
@@ -35,31 +29,9 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-// router.post("/send-email", (req, res) => {
-//   const { email, subject, message } = req.body;
-//   console.log(email, subject, message);
-
-//   var mailOption = {
-//     from: EMAIL_FROM,
-//     to: email,
-//     subject: subject,
-//     text: message,
-//   };
-//   // transporter.sendMail(mailOption); //without callback
-//   transporter.sendMail(mailOption, function (error, info) {
-//     if (error) {
-//       console.log(error);
-//     } else {
-//       console.log(info);
-//     }
-//   });
-// });
-// end of nodemailer sending email
-
 router.post("/signup", (req, res) => {
-  const { email, subject, id, name, password, user_type } = req.body;
-
-  const otp = Math.floor(Math.random() * 9000) + 1000;
+  const { email, subject, name, password, user_type } = req.body;
+  const otp = Math.floor(100000 + Math.random() * 900000);
 
   const mailOptions = {
     from: EMAIL_FROM,
@@ -86,14 +58,13 @@ router.post("/signup", (req, res) => {
 
           const insertUserQuery =
             "INSERT INTO user (`id`, `name`, `email`, `password`, `user_type`, `otp`, `is_verified`) VALUES (?, ?, ?, ?, ?, ?, ?)";
-
+          let randomID = Math.floor(100000 + Math.random() * 900000);
+          const id = `user${randomID}`;
           const values = [id, name, email, password, user_type, otp, false];
-
           db.query(insertUserQuery, values, (err, data) => {
             if (err) {
               return res.status(500).json("Error creating user");
             }
-
             return res.json(data);
           });
         }
@@ -122,10 +93,8 @@ const getStoredVerificationCode = (verificationCode) => {
   });
 };
 
-// Verify OTP
 router.post("/verify-otp", async (req, res) => {
   const { verificationCode } = req.body;
-
   try {
     const userWithVerificationCode = await getStoredVerificationCode(
       verificationCode
@@ -140,7 +109,7 @@ router.post("/verify-otp", async (req, res) => {
             .status(500)
             .json("Error updating user verification status");
         }
-        userWithVerificationCode.is_verified = 1; //update user is_verified from 0 to 1
+        userWithVerificationCode.is_verified = 1;
         return res.json(userWithVerificationCode);
       }
     );
@@ -172,15 +141,12 @@ router.post("/login-client", (req, res) => {
   });
 });
 
-// Protected route example
 router.get("/protected", verifyToken, (req, res) => {
   res.json({ message: "This is a protected route", user: req.user });
 });
 
-// Middleware function to verify the JWT token
 function verifyToken(req, res, next) {
   const token = req.headers.authorization;
-
   if (!token) {
     return res.status(401).json({ message: "No token provided" });
   }
@@ -189,13 +155,11 @@ function verifyToken(req, res, next) {
     if (err) {
       return res.status(401).json({ message: "Invalid token" });
     }
-
     req.user = decoded;
     next();
   });
 }
 
-// Adopt
 router.get("/adopt", (req, res) => {
   db.query(
     "SELECT * FROM rabbit WHERE rehome_status = 'Rehome' AND is_adopted = false",
@@ -210,7 +174,6 @@ router.get("/adopt", (req, res) => {
   );
 });
 
-// Rabbit Data
 router.get("/rabbitdata/:id", (req, res) => {
   const sql = "SELECT * FROM rabbit WHERE id = ?";
   const id = req.params.id;
@@ -220,7 +183,6 @@ router.get("/rabbitdata/:id", (req, res) => {
   });
 });
 
-//Adopt Form
 router.post(
   "/rabbitdata/:id/adopt-form",
   upload.single("image"),
@@ -229,8 +191,6 @@ router.post(
     console.log(req.file);
     const result = JSON.parse(req.body.values);
     console.log(result);
-
-    const adoption_id = `adoption${randomID}`;
 
     const userName = result.user_name;
     const userEmail = result.user_email;
@@ -256,8 +216,10 @@ router.post(
       }
     });
 
+    let randomID = Math.floor(100000 + Math.random() * 900000);
+    const id = `adoption${randomID}`;
     const values = [
-      result.id,
+      id,
       result.rabbit_id,
       result.date,
       result.phone,
@@ -289,7 +251,6 @@ router.post(
   }
 );
 
-// routerlication list
 router.get("/myrouterlication", (req, res) => {
   db.query("SELECT * FROM adoption", (err, result) => {
     if (err) {
@@ -301,7 +262,6 @@ router.get("/myrouterlication", (req, res) => {
   });
 });
 
-// Delete routerlication
 router.delete("/delete_routerlication/:id", (req, res) => {
   const id = req.params.id;
   db.query("DELETE FROM adoption WHERE id = ?", [id], (err, result) => {
@@ -353,7 +313,6 @@ router.post("/upload_profile/:id", upload.single("file"), (req, res) => {
   );
 });
 
-// Get user
 router.get("/get_user/:id", (req, res) => {
   const id = req.params.id;
   db.query("SELECT * FROM user WHERE `id` = ?", [id], (err, result) => {

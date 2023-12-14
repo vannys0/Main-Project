@@ -16,8 +16,10 @@ router.get("/breeding", (req, res) => {
 router.post("/pair-rabbit", (req, res) => {
   const sql =
     "INSERT INTO breeding_pair (`id`, `buck_id`, `doe_id`, `note`, `pairing_date`, `expected_due_date` ) VALUES (?)";
+  let randomID = Math.floor(100000 + Math.random() * 900000);
+  const id = `pair${randomID}`;
   const values = [
-    req.body.id,
+    id,
     req.body.male_rabbit_id,
     req.body.female_rabbit_id,
     req.body.note,
