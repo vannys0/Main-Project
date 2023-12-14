@@ -1,8 +1,6 @@
 import React from "react";
 import Navbar from "../components/Navbar.jsx";
 import "./style.css";
-import { Link } from "react-router-dom";
-import Rabbit from "../images/rabbit-about.png";
 import Footer from "../components/footer.jsx";
 
 function About() {
@@ -23,11 +21,10 @@ function About() {
             <br />
             creatures and ensuring that they find their forever homes.
           </p>
-          <br />
         </div>
         <div className="content">
           <h4>Our Goal</h4>
-          <br />
+
           <h5>Find a happy home for rabbits.</h5>
           <p>
             The goal is to secure a contented and suitable residence for
@@ -73,16 +70,14 @@ function About() {
             rabbit lovers in a supportive and caring community dedicated to
             enhancing the lives of these endearing animals.
           </p>
-          <br />
         </div>
         <div className="content">
           <h4 className="visit-us">Visit Us</h4>
-          <br />
+
           <h5>Visit our farm at:</h5>
           <h5>Concepcion, Libmanan, Camarines Sur, Philippines</h5>
           <p>Look for Mr. Leonardo Nogra</p>
         </div>
-        <img src={Rabbit} alt="" className="rabbit-about" />
       </div>
       <Footer />
     </div>

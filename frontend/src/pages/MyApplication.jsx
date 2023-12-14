@@ -92,12 +92,6 @@ function MyApplication() {
       },
     },
     {
-      title: "Comment",
-      dataIndex: "comment",
-      key: "comment",
-      width: 100,
-    },
-    {
       title: "Actions",
       key: "action",
       render: (text, record) => (

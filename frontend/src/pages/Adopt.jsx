@@ -5,7 +5,7 @@ import "./style.css";
 import axios from "axios";
 import RabbitData from "./RabbitData.jsx";
 import Footer from "../components/footer.jsx";
-import { Input } from "antd";
+import { Input, Image, Avatar } from "antd";
 import AboutRabbit from "./AboutRabbit.jsx";
 import { Link, useNavigate } from "react-router-dom";
 import appConfig from "../../config.json";
@@ -15,6 +15,12 @@ function Adopt() {
   const [rabbits, setRabbits] = useState([]);
   const [record, setRecord] = useState([]);
   const navigateTo = useNavigate();
+
+  const handleNavigate = (record) => {
+    navigateTo(`/rabbit_details/${record.id}`, {
+      state: { data },
+    });
+  };
 
   useEffect(() => {
     axios
@@ -56,36 +62,67 @@ function Adopt() {
         <div className="rabbitList">
           {record.length > 0 ? (
             record.map((data, i) => (
-              <Card
-                key={i}
-                style={{
-                  width: "100%",
-                  borderRadius: "0",
-                  boxShadow:
-                    "rgba(99, 99, 99, 0.2) 0px 2px 4px 0px, rgba(99, 99, 99, 0.1) 0px -2px 8px 0px",
-                }}
-              >
-                <Card.Img
-                  style={{
-                    width: "100%",
-                    alignSelf: "center",
-                    borderRadius: "0",
-                  }}
-                  variant="top"
-                  src={`http://localhost:8081/uploads/${data.image_path
-                    .split(",")[0]
-                    .trim()}`}
-                  height={250}
-                  alt="No Image"
+              // <Card
+              //   key={i}
+              //   style={{
+              //     width: "100%",
+              //     borderRadius: "0",
+              //     boxShadow:
+              //       "rgba(99, 99, 99, 0.2) 0px 2px 4px 0px, rgba(99, 99, 99, 0.1) 0px -2px 8px 0px",
+              //   }}
+              // >
+              //   <Card.Img
+              //     style={{
+              //       width: "100%",
+              //       alignSelf: "center",
+              //       borderRadius: "0",
+              //     }}
+              //     variant="top"
+              // src={`http://localhost:8081/uploads/${data.image_path
+              //   .split(",")[0]
+              //   .trim()}`}
+              //     height={250}
+              //     alt="No Image"
+              //   />
+              //   <Card.Body>
+              //     <Card.Text></Card.Text>
+              //     <AboutRabbit data={data} />
+              //   </Card.Body>
+              // </Card>
+              <div key={i} className="w-100 d-flex gap-3 p-2">
+                <Avatar
+                  style={{ borderRadius: "0" }}
+                  shape="square"
+                  size={160}
+                  src={
+                    <Image
+                      loading="lazy"
+                      src={`http://localhost:8081/uploads/${data.image_path
+                        .split(",")[0]
+                        .trim()}`}
+                    />
+                  }
                 />
-                <Card.Body>
-                  <Card.Text></Card.Text>
-                  <AboutRabbit data={data} />
-                </Card.Body>
-              </Card>
+                <div className="d-flex flex-column gap-1">
+                  <h4>{data.name}</h4>
+                  <span>{data.breed_type}</span>
+                  <span>{data.color}</span>
+                  <span>{data.sex}</span>
+                  <Link to={`/rabbit_details/${data.id}`} state={{ data }}>
+                    View Details
+                  </Link>
+                </div>
+              </div>
             ))
           ) : (
-            <div>
+            <div
+              style={{
+                display: "flex",
+                width: "100%",
+                height: "70dvh",
+                backgroundColor: "#fff",
+              }}
+            >
               <h2>No rabbits found</h2>
             </div>
           )}

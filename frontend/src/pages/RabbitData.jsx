@@ -1,76 +1,170 @@
 import React, { useState, useEffect } from "react";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
-import AdoptForm from "./AdoptForm";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import Navbar from "../components/Navbar";
+import Footer from "../components/footer";
 import axios from "axios";
 import "./style.css";
-import { Link, useParams } from "react-router-dom";
-import Rabbit from "../images/rabbit-contact.png";
-import Navbar from "../components/Navbar";
-import { IoIosArrowRoundBack } from "react-icons/io";
+import { Avatar, Image, Button } from "antd";
+import { Carousel } from "react-bootstrap";
 
 function RabbitData() {
-  const { id } = useParams();
-  console.log(id);
-  const [rabbits, setRabbits] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:8081/rabbitdata/" + id)
-      .then((res) => {
-        console.log(res);
-        setRabbits(res.data[0]);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+  const navigateTo = useNavigate();
+  const location = useLocation();
+  const { state } = location;
+  const data = state && state.data;
 
   return (
     <div className="main-div">
       <Navbar />
       <div className="rabbit-data-div">
-        <div className="cards">
-          <h2>About {rabbits.name}</h2>
-          <div>
-            <Link to="/adopt" className="back">
-              <IoIosArrowRoundBack className="icons" /> Back
-            </Link>
-          </div>
-          <div className="img-div">
-            <img variant="top" src={Rabbit} /> <br />
-          </div>
-          <div className="cards-body">
-            <div className="cards-title">{rabbits.name}</div>
-            <div className="cards-text">
-              <h5>Hi, I'm {rabbits.name} and I am looking for a new home. </h5>
-              <br />
-              <div className="data-div">
+        <div className="thumbnail">
+          <h5>Rabbit Details</h5>
+        </div>
+        {data && (
+          <div className="rabbit-container">
+            <div className="rabbit-info">
+              <Carousel>
+                {data.image_path.split(",").map((image, index) => (
+                  <Carousel.Item key={index}>
+                    <Image
+                      src={`http://localhost:8081/uploads/${image.trim()}`}
+                    />
+                  </Carousel.Item>
+                ))}
+              </Carousel>
+              <div className="rabbit_details">
+                <h4>
+                  Hi, my name is {data.name} and I am looking for a new home.
+                </h4>
                 <div>
-                  <h5>Rabbit Id</h5>
-                  <h5>Breed</h5>
-                  <h5>Sex</h5>
-                  <h5>Age</h5>
-                  <h5>Weight</h5>
+                  <h6>Rabbit Id</h6>
+                  <h6>{data.id}</h6>
                 </div>
                 <div>
-                  <h5>: {rabbits.id}</h5>
-                  <h5>: {rabbits.breed}</h5>
-                  <h5>: {rabbits.sex}</h5>
-                  <h5>: {rabbits.age} months</h5>
-                  <h5>: {rabbits.weight} klgs</h5>
+                  <h6>Name</h6>
+                  <h6>{data.name}</h6>
+                </div>
+                <div>
+                  <h6>Sex</h6>
+                  <h6>{data.sex}</h6>
+                </div>
+                <div>
+                  <h6>Breed</h6>
+                  <h6>{data.breed_type}</h6>
+                </div>
+                <div>
+                  <h6>Age</h6>
+                  <h6>Age</h6>
+                </div>
+                <div>
+                  <h6>Color</h6>
+                  <h6>{data.color}</h6>
+                </div>
+                <div>
+                  <h6>Weight</h6>
+                  <h6>{data.weight} klg</h6>
+                </div>
+                <div>
+                  <h6>Rabbit Type</h6>
+                  <h6>{data.rabbit_type}</h6>
+                </div>
+                <div>
+                  <h6>Adoption Fee</h6>
+                  <h6>{data.price}</h6>
                 </div>
               </div>
             </div>
-            <div>
-              <Link
-                to={`/rabbitdata/${rabbits.id}/adopt-form`}
-                className="btn form-control apply-btn"
-              >
-                Apply for Adopt
-              </Link>
-            </div>
+            <Button
+              className="w-100 mt-4"
+              type="primary"
+              onClick={() =>
+                navigateTo(
+                  `/rabbitdata/${JSON.stringify(data)}/${data.id}/adopt-form`
+                )
+              }
+            >
+              Apply for Adoption
+            </Button>
           </div>
-        </div>
+
+          // <div className="d-flex flex-column gap-4">
+          // <Carousel
+          //   style={{
+          //     width: "50%",
+          //     display: "flex",
+          //     alignItems: "center",
+          //     justifyContent: "center",
+          //   }}
+          // >
+          //   {data.image_path.split(",").map((image, index) => (
+          //     <Carousel.Item
+          //       style={{
+          //         display: "flex",
+          //         alignItems: "center",
+          //         justifyContent: "center",
+          //       }}
+          //       key={index}
+          //     >
+          //       <Avatar
+          //         style={{
+          //           display: "flex",
+          //           alignItems: "center",
+          //           justifyContent: "center",
+          //         }}
+          //         shape="square"
+          //         size={300}
+          //         src={
+          //           <Image
+          //             src={`http://localhost:8081/uploads/${image.trim()}`}
+          //           />
+          //         }
+          //       />
+          //     </Carousel.Item>
+          //   ))}
+          // </Carousel>
+
+          //   <div className="data_div">
+          // <div>
+          //   <h6>Rabbit Id</h6>
+          //   <h6>{data.id}</h6>
+          // </div>
+          // <div>
+          //   <h6>Name</h6>
+          //   <h6>{data.name}</h6>
+          // </div>
+          // <div>
+          //   <h6>Sex</h6>
+          //   <h6>{data.sex}</h6>
+          // </div>
+          // <div>
+          //   <h6>Breed</h6>
+          //   <h6>{data.breed_type}</h6>
+          // </div>
+          // <div>
+          //   <h6>Age</h6>
+          //   <h6>Age</h6>
+          // </div>
+          // <div>
+          //   <h6>Color</h6>
+          //   <h6>{data.color}</h6>
+          // </div>
+          // <div>
+          //   <h6>Weight</h6>
+          //   <h6>{data.weight} klg</h6>
+          // </div>
+          // <div>
+          //   <h6>Rabbit Type</h6>
+          //   <h6>{data.rabbit_type}</h6>
+          // </div>
+          // <div>
+          //   <h6>Adoption Fee</h6>
+          //   <h6>{data.price}</h6>
+          // </div>
+          //   </div>
+          // </div>
+        )}
       </div>
+      <Footer />
     </div>
   );
 }

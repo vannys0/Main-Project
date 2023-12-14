@@ -106,7 +106,7 @@ a {
 .adopt-div {
     position: relative;
     width: 50%;
-    padding: 120px 20px 20px 20px;
+    padding: 110px 10px 10px 10px;
 }
 .adopt-div .thumbnail {
     position: absolute;
@@ -148,7 +148,18 @@ a {
 .rabbitList {
     gap: 10px;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
+}
+.rabbitList > div {
+    background-color: bisque;
+}
+.rabbitList > div > div > h4 {
+    color: #0669AC;
+    font-weight: bold;
+    font-family: 'Poppins', sans-serif;
+}
+.rabbitList > div > div > span {
+    font-family: 'Poppins', sans-serif;
 }
 .btn-toHIde {
     display: none;
@@ -286,67 +297,46 @@ a {
 
 /* ABOUT RABBIT */
 .rabbit-data-div {
+    position: relative;
+    padding: 110px 10px 10px 10px;
+}
+.rabbit-data-div .thumbnail {
+    position: absolute;
+    top: 0;
+    left: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-}
-.cards {
-    width: 60%;
-    padding: 20px;
-}
-.back {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    font-size: 14px;
-    color: #111111;
-    margin: 0px 15px 20px 0;
-}
-.back>.icons {
-    width: 20px;
-    font-size: 18px;
-    margin-right: 10px;
-}
-.cards .img-div {
     width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 2px solid #797979;
-    margin-bottom: 20px;
-}
-.cards img {
-    width: 70%;
-    align-content: center;
-}
-.cards-title {
-    font-size: 24px;
-}
-.rabbitDetails div {
-    width: 40%;
-    margin-right: 50px;
-}
-.rabbitData-container div img {
-    margin-bottom: 20px;
-    width: 50%;
-    height: 50%;
-    border: 2px solid #00828c;
-}
-.apply-btn {
-    margin-top: 20px;
-    border: 2px solid #00828c;
-    color: #00828c;
-}
-.apply-btn:hover {
-    border: 2px solid #00828c;
-    background-color: #00828c;
+    height: 100px;
     color: #fff;
+    background-color: #0669AC;
 }
-.data-div {
+.rabbit-container {
+    padding: 10px;
+    background-color: bisque;
+}
+.rabbit-info {
+    gap: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+.rabbit_details {
     display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
-.data-div > div {
-    width: 25%;
+.rabbit_details > h4 {
+    color: #0669AC;
+    font-weight: bold;
+    font-family: 'Poppins', sans-serif;
+}
+.rabbit_details > div {
+    display: flex;
+    justify-content: space-between;
+}
+.rabbit_details > div > h6 {
+    font-family: 'Poppins', sans-serif;
 }
 
 /* APPLICATION */
@@ -512,7 +502,7 @@ a {
         gap: 10px;
         display: grid;
         justify-content: center;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr;
     }
     .search-input {
         width: 100%;
@@ -524,6 +514,10 @@ a {
     .cards {
         width: 100%;
         margin-top: 0;
+    }
+    /* Rabbit Data */
+    .rabbit-info {
+        grid-template-columns: 1fr;
     }
     /* AdoptForm */
     .main-div .form-div {
@@ -539,6 +533,7 @@ a {
     /* Application */
     .application-div {
         width: 100vw;
+        height: 90dvh;
         padding: 110px 10px 10px 10px;
         margin-top: 0;
     }

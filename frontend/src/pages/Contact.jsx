@@ -1,9 +1,7 @@
 import React from "react";
 import Navbar from "../components/Navbar.jsx";
 import "./style.css";
-import Rabbit from "../images/rabbit-contact.png";
 import Footer from "../components/footer.jsx";
-import BgThumbnail from "../images/thumbnail.jpg";
 import FarmImg from "../images/farm.jpg";
 import { MdOutlineAttachEmail, MdOutlinePhoneForwarded } from "react-icons/md";
 import { LiaFacebook } from "react-icons/lia";
@@ -70,7 +68,6 @@ function Contact() {
         <hr style={{ height: "2px solid black", width: "100%" }} />
       </div>
       <Footer />
-      <img src={Rabbit} alt="" className="rabbit-contact" />
     </div>
   );
 }

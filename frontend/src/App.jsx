@@ -133,7 +133,7 @@ function App() {
       ),
     },
     {
-      path: "/rabbitdata/:id",
+      path: "/rabbit_details/:id",
       element: (
         <div>
           <PrivateRoute>
