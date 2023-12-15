@@ -64,33 +64,6 @@ function Breeding() {
     });
   };
 
-  // function addLitters(record) {
-  //   const today = new Date();
-  //   const dueDate = new Date(record.expected_due_date);
-
-  //   // Remove time for comparison (compare date without considering time)
-  //   const formattedToday = new Date(
-  //     today.getFullYear(),
-  //     today.getMonth(),
-  //     today.getDate()
-  //   );
-  //   const formattedDueDate = new Date(
-  //     dueDate.getFullYear(),
-  //     dueDate.getMonth(),
-  //     dueDate.getDate()
-  //   );
-
-  //   if (formattedToday.getTime() === formattedDueDate.getTime()) {
-  //     return (
-  //       <span onClick={() => navigateTo(`/add_breeding_child/${record.id}`)}>
-  //         Add litters
-  //       </span>
-  //     );
-  //   } else {
-  //     <span>Add </span>;
-  //   }
-  // }
-
   const renderActions = (text, record) => {
     const pairingDate = new Date(record.pairing_date);
     const today = new Date();
@@ -175,24 +148,27 @@ function Breeding() {
       title: "Pairing date",
       dataIndex: "pairing_date",
       key: "pairing_date",
-      render: (pairingDate) => {
-        const formattedPairingDate = new Date(pairingDate).toLocaleDateString();
-        return <span>{formattedPairingDate}</span>;
-      },
+      render: (text) =>
+        new Date(text).toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        }),
     },
     {
       title: "Estimated due",
       dataIndex: "expected_due_date",
       key: "expected_due_date",
-      render: (dueDate) => {
-        const formattedDueDate = new Date(dueDate).toLocaleDateString();
-        return <span>{formattedDueDate}</span>;
-      },
+      render: (text) =>
+        new Date(text).toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        }),
     },
     {
       title: "Actions",
       key: "action",
-      // render: renderActions,
       render: (text, record) => (
         <Dropdown
           menu={{

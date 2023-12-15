@@ -36,8 +36,13 @@ router.post("/signup", (req, res) => {
   const mailOptions = {
     from: EMAIL_FROM,
     to: email,
-    subject: subject,
-    text: `Your verification code is ${otp}`,
+    subject: `Email verification code: <b>${otp}</b>`,
+    html: `<div>
+    <p>Welcome to E-Leporidae</p>
+    <p>Please enter the code below to complete the registration.</p>
+    <p>Thank you!</p>
+    <h2>${otp}</h2>
+  </div>`,
   };
 
   const checkEmailQuery = "SELECT * FROM user WHERE email = ?";
@@ -192,30 +197,6 @@ router.post(
     const result = JSON.parse(req.body.values);
     console.log(result);
 
-    const userName = result.user_name;
-    const userEmail = result.user_email;
-
-    const emailOptions = {
-      from: EMAIL_FROM,
-      to: userEmail,
-      subject: "Pending Adoption Request Status Inquiry",
-      text: `Hi Admin,
-      \n\nA new adoption request requires your attention. ${userName} has submitted an adoption request for rabbit Id ${result.rabbit_id}. Please review the details and progress accordingly.
-      \n\nBest regards,
-      \nE-Leporidae`,
-    };
-
-    transporter.sendMail(emailOptions, (error, info) => {
-      if (error) {
-        console.log(error);
-        return res.json("Error sending confirmation email");
-      } else {
-        console.log("Confirmation Email sent: " + info.response);
-        console.log("Successfully inserted.");
-        return res.json(results);
-      }
-    });
-
     let randomID = Math.floor(100000 + Math.random() * 900000);
     const id = `adoption${randomID}`;
     const values = [
@@ -237,6 +218,32 @@ router.post(
       result.agprod,
       result.agprodprice,
     ];
+
+    const userName = result.user_name;
+    const userEmail = result.user_email;
+
+    const emailOptions = {
+      from: EMAIL_FROM,
+      to: userEmail,
+      subject: "Pending Adoption Request Status Inquiry",
+      html: `<div>
+      <p>Hi <b>Admin</b>,</p>
+      <p>A new adoption request of <b>${id}</b> requires your attention. <b>${userName}</b> has submitted an adoption request for <b>${result.rabbit_id}</b>. Please review the details and progress accordingly.</p>
+      <p>Thank you!</p>
+      <p>E-Leporidae</p>
+      </div>`,
+    };
+
+    transporter.sendMail(emailOptions, (error, info) => {
+      if (error) {
+        console.log(error);
+        return res.json("Error sending confirmation email");
+      } else {
+        console.log("Confirmation Email sent: " + info.response);
+        console.log("Successfully inserted.");
+        return res.json(results);
+      }
+    });
 
     const sql =
       "INSERT INTO adoption (`id`, `rabbit_id`, `adoption_date`, `phone`, `province`, `city`, `barangay`, `reason_for_adoption`, `other_pets`, `user_id`, `adoption_status`, `home_environment_image_path`, `service_option`, `price`, `mode_of_payment`, `agriculture_product`, `agriculture_product_price`) VALUES (?)";

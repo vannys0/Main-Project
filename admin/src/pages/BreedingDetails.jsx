@@ -1,17 +1,23 @@
 import React, { useState } from "react";
 import { Button, Modal } from "antd";
+
 function BreedingDetails({ data }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   const showModal = () => {
     setIsModalOpen(true);
   };
+
   const handleCancel = () => {
     setIsModalOpen(false);
   };
 
   const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString();
+    return new Date(dateString).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
   };
 
   return (
@@ -26,7 +32,7 @@ function BreedingDetails({ data }) {
         style={{
           top: 20,
         }}
-        open={isModalOpen}
+        visible={isModalOpen}
         onCancel={handleCancel}
         footer={[
           <Button key="cancel" onClick={handleCancel}>

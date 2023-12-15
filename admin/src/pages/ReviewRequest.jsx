@@ -16,6 +16,14 @@ function ReviewRequest({ data }) {
     setIsModalOpen(false);
   };
 
+  const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  };
+
   return (
     <>
       <span onClick={showModal}>View</span>
@@ -62,7 +70,7 @@ function ReviewRequest({ data }) {
           <div className="d-flex justify-content-between">
             <p>Adoption Date</p>
             <p>
-              <b>{data.adoption_date}</b>
+              <b>{formatDate(data.adoption_date)}</b>
             </p>
           </div>
           <div className="d-flex justify-content-between">

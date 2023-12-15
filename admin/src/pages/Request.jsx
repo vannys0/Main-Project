@@ -182,6 +182,12 @@ function Request() {
       title: "Date",
       dataIndex: "adoption_date",
       key: "date",
+      render: (record) =>
+        new Date(record).toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        }),
     },
     {
       title: "Mode of Delivery",

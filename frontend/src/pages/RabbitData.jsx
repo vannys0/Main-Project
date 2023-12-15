@@ -13,6 +13,27 @@ function RabbitData() {
   const { state } = location;
   const data = state && state.data;
 
+  function calculateAge(dateOfBirth) {
+    const birthDate = new Date(dateOfBirth);
+    const currentDate = new Date();
+
+    let ageYears = currentDate.getFullYear() - birthDate.getFullYear();
+    let ageMonths = currentDate.getMonth() - birthDate.getMonth();
+
+    if (
+      currentDate.getMonth() < birthDate.getMonth() ||
+      (currentDate.getMonth() === birthDate.getMonth() &&
+        currentDate.getDate() < birthDate.getDate())
+    ) {
+      ageYears--;
+      ageMonths = 12 - birthDate.getMonth() + currentDate.getMonth();
+    }
+
+    return { years: ageYears, months: ageMonths };
+  }
+
+  const age = calculateAge(data.date_of_birth);
+
   return (
     <div className="main-div">
       <Navbar />
@@ -54,7 +75,9 @@ function RabbitData() {
                 </div>
                 <div>
                   <h6>Age</h6>
-                  <h6>Age</h6>
+                  <h6>
+                    {age.years} years {age.months} months
+                  </h6>
                 </div>
                 <div>
                   <h6>Color</h6>

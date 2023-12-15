@@ -25,45 +25,35 @@ function Application() {
     }
   };
 
+  const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  };
+
   const renderTimelineItems = () => {
     if (!rowData) return [];
 
-    if (rowData.adoption_status === "Pending") {
-      return [
-        {
-          color: getColorByStatus(rowData.adoption_status),
-          children: <span>{rowData.adoption_status}</span>,
-        },
-        {
-          children: <span>{rowData.adoption_date}</span>,
-        },
-      ];
-    }
+    const items = [];
 
-    if (rowData.adoption_status === "Declined") {
-      return [
-        {
-          color: getColorByStatus(rowData.adoption_status),
-          children: <span>{rowData.adoption_status}</span>,
-        },
-        {
-          children: <span>{rowData.adoption_date}</span>,
-        },
-      ];
-    }
-
-    const getDeliveryColor = () => {
-      if (rowData.delivery_status === "Pending") {
-        return "grey";
-      } else if (rowData.delivery_status === "Approved") {
-        return "green";
-      }
-      return "black";
-    };
-
-    return [
-      {
-        color: getDeliveryColor(),
+    if (
+      rowData.adoption_status === "Pending" ||
+      rowData.adoption_status === "Declined"
+    ) {
+      items.push({
+        color: getColorByStatus(rowData.adoption_status),
+        children: <span>{rowData.adoption_status}</span>,
+      });
+      items.push({
+        children: <span>{formatDate(rowData.adoption_date)}</span>,
+      });
+    } else {
+      const deliveryColor =
+        rowData.delivery_status === "Approved" ? "green" : "grey";
+      items.push({
+        color: deliveryColor,
         children: (
           <span>
             {rowData.delivery_status
@@ -71,15 +61,17 @@ function Application() {
               : "Pending for delivery"}
           </span>
         ),
-      },
-      {
+      });
+      items.push({
         color: getColorByStatus(rowData.adoption_status),
         children: <span>{rowData.adoption_status}</span>,
-      },
-      {
-        children: <span>{rowData.adoption_date}</span>,
-      },
-    ];
+      });
+      items.push({
+        children: <span>{formatDate(rowData.adoption_date)}</span>,
+      });
+    }
+
+    return items;
   };
 
   return (
@@ -103,7 +95,7 @@ function Application() {
             </div>
             <div className="d-flex justify-content-between">
               <p>Adoption Date</p>
-              <p>{rowData.adoption_date}</p>
+              <p>{formatDate(rowData.adoption_date)}</p>
             </div>
             <div className="d-flex justify-content-between">
               <p>Full Name</p>

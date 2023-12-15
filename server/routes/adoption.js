@@ -69,12 +69,13 @@ router.put("/approve-adoption/:id", (req, res) => {
   const emailOptions = {
     from: EMAIL_FROM,
     to: user_email,
-    subject: "Application Status",
-    text: `Hi ${user_name},
-    \n\nGreat news! Your adoption request for rabbit ID ${rabbit_id} has been approved. We'll be in touch shortly with next steps.
-    \nAdoption ID: ${id}.
-    \n\nBest regards,
-    \nE-Leporidae`,
+    subject: `Your adoption request ${id} has been approved.`,
+    html: `<div>
+      <p>Hello <b>${user_name}</b>,</p>
+      <p>Your adoption request to <b>${rabbit_id}</b> has been approved. We have notified the owner to start the process of your request.</p>
+      <p>Thank you!</p>
+      <p>E-Leporidae</p>
+    </div>`,
   };
 
   transporter.sendMail(emailOptions, (error, info) => {
@@ -115,18 +116,19 @@ router.put("/decline-adoption/:id", (req, res) => {
   const id = req.params.id;
   const user_name = req.body.user_name;
   const user_email = req.body.user_email;
-  const declineReason =
-    "We are sorry, but your adoption request has been declined.";
+  const declineReason = `We are sorry, but your adoption request with an adoption id of <b>${id}</b> has been declined.`;
   const someText = "Please contact us for further information or to reapply.";
 
   const emailOptions = {
     from: EMAIL_FROM,
     to: user_email,
-    subject: "Application Declined",
-    text: `Hi ${user_name},
-    \n\n${declineReason} ${someText}
-    \n\nThank you,
-    \nE-Leporidae`,
+    subject: `Your adoption request ${id} has been declined.`,
+    html: `<div>
+      <p>Hello <b>${user_name}</b>,</p>
+      <p>${declineReason} ${someText}</p>
+      <p>Thank you!</p>
+      <p>E-Leporidae</p>
+    </div>`,
   };
 
   transporter.sendMail(emailOptions, (error, info) => {
