@@ -82,7 +82,7 @@ function Navbar() {
   return (
     <nav>
       <Link to="/home" className="title">
-        <img src={Logo} alt="" />
+        <img src={Logo} alt="" className="logo" />
       </Link>
       <div className="menu" onClick={() => setMenuOpen(!menuOpen)}>
         <BsJustify className="icons menu-icon" />

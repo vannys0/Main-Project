@@ -165,6 +165,38 @@ function verifyToken(req, res, next) {
   });
 }
 
+router.post("/send_us_message", (req, res) => {
+  const email = req.body.email;
+  const subject = req.body.subject;
+  const message = req.body.message;
+  const emailTo = "leonardonogra6@gmail.com";
+
+  const emailOptions = {
+    from: email,
+    to: emailTo,
+    subject: "Inquery",
+    html: `<div>
+      <p>Hi <b>Admin</b>,</p>
+      <p>You've received a message from ${email}</p>
+      <p><b>Subject:</b> ${subject}</p>
+      <p><b>Message:</b> ${message}</p>
+      <p>Thank you!</p>
+      <p>E-Leporidae</p>
+    </div>`,
+  };
+
+  transporter.sendMail(emailOptions, (error, info) => {
+    if (error) {
+      console.log(error);
+      return res.status(500).json("Error sending confirmation email");
+    } else {
+      console.log("Confirmation Email sent: " + info.response);
+      console.log("Successfully sent.");
+      return res.json({ message: "Email sent successfully" });
+    }
+  });
+});
+
 router.get("/adopt", (req, res) => {
   db.query(
     "SELECT * FROM rabbit WHERE rehome_status = 'Rehome' AND is_adopted = false",

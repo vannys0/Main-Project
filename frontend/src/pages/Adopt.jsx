@@ -6,8 +6,10 @@ import axios from "axios";
 import RabbitData from "./RabbitData.jsx";
 import Footer from "../components/footer.jsx";
 import { Input, Image, Avatar } from "antd";
+import adopt from "../images/adopt.jpg";
 import AboutRabbit from "./AboutRabbit.jsx";
 import { Link, useNavigate } from "react-router-dom";
+import Accordion from "react-bootstrap/Accordion";
 import appConfig from "../../config.json";
 const BASE_URL = appConfig.apiBasePath;
 
@@ -42,10 +44,38 @@ function Adopt() {
   };
 
   return (
-    <div className="main-div">
+    <div className="main-div bg-light">
       <Navbar />
-      <div className="adopt-div">
-        <div className="d-flex justify-content-between thumbnail">
+      <img src={adopt} alt="" loading="lazy" />
+      <div className="adopt-div bg-light">
+        <Accordion>
+          <Accordion.Item eventKey="0">
+            <Accordion.Header>How to adopt a rabbit</Accordion.Header>
+            <Accordion.Body>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+              enim ad minim veniam, quis nostrud exercitation ullamco laboris
+              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+              reprehenderit in voluptate velit esse cillum dolore eu fugiat
+              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+              sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </Accordion.Body>
+          </Accordion.Item>
+          <Accordion.Item eventKey="1">
+            <Accordion.Header>Who can adopt a rabbit</Accordion.Header>
+            <Accordion.Body>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+              enim ad minim veniam, quis nostrud exercitation ullamco laboris
+              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+              reprehenderit in voluptate velit esse cillum dolore eu fugiat
+              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+              sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </Accordion.Body>
+          </Accordion.Item>
+        </Accordion>
+
+        {/* <div className="d-flex justify-content-between thumbnail">
           <h5>Adoptable Rabbits</h5>
           <Search
             style={{
@@ -58,42 +88,18 @@ function Adopt() {
             size="large"
             onSearch={Filter}
           />
+        </div> */}
+        <div className="d-flex justify-content-between">
+          <h4>Adoptable rabbits</h4>
         </div>
-        <div className="rabbitList">
+        <div className="rabbitList bg-light">
           {record.length > 0 ? (
             record.map((data, i) => (
-              // <Card
-              //   key={i}
-              //   style={{
-              //     width: "100%",
-              //     borderRadius: "0",
-              //     boxShadow:
-              //       "rgba(99, 99, 99, 0.2) 0px 2px 4px 0px, rgba(99, 99, 99, 0.1) 0px -2px 8px 0px",
-              //   }}
-              // >
-              //   <Card.Img
-              //     style={{
-              //       width: "100%",
-              //       alignSelf: "center",
-              //       borderRadius: "0",
-              //     }}
-              //     variant="top"
-              // src={`http://localhost:8081/uploads/${data.image_path
-              //   .split(",")[0]
-              //   .trim()}`}
-              //     height={250}
-              //     alt="No Image"
-              //   />
-              //   <Card.Body>
-              //     <Card.Text></Card.Text>
-              //     <AboutRabbit data={data} />
-              //   </Card.Body>
-              // </Card>
-              <div key={i} className="w-100 d-flex gap-3 p-2">
+              <div key={i} className="w-100 d-flex gap-3 p-3">
                 <Avatar
                   style={{ borderRadius: "0" }}
                   shape="square"
-                  size={160}
+                  size={180}
                   src={
                     <Image
                       loading="lazy"
@@ -111,6 +117,7 @@ function Adopt() {
                   <Link to={`/rabbit_details/${data.id}`} state={{ data }}>
                     View Details
                   </Link>
+                  <AboutRabbit data={data} />
                 </div>
               </div>
             ))

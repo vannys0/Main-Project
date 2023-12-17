@@ -43,7 +43,7 @@ function AboutRabbit({ data }) {
   return (
     <>
       <div className="d-flex justify-content-center">
-        <Button className="w-100" onClick={showModal}>
+        <Button type="link" className="w-100" onClick={showModal}>
           {data.name}
         </Button>
       </div>

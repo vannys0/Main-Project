@@ -17,8 +17,7 @@ nav .title {
 }
 .title img {
     margin-left: 40px;
-    width: 180px;
-    color: #fff;
+    width: 140px;
 }
 
 nav ul {
@@ -45,7 +44,7 @@ nav ul li a {
     text-decoration: none;
     color: #1e1e1e;
     margin: 0 15px;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 400;
 }
 nav .menu {
@@ -77,7 +76,7 @@ nav .menu .menu-icon {
         display: flex;
     }
     .title img {
-        font-size: 20px;
+        width: 130px;
         margin-left: 20px;
     }
     nav {

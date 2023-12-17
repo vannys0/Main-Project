@@ -14,7 +14,7 @@ function Home() {
   return (
     <div className="main-div">
       <Navbar />
-      <div className="home-div">
+      <div className="home-div bg-light">
         <div className="thumbnail">
           <h4>Welcome to e-Leporidae!</h4>
         </div>

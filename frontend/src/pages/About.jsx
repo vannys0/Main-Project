@@ -1,46 +1,27 @@
 import React from "react";
 import Navbar from "../components/Navbar.jsx";
 import "./style.css";
+import about from "../images/about.jpg";
 import Footer from "../components/footer.jsx";
 
 function About() {
   return (
     <div className="main-div">
       <Navbar />
-      <div className="about-div">
-        <div className="thumbnail">
-          <h5>About Us</h5>
-        </div>
-        <div className="content">
+      <div className="about-div bg-light">
+        <img src={about} alt="no image" loading="lazy" />
+        <div>
+          <h4>Welcome to e-Leporidae</h4>
           <p>
-            At e-Leporidae, we are driven by a simple but powerful mission: to{" "}
-            <br />
+            At e-Leporidae, we are driven by a simple but powerful mission: to
             provide a safe and loving environment for rabbits in need of
-            rehoming. <br />
-            Our team is dedicated to promoting the well-being of these gentle{" "}
+            rehoming. Our team is dedicated to promoting the well-being of these
+            gentle creatures and ensuring that they find their forever homes.
+          </p>
+          <h4>Our goal</h4>
+          <p>
+            <span>Educate rabbit owners on responsible care.</span>
             <br />
-            creatures and ensuring that they find their forever homes.
-          </p>
-        </div>
-        <div className="content">
-          <h4>Our Goal</h4>
-
-          <h5>Find a happy home for rabbits.</h5>
-          <p>
-            The goal is to secure a contented and suitable residence for
-            rabbits. This entails locating environments where these animals can
-            live comfortably, free from harm, and with access to their physical
-            and emotional needs. The primary objective is to match rabbits with
-            loving families or caregivers who can provide them with proper care
-            and a nurturing atmosphere. By finding happy homes for rabbits, we
-            aim to ensure that they can experience a life filled with joy,
-            companionship, and the security they deserve. This involves not only
-            identifying appropriate living spaces but also educating potential
-            owners on how to create a harmonious and enriching habitat for their
-            rabbit companions.
-          </p>
-          <h5>Educate rabbit owners on responsible care.</h5>
-          <p>
             The core objective here is to inform and guide rabbit owners in the
             practice of responsible care for these beloved pets. This
             encompasses a range of critical aspects, such as nutrition, habitat,
@@ -54,8 +35,9 @@ function About() {
             community of informed and responsible rabbit owners who can offer
             their furry companions the best possible quality of life.
           </p>
-          <h5>Create a supportive rabbit-loving community.</h5>
           <p>
+            <span>Create a supportive rabbit-loving community.</span>
+            <br />
             Our primary aim is to establish a nurturing and inclusive community
             of individuals who share a profound love for rabbits. We believe
             that by coming together, we can create an environment where rabbit
@@ -70,13 +52,6 @@ function About() {
             rabbit lovers in a supportive and caring community dedicated to
             enhancing the lives of these endearing animals.
           </p>
-        </div>
-        <div className="content">
-          <h4 className="visit-us">Visit Us</h4>
-
-          <h5>Visit our farm at:</h5>
-          <h5>Concepcion, Libmanan, Camarines Sur, Philippines</h5>
-          <p>Look for Mr. Leonardo Nogra</p>
         </div>
       </div>
       <Footer />
