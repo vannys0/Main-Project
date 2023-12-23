@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import "./Navbar.css";
-import Button from "react-bootstrap/Button";
 import Logo from "../images/Logo.png";
 import { BsJustify } from "react-icons/bs";
 import Swal from "sweetalert2";
 import { UserOutlined, DownOutlined } from "@ant-design/icons";
 import { Dropdown, Space, Avatar } from "antd";
+import UserProfile from "../pages/profile/UserProfile";
 import SecureStore from "react-secure-storage";
 import { AuthContext } from "../App";
 import axios from "axios";
@@ -57,13 +57,17 @@ function Navbar() {
       key: "0",
     },
     {
-      label: (
-        <span onClick={() => navigateTo(`/user_profile/${user.id}`)}>
-          Profile
-        </span>
-      ),
+      label: <UserProfile />,
       key: "1",
     },
+    // {
+    //   label: (
+    //     <span onClick={() => navigateTo(`/user_profile/${user.id}`)}>
+    //       Profile
+    //     </span>
+    //   ),
+    //   key: "1",
+    // },
     {
       label: (
         <span onClick={() => navigateTo("/myapplication")}>Application</span>
@@ -114,6 +118,7 @@ function Navbar() {
               <Space>
                 {hasProfileImage ? (
                   <Avatar
+                    style={{ border: "2px solid #eaeaea" }}
                     size={30}
                     src={
                       <img

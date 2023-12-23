@@ -7,9 +7,11 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import ViewApplication from "./ViewApplication";
 import { Button, Tag, Table, Dropdown, Space } from "antd";
 import { DownOutlined } from "@ant-design/icons";
+import { SlOptionsVertical } from "react-icons/sl";
 import Swal from "sweetalert2";
 import SecureStore from "react-secure-storage";
 import appConfig from "../../config.json";
+import Appli from "./Appli";
 const BASE_URL = appConfig.apiBasePath;
 
 function MyApplication() {
@@ -52,7 +54,7 @@ function MyApplication() {
           position: "center",
           icon: "success",
           title: "Cancelled",
-          text: "your application has been cancelled",
+          text: "Adoption request has been cancelled",
           showConfirmButton: false,
           timer: 1500,
         });
@@ -67,7 +69,32 @@ function MyApplication() {
     return date.toLocaleDateString();
   }
 
+  const options = (record) =>
+    record.adoption_status === "Pending"
+      ? [
+          {
+            label: <Appli data={record} />,
+            key: "0",
+          },
+          {
+            label: <span onClick={() => handleDelete(record.id)}>Delete</span>,
+            key: "1",
+            danger: true,
+          },
+        ]
+      : [
+          {
+            label: <Appli data={record} />,
+            key: "0",
+          },
+        ];
+
   const columns = [
+    {
+      title: "Adoption ID",
+      dataIndex: "id",
+      key: "id",
+    },
     {
       title: "Date",
       dataIndex: "adoption_date",
@@ -95,22 +122,17 @@ function MyApplication() {
       title: "Actions",
       key: "action",
       render: (text, record) => (
-        <div className="d-flex gap-2">
-          <Button type="text" onClick={() => handleClick(record)}>
-            View
-          </Button>
-          {record.adoption_status === "Pending" ? (
-            <Button
-              type="primary"
-              danger
-              onClick={() => handleDelete(record.id)}
-            >
-              Cancel
-            </Button>
-          ) : (
-            <span style={{ color: "black" }}></span>
-          )}
-        </div>
+        <Dropdown
+          menu={{
+            items: options(record),
+          }}
+          trigger={["click"]}
+          placement="bottomLeft"
+        >
+          <a onClick={(e) => e.preventDefault()}>
+            <SlOptionsVertical style={{ color: "#1e1e1e" }} />
+          </a>
+        </Dropdown>
       ),
     },
   ];
@@ -127,47 +149,45 @@ function MyApplication() {
 
   const items = [
     {
-      label: <Link onClick={() => handleStatusFilter("All")}>All</Link>,
+      label: <span onClick={() => handleStatusFilter("All")}>All</span>,
       key: "0",
     },
     {
-      label: <Link onClick={() => handleStatusFilter("Pending")}>Pending</Link>,
+      label: <span onClick={() => handleStatusFilter("Pending")}>Pending</span>,
       key: "1",
     },
     {
       label: (
-        <Link onClick={() => handleStatusFilter("Approved")}>Approved</Link>
+        <span onClick={() => handleStatusFilter("Approved")}>Approved</span>
       ),
       key: "2",
     },
     {
       label: (
-        <Link onClick={() => handleStatusFilter("Declined")}>Declined</Link>
+        <span onClick={() => handleStatusFilter("Declined")}>Declined</span>
       ),
       key: "3",
     },
     {
       label: (
-        <Link onClick={() => handleStatusFilter("Cancelled")}>Cancelled</Link>
+        <span onClick={() => handleStatusFilter("Cancelled")}>Cancelled</span>
       ),
       key: "4",
     },
   ];
 
   return (
-    <div className="main-div">
+    <div className="main-div bg-light">
       <Navbar />
       <div className="application-div">
-        <div className="thumbnail">
-          <h5>Recent Adoption</h5>
-        </div>
+        <h4>Recent Adoption</h4>
         <Dropdown
           menu={{
             items,
           }}
           trigger={["click"]}
         >
-          <a onClick={(e) => e.preventDefault()}>
+          <a style={{ color: "#1e1e1e" }} onClick={(e) => e.preventDefault()}>
             <Space>
               Filter
               <DownOutlined />

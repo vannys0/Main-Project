@@ -12,9 +12,9 @@ import SecureStore from "react-secure-storage";
 function Home() {
   const user = SecureStore.getItem("userToken");
   return (
-    <div className="main-div">
+    <div className="main-div bg-light">
       <Navbar />
-      <div className="home-div bg-light">
+      <div className="home-div">
         <div className="thumbnail">
           <h4>Welcome to e-Leporidae!</h4>
         </div>

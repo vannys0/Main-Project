@@ -7,6 +7,7 @@ import "./style.css";
 import adopt from "../images/adopt.jpg";
 import { Avatar, Image, Button } from "antd";
 import { Carousel } from "react-bootstrap";
+import AdoptForm from "./AdoptForm";
 import {
   MdDriveFileRenameOutline,
   MdOutlineColorLens,
@@ -50,106 +51,69 @@ function RabbitData() {
     <div className="main-div bg-light">
       <Navbar />
       <img src={adopt} alt="" />
-      <div className="rabbit-data-div bg-light">
-        {data && (
-          <div>
-            <div className="images">
-              <Carousel>
-                {data.image_path.split(",").map((image, index) => (
-                  <Carousel.Item key={index}>
-                    <Image
-                      src={`http://localhost:8081/uploads/${image.trim()}`}
-                    />
-                  </Carousel.Item>
-                ))}
-              </Carousel>
+      {data && (
+        <div className="rabbit-data-div">
+          <div className="carousel">
+            <Carousel>
+              {data.image_path.split(",").map((image, index) => (
+                <Carousel.Item key={index}>
+                  <Image
+                    src={`http://localhost:8081/uploads/${image.trim()}`}
+                  />
+                </Carousel.Item>
+              ))}
+            </Carousel>
+          </div>
+          <div className="rabbit-info">
+            <h4>
+              <b>About me</b>
+              <br />
+              Hi, my name is {data.name} and I am looking for a new home.
+            </h4>
+            <div>
+              <h6>Rabbit ID</h6>
+              <h6>{data.id}</h6>
             </div>
-            <div className="statement">
-              <h4>
-                Hi, my name is {data.name} and I am looking for a new home.
-              </h4>
+            <div>
+              <h6>Name</h6>
+              <h6>{data.name}</h6>
             </div>
-            <div className="d-flex align-items-center gap-4">
-              <button className="btn btn-success">
-                <SiRabbitmq />
-              </button>
-              <span>{data.id}</span>
+            <div>
+              <h6>Sex</h6>
+              <h6>{data.sex}</h6>
             </div>
-            <div className="d-flex align-items-center gap-4">
-              <button className="btn btn-success">
-                <MdDriveFileRenameOutline />
-              </button>
-              <span>{data.name}</span>
+            <div>
+              <h6>Breed</h6>
+              <h6>{data.breed_type}</h6>
             </div>
-            <div className="d-flex align-items-center gap-4">
-              {data && data.sex === "Male" ? (
-                <button className="btn btn-success">
-                  <IoMdMale />
-                </button>
-              ) : (
-                <button className="btn btn-success">
-                  <IoFemaleSharp />
-                </button>
-              )}
-              <span>{data.sex}</span>
-            </div>
-            <div className="d-flex align-items-center gap-4">
-              <button className="btn btn-success">
-                <MdOutlineBloodtype />
-              </button>
-              <span>{data.breed_type}</span>
-            </div>
-            <div className="d-flex align-items-center gap-4">
-              <button className="btn btn-success">
-                <LiaBirthdayCakeSolid />
-              </button>
-              <span>
+            <div>
+              <h6>Age</h6>
+              <h6>
                 {age.years} years {age.months} months
-              </span>
+              </h6>
             </div>
-            <div className="d-flex align-items-center gap-4">
-              <button className="btn btn-success">
-                <MdOutlineColorLens />
-              </button>
-              <span>{data.color}</span>
+            <div>
+              <h6>Color</h6>
+              <h6>{data.color}</h6>
             </div>
-            <div className="d-flex align-items-center gap-4">
-              <button className="btn btn-success">
-                <MdPets />
-              </button>
-              <span>{data.rabbit_type}</span>
+            <div>
+              <h6>Rabbit Type</h6>
+              <h6>{data.rabbit_type}</h6>
             </div>
-            <div className="d-flex align-items-center gap-4">
-              <button className="btn btn-success">
-                <TbWeight />
-              </button>
-              <span>{data.weight}</span>
+            <div>
+              <h6>Weight</h6>
+              <h6>{data.weight} klg</h6>
             </div>
-            <div className="d-flex align-items-center gap-4">
-              <button className="btn btn-success">
-                <IoPricetagsOutline />
-              </button>
-              <span>Php{data.price}</span>
-            </div>
-            <div className="d-flex align-items-center gap-4">
-              <Button
-                className="apply-btn"
-                type="primary"
-                onClick={() =>
-                  navigateTo(
-                    `/rabbitdata/${JSON.stringify(data)}/${data.id}/adopt-form`
-                  )
-                }
-              >
-                Apply for Adoption
-              </Button>
-              <Button type="text" onClick={() => navigateTo("/adopt")}>
-                Back to Home
-              </Button>
+            <div>
+              <h6>Adoption Fee</h6>
+              <h6>Php{data.price}</h6>
             </div>
           </div>
-        )}
-      </div>
+          <div className="adopt-form-container">
+            <AdoptForm data={data} />
+          </div>
+        </div>
+      )}
       <Footer />
     </div>
   );

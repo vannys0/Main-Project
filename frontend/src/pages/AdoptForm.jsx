@@ -4,7 +4,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/footer";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Form } from "react-bootstrap";
-import { Button } from "antd";
+import { Button, Modal } from "antd";
 import Swal from "sweetalert2";
 import Validation from "./Validation/AdoptFormValidation";
 import SecureStore from "react-secure-storage";
@@ -16,7 +16,7 @@ import {
 import appConfig from "../../config.json";
 const BASE_URL = appConfig.apiBasePath;
 
-function AdoptForm() {
+function AdoptForm({ data }) {
   const user = SecureStore.getItem("userToken");
   const USER_NAME = user.name;
   const { name, id } = useParams();
@@ -37,6 +37,25 @@ function AdoptForm() {
   }
   const currentDate = new Date();
   const dateToday = formatAsDate(currentDate);
+
+  const [open, setOpen] = useState(false);
+  const [confirmLoading, setConfirmLoading] = useState(false);
+  const [modalText, setModalText] = useState("Content of the modal");
+  const showModal = () => {
+    setOpen(true);
+  };
+  const handleOk = () => {
+    setModalText("The modal will be closed after two seconds");
+    setConfirmLoading(true);
+    setTimeout(() => {
+      setOpen(false);
+      setConfirmLoading(false);
+    }, 2000);
+  };
+  const handleCancel = () => {
+    console.log("Clicked cancel button");
+    setOpen(false);
+  };
 
   useEffect(() => {
     getAllProvince((data) => {
@@ -95,7 +114,7 @@ function AdoptForm() {
     adoption_status: "Pending",
     serviceoption: "",
     mop: "",
-    price: JSON.parse(name).price,
+    price: data.price,
     agprod: null,
     agprodprice: 0,
   });
@@ -141,19 +160,26 @@ function AdoptForm() {
   };
 
   return (
-    <div className="main-div">
-      <Navbar />
-      <div className="form-div">
-        <div className="thumbnail">
-          <h4>Adoption Application </h4>
-        </div>
+    <div>
+      <Button type="primary" onClick={showModal}>
+        Apply for adoption
+      </Button>
+      <Modal
+        title="Adoption Form"
+        open={open}
+        onOk={handleSubmit}
+        confirmLoading={confirmLoading}
+        onCancel={handleCancel}
+        footer={[
+          <Button key="cancel" onClick={handleCancel}>
+            Cancel
+          </Button>,
+          <Button key="apply" type="primary" onClick={handleSubmit}>
+            Apply
+          </Button>,
+        ]}
+      >
         <form encType="multipart/form-data">
-          <p>
-            <em>
-              Note: Adoption requires an adoption fee of P
-              {JSON.parse(name).price}
-            </em>
-          </p>
           <label htmlFor="phone">Phone Number</label>
           <input
             type="tel"
@@ -258,6 +284,7 @@ function AdoptForm() {
           </Form.Select>
           {mopAgriculture && (
             <div>
+              <br />
               <label htmlFor="agprod" className="label-name">
                 Agricultural Product <em>(Please specify)</em>
               </label>
@@ -267,7 +294,7 @@ function AdoptForm() {
                 className="form-control"
                 onChange={handleInput}
               />
-
+              <br />
               <label htmlFor="agprodprice" className="label-name">
                 Product estimated amount <em>(Php)</em>
               </label>
@@ -330,18 +357,8 @@ function AdoptForm() {
             className="form-control"
             onChange={handleInput}
           />
-
-          <div className="d-flex justify-content-end gap-2 my-4">
-            <Button type="primary" danger onClick={() => navigateTo("/adopt")}>
-              Cancel
-            </Button>
-            <Button type="primary" onClick={handleSubmit}>
-              Apply
-            </Button>
-          </div>
         </form>
-      </div>
-      <Footer />
+      </Modal>
     </div>
   );
 }
