@@ -9,19 +9,23 @@ import {
 } from "react-icons/bs";
 import { LuUsers, LuBell } from "react-icons/lu";
 import { CiCircleList } from "react-icons/ci";
-import {
-  BarChart,
-  Bar,
-  Cell,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-  LineChart,
-  Line,
-} from "recharts";
+// import {
+//   BarChart,
+//   Bar,
+//   Cell,
+//   XAxis,
+//   YAxis,
+//   CartesianGrid,
+//   Tooltip,
+//   Legend,
+//   ResponsiveContainer,
+//   LineChart,
+//   Line,
+// } from "recharts";
+import { Chart as ChartJS, defaults } from "chart.js/auto";
+defaults.maintainAspectRatio = false;
+defaults.responsive = true;
+import { Bar, Doughnut, Line } from "react-chartjs-2";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 import SecureStore from "react-secure-storage";
@@ -173,6 +177,31 @@ function Dashboard() {
     },
   ];
 
+  const adoptData = {
+    labels: adopt.map((item) => item.name),
+    datasets: [
+      {
+        label: "Adopt",
+        data: adopt.map((item) => item.Adopt),
+        backgroundColor: "rgba(43, 63, 229, 0.8)",
+      },
+    ],
+  };
+
+  const salesData = {
+    labels: monthSales.map((item) => item.name),
+    datasets: [
+      {
+        label: "Sales",
+        data: monthSales.map((item) => item.Sales),
+        fill: false,
+        tension: 0.1,
+        borderColor: "rgba(50, 192, 19, 0.8)",
+        backgroundColor: "rgba(50, 192, 19, 0.8)",
+      },
+    ],
+  };
+
   return (
     <div className="grid-container">
       <Header OpenSidebar={OpenSidebar} />
@@ -186,7 +215,6 @@ function Dashboard() {
           <div className="card-div" onClick={(e) => navigateTo("/clients")}>
             <div className="card-inner">
               <h5>Clients</h5>
-
               <LuUsers className="card_icon " />
             </div>
             <h5>{userCount}</h5>
@@ -194,7 +222,6 @@ function Dashboard() {
           <div className="card-div" onClick={() => navigateTo("/request")}>
             <div className="card-inner">
               <h5>Pending</h5>
-
               <RiPassPendingLine className="card_icon" />
             </div>
             <h5>{pending}</h5>
@@ -202,7 +229,6 @@ function Dashboard() {
           <div className="card-div" onClick={(e) => navigateTo("/rabbits")}>
             <div className="card-inner">
               <h5>Rabbits</h5>
-
               <CiCircleList className="card_icon" />
             </div>
             <h5>{rabbitCount}</h5>
@@ -210,14 +236,39 @@ function Dashboard() {
           <div className="card-div" onClick={() => navigateTo("/breeding")}>
             <div className="card-inner">
               <h5>Upcoming</h5>
-
               <LuBell className="card_icon" />
             </div>
             <h5>42</h5>
           </div>
         </div>
-
-        <ResponsiveContainer width="100%" height="75%">
+        <div className="first-chart chart-div">
+          <Bar data={adoptData} />
+        </div>
+        <div className="chart-div">
+          <Line data={salesData} />
+        </div>
+        <div className="chart-div">
+          <Doughnut
+            data={{
+              labels: ["A", "B", "C", "D", "E"],
+              datasets: [
+                {
+                  label: "Revenue",
+                  data: [200, 300, 150, 400, 250],
+                  fill: false,
+                  tension: 0.1,
+                  backgroundColor: [
+                    "rgba(43, 63, 229, 0.8)",
+                    "rgba(250, 192, 19, 0.8)",
+                    "rgba(50, 192, 19, 0.8)",
+                    "rgba(253, 135, 135, 0.8)",
+                  ],
+                },
+              ],
+            }}
+          />
+        </div>
+        {/* <ResponsiveContainer width="100%" height="75%">
           <BarChart
             className="bar-chart"
             style={{
@@ -276,7 +327,7 @@ function Dashboard() {
               activeDot={{ r: 8 }}
             />
           </LineChart>
-        </ResponsiveContainer>
+        </ResponsiveContainer> */}
 
         <div className="activity">
           <div
