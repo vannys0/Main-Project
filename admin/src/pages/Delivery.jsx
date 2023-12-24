@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import "../Style.css";
 import { SlOptionsVertical } from "react-icons/sl";
 import { Table, Button, Pagination, Tag, Dropdown, Space } from "antd";
+import DataTable from "react-data-table-component";
 import axios from "axios";
 import Swal from "sweetalert2";
 import appConfig from "../../config.json";
@@ -14,22 +15,7 @@ function Delivery() {
   const OpenSidebar = () => {
     setOpenSidebarToggle(!openSidebarToggle);
   };
-
   const [values, setValues] = useState([]);
-  const [pageNumber, setPageNumber] = useState(1);
-  const itemsPerPage = 6;
-
-  const pagesVisited = (pageNumber - 1) * itemsPerPage;
-  const displayedValues = values.slice(
-    pagesVisited,
-    pagesVisited + itemsPerPage
-  );
-
-  const totalItems = values.length;
-
-  const handlePageChange = (page, pageSize) => {
-    setPageNumber(page);
-  };
 
   useEffect(() => {
     axios
@@ -101,35 +87,43 @@ function Delivery() {
         },
   ];
 
+  const tableHeaderStyle = {
+    headCells: {
+      style: {
+        color: "#ffffff",
+        fontSize: "14px",
+        backgroundColor: "#1677ff",
+      },
+    },
+  };
+
   const columns = [
     {
-      title: "Adoption Id",
-      dataIndex: "id",
-      key: "id",
+      name: "Adoption Id",
+      selector: (row) => row.id,
+      sortable: true,
     },
     {
-      title: "Name",
-      dataIndex: "user_name",
-      key: "user_name",
+      name: "Name",
+      selector: (row) => row.user_name,
+      sortable: true,
     },
     {
-      title: "Contact number",
-      dataIndex: "phone",
-      key: "phone",
+      name: "Contact number",
+      selector: (row) => row.phone,
+      sortable: true,
     },
     {
-      title: "Address",
-      key: "address",
-      render: (text, record) => (
+      name: "Address",
+      cell: (record) => (
         <span>
           {record.barangay}, {record.city}, {record.province}
         </span>
       ),
     },
     {
-      title: "Delivery Status",
-      key: "delivery_status",
-      render: (text, record) => (
+      name: "Delivery Status",
+      cell: (record) => (
         <span>
           {record.delivery_status === "Approved" ? (
             <Tag color="success">Approved</Tag>
@@ -140,9 +134,8 @@ function Delivery() {
       ),
     },
     {
-      title: "Actions",
-      key: "action",
-      render: (text, record) => (
+      name: "Actions",
+      cell: (record) => (
         <Dropdown
           menu={{
             items: items(record),
@@ -170,24 +163,14 @@ function Delivery() {
         <h3>Delivery {values.id}</h3>
 
         <div className="tables">
-          <Table
+          <DataTable
             columns={columns}
-            dataSource={displayedValues}
-            pagination={false}
+            data={values}
+            pagination
+            customStyles={tableHeaderStyle}
+            highlightOnHover
           />
         </div>
-        <Pagination
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "flex-end",
-          }}
-          current={pageNumber}
-          total={totalItems}
-          pageSize={itemsPerPage}
-          showSizeChanger={false}
-          onChange={handlePageChange}
-        />
       </div>
     </div>
   );

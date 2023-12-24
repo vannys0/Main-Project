@@ -65,53 +65,16 @@ function Sidebar({ openSidebarToggle, OpenSidebar }) {
     >
       <div className="sidebar-title">
         <div className="sidebar-brand">
-          <img src={Logo} alt="" />
+          <img className="logo" src={Logo} alt="" />
         </div>
         <span className="icon close_icon" onClick={OpenSidebar}>
           <AiOutlineClose />
         </span>
       </div>
       <ul className="sidebar-list">
-        {/* <div
-          className="admin-side"
-          onClick={() => navigateTo(`/profile/${user.id}`)}
-        >
-          <div>
-            {hasProfileImage ? (
-              <Avatar
-                style={{
-                  width: "40px",
-                  height: "40px",
-                }}
-                src={
-                  <img
-                    src={`http://localhost:8081/uploads/${userInfo.profile}`}
-                    alt=""
-                    style={{ width: "100%" }}
-                  />
-                }
-              />
-            ) : (
-              <Avatar
-                style={{
-                  width: "40px",
-                  height: "40px",
-                }}
-                src={<img src={Default} alt="" />}
-              />
-            )}
-          </div>
-          <div className="admin-user">
-            <h5>{user.name}</h5>
-            <h6>{user.user_type}</h6>
-          </div>
-        </div> */}
         <NavLink to="/dashboard" className="sidebar-list-item">
           <LuLayoutDashboard className="icon" /> Dashboard
         </NavLink>
-        {/* <NavLink to={`/profile/${user.id}`} className="sidebar-list-item">
-          <LuUser className="icon" /> Profile
-        </NavLink> */}
         <NavLink to="/rabbits" className="sidebar-list-item">
           <CiCircleList className="icon" /> Rabbits
         </NavLink>
@@ -129,9 +92,6 @@ function Sidebar({ openSidebarToggle, OpenSidebar }) {
         <NavLink to="/clients" className="sidebar-list-item">
           <LuUsers className="icon" /> Users
         </NavLink>
-        {/* <Link to="" onClick={onLogout} className="sidebar-list-item">
-          <BsBoxArrowLeft className="icon" /> Logout
-        </Link> */}
       </ul>
     </aside>
   );

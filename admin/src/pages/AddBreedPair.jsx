@@ -195,7 +195,6 @@ function BreedPair() {
       />
       <div className="main-container bg-light">
         <h3>Add Breeding Pair</h3>
-        <br />
         <div className="breed-ground">
           <div className="ground">
             <h6>Male</h6>
@@ -215,8 +214,6 @@ function BreedPair() {
         </div>
         <div className="actions d-flex justify-content-end my-2">
           <Button
-            type="primary"
-            danger
             onClick={(e) => {
               navigateTo("/breeding");
             }}

@@ -255,13 +255,7 @@ function AddRabbit() {
           </div>
           <div className="d-flex justify-content-end">
             <div className="actions">
-              <Button
-                type="primary"
-                danger
-                onClick={() => navigateTo("/rabbits")}
-              >
-                Cancel
-              </Button>
+              <Button onClick={() => navigateTo("/rabbits")}>Cancel</Button>
               <Button type="primary" onClick={handleSubmit}>
                 Add
               </Button>

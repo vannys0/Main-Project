@@ -3,7 +3,7 @@ import Sidebar from "../../components/Sidebar";
 import Header from "../../components/Header";
 import "../../Style.css";
 import { UserOutlined, UploadOutlined } from "@ant-design/icons";
-import { Upload, Button, Avatar, Image } from "antd";
+import { Upload, Button, Avatar, Image, Modal } from "antd";
 import ImgCrop from "antd-img-crop";
 import {} from "@ant-design/icons";
 import appConfig from "../../../config.json";
@@ -14,17 +14,24 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 
-function AdminProfile() {
+function AdminUserProfile() {
   const user = SecureStore.getItem("userToken");
-  const { id } = useParams();
-  const [openSidebarToggle, setOpenSidebarToggle] = useState(false);
-  const OpenSidebar = () => {
-    setOpenSidebarToggle(!openSidebarToggle);
-  };
+  const id = user.id;
   const [userInfo, setUserInfo] = useState([]);
   const [image, setImage] = useState("");
   const inputRef = useRef(null);
   const hasProfileImage = userInfo && userInfo.profile;
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
 
   useEffect(() => {
     axios
@@ -79,37 +86,23 @@ function AdminProfile() {
     console.log(e.target.files);
   };
 
-  const onPreview = async (file) => {
-    let src = file.url;
-    if (!src) {
-      src = await new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file.originFileObj);
-        reader.onload = () => resolve(reader.result);
-      });
-    }
-
-    const image = new Image();
-    image.src = src;
-    const imgWindow = window.open(src);
-    imgWindow?.document.write(image.outerHTML);
-  };
-
   return (
-    <div className="grid-container">
-      <Header OpenSidebar={OpenSidebar} />
-      <Sidebar
-        openSidebarToggle={openSidebarToggle}
-        OpenSidebar={OpenSidebar}
-      />
-      <div className="main-container bg-light">
-        <h3>Admin Profile</h3>
+    <div>
+      <span onClick={showModal}>My Profile</span>
+      <Modal
+        title="My Profile"
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        footer={<Button onClick={handleCancel}>Close</Button>}
+      >
         <div className="client-profile">
           <div className="d-flex flex-column gap-2 align-items-center justify-content-center">
             <div>
               {image ? (
                 <div className="d-flex flex-column gap-2 align-items-center justify-content-center">
                   <Avatar
+                    shape="square"
                     style={{
                       width: "168px",
                       height: "168px",
@@ -128,6 +121,7 @@ function AdminProfile() {
               ) : hasProfileImage ? (
                 <div className="d-flex flex-column gap-2 align-items-center justify-content-center">
                   <Avatar
+                    shape="square"
                     style={{
                       width: "168px",
                       height: "168px",
@@ -146,6 +140,7 @@ function AdminProfile() {
               ) : (
                 <div className="d-flex flex-column gap-2 align-items-center justify-content-center">
                   <Avatar
+                    shape="square"
                     style={{
                       width: "168px",
                       height: "168px",
@@ -166,31 +161,29 @@ function AdminProfile() {
                 style={{ display: "none" }}
               />
             </div>
-
-            {/* <UploadProfile /> */}
           </div>
           <div className="client-data">
             <div>
               <p>User Type</p>
-              <p>: {user.user_type}</p>
+              <p>{userInfo.user_type}</p>
             </div>
             <div>
               <p>User ID</p>
-              <p>: {user.id}</p>
+              <p>{userInfo.id}</p>
             </div>
             <div>
               <p>Name</p>
-              <p>: {user.name}</p>
+              <p>{userInfo.name}</p>
             </div>
             <div>
               <p>Email</p>
-              <p>: {user.email}</p>
+              <p>{userInfo.email}</p>
             </div>
           </div>
         </div>
-      </div>
+      </Modal>
     </div>
   );
 }
 
-export default AdminProfile;
+export default AdminUserProfile;

@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
-import { Input, Table, Pagination, Space, Button, Avatar, Image } from "antd";
+import { Input, Pagination, Space, Avatar } from "antd";
+import { SearchOutlined } from "@ant-design/icons";
 import axios from "axios";
-import { UserOutlined, UploadOutlined } from "@ant-design/icons";
+import ClientUserProfile from "./Profile/ClientUserProfile";
+import DataTable from "react-data-table-component";
 import Default from "../images/default-profile.png";
 import appConfig from "../../config.json";
-import { useNavigate } from "react-router-dom";
 const BASE_URL = appConfig.apiBasePath;
 
 function Clients() {
@@ -16,8 +18,6 @@ function Clients() {
   };
   const navigateTo = useNavigate();
   const [clients, setClients] = useState([]);
-  const [pageNumber, setPageNumber] = useState(1);
-  const clientsPerPage = 6;
   const [searchedClients, setSearchedClients] = useState([]);
 
   useEffect(() => {
@@ -25,84 +25,68 @@ function Clients() {
       .get(BASE_URL + "/clients")
       .then((res) => {
         setClients(res.data);
+        setSearchedClients(res.data);
       })
       .catch((err) => console.log(err));
   }, []);
 
-  useEffect(() => {
-    setSearchedClients(clients);
-  }, [clients]);
-
-  const pagesVisited = (pageNumber - 1) * clientsPerPage;
-  const displayedClients = searchedClients.slice(
-    pagesVisited,
-    pagesVisited + clientsPerPage
-  );
-
-  const pageCount = Math.ceil(searchedClients.length / clientsPerPage);
-
-  const handlePageChange = (page, pageSize) => {
-    setPageNumber(page);
+  const tableHeaderStyle = {
+    headCells: {
+      style: {
+        color: "#ffffff",
+        fontSize: "14px",
+        backgroundColor: "#1677ff",
+      },
+    },
   };
 
   const columns = [
     {
-      title: "Profile",
-      dataIndex: "profile",
-      key: "profile",
-      render: (profile) => {
+      name: "Profile",
+      selector: (row) => row.profile,
+      cell: (row) => {
         return (
-          <div>
-            {profile ? (
-              <Avatar
-                src={<img src={`http://localhost:8081/uploads/${profile}`} />}
-              />
-            ) : (
-              <Avatar
-                style={{
-                  color: "#fff",
-                  backgroundColor: "#eaeaea",
-                }}
-                src={<img src={Default} alt="" />}
-              />
-            )}
-          </div>
+          <Avatar
+            shape="square"
+            src={
+              row.profile
+                ? `http://localhost:8081/uploads/${row.profile}`
+                : Default
+            }
+            alt=""
+          />
         );
       },
     },
     {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
+      name: "Name",
+      selector: (row) => row.name,
+      sortable: true,
     },
     {
-      title: "Email",
-      dataIndex: "email",
-      key: "email",
+      name: "Email",
+      selector: (row) => row.email,
+      sortable: true,
     },
     {
-      title: "User Type",
-      dataIndex: "user_type",
-      key: "user_type",
+      name: "User Type",
+      selector: (row) => row.user_type,
+      sortable: true,
     },
     {
-      title: "Actions",
-      key: "action",
-      render: (text, client) => (
+      name: "Actions",
+      cell: (row) => (
         <Space>
-          <Button onClick={() => navigateTo(`/client-profile/${client.id}`)}>
-            View
-          </Button>
+          <ClientUserProfile data={row} />
         </Space>
       ),
     },
   ];
 
-  // Search Function
-  const { Search } = Input;
-  const onSearch = (value) => {
+  const handleSearch = (event) => {
+    const value = event.target.value.toLowerCase();
     const filteredClients = clients.filter((client) =>
-      client.name.toLowerCase().includes(value.toLowerCase())
+      client.name.toLowerCase().includes(value)
     );
     setSearchedClients(filteredClients);
   };
@@ -117,40 +101,29 @@ function Clients() {
       <div className="main-container bg-light">
         <div className="d-flex justify-content-between">
           <h3>Users</h3>
-          <Search
+          <Input
             style={{
               height: "40px",
               fontSize: "16px",
               width: "400px",
               marginBottom: "10px",
             }}
-            placeholder="Search"
+            placeholder="Search by name"
             allowClear
             size="large"
-            onSearch={onSearch}
+            onChange={handleSearch}
+            prefix={<SearchOutlined />}
           />
         </div>
-
         <div className="tables">
-          <Table
+          <DataTable
             columns={columns}
-            dataSource={displayedClients}
-            pagination={false}
+            data={searchedClients}
+            pagination
+            customStyles={tableHeaderStyle}
+            highlightOnHover
           />
         </div>
-
-        <Pagination
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "flex-end",
-          }}
-          current={pageNumber}
-          total={searchedClients.length}
-          pageSize={clientsPerPage}
-          showSizeChanger={false}
-          onChange={handlePageChange}
-        />
       </div>
     </div>
   );

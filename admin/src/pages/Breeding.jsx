@@ -4,7 +4,9 @@ import Header from "../components/Header";
 import "../Style.css";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Table, Button, Pagination, Input, Dropdown, Space } from "antd";
+import DataTable from "react-data-table-component";
 import { SlOptionsVertical } from "react-icons/sl";
+import { SearchOutlined } from "@ant-design/icons";
 import axios from "axios";
 import BreedingDetails from "./BreedingDetails";
 import Swal from "sweetalert2";
@@ -19,24 +21,14 @@ function Breeding() {
   const navigateTo = useNavigate();
   const { id } = useParams();
   const [data, setData] = useState([]);
-  const [filtered, setFiltered] = useState([]);
-  const [pageNumber, setPageNumber] = useState(1);
-  const itemsPerPage = 6;
-
-  const pagesVisited = (pageNumber - 1) * itemsPerPage;
-  const displayedData = data.slice(pagesVisited, pagesVisited + itemsPerPage);
-
-  const totalItems = data.length;
-
-  const handlePageChange = (page, pageSize) => {
-    setPageNumber(page);
-  };
+  const [filteredData, setFilteredData] = useState([]);
 
   useEffect(() => {
     axios
       .get(BASE_URL + "/breeding")
       .then((res) => {
         setData(res.data);
+        setFilteredData(res.data);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -133,46 +125,55 @@ function Breeding() {
     return rabbitPair;
   };
 
+  const tableHeaderStyle = {
+    headCells: {
+      style: {
+        color: "#ffffff",
+        fontSize: "14px",
+        backgroundColor: "#1677ff",
+      },
+    },
+  };
+
   const columns = [
     {
-      title: "Pair Id",
-      dataIndex: "id",
-      key: "id",
+      name: "Pair Id",
+      selector: (row) => row.id,
+      sortable: true,
     },
     {
-      title: "Note",
-      dataIndex: "note",
-      key: "note",
+      name: "Note",
+      selector: (row) => row.note,
+      sortable: true,
     },
     {
-      title: "Pairing date",
-      dataIndex: "pairing_date",
-      key: "pairing_date",
-      render: (text) =>
-        new Date(text).toLocaleDateString("en-US", {
+      name: "Pairing date",
+      selector: (row) => row.pairing_date,
+      sortable: true,
+      format: (row) =>
+        new Date(row.pairing_date).toLocaleDateString("en-US", {
           year: "numeric",
           month: "long",
           day: "numeric",
         }),
     },
     {
-      title: "Estimated due",
-      dataIndex: "expected_due_date",
-      key: "expected_due_date",
-      render: (text) =>
-        new Date(text).toLocaleDateString("en-US", {
+      name: "Estimated due",
+      selector: (row) => row.expected_due_date,
+      sortable: true,
+      format: (row) =>
+        new Date(row.expected_due_date).toLocaleDateString("en-US", {
           year: "numeric",
           month: "long",
           day: "numeric",
         }),
     },
     {
-      title: "Actions",
-      key: "action",
-      render: (text, record) => (
+      name: "Actions",
+      cell: (row) => (
         <Dropdown
           menu={{
-            items: items(record),
+            items: items(row),
           }}
           trigger={["click"]}
           placement="bottomLeft"
@@ -185,13 +186,12 @@ function Breeding() {
     },
   ];
 
-  const { Search } = Input;
-  const Filter = (value) => {
-    const lowerCaseValue = value.toLowerCase().trim();
-    const filteredPair = data.filter((pair) =>
-      pair.id.toString().toLowerCase().includes(lowerCaseValue)
+  const handleSearch = (event) => {
+    const value = event.target.value.toLowerCase();
+    const filteredPairs = data.filter((pair) =>
+      pair.id.toString().toLowerCase().includes(value)
     );
-    setData(filteredPair);
+    setFilteredData(filteredPairs);
   };
 
   return (
@@ -204,16 +204,17 @@ function Breeding() {
       <div className="main-container bg-light">
         <div className="d-flex align-items-center justify-content-between">
           <h3>Breeding List</h3>
-          <Search
+          <Input
             style={{
               height: "40px",
               fontSize: "16px",
               width: "400px",
             }}
-            placeholder="Search"
+            placeholder="Search by ID"
             allowClear
             size="large"
-            onSearch={Filter}
+            onChange={handleSearch}
+            prefix={<SearchOutlined />}
           />
         </div>
         <div className="d-flex justify-content-end my-2">
@@ -222,24 +223,15 @@ function Breeding() {
           </Button>
         </div>
         <div className="tables">
-          <Table
+          <DataTable
             columns={columns}
-            dataSource={displayedData}
-            pagination={false}
+            data={filteredData}
+            pagination
+            customStyles={tableHeaderStyle}
+            selectableRowsHighlight
+            highlightOnHover
           />
         </div>
-        <Pagination
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "flex-end",
-          }}
-          current={pageNumber}
-          total={totalItems}
-          pageSize={itemsPerPage}
-          showSizeChanger={false}
-          onChange={handlePageChange}
-        />
       </div>
     </div>
   );

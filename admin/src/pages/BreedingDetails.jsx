@@ -32,7 +32,7 @@ function BreedingDetails({ data }) {
         style={{
           top: 20,
         }}
-        visible={isModalOpen}
+        open={isModalOpen}
         onCancel={handleCancel}
         footer={[
           <Button key="cancel" onClick={handleCancel}>

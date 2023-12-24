@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import "../Style.css";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
+import DataTable from "react-data-table-component";
 import { Link, useNavigate } from "react-router-dom";
 import {
   Button,
@@ -16,6 +17,7 @@ import {
   Dropdown,
 } from "antd";
 import { SlOptionsVertical } from "react-icons/sl";
+import { SearchOutlined } from "@ant-design/icons";
 import Swal from "sweetalert2";
 import appConfig from "../../config.json";
 const BASE_URL = appConfig.apiBasePath;
@@ -26,14 +28,10 @@ function RabbitList() {
     setOpenSidebarToggle(!openSidebarToggle);
   };
   const navigateTo = useNavigate();
-  const toEdit = navigateTo;
   const [rabbits, setRabbits] = useState([]);
   const [record, setRecord] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(6);
 
-  const [slaughter, setSlaughter] = useState("1 yrs 1 mos"); // default value if not present in table.
-
+  const [slaughter, setSlaughter] = useState("1 yrs 1 mos");
   const onRehome = (e, o) => {
     Swal.fire({
       title: "Confirm?",
@@ -112,15 +110,6 @@ function RabbitList() {
     });
   };
 
-  const { Search } = Input;
-  const Filter = (value) => {
-    const lowerCaseValue = value.toLowerCase();
-    const filteredRabbits = rabbits.filter((rabbit) =>
-      rabbit.name.toLowerCase().includes(lowerCaseValue)
-    );
-    setRecord(filteredRabbits);
-  };
-
   function calculateAge(dateOfBirth) {
     const birthDate = new Date(dateOfBirth);
     const currentDate = new Date();
@@ -136,7 +125,6 @@ function RabbitList() {
     return years + " yrs " + months + " mos";
   }
 
-  //Dropdown
   const items = (record) => [
     {
       label: (
@@ -165,20 +153,29 @@ function RabbitList() {
     },
   ];
 
-  // Table
+  const tableHeaderStyle = {
+    headCells: {
+      style: {
+        color: "#ffffff",
+        fontSize: "14px",
+        backgroundColor: "#1677ff",
+      },
+    },
+  };
+
   const columns = [
     {
-      title: "Image",
-      dataIndex: "image_path",
-      key: "image_path",
-      render: (image_path) => {
-        const imagePaths = image_path.split(",");
+      name: "Image",
+      selector: (row) => row.image_path,
+      cell: (row) => {
+        const imagePaths = row.image_path.split(",");
         const firstImagePath = imagePaths[0];
 
         return (
           <div>
             {firstImagePath && (
               <Avatar
+                shape="square"
                 src={
                   <img
                     src={`http://localhost:8081/uploads/${firstImagePath}`}
@@ -191,58 +188,47 @@ function RabbitList() {
       },
     },
     {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
+      name: "Name",
+      selector: (row) => row.name,
+      sortable: true,
     },
     {
-      title: "Age",
-      dataIndex: "date_of_birth",
-      key: "date_of_birth",
-      render: (dateOfBirth) => {
-        // const age = calculateAge(dateOfBirth);
-        // return `${age.years} yrs ${age.months} mos`;
-        return calculateAge(dateOfBirth);
-      },
+      name: "Age",
+      selector: (row) => row.date_of_birth,
+      sortable: true,
+      cell: (row) => calculateAge(row.date_of_birth),
     },
     {
-      title: "Sex",
-      dataIndex: "sex",
-      key: "sex",
+      name: "Sex",
+      selector: (row) => row.sex,
+      sortable: true,
     },
     {
-      title: "Breed",
-      dataIndex: "breed_type",
-      key: "breed_type",
+      name: "Breed",
+      selector: (row) => row.breed_type,
+      sortable: true,
     },
     {
-      title: "Color",
-      dataIndex: "color",
-      key: "color",
+      name: "Color",
+      selector: (row) => row.color,
+      sortable: true,
     },
+    // {
+    //   name: "Slaughter",
+    //   cell: (row) => {
+    //     if (row.rabbit_type === "Meat rabbit") {
+    //       const age = calculateAge(row.date_of_birth);
+    //       return age.localeCompare(slaughter) >= 0 ? "YES" : "NO"; // slaughtere from config
+    //     }
+    //     return null;
+    //   },
+    // },
     {
-      title: "Type",
-      dataIndex: "rabbit_type",
-      key: "rabbit_type",
-    },
-    {
-      title: "Slaughter",
-      render: (o) => {
-        if (o.rabbit_type === "Meat rabbit") {
-          const age = calculateAge(o.date_of_birth);
-          return age.localeCompare(slaughter) >= 0 ? "YES" : "NO"; // slaughtere from config
-        }
-
-        return null;
-      },
-    },
-    {
-      title: "Actions",
-      key: "action",
-      render: (text, record) => (
+      name: "Actions",
+      cell: (row) => (
         <Dropdown
           menu={{
-            items: items(record),
+            items: items(row),
           }}
           trigger={["click"]}
           placement="bottomLeft"
@@ -252,44 +238,24 @@ function RabbitList() {
           </a>
         </Dropdown>
       ),
-      // render: (text, record) => (
-      //   <Space>
-      //     <Button onClick={() => navigateTo(`/edit-rabbit/${record.id}`)}>
-      //       Edit
-      //     </Button>
-      //     {record.rehome_status === "Rehome" ? (
-      //       <Button
-      //         disabled
-      //         type="primary"
-      //         onClick={(e) => onUnRehome(e, record)}
-      //       >
-      //         Rehome
-      //       </Button>
-      //     ) : (
-      //       <Button type="primary" onClick={(e) => onRehome(e, record)}>
-      //         Rehome
-      //       </Button>
-      //     )}
-      //     <Button
-      //       type="primary"
-      //       danger
-      //       onClick={(e) => handleDelete(record.id)}
-      //     >
-      //       Delete
-      //     </Button>
-      //   </Space>
-      // ),
     },
   ];
 
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = record.slice(indexOfFirstItem, indexOfLastItem);
-  const paginationProps = {
-    current: currentPage,
-    total: record.length,
-    pageSize: itemsPerPage,
-    onChange: (page) => setCurrentPage(page),
+  // const { Search } = Input;
+  // const Filter = (value) => {
+  //   const lowerCaseValue = value.toLowerCase();
+  //   const filteredRabbits = rabbits.filter((rabbit) =>
+  //     rabbit.name.toLowerCase().includes(lowerCaseValue)
+  //   );
+  //   setRecord(filteredRabbits);
+  // };
+
+  const Filter = (event) => {
+    const value = event.target.value.toLowerCase();
+    const filteredRabbits = rabbits.filter((rabbit) =>
+      rabbit.name.toLowerCase().includes(value)
+    );
+    setRecord(filteredRabbits);
   };
 
   return (
@@ -302,16 +268,17 @@ function RabbitList() {
       <div className="main-container bg-light">
         <div className="d-flex align-items-center justify-content-between">
           <h3>Rabbit List</h3>
-          <Search
+          <Input
             style={{
               height: "40px",
               fontSize: "16px",
               width: "400px",
             }}
-            placeholder="Search"
+            placeholder="Search by name"
             allowClear
             size="large"
-            onSearch={Filter}
+            onChange={Filter}
+            prefix={<SearchOutlined />}
           />
         </div>
         <div className="d-flex align-items-center justify-content-end my-2">
@@ -320,10 +287,13 @@ function RabbitList() {
           </Button>
         </div>
         <div className="tables">
-          <Table
+          <DataTable
             columns={columns}
-            dataSource={currentItems}
-            pagination={paginationProps}
+            data={record}
+            pagination
+            customStyles={tableHeaderStyle}
+            selectableRowsHighlight
+            highlightOnHover
           />
         </div>
       </div>

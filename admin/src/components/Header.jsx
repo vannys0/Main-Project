@@ -11,6 +11,7 @@ import { DownOutlined } from "@ant-design/icons";
 import "./Header.css";
 import { Badge, Space, Typography, Dropdown, Avatar } from "antd";
 import Default from "../images/default-profile.png";
+import AdminUserProfile from "../pages/Profile/AdminUserProfile";
 import Swal from "sweetalert2";
 import axios from "axios";
 import SecureStore from "react-secure-storage";
@@ -49,16 +50,20 @@ function Header({ OpenSidebar }) {
   const items = [
     {
       key: "1",
-      label: (
-        <a
-          style={{ textDecoration: "none" }}
-          rel="noopener noreferrer"
-          href="/request"
-          onClick={() => navigateTo("/request")}
-        >
-          You have {pending} pending request
-        </a>
-      ),
+      label:
+        pending === 0 ? (
+          <a style={{ textDecoration: "none" }} rel="noopener noreferrer">
+            No adoption request yet
+          </a>
+        ) : (
+          <a
+            style={{ textDecoration: "none" }}
+            rel="noopener noreferrer"
+            onClick={() => navigateTo("/request")}
+          >
+            You have {pending} pending request
+          </a>
+        ),
     },
   ];
 
@@ -68,9 +73,7 @@ function Header({ OpenSidebar }) {
       key: "0",
     },
     {
-      label: (
-        <span onClick={() => navigateTo(`/profile/${user.id}`)}>Profile</span>
-      ),
+      label: <AdminUserProfile />,
       key: "1",
     },
     {
@@ -113,10 +116,10 @@ function Header({ OpenSidebar }) {
               items,
             }}
             trigger={["click"]}
-            placement="bottomCenter"
+            placement="bottom"
           >
             <Space>
-              <BsFillBellFill className="icon" />
+              <BsFillBellFill className="icon" style={{ color: "#797979" }} />
             </Space>
           </Dropdown>
         </Badge>

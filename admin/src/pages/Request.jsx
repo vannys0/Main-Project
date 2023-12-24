@@ -9,6 +9,7 @@ import { DownOutlined } from "@ant-design/icons";
 import { SlOptionsVertical } from "react-icons/sl";
 import { Button, Input, Table, Tag, Space, Pagination, Dropdown } from "antd";
 import Swal from "sweetalert2";
+import DataTable from "react-data-table-component";
 import appConfig from "../../config.json";
 const BASE_URL = appConfig.apiBasePath;
 
@@ -19,9 +20,6 @@ function Request() {
   };
   const navigateTo = useNavigate();
   const [values, setValues] = useState([]);
-  const [pageNumber, setPageNumber] = useState(1);
-  const itemsPerPage = 6;
-
   const [filteredValues, setFilteredValues] = useState([]);
   const [selectedStatus, setSelectedStatus] = useState("All");
 
@@ -120,16 +118,6 @@ function Request() {
       .catch((err) => console.log(err));
   }, []);
 
-  const handlePageChange = (page) => {
-    setPageNumber(page);
-  };
-
-  const getDisplayedData = () => {
-    const startIndex = (pageNumber - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    return values.slice(startIndex, endIndex);
-  };
-
   const listItems = (record) => [
     {
       label: <ReviewRequest data={record} />,
@@ -163,42 +151,51 @@ function Request() {
         },
   ];
 
+  const tableHeaderStyle = {
+    headCells: {
+      style: {
+        color: "#ffffff",
+        fontSize: "14px",
+        backgroundColor: "#1677ff",
+      },
+    },
+  };
+
   const columns = [
     {
-      title: "Adoption Id",
-      dataIndex: "id",
-      key: "id",
+      name: "Adoption Id",
+      selector: (row) => row.id,
+      sortable: true,
     },
     {
-      title: "Address",
-      key: "address",
-      render: (text, record) => (
+      name: "Address",
+      cell: (record) => (
         <span>
           {record.barangay}, {record.city}, {record.province}
         </span>
       ),
     },
     {
-      title: "Date",
-      dataIndex: "adoption_date",
-      key: "date",
-      render: (record) =>
-        new Date(record).toLocaleDateString("en-US", {
+      name: "Date",
+      selector: (row) => row.adoption_date,
+      sortable: true,
+      format: (record) =>
+        new Date(record.adoption_date).toLocaleDateString("en-US", {
           year: "numeric",
           month: "long",
           day: "numeric",
         }),
     },
     {
-      title: "Mode of Delivery",
-      dataIndex: "service_option",
-      key: "service_option",
+      name: "Mode of Delivery",
+      selector: (row) => row.service_option,
+      sortable: true,
     },
     {
-      title: "Status",
-      dataIndex: "adoption_status",
-      key: "adoption_status",
-      render: (text, record) => (
+      name: "Status",
+      selector: (row) => row.adoption_status,
+      sortable: true,
+      cell: (record) => (
         <span>
           {record.adoption_status === "Pending" ? (
             <Tag color="warning">{record.adoption_status}</Tag>
@@ -211,15 +208,15 @@ function Request() {
       ),
     },
     {
-      title: "SGA",
-      render: (o) => {
-        if (o.adoption_status !== "Pending") {
+      name: "SGA",
+      cell: (record) => {
+        if (record.adoption_status !== "Pending") {
           return null;
         }
 
         if (
-          o.mode_of_payment === "Agriculture" &&
-          o.agriculture_product_price >= o.price
+          record.mode_of_payment === "Agriculture" &&
+          record.agriculture_product_price >= record.price
         ) {
           return "Yes";
         }
@@ -228,9 +225,8 @@ function Request() {
       },
     },
     {
-      title: "Actions",
-      key: "action",
-      render: (text, record) => (
+      name: "Actions",
+      cell: (record) => (
         <Dropdown
           menu={{
             items: listItems(record),
@@ -308,12 +304,13 @@ function Request() {
         <span> {selectedStatus}</span>
 
         <div className="tables">
-          <Table
-            dataSource={filteredValues}
+          <DataTable
             columns={columns}
-            pagination={{
-              pageSize: itemsPerPage,
-            }}
+            data={filteredValues}
+            pagination
+            customStyles={tableHeaderStyle}
+            highlightOnHover
+            selectableRowsHighlight
           />
         </div>
       </div>

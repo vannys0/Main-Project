@@ -28,6 +28,7 @@ import SecureStore from "react-secure-storage";
 import axios from "axios";
 import { UserOutlined, UploadOutlined } from "@ant-design/icons";
 import { Table, Col, Row, Statistic, Space, Avatar } from "antd";
+import DataTable from "react-data-table-component";
 import { RiPassPendingLine } from "react-icons/ri";
 import appConfig from "../../config.json";
 const BASE_URL = appConfig.apiBasePath;
@@ -37,16 +38,13 @@ function Dashboard() {
   const OpenSidebar = () => {
     setOpenSidebarToggle(!openSidebarToggle);
   };
-
   const user = SecureStore.getItem("userToken");
-
+  const navigateTo = useNavigate();
   const [userCount, setUserCount] = useState(0);
   const [rabbitCount, setRabbitCount] = useState(0);
   const [pending, setPending] = useState(0);
   const [rabbit, setRabbit] = useState([]);
   const [clients, setClients] = useState([]);
-
-  //chart api
   const [monthSales, setMonthSales] = useState([]);
   const [adopt, setAdopt] = useState([]);
 
@@ -115,12 +113,65 @@ function Dashboard() {
       });
   }, []);
 
-  const navigateTo = useNavigate();
-
   const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString();
+    return new Date(dateString).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
   };
+
+  const tableHeaderStyle = {
+    headCells: {
+      style: {
+        color: "#ffffff",
+        fontSize: "14px",
+        backgroundColor: "#1677ff",
+      },
+    },
+  };
+
+  const columns = [
+    {
+      name: "Name",
+      selector: (row) => row.name,
+      sortable: true,
+    },
+    {
+      name: "Sex",
+      selector: (row) => row.sex,
+      sortable: true,
+    },
+    {
+      name: "Breed",
+      selector: (row) => row.breed_type,
+      sortable: true,
+    },
+    {
+      name: "Color",
+      selector: (row) => row.color,
+      sortable: true,
+    },
+  ];
+
+  const adoption = [
+    {
+      name: "Adoption ID",
+      selector: (row) => row.id,
+      sortable: true,
+    },
+    {
+      name: "Adoption Date",
+      selector: (row) => row.adoption_date,
+      sortable: true,
+      format: (row) => formatDate(row.adoption_date),
+    },
+    {
+      name: "Status",
+      selector: (row) => row.adoption_status,
+      sortable: true,
+    },
+  ];
 
   return (
     <div className="grid-container">
@@ -131,9 +182,6 @@ function Dashboard() {
       />
       <main className="main-container bg-light">
         <h3>Dashboard</h3>
-        {/* <div className="videoDiv">
-          <video src={Video} autoPlay loop muted></video>
-        </div> */}
         <div className="main-cards">
           <div className="card-div" onClick={(e) => navigateTo("/clients")}>
             <div className="card-inner">
@@ -159,7 +207,7 @@ function Dashboard() {
             </div>
             <h5>{rabbitCount}</h5>
           </div>
-          <div className="card-div">
+          <div className="card-div" onClick={() => navigateTo("/breeding")}>
             <div className="card-inner">
               <h5>Upcoming</h5>
 
@@ -238,20 +286,19 @@ function Dashboard() {
                 "rgba(99, 99, 99, 0.2) 0px 2px 4px 0px, rgba(99, 99, 99, 0.1) 0px -2px 8px 0px",
               padding: "10px",
               backgroundColor: "#fff",
+              cursor: "pointer",
             }}
+            onClick={() => navigateTo("/rabbits")}
           >
             <h6>Recent Added</h6>
             <div style={{ overflowX: "auto" }}>
-              <Table dataSource={rabbit} pagination={false}>
-                <Table.Column title="Rabbit name" dataIndex="name" key="name" />
-                <Table.Column title="Sex" dataIndex="sex" key="sex" />
-                <Table.Column
-                  title="Breed"
-                  dataIndex="breed_type"
-                  key="breed_type"
-                />
-                <Table.Column title="Color" dataIndex="color" key="color" />
-              </Table>
+              <DataTable
+                columns={columns}
+                data={rabbit}
+                pagination={false}
+                customStyles={tableHeaderStyle}
+                highlightOnHover
+              />
             </div>
           </div>
           <div
@@ -261,24 +308,19 @@ function Dashboard() {
                 "rgba(99, 99, 99, 0.2) 0px 2px 4px 0px, rgba(99, 99, 99, 0.1) 0px -2px 8px 0px",
               padding: "10px",
               backgroundColor: "#fff",
+              cursor: "pointer",
             }}
+            onClick={() => navigateTo("/request")}
           >
             <h6>Recent Adoption</h6>
             <div style={{ overflowX: "auto" }}>
-              <Table dataSource={clients} pagination={false}>
-                <Table.Column title=" ID" dataIndex="id" key="id" />
-                <Table.Column
-                  title="Adoption Date"
-                  dataIndex="adoption_date"
-                  key="adoption_date"
-                  render={(date) => formatDate(date)}
-                />
-                <Table.Column
-                  title="Status"
-                  dataIndex="transaction_status"
-                  key="transaction_status"
-                />
-              </Table>
+              <DataTable
+                columns={adoption}
+                data={clients}
+                pagination={false}
+                customStyles={tableHeaderStyle}
+                highlightOnHover
+              />
             </div>
           </div>
         </div>

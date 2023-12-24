@@ -20,29 +20,6 @@
     background-color: #1677ff;
   }
 
-  .admin-side {
-    gap: 20px;
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-    cursor: pointer;
-  }
-
-  .admin-side > div > .icons {
-    font-size: 34px;
-    color: #00828c;
-  }
-
-  .admin-side .admin-user {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  .admin-side > .admin-user > h6 {
-    font-weight: 600;
-  }
-
   ul .active {
     color: #fff;
   }
@@ -53,20 +30,13 @@
   
   .sidebar-title {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 15px 30px 0px 30px;
-    margin-bottom: 30px;
+    justify-content: space-between;
+    padding: 0 50px;
   }
   
   .sidebar-title > span {
     display: none;
-  }
-  
-  .sidebar-brand {
-    margin-top: 15px;
-    font-size: 20px;
-    font-weight: 700;
   }
   
   .sidebar-list {
@@ -76,7 +46,7 @@
     list-style-type: none;
     
   }
-  
+
   .sidebar-list-item {
     text-decoration: none;
     color: rgba(0, 0, 0, .75);
@@ -87,9 +57,12 @@
   .sidebar-list-item .icon {
     font-size: 16px;
   }
-  .sidebar-list-item:hover {
-    color: rgba(0, 0, 0, .75);
+  
+  .sidebar-list-item:not(.active):hover {
+    color: rgba(0, 0, 0, 0.75);
+    background-color: #eaeaea;
   }
+
   .sidebar-responsive {
     display: inline !important;
     position: absolute;
