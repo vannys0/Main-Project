@@ -181,7 +181,7 @@ function Dashboard() {
     labels: adopt.map((item) => item.name),
     datasets: [
       {
-        label: "Adopt",
+        label: "Adoptions",
         data: adopt.map((item) => item.Adopt),
         backgroundColor: "rgba(43, 63, 229, 0.8)",
       },
@@ -192,7 +192,7 @@ function Dashboard() {
     labels: monthSales.map((item) => item.name),
     datasets: [
       {
-        label: "Sales",
+        label: "Adoption Revenue",
         data: monthSales.map((item) => item.Sales),
         fill: false,
         tension: 0.1,
