@@ -32,11 +32,11 @@ function ClientUserProfile({ data }) {
           </div>
         }
       >
-        <div className="client-profile">
-          <div className="d-flex align-items-center justify-content-center">
+        <div className="profile-div">
+          <div className="thumbnail"></div>
+          <div className="d-flex justify-content-center">
             {data.profile ? (
               <Avatar
-                shape="square"
                 style={{
                   width: "168px",
                   height: "168px",
@@ -52,7 +52,6 @@ function ClientUserProfile({ data }) {
               />
             ) : (
               <Avatar
-                shape="square"
                 style={{
                   width: "168px",
                   height: "168px",
@@ -62,21 +61,20 @@ function ClientUserProfile({ data }) {
               />
             )}
           </div>
-          <div className="client-data">
+          <div className="client-info">
+            <hr style={{ height: "2px solid black", width: "100%" }} />
             <div>
-              <p>User Type</p>
-              <p>{data.user_type}</p>
-            </div>
-            <div>
-              <p>User ID</p>
+              <h6>User ID</h6>
               <p>{data.id}</p>
             </div>
+            <hr style={{ height: "2px solid black", width: "100%" }} />
             <div>
-              <p>Name</p>
+              <h6>Full Name</h6>
               <p>{data.name}</p>
             </div>
+            <hr style={{ height: "2px solid black", width: "100%" }} />
             <div>
-              <p>Email</p>
+              <h6>Email</h6>
               <p>{data.email}</p>
             </div>
           </div>

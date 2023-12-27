@@ -9,22 +9,15 @@ import {
 } from "react-icons/bs";
 import { LuUsers, LuBell } from "react-icons/lu";
 import { CiCircleList } from "react-icons/ci";
-// import {
-//   BarChart,
-//   Bar,
-//   Cell,
-//   XAxis,
-//   YAxis,
-//   CartesianGrid,
-//   Tooltip,
-//   Legend,
-//   ResponsiveContainer,
-//   LineChart,
-//   Line,
-// } from "recharts";
 import { Chart as ChartJS, defaults } from "chart.js/auto";
+
 defaults.maintainAspectRatio = false;
 defaults.responsive = true;
+defaults.plugins.title.display = true;
+defaults.plugins.title.align = "start";
+defaults.plugins.title.font.size = 18;
+defaults.plugins.title.color = "rgba(0, 0, 0, 0.75)";
+
 import { Bar, Doughnut, Line } from "react-chartjs-2";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
@@ -51,6 +44,7 @@ function Dashboard() {
   const [clients, setClients] = useState([]);
   const [monthSales, setMonthSales] = useState([]);
   const [adopt, setAdopt] = useState([]);
+  const [adoptedBySex, setAdoptedBySex] = useState([]);
 
   useEffect(() => {
     axios
@@ -114,6 +108,15 @@ function Dashboard() {
       })
       .catch((error) => {
         console.error(error);
+      });
+
+    axios
+      .get(BASE_URL + "/adopted-by-sex")
+      .then((response) => {
+        setAdoptedBySex(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching adopted rabbits by sex:", error);
       });
   }, []);
 
@@ -202,6 +205,17 @@ function Dashboard() {
     ],
   };
 
+  const adoptDataBySex = {
+    labels: adoptedBySex.map((item) => item.sex || ""),
+    datasets: [
+      {
+        label: "Adopted Rabbits by Sex",
+        data: adoptedBySex.map((item) => item.count_adopted_rabbits || 0),
+        backgroundColor: ["rgba(253, 135, 135, 0.8)", "rgba(43, 63, 229, 0.8)"],
+      },
+    ],
+  };
+
   return (
     <div className="grid-container">
       <Header OpenSidebar={OpenSidebar} />
@@ -242,93 +256,55 @@ function Dashboard() {
           </div>
         </div>
         <div className="first-chart chart-div">
-          <Bar data={adoptData} />
-        </div>
-        <div className="chart-div">
-          <Line data={salesData} />
-        </div>
-        <div className="chart-div">
-          <Doughnut
-            data={{
-              labels: ["A", "B", "C", "D", "E"],
-              datasets: [
-                {
-                  label: "Revenue",
-                  data: [200, 300, 150, 400, 250],
-                  fill: false,
-                  tension: 0.1,
-                  backgroundColor: [
-                    "rgba(43, 63, 229, 0.8)",
-                    "rgba(250, 192, 19, 0.8)",
-                    "rgba(50, 192, 19, 0.8)",
-                    "rgba(253, 135, 135, 0.8)",
-                  ],
+          {adoptData.labels.length === 0 ||
+          adoptData.datasets[0].data.every((dataPoint) => dataPoint === 0) ? (
+            <p>No data available for the chart</p>
+          ) : (
+            <Bar
+              data={adoptData}
+              options={{
+                plugins: {
+                  title: {
+                    text: "Adoptions",
+                  },
                 },
-              ],
-            }}
-          />
-        </div>
-        {/* <ResponsiveContainer width="100%" height="75%">
-          <BarChart
-            className="bar-chart"
-            style={{
-              boxShadow:
-                "rgba(99, 99, 99, 0.2) 0px 2px 4px 0px, rgba(99, 99, 99, 0.1) 0px -2px 8px 0px",
-              padding: "10px",
-              backgroundColor: "#fff",
-            }}
-            width={500}
-            height={300}
-            data={adopt}
-            margin={{
-              top: 20,
-              right: 50,
-              left: 20,
-              bottom: 20,
-            }}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Bar dataKey="Adopt" fill="#1677ff" />
-          </BarChart>
-        </ResponsiveContainer>
-
-        <br />
-        <ResponsiveContainer width="100%" height="75%">
-          <LineChart
-            style={{
-              boxShadow:
-                "rgba(99, 99, 99, 0.2) 0px 2px 4px 0px, rgba(99, 99, 99, 0.1) 0px -2px 8px 0px",
-              padding: "10px",
-              backgroundColor: "#fff",
-            }}
-            width={500}
-            height={300}
-            data={monthSales}
-            margin={{
-              top: 20,
-              right: 50,
-              left: 20,
-              bottom: 20,
-            }}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Line
-              type="monotone"
-              dataKey="Sales"
-              stroke="#1677ff"
-              activeDot={{ r: 8 }}
+              }}
             />
-          </LineChart>
-        </ResponsiveContainer> */}
-
+          )}
+        </div>
+        <div className="chart-div">
+          {salesData.labels.length === 0 ||
+          salesData.datasets[0].data.every((dataPoint) => dataPoint === 0) ? (
+            <p>No data available for the chart</p>
+          ) : (
+            <Line
+              data={salesData}
+              options={{
+                plugins: {
+                  title: {
+                    text: "Adoption Revenue",
+                  },
+                },
+              }}
+            />
+          )}
+        </div>
+        <div className="chart-div">
+          {!adoptDataBySex.labels.length ? (
+            <p>No data available for the chart</p>
+          ) : (
+            <Doughnut
+              data={adoptDataBySex}
+              options={{
+                plugins: {
+                  title: {
+                    text: "Adopted Rabbits by Sex",
+                  },
+                },
+              }}
+            />
+          )}
+        </div>
         <div className="activity">
           <div
             className="rabbit-added"

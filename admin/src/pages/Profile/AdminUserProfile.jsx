@@ -96,7 +96,86 @@ function AdminUserProfile() {
         onCancel={handleCancel}
         footer={<Button onClick={handleCancel}>Close</Button>}
       >
-        <div className="client-profile">
+        <div className="profile-div">
+          <div className="admin-thumbnail"></div>
+          <div className="d-flex justify-content-center">
+            {image ? (
+              <div className="d-flex flex-column gap-2 align-items-center justify-content-center">
+                <Avatar
+                  style={{
+                    width: "168px",
+                    height: "168px",
+                    border: "5px solid #ffffff",
+                  }}
+                  src={
+                    <img
+                      src={URL.createObjectURL(image)}
+                      alt=""
+                      style={{ width: "100%" }}
+                    />
+                  }
+                />
+                <Button onClick={handleUploadProfile}>Upload profile</Button>
+              </div>
+            ) : hasProfileImage ? (
+              <div className="d-flex flex-column gap-2 align-items-center justify-content-center">
+                <Avatar
+                  style={{
+                    width: "168px",
+                    height: "168px",
+                    border: "5px solid #ffffff",
+                  }}
+                  src={
+                    <img
+                      src={`http://localhost:8081/uploads/${userInfo.profile}`}
+                      alt=""
+                      style={{ width: "100%" }}
+                    />
+                  }
+                />
+                <Button onClick={handleUpload}>Change profile</Button>
+              </div>
+            ) : (
+              <div className="d-flex flex-column gap-2 align-items-center justify-content-center">
+                <Avatar
+                  style={{
+                    width: "168px",
+                    height: "168px",
+                    border: "5px solid #ffffff",
+                  }}
+                  src={<img src={Default} alt="" />}
+                />
+                <Button onClick={handleUpload}>Upload profile</Button>
+              </div>
+            )}
+            <input
+              type="file"
+              name="file"
+              accept="image/*"
+              ref={inputRef}
+              onChange={handleImageChange}
+              style={{ display: "none" }}
+            />
+          </div>
+          <div className="client-info">
+            <hr style={{ height: "2px solid black", width: "100%" }} />
+            <div>
+              <h6>User ID</h6>
+              <p>{userInfo.id}</p>
+            </div>
+            <hr style={{ height: "2px solid black", width: "100%" }} />
+            <div>
+              <h6>Full Name</h6>
+              <p>{userInfo.name}</p>
+            </div>
+            <hr style={{ height: "2px solid black", width: "100%" }} />
+            <div>
+              <h6>Email</h6>
+              <p>{userInfo.email}</p>
+            </div>
+          </div>
+        </div>
+        {/* <div className="client-profile">
           <div className="d-flex flex-column gap-2 align-items-center justify-content-center">
             <div>
               {image ? (
@@ -180,7 +259,7 @@ function AdminUserProfile() {
               <p>{userInfo.email}</p>
             </div>
           </div>
-        </div>
+        </div> */}
       </Modal>
     </div>
   );

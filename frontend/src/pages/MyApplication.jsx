@@ -64,10 +64,13 @@ function MyApplication() {
     });
   };
 
-  function formatDate(dateString) {
-    const date = new Date(dateString);
-    return date.toLocaleDateString();
-  }
+  const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  };
 
   const options = (record) =>
     record.adoption_status === "Pending"
@@ -77,15 +80,20 @@ function MyApplication() {
             key: "0",
           },
           {
-            label: <span onClick={() => handleDelete(record.id)}>Delete</span>,
+            label: <span>Cancel</span>,
             key: "1",
-            danger: true,
+            disabled: true,
           },
         ]
       : [
           {
             label: <Appli data={record} />,
             key: "0",
+          },
+          {
+            label: <span onClick={() => handleDelete(record.id)}>Cancel</span>,
+            key: "1",
+            danger: true,
           },
         ];
 

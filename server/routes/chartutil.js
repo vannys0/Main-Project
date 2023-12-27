@@ -100,4 +100,19 @@ router.get("/chart-monthly-sales", (req, res) => {
   );
 });
 
+router.get("/adopted-by-sex", (req, res) => {
+  db.query(
+    "SELECT sex, COUNT(*) AS count_adopted_rabbits FROM rabbit WHERE is_adopted = true GROUP BY sex",
+    (error, result) => {
+      if (error) {
+        console.error("Error fetching adopted rabbits by sex:", error);
+        return res
+          .status(500)
+          .json({ error: "Error fetching adopted rabbits by sex" });
+      }
+      res.json(result);
+    }
+  );
+});
+
 module.exports = router;
