@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 13, 2023 at 04:34 PM
+-- Generation Time: Dec 27, 2023 at 08:48 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.10
 
@@ -37,7 +37,7 @@ CREATE TABLE `adoption` (
   `city` varchar(100) NOT NULL,
   `barangay` varchar(100) NOT NULL,
   `reason_for_adoption` varchar(200) NOT NULL,
-  `other_pets` varchar(200) NOT NULL,
+  `other_pets` varchar(200) DEFAULT NULL,
   `adoption_status` varchar(255) NOT NULL,
   `home_environment_image_path` varchar(255) DEFAULT NULL,
   `service_option` varchar(255) DEFAULT NULL,
@@ -54,7 +54,8 @@ CREATE TABLE `adoption` (
 --
 
 INSERT INTO `adoption` (`id`, `user_id`, `rabbit_id`, `adoption_date`, `phone`, `province`, `city`, `barangay`, `reason_for_adoption`, `other_pets`, `adoption_status`, `home_environment_image_path`, `service_option`, `delivery_status`, `comment`, `price`, `mode_of_payment`, `agriculture_product`, `agriculture_product_price`) VALUES
-('a2147255-3da6-4249-a1b3-5c7cb64ee089', '6226702d-125e-4c1d-973b-994c76bf52a3', '5eee1b09-4841-45a9-bce2-ffc484436760', '2023-12-13', '09482048756', 'CAMARINES SUR', 'CABUSAO', 'Santa Cruz', 'Rabbits are a great pet', '', 'Approved', 'Gantt chart - eLeporidae (3).png', 'Deliver', 'Approved', NULL, 350, 'Cash', '', 0);
+('adoption118934', 'user167491', 'rabbit470950', '2023-12-27', '09222222222', 'CAMARINES SUR', 'CABUSAO', 'Santa Cruz', 'Rabbits live a long time', '', 'Approved', 'Gantt chart - eLeporidae (3).png', 'Deliver', 'Approved', NULL, 400, 'Agriculture', 'Palay', 400),
+('adoption768816', 'user167491', 'rabbit119521', '2023-12-27', '09482048756', 'CAMARINES SUR', 'CABUSAO', 'Santa Cruz', 'Adaptability to indoor living', '', 'Approved', 'Gantt chart - eLeporidae (3).png', 'Deliver', 'Approved', NULL, 350, 'Cash', '', 0);
 
 -- --------------------------------------------------------
 
@@ -76,7 +77,8 @@ CREATE TABLE `breeding_pair` (
 --
 
 INSERT INTO `breeding_pair` (`id`, `buck_id`, `doe_id`, `note`, `pairing_date`, `expected_due_date`) VALUES
-('dbb32ecb-5a7a-4bbe-86d2-ecc52b820c68', '40f87a68-9c15-4d08-9164-225102ce652a', '4bde3adb-0370-4724-9b42-25be2c25a64b', 'L&Ch', '2023-12-13', '2024-01-14');
+('pair345236', 'rabbit441541', 'rabbit375996', 'Petter$Pancake', '2023-10-14', '2024-01-15'),
+('pair878278', 'rabbit884171', 'rabbit470950', 'Lea$George', '2023-12-14', '2024-01-15');
 
 -- --------------------------------------------------------
 
@@ -116,14 +118,21 @@ CREATE TABLE `rabbit` (
 --
 
 INSERT INTO `rabbit` (`id`, `breeding_pair_id`, `name`, `date_of_birth`, `sex`, `rabbit_type`, `color`, `breed_type`, `weight`, `image_path`, `rehome_status`, `price`, `is_adopted`) VALUES
-('40f87a68-9c15-4d08-9164-225102ce652a', NULL, 'Chingkong', '2023-12-08', 'Male', 'Pet rabbit', 'Black', 'American', '1.4', 'âPngtreeârabbit_3644555.png', NULL, 300, 0),
-('4bde3adb-0370-4724-9b42-25be2c25a64b', NULL, 'Lea', '2023-06-29', 'Female', 'Meat rabbit', 'Tan', 'Flemish Giant', '2', 'Lea.jpg', NULL, 350, 0),
-('5eee1b09-4841-45a9-bce2-ffc484436760', '5f858901-5391-4860-bd5c-06e7337ce8dc', 'AME-BEV', '2023-12-11', 'Male', 'Pet rabbit', 'Fawn', 'American-Beveren', '2', 'Lea.jpg', 'Rehome', 350, 1),
-('982878d3-399d-41d9-95e8-5524e16a1393', '97f53b50-e34b-4011-a2b2-a382ee5e4db0', 'Akif', '2023-12-09', 'Male', 'Pet rabbit', 'Tan', 'French Lop-Flemish Giant', '1.2', 'harold.jpg', 'Rehome', 350, 0),
-('a55a0de6-c9b7-4ebb-bba1-5ee445ba980c', NULL, 'Gerald', '2023-07-02', 'Male', 'Pet rabbit', 'Sooty', 'French Lop', '2', 'Gerald.jpg', 'Rehome', 300, 0),
-('cb9e8d58-2fd5-4921-9b75-bb47a7aa13fe', NULL, 'Georgia', '2023-06-27', 'Female', 'Pet rabbit', 'Black', 'Beveren', '1.7', 'george.jpg', 'Rehome', 300, 0),
-('cc9d8b5f-d8dc-4928-a34c-698f44125a0e', NULL, 'Pancake', '2023-07-02', 'Female', 'Pet rabbit', 'White', 'American', '1.6', 'Pancake.jpg', 'Rehome', 400, 0),
-('f8c9097c-5117-450e-bb69-760d3fb249dd', NULL, 'Leo', '2023-07-09', 'Male', 'Pet rabbit', 'White', 'Beveren', '2', 'leo.jpg', 'Rehome', 350, 0);
+('rabbit119521', NULL, 'Totoro', '2023-02-23', 'Male', 'Pet rabbit', 'Fawn', 'Beveren', '1.4', 'totoro.jpg', 'Rehome', 350, 1),
+('rabbit149972', 'pair345236', 'French-Bev', '2023-12-23', 'Male', 'Pet rabbit', 'Tan', 'French Lop-Beveren', '1.2', 'Lea.jpg', NULL, 0, 0),
+('rabbit166339', NULL, 'Pancsssss', '2023-12-23', 'Female', 'Pet rabbit', 'Agouti', 'American', '1.1', 'Pancake.jpg', NULL, 0, 0),
+('rabbit332716', NULL, 'Harrold', '2022-12-07', 'Male', 'Pet rabbit', 'Brown', 'American', '1.3', 'harold.jpg', 'Rehome', 450, 0),
+('rabbit335156', NULL, 'Lokkss', '2023-12-23', 'Male', 'Pet rabbit', 'Brown', 'Belgian Hare', '1', 'Loki.jpg', NULL, 0, 0),
+('rabbit346045', NULL, 'Loki', '2023-05-26', 'Male', 'Pet rabbit', 'Black', 'American', '1.5', 'Loki.jpg', 'Rehome', 400, 0),
+('rabbit357444', NULL, 'Testsssssttttttttttttttttttt', '2023-12-13', 'Male', 'Pet rabbit', 'Brown', 'American', '2', 'Loki.jpg,Pancake.jpg,Gerald.jpg', NULL, 0, 0),
+('rabbit360052', NULL, 'Gerald', '2023-01-04', 'Male', 'Pet rabbit', 'Fawn', 'Britannia Petite', '1.7', 'Gerald.jpg', 'Rehome', 350, 1),
+('rabbit375996', NULL, 'Pancake', '2023-03-06', 'Female', 'Pet rabbit', 'Sooty', 'Beveren', '1.8', 'Pancake.jpg', 'Rehome', 450, 1),
+('rabbit441541', NULL, 'Petter', '2023-03-15', 'Male', 'Pet rabbit', 'Agouti', 'French Lop', '1.2', 'petter.jpg', 'Rehome', 400, 0),
+('rabbit470950', NULL, 'Lea', '2023-02-21', 'Female', 'Pet rabbit', 'Sooty', 'Havana', '1.5', 'Lea.jpg', 'Rehome', 400, 1),
+('rabbit505640', NULL, 'Geregg', '2023-12-23', 'Male', 'Pet rabbit', 'Chinchilla', 'Belgian Hare', '1.2', 'Gerald.jpg', NULL, 0, 0),
+('rabbit571815', NULL, 'Tootsssss', '2023-12-23', 'Male', 'Pet rabbit', 'Tan', 'Checkered Giant', '1.3', 'totoro.jpg', NULL, 0, 0),
+('rabbit581715', NULL, 'Pettssss', '2023-12-23', 'Male', 'Pet rabbit', 'Tan', 'American', '1.2', 'petter.jpg', NULL, 0, 1),
+('rabbit844637', NULL, 'Leo', '2023-06-21', 'Male', 'Pet rabbit', 'Tan', 'French Lop', '1.4', 'leo.jpg', 'Rehome', 400, 1);
 
 -- --------------------------------------------------------
 
@@ -143,7 +152,8 @@ CREATE TABLE `transaction` (
 --
 
 INSERT INTO `transaction` (`id`, `adoption_id`, `transaction_date`, `transaction_status`) VALUES
-('08dc8995-9df1-48f7-ba1b-c87285bd81d1', 'a2147255-3da6-4249-a1b3-5c7cb64ee089', '2023-12-13', 'Completed');
+('transaction511321', 'adoption768816', '2023-12-27', 'Completed'),
+('transaction924821', 'adoption118934', '2023-12-27', 'Completed');
 
 -- --------------------------------------------------------
 
@@ -167,11 +177,9 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `name`, `email`, `password`, `user_type`, `profile`, `otp`, `is_verified`) VALUES
-('6226702d-125e-4c1d-973b-994c76bf52a3', 'Ivan Bengcolado', 'ivanpaglinawan0@gmail.com', '1234', 'client', 'âPngtreeârabbit_3644555.png', 5420, 1),
-('d09a9d2d-0984-4fda-8476-52a56a6cf484', 'Leonardo Nogra', 'leonardo@gmail.com', 'admin', 'admin', NULL, NULL, 0),
-('dc63f09f-f4c6-4bce-b73b-f83d64746ee1', 'Ivan', 'ivanpaglinawan00@gmail.com', 'zsdcas', 'client', NULL, NULL, 0),
-('effbe5b7-9757-4bfb-b6b9-2e5f170c6787', 'Cynthia Lorio', 'cynthialorio08@gmail.com', '1234', 'client', NULL, 7856, 1),
-('f0a9b912-a774-4219-badd-c0a9c5317d5d', 'Francis Bawag', 'francisbawag@gmail.com', '1234', 'client', NULL, NULL, 1);
+('user167491', 'Ivan Paglinawan', 'ivanpaglinawan0@gmail.com', '1234', 'client', 'Gantt chart - eLeporidae (3).png', 991957, 1),
+('user635882', 'Leonardo Nogra', 'leonardo@gmail.com', 'admin', 'admin', 'âPngtreeârabbit_3644555.png', NULL, 0),
+('user737997', 'Ivan Bengcolado', 'ivanbengcolado@gmail.com', '1234', 'client', NULL, 744150, 1);
 
 --
 -- Indexes for dumped tables
