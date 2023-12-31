@@ -187,7 +187,7 @@ body {
 }
 .grid-container > .main-container > .form {
   gap: 20px;
-  padding: 20px 20px 0px 20px;
+  padding: 30px 30px 10px 30px;
   background-color: #fff;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 4px 0px, rgba(99, 99, 99, 0.1) 0px -2px 8px 0px;
 }
@@ -199,15 +199,26 @@ body {
 .main-container .form > div > h6 {
   color: rgba(0, 0, 0, 0.8);
 }
+/* SCAN RABBIT */
 .scan-rabbit-div {
-  padding: 20px;
+  padding: 30px;
   background-color: #ffffff;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 4px 0px, rgba(99, 99, 99, 0.1) 0px -2px 8px 0px;
 }
-.scan-result div {
-   display: grid;
-   grid-template-columns: 1fr 3fr;
+.scan-result {
+  gap: 5px;
+  display: flex;
+  flex-direction: column;
 }
+.scan-result > div:not(.scan-again-div) {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+}
+.scan-again-div {
+  display: flex;
+  justify-content: flex-end;
+}
+
 .active {
   color: #007bff;
 }
@@ -216,7 +227,7 @@ body {
 .grid-container .main-container .edit-div {
   width: 100%;
   gap: 20px;
-  padding: 20px;
+  padding: 30px;
   display: grid;
   align-items: start;
   grid-template-columns: 1fr 2fr;
@@ -277,10 +288,16 @@ body {
 
 .breed-ground {
   display: grid;
-  padding: 40px;
+  padding: 20px;
   background-color: #fff;
   grid-template-columns: 1fr 1fr 1fr;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 4px 0px, rgba(99, 99, 99, 0.1) 0px -2px 8px 0px;
+}
+.breed-ground > .actions {
+  display: flex;
+  margin-top: 20px;
+  justify-content: flex-end;
+  grid-column: span 3;
 }
 
 /* BREEDING DETAILS */

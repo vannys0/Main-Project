@@ -177,15 +177,6 @@ function BreedPair() {
     console.log("onpair");
   };
 
-  const readerStyle = {
-    border: "2px solid #333",
-    borderRadius: "8px",
-    margin: "20px",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  };
-
   return (
     <div className="grid-container">
       <Header OpenSidebar={OpenSidebar} />
@@ -200,8 +191,8 @@ function BreedPair() {
             <h6>Male</h6>
             {scanResult ? <span>{scanResult}</span> : <div id="reader"></div>}
           </div>
-          <div className="d-flex justify-content-center">
-            <h6> Matching result</h6>
+          <div className="d-flex justify-content-center align-items-center">
+            <h6> Matching</h6>
           </div>
           <div className="ground">
             <h6>Female</h6>
@@ -211,24 +202,24 @@ function BreedPair() {
               <div id="reader1"></div>
             )}
           </div>
-        </div>
-        <div className="actions d-flex justify-content-end my-2">
-          <Button
-            onClick={(e) => {
-              navigateTo("/breeding");
-            }}
-          >
-            Cancel
-          </Button>
-          <Button
-            type="primary"
-            to="/breeding"
-            onClick={(e) => {
-              onPair(e);
-            }}
-          >
-            Pair now
-          </Button>
+          <div className="actions">
+            <Button
+              onClick={(e) => {
+                navigateTo("/breeding");
+              }}
+            >
+              Cancel
+            </Button>
+            <Button
+              type="primary"
+              to="/breeding"
+              onClick={(e) => {
+                onPair(e);
+              }}
+            >
+              Pair now
+            </Button>
+          </div>
         </div>
       </div>
     </div>

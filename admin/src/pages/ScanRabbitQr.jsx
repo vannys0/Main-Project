@@ -3,6 +3,7 @@ import "../Style.css";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import { Html5QrcodeScanner } from "html5-qrcode";
+import { Button } from "antd";
 import axios from "axios";
 import appConfig from "../../config.json";
 const BASE_URL = appConfig.apiBasePath;
@@ -104,6 +105,14 @@ function ScanRabbitQr() {
                   <div>
                     <span>Weight</span>
                     <span>{data.weight} klg</span>
+                  </div>
+                  <div className="scan-again-div">
+                    <Button
+                      type="primary"
+                      onClick={() => window.location.reload()}
+                    >
+                      Scan again
+                    </Button>
                   </div>
                 </div>
               ) : (
