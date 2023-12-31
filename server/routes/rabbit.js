@@ -158,4 +158,14 @@ router.get("/rabbit/:id", (req, res) => {
   });
 });
 
+router.get("/scan-rabbit", (req, res) => {
+  const id = req.query.id;
+  db.query("SELECT * FROM rabbit WHERE id = ?", [id], (err, results) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    return res.json(results);
+  });
+});
+
 module.exports = router;

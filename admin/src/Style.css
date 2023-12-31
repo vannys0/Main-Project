@@ -164,11 +164,32 @@ body {
   }
 
 /* ADD RABBIT */
+.btn-add,
+.btn-scan {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  cursor: pointer;
+  font-size: 20px;
+  border-radius: 50px;
+  align-items: center;
+  justify-content: center;
+  background-color:#ffffff;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 4px 0px, rgba(99, 99, 99, 0.1) 0px -2px 8px 0px;
+}
+.btn-add:hover {
+  color: #ffffff;
+  background-color: #1677ff;
+}
+.btn-scan:hover {
+  color: #ffffff;
+  background-color: #52c41a;
+}
 .grid-container > .main-container > .form {
   gap: 20px;
   padding: 20px 20px 0px 20px;
   background-color: #fff;
-  border: 2px solid #eaeaea;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 4px 0px, rgba(99, 99, 99, 0.1) 0px -2px 8px 0px;
 }
 .main-container .form > div{
   margin-bottom: 30px;
@@ -178,9 +199,15 @@ body {
 .main-container .form > div > h6 {
   color: rgba(0, 0, 0, 0.8);
 }
-
-/* Request */
-
+.scan-rabbit-div {
+  padding: 20px;
+  background-color: #ffffff;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 4px 0px, rgba(99, 99, 99, 0.1) 0px -2px 8px 0px;
+}
+.scan-result div {
+   display: grid;
+   grid-template-columns: 1fr 3fr;
+}
 .active {
   color: #007bff;
 }
@@ -250,10 +277,10 @@ body {
 
 .breed-ground {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
   padding: 40px;
-  border: 2px solid #eaeaea;
   background-color: #fff;
+  grid-template-columns: 1fr 1fr 1fr;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 4px 0px, rgba(99, 99, 99, 0.1) 0px -2px 8px 0px;
 }
 
 /* BREEDING DETAILS */

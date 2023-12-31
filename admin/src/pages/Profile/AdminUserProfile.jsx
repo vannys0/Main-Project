@@ -90,6 +90,9 @@ function AdminUserProfile() {
     <div>
       <span onClick={showModal}>My Profile</span>
       <Modal
+        style={{
+          top: 20,
+        }}
         title="My Profile"
         open={isModalOpen}
         onOk={handleOk}

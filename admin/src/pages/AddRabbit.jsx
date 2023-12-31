@@ -120,6 +120,7 @@ function AddRabbit() {
         OpenSidebar={OpenSidebar}
       />
       <div className="main-container bg-light">
+        <h3>Add Rabbit</h3>
         <form className="form" encType="multipart/form-data">
           <div>
             <label>Picture :</label>

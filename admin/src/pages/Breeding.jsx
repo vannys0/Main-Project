@@ -9,10 +9,12 @@ import { SlOptionsVertical } from "react-icons/sl";
 import { SearchOutlined } from "@ant-design/icons";
 import axios from "axios";
 import BreedingDetails from "./BreedingDetails";
+import { IoMdAdd } from "react-icons/io";
 import Swal from "sweetalert2";
 import appConfig from "../../config.json";
 const BASE_URL = appConfig.apiBasePath;
 import { breedType } from "./API/RabbitApi";
+
 function Breeding() {
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false);
   const OpenSidebar = () => {
@@ -217,10 +219,13 @@ function Breeding() {
             prefix={<SearchOutlined />}
           />
         </div>
-        <div className="d-flex justify-content-end my-2">
-          <Button type="primary" onClick={() => navigateTo("/add-breed-pair")}>
-            Add
-          </Button>
+        <div className="d-flex justify-content-end my-3">
+          <div
+            className="btn-add"
+            onClick={() => navigateTo("/add-breed-pair")}
+          >
+            <IoMdAdd />
+          </div>
         </div>
         <div className="tables">
           <DataTable

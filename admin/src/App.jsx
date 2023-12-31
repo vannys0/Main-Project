@@ -34,6 +34,7 @@ import Calendar from "./pages/Calendar";
 import AdminProfile from "./pages/Profile/AdminProfile";
 import ClientProfile from "./pages/Profile/ClientProfile";
 import RabbitSale from "./pages/RabbitSale";
+import ScanRabbitQr from "./pages/ScanRabbitQr";
 
 function App() {
   const signIn = useContext(AuthContext);
@@ -110,6 +111,16 @@ function App() {
         <div>
           <PrivateRoute>
             <AddRabbit />
+          </PrivateRoute>
+        </div>
+      ),
+    },
+    {
+      path: "/scan-rabbit",
+      element: (
+        <div>
+          <PrivateRoute>
+            <ScanRabbitQr />
           </PrivateRoute>
         </div>
       ),

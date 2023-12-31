@@ -16,6 +16,9 @@ import {
   Image,
   Dropdown,
 } from "antd";
+import { BiQrScan } from "react-icons/bi";
+import { IoMdAdd } from "react-icons/io";
+import ScanRabbitQr from "./ScanRabbitQr";
 import { SlOptionsVertical } from "react-icons/sl";
 import { SearchOutlined } from "@ant-design/icons";
 import Swal from "sweetalert2";
@@ -241,15 +244,6 @@ function RabbitList() {
     },
   ];
 
-  // const { Search } = Input;
-  // const Filter = (value) => {
-  //   const lowerCaseValue = value.toLowerCase();
-  //   const filteredRabbits = rabbits.filter((rabbit) =>
-  //     rabbit.name.toLowerCase().includes(lowerCaseValue)
-  //   );
-  //   setRecord(filteredRabbits);
-  // };
-
   const Filter = (event) => {
     const value = event.target.value.toLowerCase();
     const filteredRabbits = rabbits.filter((rabbit) =>
@@ -281,10 +275,13 @@ function RabbitList() {
             prefix={<SearchOutlined />}
           />
         </div>
-        <div className="d-flex align-items-center justify-content-end my-2">
-          <Button type="primary" onClick={() => navigateTo("/add-rabbit")}>
-            Add
-          </Button>
+        <div className="d-flex align-items-center justify-content-end my-3 gap-3">
+          <div className="btn-add" onClick={() => navigateTo("/add-rabbit")}>
+            <IoMdAdd />
+          </div>
+          <div className="btn-scan" onClick={() => navigateTo("/scan-rabbit")}>
+            <BiQrScan />
+          </div>
         </div>
         <div className="tables">
           <DataTable

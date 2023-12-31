@@ -22,6 +22,9 @@ function ClientUserProfile({ data }) {
         View
       </span>
       <Modal
+        style={{
+          top: 20,
+        }}
         title="Profile"
         open={isModalOpen}
         onOk={handleOk}
