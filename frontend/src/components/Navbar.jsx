@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 import Logo from "../images/Logo.png";
-import { BsJustify } from "react-icons/bs";
+import { IoMdMenu } from "react-icons/io";
 import Swal from "sweetalert2";
 import { UserOutlined, DownOutlined } from "@ant-design/icons";
 import { Dropdown, Space, Avatar } from "antd";
@@ -85,11 +85,16 @@ function Navbar() {
 
   return (
     <nav>
-      <Link to="/home" className="title">
+      {/* <Link to="/home" className="title">
         <img src={Logo} alt="" className="logo" />
-      </Link>
+      </Link> */}
+      <div className="title">
+        <h3 className="gradient-text" onClick={() => navigateTo("/home")}>
+          eLeporidae
+        </h3>
+      </div>
       <div className="menu" onClick={() => setMenuOpen(!menuOpen)}>
-        <BsJustify className="icons menu-icon" />
+        <IoMdMenu className="icons menu-icon" />
       </div>
       <ul className={menuOpen ? "open" : ""}>
         <li>

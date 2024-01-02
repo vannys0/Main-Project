@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Modal } from "antd";
+import { Button, Modal, Timeline } from "antd";
 import SecureStore from "react-secure-storage";
 
 function Appli({ data }) {
@@ -26,6 +26,60 @@ function Appli({ data }) {
     });
   };
 
+  const getColorByStatus = (status) => {
+    switch (status) {
+      case "Pending":
+        return "orange";
+      case "Approved":
+        return "green";
+      case "Declined":
+        return "red";
+      default:
+        return "grey";
+    }
+  };
+
+  const renderTimelineItems = () => {
+    if (!data) return [];
+
+    const items = [];
+
+    if (
+      data.adoption_status === "Pending" ||
+      data.adoption_status === "Declined"
+    ) {
+      items.push({
+        color: getColorByStatus(data.adoption_status),
+        children: <span>{data.adoption_status}</span>,
+      });
+      items.push({
+        children: <span>Date created: {formatDate(data.adoption_date)}</span>,
+      });
+    } else {
+      const deliveryColor =
+        data.delivery_status === "Approved" ? "green" : "grey";
+      items.push({
+        color: deliveryColor,
+        children: (
+          <span>
+            {data.delivery_status
+              ? "Owner is preparing for delivery"
+              : "Pending for delivery"}
+          </span>
+        ),
+      });
+      items.push({
+        color: getColorByStatus(data.adoption_status),
+        children: <span>Adoption Status: {data.adoption_status}</span>,
+      });
+      items.push({
+        children: <span>Date created: {formatDate(data.adoption_date)}</span>,
+      });
+    }
+
+    return items;
+  };
+
   return (
     <div>
       <span onClick={showModal}>View</span>
@@ -34,10 +88,12 @@ function Appli({ data }) {
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
-        footer={<Button onClick={handleCancel}>Close</Button>}
+        footer={null}
       >
         <div>
           <div className="d-flex flex-column">
+            <Timeline items={renderTimelineItems()} />
+            <hr />
             <div className="d-flex justify-content-between">
               <p>Adoption ID</p>
               <p>{data.id}</p>

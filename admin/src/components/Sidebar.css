@@ -15,7 +15,6 @@
     transition: all 0.5s;
     -webkit-transition: all 0.5s;
   }
-  
   .active {
     background-color: #1677ff;
   }
@@ -34,7 +33,16 @@
     justify-content: space-between;
     padding: 0 50px;
   }
-  
+  .gradient-text {
+    font-weight: 600;
+    cursor: pointer;
+    background: linear-gradient(to right, #5cb85c, #00828c);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.sidebar-brand {
+  margin: 20px 0;
+}
   .sidebar-title > span {
     display: none;
   }

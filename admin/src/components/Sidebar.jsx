@@ -65,30 +65,62 @@ function Sidebar({ openSidebarToggle, OpenSidebar }) {
     >
       <div className="sidebar-title">
         <div className="sidebar-brand">
-          <img className="logo" src={Logo} alt="" />
+          <h3 className="gradient-text">eLeporidae</h3>
+          {/* <img className="logo" src={Logo} alt="" /> */}
         </div>
         <span className="icon close_icon" onClick={OpenSidebar}>
           <AiOutlineClose />
         </span>
       </div>
       <ul className="sidebar-list">
+        <h6 style={{ marginLeft: "20px", color: "#797979", fontWeight: "600" }}>
+          MAIN MENU
+        </h6>
         <NavLink to="/dashboard" className="sidebar-list-item">
           <LuLayoutDashboard className="icon" /> Dashboard
-        </NavLink>
-        <NavLink to="/rabbits" className="sidebar-list-item">
-          <CiCircleList className="icon" /> Rabbits
         </NavLink>
         <NavLink to="/breeding" className="sidebar-list-item">
           <BsListCheck className="icon" /> Breeding
         </NavLink>
-
+        <NavLink to="/rabbits" className="sidebar-list-item">
+          <CiCircleList className="icon" /> Rabbits
+        </NavLink>
+        <h6
+          style={{
+            marginLeft: "20px",
+            color: "#797979",
+            fontWeight: "600",
+            marginTop: "10px",
+          }}
+        >
+          ADOPTIONS
+        </h6>
         <NavLink to="/request" className="sidebar-list-item">
           <RiPassPendingLine className="icon" /> Request
         </NavLink>
-
+        <h6
+          style={{
+            marginLeft: "20px",
+            color: "#797979",
+            fontWeight: "600",
+            marginTop: "10px",
+          }}
+        >
+          DELIVERY
+        </h6>
         <NavLink to="/delivery" className="sidebar-list-item">
           <BsTruck className="icon" /> Delivery
         </NavLink>
+        <h6
+          style={{
+            marginLeft: "20px",
+            color: "#797979",
+            fontWeight: "600",
+            marginTop: "10px",
+          }}
+        >
+          USERS
+        </h6>
         <NavLink to="/clients" className="sidebar-list-item">
           <LuUsers className="icon" /> Users
         </NavLink>

@@ -49,10 +49,14 @@ function BreedPair() {
               icon: "error",
               title: "Invalid Rabbit",
               text: "Please scan a male rabbit at this reader.",
-              showConfirmButton: false,
-              timer: 2000,
+            }).then((result) => {
+              if (
+                result.isConfirmed ||
+                result.dismiss === Swal.DismissReason.timer
+              ) {
+                window.location.reload();
+              }
             });
-            window.location.reload();
           }
         })
         .catch((err) => console.log(err));
@@ -117,10 +121,11 @@ function BreedPair() {
         icon: "error",
         title: "Failed",
         text: "Scanned codes must be different for pairing.",
-        showConfirmButton: false,
-        timer: 2000,
+      }).then((result) => {
+        if (result.isConfirmed || result.dismiss === Swal.DismissReason.timer) {
+          window.location.reload();
+        }
       });
-      window.location.reload();
       return;
     }
 
@@ -129,10 +134,28 @@ function BreedPair() {
         icon: "error",
         title: "Failed",
         text: "Rabbits of the same sex cannot be paired.",
-        showConfirmButton: false,
-        timer: 2000,
+      }).then((result) => {
+        if (result.isConfirmed || result.dismiss === Swal.DismissReason.timer) {
+          window.location.reload();
+        }
       });
-      window.location.reload();
+      return;
+    }
+
+    if (
+      scanResult &&
+      scanResult1 &&
+      scanResult.breeding_pair_id === scanResult1.breeding_pair_id
+    ) {
+      Swal.fire({
+        icon: "error",
+        title: "Failed",
+        text: "Rabbits with the same breeding pair ID cannot be paired due to inbreeding concerns.",
+      }).then((result) => {
+        if (result.isConfirmed || result.dismiss === Swal.DismissReason.timer) {
+          window.location.reload();
+        }
+      });
       return;
     }
 
@@ -192,7 +215,7 @@ function BreedPair() {
             {scanResult ? <span>{scanResult}</span> : <div id="reader"></div>}
           </div>
           <div className="d-flex justify-content-center align-items-center">
-            <h6> Matching</h6>
+            <h6>Match</h6>
           </div>
           <div className="ground">
             <h6>Female</h6>
@@ -208,7 +231,7 @@ function BreedPair() {
                 navigateTo("/breeding");
               }}
             >
-              Cancel
+              Back
             </Button>
             <Button
               type="primary"

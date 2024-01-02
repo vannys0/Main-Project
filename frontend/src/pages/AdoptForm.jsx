@@ -165,6 +165,7 @@ function AdoptForm({ data }) {
         Apply for adoption
       </Button>
       <Modal
+        style={{ top: 20 }}
         title="Adoption Form"
         open={open}
         onOk={handleSubmit}

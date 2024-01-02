@@ -256,15 +256,9 @@ function EditRabbit() {
             </div>
             <div className="d-flex justify-content-end">
               <div className="actions justify-content-end">
-                <Button
-                  type="primary"
-                  danger
-                  onClick={() => navigateTo("/rabbits")}
-                >
-                  Cancel
-                </Button>
+                <Button onClick={() => navigateTo("/rabbits")}>Cancel</Button>
                 <Button type="primary" onClick={handleSubmit}>
-                  Save changes
+                  Save
                 </Button>
               </div>
             </div>

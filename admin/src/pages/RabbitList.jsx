@@ -113,20 +113,20 @@ function RabbitList() {
     });
   };
 
-  function calculateAge(dateOfBirth) {
-    const birthDate = new Date(dateOfBirth);
-    const currentDate = new Date();
+  const calculateAge = (birthDate) => {
+    const today = new Date();
+    const dob = new Date(birthDate);
 
-    const years = currentDate.getFullYear() - birthDate.getFullYear();
-    var months = currentDate.getMonth() - birthDate.getMonth();
+    let years = today.getFullYear() - dob.getFullYear();
+    let months = today.getMonth() - dob.getMonth();
 
-    const adjustedMonths =
-      months + (currentDate.getDate() < birthDate.getDate() ? -1 : 0);
+    if (months < 0 || (months === 0 && today.getDate() < dob.getDate())) {
+      years--;
+      months = 12 + months;
+    }
 
-    months = adjustedMonths < 0 ? 0 : adjustedMonths;
-
-    return years + " yrs " + months + " mos";
-  }
+    return `${years} yrs and ${months} mos`;
+  };
 
   const items = (record) => [
     {

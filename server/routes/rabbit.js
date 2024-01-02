@@ -138,7 +138,7 @@ router.delete("/delete-rabbit/:id", (req, res) => {
 
 router.get("/get_sex", (req, res) => {
   const id = req.query.id;
-  db.query("SELECT sex FROM rabbit WHERE id = ?", [id], (err, results) => {
+  db.query("SELECT * FROM rabbit WHERE id = ?", [id], (err, results) => {
     if (err) {
       console.error("Error fetching rabbit:", err);
       res.status(500).json({ error: "Internal Server Error" });

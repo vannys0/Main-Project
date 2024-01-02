@@ -42,37 +42,26 @@ function Adopt() {
     setRecord(filteredRabbits);
   };
 
+  const calculateAge = (birthDate) => {
+    const today = new Date();
+    const dob = new Date(birthDate);
+
+    let years = today.getFullYear() - dob.getFullYear();
+    let months = today.getMonth() - dob.getMonth();
+
+    if (months < 0 || (months === 0 && today.getDate() < dob.getDate())) {
+      years--;
+      months = 12 + months;
+    }
+
+    return `${years} yrs and ${months} mos`;
+  };
+
   return (
     <div className="main-div bg-light">
       <Navbar />
       <img src={adopt} alt="" loading="lazy" />
       <div className="adopt-div bg-light">
-        {/* <Accordion>
-          <Accordion.Item eventKey="0">
-            <Accordion.Header>How to adopt a rabbit</Accordion.Header>
-            <Accordion.Body>
-              <h5>
-                Step 1. See <a href="#adoptable">Adoptable rabbits</a>
-              </h5>
-              <br />
-              <h5>Step 2. Complete the adoption form.</h5>
-              <br />
-              <h5>Step 3. Once application is completed, submit the form.</h5>
-            </Accordion.Body>
-          </Accordion.Item>
-          <Accordion.Item eventKey="1">
-            <Accordion.Header>Who can adopt a rabbit</Accordion.Header>
-            <Accordion.Body>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </Accordion.Body>
-          </Accordion.Item>
-        </Accordion> */}
         <div className="d-flex justify-content-between">
           <h3>Adoptable rabbits</h3>
           <div className="d-flex">
@@ -83,7 +72,7 @@ function Adopt() {
             ></input>
             <button
               className="btn-search"
-              onClick={() => Filter(e.target.value)}
+              onClick={(e) => Filter(e.target.value)}
             >
               Search
             </button>
@@ -114,9 +103,10 @@ function Adopt() {
                 />
                 <div className="d-flex flex-column gap-1">
                   <h4>{data.name}</h4>
+                  <span>{calculateAge(data.date_of_birth)}</span>
+                  <span>{data.sex}</span>
                   <span>{data.breed_type}</span>
                   <span>{data.color}</span>
-                  <span>{data.sex}</span>
                 </div>
               </div>
             ))

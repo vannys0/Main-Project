@@ -89,7 +89,7 @@ function RabbitData() {
             <div>
               <h6>Age</h6>
               <h6>
-                {age.years} years {age.months} months
+                {age.years} yrs {age.months} mos
               </h6>
             </div>
             <div>
