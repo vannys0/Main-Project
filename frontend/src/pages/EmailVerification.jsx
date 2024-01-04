@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import "./LoginSignup.css";
 import axios from "axios";
 import { AuthContext } from "../App";
 import SecureStore from "react-secure-storage";
@@ -19,10 +20,10 @@ function Login() {
         verificationCode: verificationCode,
       });
       if (response.data.is_verified) {
-        const user = response.data; // token are all fields of user
+        const user = response.data;
         authContext.signIn(user);
-        SecureStore.setItem("userToken", user); // Set the token in SecureStore
-        navigate("/home"); // Navigate to the home page after verification
+        SecureStore.setItem("userToken", user);
+        navigate("/home");
       }
     } catch (error) {
       console.error("Verification failed:", error);
@@ -30,23 +31,23 @@ function Login() {
   };
 
   return (
-    <div className="LoginSignup-div bg-light">
-      <form
-        className="bg-white d-flex flex-column justify-content-center align-items-center px-5 py-4 gap-3"
-        style={{ boxShadow: "0 0 10px 3px rgba(0, 0, 0, 0.3)" }}
-      >
-        <h2>Verify your account</h2>
-        <p>We've sent a verification code to your email</p>
-        <input
-          id="verificationCode"
-          type="text"
-          className="form-control"
-          placeholder="Verification code"
-        />
-        <button className="btn btn-success form-control" onClick={handleVerify}>
-          Verify
-        </button>
-      </form>
+    <div className="LoginSignup-div">
+      <div className="main-container">
+        <form onSubmit={handleVerify}>
+          <h3 className="brand-name">eLeporidae</h3>
+          <h4>Verify your account</h4>
+          <p>We've sent a verification code to your email</p>
+          <div className="inputs">
+            <div className="input">
+              <input id="verificationCode" type="text" required />
+              <label htmlFor="">Enter Verification Code</label>
+            </div>
+          </div>
+          <button type="submit" className="verify-btn">
+            Verify
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

@@ -13,7 +13,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Gothic', sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
 html {
     font-size: 90%;
@@ -66,32 +66,17 @@ a {
 }
 .adopt-btn {
     height: 50px;
-    padding: 0 50px;
     border: none;
-    font-size: 18px;
-    background-color: #EC7D20;
+    padding: 0 30px;
     color: #fff;
-    border-radius: 5px;
+    font-size: 18px;
     cursor: pointer;
+    border-radius: 5px;
+    background-color: #EC7D20;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 4px 0px, rgba(99, 99, 99, 0.1) 0px -2px 8px 0px;
 }
-.home-div .last-div {
-    display: flex;
-    flex-direction: column;
-}
-.home-div .last-div img {
-    width: 100%;
-}
-.home-body {
-    display: grid;
-    gap: 20px;
-    grid-template-columns: 1fr 1fr;
-}
-.home-body > div > img {
-    width: 100%;
-}
 .email {
-    color: #0669AC;
+    color: #00828c;
 }
 
 /* ADOPT */

@@ -87,6 +87,7 @@ function UserProfile() {
         My Profile
       </span>
       <Modal
+        style={{ top: 20 }}
         title="User Profile"
         open={isModalOpen}
         onOk={handleOk}

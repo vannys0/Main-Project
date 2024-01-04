@@ -36,7 +36,7 @@ router.post("/signup", (req, res) => {
   const mailOptions = {
     from: EMAIL_FROM,
     to: email,
-    subject: `Email verification code: <b>${otp}</b>`,
+    subject: `Account verification code: ${otp}`,
     html: `<div>
     <p>Welcome to E-Leporidae</p>
     <p>Please enter the code below to complete the registration.</p>

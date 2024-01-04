@@ -14,12 +14,18 @@ const BASE_URL = appConfig.apiBasePath;
 
 function Login() {
   const authContext = useContext(AuthContext);
+  const navigate = useNavigate();
+  const [errors, setErrors] = useState({});
   const [values, setValues] = useState({
     email: "",
     password: "",
   });
-  const navigate = useNavigate();
-  const [errors, setErrors] = useState({});
+
+  const [showPassword, setShowPassword] = useState(false);
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   const handleInput = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
@@ -52,15 +58,10 @@ function Login() {
 
   return (
     <div className="LoginSignup-div">
-      <div className="bg-image"></div>
       <div className="main-container">
-        <div className="title-div">
-          <h4 className="text">
-            Welcome back! <br />
-            to E-Leporidae
-          </h4>
-        </div>
         <form onSubmit={handleSubmit}>
+          <h3 className="brand-name">eLeporidae</h3>
+          <h4>SIGN IN</h4>
           <div className="inputs">
             <div className="input">
               <AiOutlineMail className="icons" />
@@ -69,28 +70,36 @@ function Login() {
                 name="email"
                 value={values.email}
                 onChange={handleInput}
-                placeholder="Email"
                 required
               />
+              <label htmlFor="">Enter your email</label>
               {errors.email && <p className="error">{errors.email}</p>}
             </div>
             <div className="input">
               <RiLockPasswordLine className="icons" />
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 name="password"
                 value={values.password}
                 onChange={handleInput}
-                placeholder="Password"
                 required
               />
+              <label htmlFor="">Enter your password</label>
               {errors.password && <p className="error">{errors.password}</p>}
+            </div>
+            <div className="d-flex justify-content-end">
+              <span
+                className="show-password"
+                onClick={togglePasswordVisibility}
+              >
+                {showPassword ? "Hide" : "Show"}
+              </span>
             </div>
           </div>
           <button type="submit" className="submit login-btn">
             Login
           </button>
-          <div className="signup-link my-2">
+          <div className="signup-link">
             Don't have an account? <Link to="/signup">Sign up</Link>
           </div>
         </form>
