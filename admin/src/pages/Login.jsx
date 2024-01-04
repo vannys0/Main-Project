@@ -5,6 +5,7 @@ import axios from "axios";
 import * as UserController from "../controller/UserController.jsx";
 import { AuthContext } from "../App";
 import Swal from "sweetalert2";
+import { AiOutlineMail } from "react-icons/ai";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import { Button, Input, Space } from "antd";
 import collaborators from "../images/collaborators.svg";
@@ -22,6 +23,11 @@ function Login() {
   const [loginStatus, setLoginStatus] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+
+  const [showPassword, setShowPassword] = useState(false);
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   function loginUser(e) {
     e.preventDefault();
@@ -91,50 +97,51 @@ function Login() {
   }
 
   return (
-    <div className="loginPage bg-light">
+    <div className="loginPage">
       <div className="container">
-        <div className="welcome-div">
-          <h2>E-LEPORIDAE</h2>
-          <img src={collaborators} alt="" />
-        </div>
-        <form className="form grid">
-          <h2 className="login-title">Welcome back!</h2>
-          <div className="coolinput">
-            <label htmlFor="input" className="text">
-              Email:
-            </label>
-            <input
-              type="text"
-              name="username"
-              id="username"
-              className="input"
-              onChange={handleEmailChange}
-            />
-            {emailError && <span className="error-message">{emailError}</span>}
+        <form className="form grid bg-light" onSubmit={loginUser}>
+          <h3 className="brand-name">eLeporidae</h3>
+          <h3 className="login-title">Welcome back Admin</h3>
+          <div className="inputs">
+            <div className="input">
+              <AiOutlineMail className="icons" />
+              <input
+                type="text"
+                name="username"
+                id="username"
+                onChange={handleEmailChange}
+                required
+              />
+              <label htmlFor="" className="bg-light">
+                Enter your email
+              </label>
+            </div>
+            <div className="input">
+              <span
+                className="d-flex align-items-center justify-content-center"
+                onClick={togglePasswordVisibility}
+              >
+                {showPassword ? (
+                  <EyeTwoTone className="icons" />
+                ) : (
+                  <EyeInvisibleOutlined className="icons" />
+                )}
+              </span>
+              <input
+                type={showPassword ? "text" : "password"}
+                name="email"
+                id="email"
+                onChange={handlePasswordChange}
+                required
+              />
+              <label htmlFor="" className="bg-light">
+                Enter your password
+              </label>
+            </div>
           </div>
-          <div className="coolinput">
-            <label htmlFor="input" className="text">
-              Password:
-            </label>
-            <input
-              type="password"
-              name="password"
-              id="password"
-              className="input"
-              onChange={handlePasswordChange}
-            />
-            {passwordError && (
-              <span className="error-message">{passwordError}</span>
-            )}
-          </div>
-          <Button
-            style={{ margin: "20px 0px 0px 0px", height: "40px" }}
-            type="primary"
-            className="btn btn-primary"
-            onClick={loginUser}
-          >
-            <span className="login-span">Login </span>
-          </Button>
+          <button type="submit" className="submit login-btn">
+            Sign in
+          </button>
           <div>
             Don't have an account? <Link to="/register">Sign up</Link>
           </div>

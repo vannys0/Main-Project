@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "./LoginSignup.css";
 import Validation from "./LoginValidation.jsx";
 import { AiOutlineMail } from "react-icons/ai";
-import { RiLockPasswordLine } from "react-icons/ri";
+import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import axios from "axios";
 import { toast } from "react-toastify";
 import SecureStore from "react-secure-storage";
@@ -76,7 +76,16 @@ function Login() {
               {errors.email && <p className="error">{errors.email}</p>}
             </div>
             <div className="input">
-              <RiLockPasswordLine className="icons" />
+              <span
+                className="d-flex align-items-center justify-content-center"
+                onClick={togglePasswordVisibility}
+              >
+                {showPassword ? (
+                  <EyeTwoTone className="icons" />
+                ) : (
+                  <EyeInvisibleOutlined className="icons" />
+                )}
+              </span>
               <input
                 type={showPassword ? "text" : "password"}
                 name="password"
@@ -86,14 +95,6 @@ function Login() {
               />
               <label htmlFor="">Enter your password</label>
               {errors.password && <p className="error">{errors.password}</p>}
-            </div>
-            <div className="d-flex justify-content-end">
-              <span
-                className="show-password"
-                onClick={togglePasswordVisibility}
-              >
-                {showPassword ? "Hide" : "Show"}
-              </span>
             </div>
           </div>
           <button type="submit" className="submit login-btn">

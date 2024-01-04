@@ -4,7 +4,7 @@ import "./LoginSignup.css";
 import Validation from "./SignupValidation.jsx";
 import { HiOutlineUser } from "react-icons/hi";
 import { AiOutlineMail } from "react-icons/ai";
-import { RiLockPasswordLine } from "react-icons/ri";
+import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import axios from "axios";
 import Swal from "sweetalert2";
 import appConfig from "../../config.json";
@@ -74,7 +74,16 @@ function Signup() {
               <label htmlFor="">Enter your email</label>
             </div>
             <div className="input">
-              <RiLockPasswordLine className="icons" />
+              <span
+                className="d-flex align-items-center justify-content-center"
+                onClick={togglePasswordVisibility}
+              >
+                {showPassword ? (
+                  <EyeTwoTone className="icons" />
+                ) : (
+                  <EyeInvisibleOutlined className="icons" />
+                )}
+              </span>
               <input
                 type={showPassword ? "text" : "password"}
                 onChange={handleInput}
@@ -83,20 +92,12 @@ function Signup() {
               />
               <label htmlFor="">Enter your password</label>
             </div>
-            <div className="d-flex justify-content-end">
-              <span
-                className="show-password"
-                onClick={togglePasswordVisibility}
-              >
-                {showPassword ? "Hide" : "Show"}
-              </span>
-            </div>
           </div>
           <button type="submit" className="submit">
             Sign up
           </button>
           <div className="signup-link">
-            Already have an account? <Link to="/">Login</Link>
+            Already have an account? <Link to="/">Sign in</Link>
           </div>
         </form>
       </div>
