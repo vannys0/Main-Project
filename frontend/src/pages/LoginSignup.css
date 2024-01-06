@@ -79,9 +79,9 @@ form h4 {
     font-size: 16px;
     color: #797979;
 }
-input {
+.inputs .input input {
     width: 100%;
-    font-size: 18px;
+    font-size: 14px;
     padding: 15px 38px 15px 15px;
     background-color: transparent;
     border: none;
@@ -130,22 +130,6 @@ input {
 
 
 /* Responsive */
-@media (max-width: 780px) {
-    .form-container {
-        width: 45lvw;
-    }
-    .bg-image {
-        visibility: hidden;
-    }
-}
-@media (max-width: 600px) {
-    .form-container {
-        width: 60lvw;
-    }
-    .bg-image {
-        visibility: hidden;
-    }
-}
 @media (max-width: 480px) {
     .LoginSignup-div {
         background-image: none;

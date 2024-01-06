@@ -77,6 +77,10 @@ nav .menu .menu-icon {
     .active {
         border-bottom: 0;
     }
+    .gradient-text {
+        margin-left: 20px;
+        margin-top: 20px;
+    }
     nav .menu {
         margin: 10px 10px 0px 0px;
         display: flex;

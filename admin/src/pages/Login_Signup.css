@@ -4,9 +4,6 @@
     box-sizing:border-box;
     font-family: 'Monserrat', sans-serif;
 }
-.error-message {
-    color: red;
-}
 .loginPage {
     position: relative;
     width:100dvw;
@@ -24,6 +21,7 @@
     padding: 0;
     display: flex;
     justify-content: center;
+    border-radius: 5px;
     background-color: #ffffff;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
@@ -43,6 +41,7 @@
     width: 100%;
     padding: 30px;
     display: flex;
+    border-radius: 5px;
     flex-direction: column;
 }
 .login-title {
@@ -115,62 +114,21 @@
     color: #fff;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 4px 0px, rgba(99, 99, 99, 0.1) 0px -2px 8px 0px;
 }
-.coolinput {
-    display: flex;
-    flex-direction: column;
-    width: fit-content;
-    position: static;
-    width: 100%;
-}
-.coolinput label.text {
-    font-size: 16px;
-    position: relative;
-    top: 13px;
-    margin: 0 0 0 10px;
-    padding: 0 3px;
-    background: #00BFA6;
-    width: fit-content;
-}
-.coolinput input[type=text].input,
-.coolinput input[type=email].input,
-.coolinput input[type=password].input {
-    width: 100%;
-    font-size: 16px;
-    letter-spacing: 1px;
-    border-radius: 5px;
-    background: transparent;
-}
-.coolinput input[type=text].input:focus,
-.coolinput input[type=email].input:focus,
-.coolinput input[type=password].input:focus {
-    outline: none;
-}
 
 
 
-
-
-
-
-
-@media screen and (max-width: 576px) {
+@media (max-width: 480px) {
     .loginPage {
+        background-image: none;
     }
-    .loginPage .container {
-        grid-template-columns: 1fr;
+    .container form {
+        padding: 0;
         width: 100%;
-    }
-    .welcome-div {
-        display: none;
-    }
-    .loginPage .container .form {
-        width: 100%;
-        padding: 20px 10px;
-    }
-    .loginPage .container .form .login-title {
-        margin-bottom: 0;
-    }
-    .email {
+        height: 100dvh;
         margin-top: 70px;
+    }
+    .brand-name {
+        top: 10px;
+        left: 10px;
     }
 }

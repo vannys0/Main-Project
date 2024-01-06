@@ -84,6 +84,7 @@ function Appli({ data }) {
     <div>
       <span onClick={showModal}>View</span>
       <Modal
+        style={{ top: 20 }}
         title="Adoption details"
         open={isModalOpen}
         onOk={handleOk}

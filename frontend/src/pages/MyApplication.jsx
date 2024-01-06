@@ -80,9 +80,9 @@ function MyApplication() {
             key: "0",
           },
           {
-            label: <span>Cancel</span>,
+            label: <span onClick={() => handleDelete(record.id)}>Cancel</span>,
             key: "1",
-            disabled: true,
+            danger: true,
           },
         ]
       : [
@@ -91,9 +91,9 @@ function MyApplication() {
             key: "0",
           },
           {
-            label: <span onClick={() => handleDelete(record.id)}>Cancel</span>,
+            label: <span>Cancel</span>,
             key: "1",
-            danger: true,
+            disabled: true,
           },
         ];
 

@@ -123,8 +123,10 @@ a {
     width: 250px;
     padding: 8px;
     font-size: 14px;
+    color: #1e1e1e;
+    outline: none;
     border-radius: 5px 0 0 5px;
-    border: 1px solid #5cb85c;
+    border: 1px solid #eaeaea;
     background-color: #ffffff;
 }
 .btn-search {
@@ -178,6 +180,9 @@ a {
     height: 40px;
     padding: 8px;
     border-radius: 5px;
+    color: #1e1e1e;
+    outline: none;
+    background-color: transparent;
     border: 1px solid #eaeaea;
 }
 .contact-div > form > textarea {
@@ -362,42 +367,15 @@ a {
 
 
 /* RESPONSIVE */
-
 @media (max-width: 480px) {
     /* Home */
     .home-div {
         width: 100%;
-        padding: 110px 10px 10px 10px;
+        padding: 0px 10px 10px 10px;
     }
-    .rabbit-home::after {
-        width: 10%;
-        height: 10%;
-    }
-    .floating {
-        font-size: 26px;
-        top: 35%;
-        left: 7%;
-    }
-    .home-body {
-        display: flex;
-        flex-direction: column;
-    }
-    .home-body>div {
-        padding: 0;
+    .home-content {
         width: 100%;
-    }
-    .home-div .adoptbtn {
-        width: 150px;
-        font-size: 14px;
-    }
-    .related-business {
-        margin-top: 20px;
-    }
-    .home-body>div>img {
-        width: 100%;
-    }
-    .home-div .last-div h5 {
-        align-self: self-start;
+        padding: 10px;
     }
     /* Contact */
     .contact-div {
@@ -495,7 +473,7 @@ a {
     .application-div {
         width: 100vw;
         height: 90dvh;
-        padding: 110px 10px 10px 10px;
+        padding: 10px 10px 10px 10px;
         margin-top: 0;
     }
     /* Profile */
