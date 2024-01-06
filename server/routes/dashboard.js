@@ -26,16 +26,6 @@ router.get("/requestCount", (req, res) => {
     return res.json(results);
   });
 });
-router.get("/userCount", (req, res) => {
-  db.query("SELECT count(*) as userCount FROM user", (err, results) => {
-    if (err) {
-      console.error("Error fetching :", err);
-      res.status(500).json({ error: "Internal Server Error" });
-      return;
-    }
-    return res.json(results);
-  });
-});
 
 router.get("/pending-adoption", (req, res) => {
   db.query(

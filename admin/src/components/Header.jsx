@@ -48,22 +48,30 @@ function Header({ OpenSidebar }) {
   });
 
   const items = [
+    pending === 0
+      ? {
+          key: "0",
+          label: (
+            <span>
+              <b>Notifications</b>
+            </span>
+          ),
+        }
+      : {
+          key: "0",
+          label: (
+            <span>
+              <b>Notifications</b>
+            </span>
+          ),
+        },
     {
       key: "1",
-      label:
-        pending === 0 ? (
-          <a style={{ textDecoration: "none" }} rel="noopener noreferrer">
-            No adoption request yet
-          </a>
-        ) : (
-          <a
-            style={{ textDecoration: "none" }}
-            rel="noopener noreferrer"
-            onClick={() => navigateTo("/request")}
-          >
-            You have {pending} pending request
-          </a>
-        ),
+      label: (
+        <span onClick={() => navigateTo("/request")}>
+          You have {pending} pending request
+        </span>
+      ),
     },
   ];
 

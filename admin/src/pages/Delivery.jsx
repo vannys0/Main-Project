@@ -25,21 +25,26 @@ function Delivery() {
   }, []);
 
   const onApprove = (e, o) => {
-    axios
-      .put(BASE_URL + "/approve-delivery/" + o.id)
-      .then((res) => {
-        window.location.reload();
-      })
-      .catch((err) => console.log(err));
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to approve the delivery?",
+      showCancelButton: true,
+      confirmButtonColor: "#1677ff",
+      cancelButtonColor: "#797979",
+      confirmButtonText: "Yes",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .put(BASE_URL + "/approve-delivery/" + o.id)
+          .then((res) => {
+            window.location.reload();
+          })
+          .catch((err) => console.log(err));
+      }
+    });
   };
 
   const onDelivered = (id, rabbit_id) => {
-    const payload = {
-      adoption_id: id,
-      transaction_date: new Date().toISOString(),
-      transaction_status: "Completed",
-      rabbit_id: rabbit_id,
-    };
     Swal.fire({
       title: "Are you sure?",
       text: "Do you want to confirm delivery?",
@@ -47,8 +52,26 @@ function Delivery() {
       confirmButtonColor: "#1677ff",
       cancelButtonColor: "#797979",
       confirmButtonText: "Yes",
+      html: '<input type="file" id="file" accept=".jpg, .jpeg, .png">',
+      preConfirm: () => {
+        const fileInput = document.getElementById("file");
+        const file = fileInput.files[0];
+        if (!file) {
+          Swal.showValidationMessage("Please select a file");
+          return;
+        }
+        return file;
+      },
     }).then((result) => {
       if (result.isConfirmed) {
+        const payload = new FormData();
+        const fileName = result.value.name; // Extracting just the filename
+        payload.append("file", result.value, fileName); // Append file with filename only
+        payload.append("adoption_id", id);
+        payload.append("transaction_date", new Date().toISOString());
+        payload.append("transaction_status", "Completed");
+        payload.append("rabbit_id", rabbit_id);
+
         axios
           .put(`${BASE_URL}/delivered`, payload)
           .then((res) => {

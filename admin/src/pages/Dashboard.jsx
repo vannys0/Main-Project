@@ -5,6 +5,7 @@ import {
   BsFillArchiveFill,
   BsFillGrid3X3GapFill,
   BsPeopleFill,
+  BsListCheck,
   BsFillBellFill,
 } from "react-icons/bs";
 import { LuUsers, LuBell } from "react-icons/lu";
@@ -42,6 +43,7 @@ function Dashboard() {
   const [pending, setPending] = useState(0);
   const [rabbit, setRabbit] = useState([]);
   const [clients, setClients] = useState([]);
+  const [breeding, setBreeding] = useState(0);
   const [monthSales, setMonthSales] = useState([]);
   const [adopt, setAdopt] = useState([]);
   const [adoptedBySex, setAdoptedBySex] = useState([]);
@@ -78,6 +80,15 @@ function Dashboard() {
       .get(BASE_URL + "/recent-rabbit")
       .then((res) => {
         setRabbit(res.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+
+    axios
+      .get(BASE_URL + "/pairCount")
+      .then((res) => {
+        setBreeding(res.data[0].pairCount);
       })
       .catch((error) => {
         console.error(error);
@@ -249,10 +260,10 @@ function Dashboard() {
           </div>
           <div className="card-div" onClick={() => navigateTo("/breeding")}>
             <div className="card-inner">
-              <h5>Upcoming</h5>
-              <LuBell className="card_icon" />
+              <h5>Breeding Pair</h5>
+              <BsListCheck className="card_icon" />
             </div>
-            <h5>42</h5>
+            <h5>{breeding}</h5>
           </div>
         </div>
         <div className="first-chart chart-div">
