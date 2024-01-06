@@ -20,10 +20,8 @@ function BreedPair() {
   const navigateTo = useNavigate();
   const [scanResult, setScanResult] = useState();
   const [scanResult1, setScanResult1] = useState();
-  const [sex, setSex] = useState();
-  const [sex1, setSex1] = useState();
-  const [maleRabbits, setMaleRabbits] = useState([]);
-  const [femaleRabbits, setFemaleRabbits] = useState([]);
+  const [rabbit, setRabbit] = useState(null);
+  const [rabbit1, setRabbit1] = useState(null);
 
   useEffect(() => {
     const scanner = new Html5QrcodeScanner("reader", {
@@ -41,6 +39,7 @@ function BreedPair() {
       axios
         .get(`${BASE_URL}/get_sex?id=${result}`)
         .then((res) => {
+          setRabbit(res.data[0]);
           const scannedSex = res.data[0].sex;
           if (scannedSex === "Male") {
             setScanResult(result);
@@ -83,6 +82,7 @@ function BreedPair() {
       axios
         .get(`${BASE_URL}/get_sex?id=${result}`)
         .then((res) => {
+          setRabbit1(res.data[0]);
           const scannedSex = res.data[0].sex;
           if (scannedSex === "Female") {
             setScanResult1(result);
@@ -91,10 +91,14 @@ function BreedPair() {
               icon: "error",
               title: "Invalid Rabbit",
               text: "Please scan a female rabbit at this reader.",
-              showConfirmButton: false,
-              timer: 2000,
+            }).then((result) => {
+              if (
+                result.isConfirmed ||
+                result.dismiss === Swal.DismissReason.timer
+              ) {
+                window.location.reload();
+              }
             });
-            window.location.reload();
           }
         })
         .catch((err) => console.log(err));
@@ -129,35 +133,18 @@ function BreedPair() {
       return;
     }
 
-    if (sex && sex1 && sex.sex === sex1.sex) {
-      Swal.fire({
-        icon: "error",
-        title: "Failed",
-        text: "Rabbits of the same sex cannot be paired.",
-      }).then((result) => {
-        if (result.isConfirmed || result.dismiss === Swal.DismissReason.timer) {
-          window.location.reload();
-        }
-      });
-      return;
-    }
-
-    if (
-      scanResult &&
-      scanResult1 &&
-      scanResult.breeding_pair_id === scanResult1.breeding_pair_id
-    ) {
-      Swal.fire({
-        icon: "error",
-        title: "Failed",
-        text: "Rabbits with the same breeding pair ID cannot be paired due to inbreeding concerns.",
-      }).then((result) => {
-        if (result.isConfirmed || result.dismiss === Swal.DismissReason.timer) {
-          window.location.reload();
-        }
-      });
-      return;
-    }
+    // if (pair === pair1) {
+    //   Swal.fire({
+    //     icon: "error",
+    //     title: "Failed",
+    //     text: "Rabbits with the same breeding pair ID cannot be paired due to inbreeding concerns.",
+    //   }).then((result) => {
+    //     if (result.isConfirmed || result.dismiss === Swal.DismissReason.timer) {
+    //       window.location.reload();
+    //     }
+    //   });
+    //   return;
+    // }
 
     const currentDate = new Date();
     const futureDate = new Date();
@@ -165,13 +152,19 @@ function BreedPair() {
 
     Swal.fire({
       title: "Confirm?",
-      text: "Add a note for this pair",
+      text: "Add a note to this pair",
       input: "text",
       inputPlaceholder: "Add a note",
       showCancelButton: true,
       confirmButtonColor: "#2e7d32",
       cancelButtonColor: "#797979",
       confirmButtonText: "Confirm",
+      preConfirm: (note) => {
+        if (!note) {
+          Swal.showValidationMessage("Note cannot be empty");
+        }
+        return note;
+      },
     }).then((result) => {
       if (result.isConfirmed) {
         axios
@@ -212,7 +205,14 @@ function BreedPair() {
         <div className="breed-ground">
           <div className="ground">
             <h6>Male</h6>
-            {scanResult ? <span>{scanResult}</span> : <div id="reader"></div>}
+            {scanResult ? (
+              <div className="d-flex flex-column gap-1">
+                <span>ID: {scanResult}</span>
+                <span>Rabbit Name: {rabbit.name}</span>
+              </div>
+            ) : (
+              <div id="reader"></div>
+            )}
           </div>
           <div className="d-flex justify-content-center align-items-center">
             <h6>Match</h6>
@@ -220,7 +220,10 @@ function BreedPair() {
           <div className="ground">
             <h6>Female</h6>
             {scanResult1 ? (
-              <span>{scanResult1}</span>
+              <div className="d-flex flex-column gap-1">
+                <span>ID: {scanResult1}</span>
+                <span>Rabbit Name: {rabbit1.name}</span>
+              </div>
             ) : (
               <div id="reader1"></div>
             )}

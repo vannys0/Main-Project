@@ -40,11 +40,17 @@ function RabbitList() {
       title: "Confirm?",
       text: "When rehoming this rabbit, the adopter will have the opportunity to request an adoption.",
       input: "number",
-      inputPlaceholder: "Please input the specific amount",
+      inputPlaceholder: "Please input the adoption fee",
       showCancelButton: true,
       confirmButtonColor: "#2e7d32",
       cancelButtonColor: "#797979",
       confirmButtonText: "Rehome",
+      preConfirm: (note) => {
+        if (!note) {
+          Swal.showValidationMessage("Field cannot be empty");
+        }
+        return note;
+      },
     }).then((result) => {
       if (result.isConfirmed) {
         axios

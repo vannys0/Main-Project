@@ -21,7 +21,7 @@ function Request() {
   const navigateTo = useNavigate();
   const [values, setValues] = useState([]);
   const [filteredValues, setFilteredValues] = useState([]);
-  const [selectedStatus, setSelectedStatus] = useState("All");
+  const [selectedStatus, setSelectedStatus] = useState("Pending");
 
   const fetchUserData = async (values) => {
     try {
@@ -113,10 +113,13 @@ function Request() {
       .get(BASE_URL + "/adoptions")
       .then((res) => {
         setValues(res.data);
-        setFilteredValues(res.data);
+        const filtered = res.data.filter(
+          (item) => item.adoption_status === selectedStatus
+        );
+        setFilteredValues(filtered);
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [selectedStatus]);
 
   const listItems = (record) => [
     {

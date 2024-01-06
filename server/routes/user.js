@@ -106,14 +106,17 @@ router.post("/register", (req, res) => {
 });
 
 router.get("/clients", (req, res) => {
-  db.query("SELECT * FROM user ORDER BY user_type", (err, results) => {
-    if (err) {
-      console.error("Error fetching :", err);
-      res.status(500).json({ error: "Internal Server Error" });
-      return;
+  db.query(
+    "SELECT * FROM user WHERE is_verified = true ORDER BY user_type",
+    (err, results) => {
+      if (err) {
+        console.error("Error fetching :", err);
+        res.status(500).json({ error: "Internal Server Error" });
+        return;
+      }
+      return res.json(results);
     }
-    return res.json(results);
-  });
+  );
 });
 
 router.get("/client-profile/:id", (req, res) => {
