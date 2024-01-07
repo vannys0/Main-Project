@@ -50,7 +50,7 @@ function Appli({ data }) {
     ) {
       items.push({
         color: getColorByStatus(data.adoption_status),
-        children: <span>{data.adoption_status}</span>,
+        children: <span>Adoption Status: {data.adoption_status}</span>,
       });
       items.push({
         children: <span>Date created: {formatDate(data.adoption_date)}</span>,

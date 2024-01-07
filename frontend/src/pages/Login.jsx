@@ -8,7 +8,6 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import SecureStore from "react-secure-storage";
 import { AuthContext } from "../App";
-import Swal from "sweetalert2";
 import appConfig from "../../config.json";
 const BASE_URL = appConfig.apiBasePath;
 
@@ -20,7 +19,9 @@ function Login() {
     email: "",
     password: "",
   });
-
+  const [emailError, setEmailError] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+  const [errorLogin, setErrorLogin] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -30,31 +31,44 @@ function Login() {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    axios
-      .post(`${BASE_URL}/login-client`, values)
-      .then((res) => {
-        if (res.data.Message === "Success") {
-          const user = res.data;
-          SecureStore.setItem("userToken", user);
-          authContext.signIn(user);
 
-          navigate("/home");
-        } else {
-          Swal.fire({
-            position: "center",
-            icon: "error",
-            title: "Login Failed",
-            text: "Incorrect email or password",
-          });
-        }
-      })
-      .catch((err) => {
-        console.error(err);
-        toast.error("An error occurred during login");
-      });
+    if (!validateEmail(values.email)) {
+      setEmailError(true);
+      setTimeout(() => {
+        setEmailError(false);
+      }, 5000);
+      return;
+    }
+
+    try {
+      const res = await axios.post(`${BASE_URL}/login-client`, values);
+
+      if (res.data.Message === "Success") {
+        const user = res.data;
+        SecureStore.setItem("userToken", user);
+        authContext.signIn(user);
+        navigate("/home");
+      } else {
+        setShowAlert(true);
+        setTimeout(() => {
+          setShowAlert(false);
+        }, 5000);
+      }
+    } catch (err) {
+      console.error(err);
+      setErrorLogin(true);
+      setTimeout(() => {
+        setErrorLogin(false);
+      }, 5000);
+    }
   };
+
+  function validateEmail(email) {
+    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
+    return emailRegex.test(email);
+  }
 
   return (
     <div className="LoginSignup-div">
@@ -63,6 +77,66 @@ function Login() {
           <h3 className="brand-name">eLeporidae</h3>
           <h4>SIGN IN</h4>
           <div className="inputs">
+            {emailError && (
+              <div
+                className="alert alert-warning d-flex align-items-center"
+                role="alert"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="currentColor"
+                  class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2"
+                  viewBox="0 0 16 16"
+                  role="img"
+                  aria-label="Warning:"
+                >
+                  <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+                </svg>
+                <div>Invalid email format</div>
+              </div>
+            )}
+            {showAlert && (
+              <div
+                className="d-flex align-items-center alert alert-danger"
+                role="alert"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="currentColor"
+                  class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2"
+                  viewBox="0 0 16 16"
+                  role="img"
+                  aria-label="Warning:"
+                >
+                  <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+                </svg>
+                Incorrect email or password
+              </div>
+            )}
+            {errorLogin && (
+              <div
+                className="d-flex align-items-center alert alert-danger"
+                role="alert"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="currentColor"
+                  class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2"
+                  viewBox="0 0 16 16"
+                  role="img"
+                  aria-label="Warning:"
+                >
+                  <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+                </svg>
+                <div>An error occurred during login</div>
+              </div>
+            )}
             <div className="input">
               <AiOutlineMail className="icons" />
               <input
