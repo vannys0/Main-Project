@@ -17,34 +17,28 @@ function Home() {
     <div className="main-div bg-light">
       <Navbar />
       <div className="home-div">
-        <Carousel>
-          <Carousel.Item>
-            <Image src={about} alt="" />
-          </Carousel.Item>
-          <Carousel.Item>
-            <Image src={contact} alt="" />
-          </Carousel.Item>
-          <Carousel.Item>
-            <Image src={adopt} alt="" />
-          </Carousel.Item>
-        </Carousel>
+        <div className="carousel">
+          <Carousel>
+            <Carousel.Item>
+              <img src={about} alt="" className="w-100" />
+            </Carousel.Item>
+            <Carousel.Item>
+              <img src={contact} alt="" className="w-100" />
+            </Carousel.Item>
+            <Carousel.Item>
+              <img src={adopt} alt="" className="w-100" />
+            </Carousel.Item>
+          </Carousel>
+        </div>
         <div className="home-content">
-          <h3>WELCOME TO ELEPORIDAE</h3>
-          <div className="w-100 d-flex justify-content-between">
-            <h3>
-              Creating a better future <br /> for all rabbits.
-            </h3>
-            <button className="adopt-btn" onClick={() => navigateTo("/adopt")}>
-              Adopt Now!
-            </button>
-          </div>
+          <h1>Creating a better future for all rabbits.</h1>
           <p>
-            &emsp; &emsp; ELeporidae's primary objective is to pave the way for
-            a brighter future for rabbits. At the core of our mission is a deep
-            commitment to the well-being and welfare of these beloved animals.
-            We strive to create a world where rabbits can thrive in safe and
-            nurturing environments, championing their health, happiness, and
-            quality of life. Our unwavering dedication to these furry companions
+            eLeporidae's primary objective is to pave the way for a brighter
+            future for rabbits. At the core of our mission is a deep commitment
+            to the well-being and welfare of these beloved animals. We strive to
+            create a world where rabbits can thrive in safe and nurturing
+            environments, championing their health, happiness, and quality of
+            life. Our unwavering dedication to these furry companions
             underscores our determination to ensure a better tomorrow for them
             in every possible way.
           </p>

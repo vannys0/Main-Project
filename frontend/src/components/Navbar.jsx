@@ -60,14 +60,6 @@ function Navbar() {
       label: <UserProfile />,
       key: "1",
     },
-    // {
-    //   label: (
-    //     <span onClick={() => navigateTo(`/user_profile/${user.id}`)}>
-    //       Profile
-    //     </span>
-    //   ),
-    //   key: "1",
-    // },
     {
       label: (
         <span onClick={() => navigateTo("/myapplication")}>Application</span>
@@ -85,9 +77,6 @@ function Navbar() {
 
   return (
     <nav>
-      {/* <Link to="/home" className="title">
-        <img src={Logo} alt="" className="logo" />
-      </Link> */}
       <div className="title">
         <h3 className="gradient-text" onClick={() => navigateTo("/home")}>
           eLeporidae
@@ -101,7 +90,7 @@ function Navbar() {
           <NavLink to="/home">Home</NavLink>
         </li>
         <li>
-          <NavLink to="/adopt">Adopt a Rabbit</NavLink>
+          <NavLink to="/adopt">Adopt</NavLink>
         </li>
         <li>
           <NavLink to="/contact">Contact Us</NavLink>

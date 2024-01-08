@@ -37,8 +37,8 @@ function Contact() {
   return (
     <div className="main-div">
       <Navbar />
+      <img src={contact} alt="no image" loading="lazy" />
       <div className="contact-div bg-light">
-        <img src={contact} alt="no image" loading="lazy" />
         <div className="contact-details">
           <div className="d-flex align-items-center gap-3">
             <button className="btn btn-success">

@@ -52,6 +52,14 @@ a {
     flex-direction: column;
     background-color: #ffffff;
 }
+.home-div h1 {
+    font-weight: 700;
+    margin: 20px 0;
+    background: linear-gradient(to right, #5cb85c, #00828c);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: 'Poppins', sans-serif;
+}
 .home-content {
     width: 80%;
     gap: 20px;
@@ -61,24 +69,9 @@ a {
     align-items: center;
     justify-content: center;
 }
-.search-input {
-    width: 50%;
-}
-.adopt-btn {
-    height: 50px;
-    border: none;
-    padding: 0 30px;
-    color: #fff;
-    font-size: 18px;
-    cursor: pointer;
-    border-radius: 5px;
-    background-color: #EC7D20;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 4px 0px, rgba(99, 99, 99, 0.1) 0px -2px 8px 0px;
-}
 .email {
     color: #00828c;
 }
-
 /* ADOPT */
 .adopt-div { 
     width: 100%;
@@ -88,6 +81,10 @@ a {
 }
 .main-div > img {
     width: 100%;
+}
+.adopt-div .btn-field {
+    display: flex;
+    justify-content: space-between;
 }
 .rabbitList {
     gap: 10px;
@@ -120,12 +117,12 @@ a {
     display: none;
 }
 .input-search {
-    width: 250px;
-    padding: 8px;
+    width: 25%;
+    padding: 10px;
     font-size: 14px;
     color: #1e1e1e;
     outline: none;
-    border-radius: 5px 0 0 5px;
+    border-radius: 5px;
     border: 1px solid #eaeaea;
     background-color: #ffffff;
 }
@@ -145,7 +142,7 @@ a {
     align-items: center;
     position: relative;
 }
-.contact-div > img {
+.main-div > img {
     width: 100%;
 }
 .contact-div > .contact-details {
@@ -377,19 +374,33 @@ a {
         width: 100%;
         padding: 10px;
     }
+    .home-div .carousel {
+        width: 100%;
+    }
+    .home-content h1 {
+        margin: 10px 0;
+    }
     /* Contact */
     .contact-div {
-        width: 100vw;
+        width: 100%;
+        padding: 10px;
     }
     .contact-div > .contact-details {
         grid-template-columns: 1fr;
-    }
-    .contact-div > .contact-details {
         width: 100%;
+        gap: 10px;
+        padding: 10px 0;
+    }
+    .contact-div > div > div {
+        padding: 20px;
     }
     .contact-div > form {
         width: 100%;
         padding: 0 10px;
+    }
+    .contact-details {
+        padding: 0 10px;
+        gap: 10px;
     }
     /* About */
     .about-div {
@@ -401,7 +412,7 @@ a {
     .about-div > div {
         gap: 0;
         width: 100%;
-        padding: 20px;
+        padding: 10px 10px 0 10px;
     }
     .about-div > div > p {
         grid-column: span 2;
@@ -420,6 +431,10 @@ a {
     width: 100%;
     padding: 10px;
     }
+    .adopt-div .btn-field {
+        flex-direction: column;
+        justify-content: center;
+    }
     .adopt-div .rabbitList {
         padding: 0;
         gap: 10px;
@@ -427,22 +442,25 @@ a {
         justify-content: center;
         grid-template-columns: 1fr;
     }
-    .search-input {
+    .input-search {
         width: 100%;
     }
     /* About Rabbit */
     .rabbit-data-div {
         width: 100%;
+        padding: 10px;
+        margin: 10px 0;
     }
-    .main-div > img {
-        width: 100%;
+    .carousel {
+        width: 50%;
+        display: flex;
+        margin-bottom: 10px;
+        justify-content: center;
+        grid-column: span 3;
     }
-    .main-div > .rabbit-data-div {
-        width: 100%;
-    }
+
     .rabbit-data-div > div {
         width: 100%;
-        grid-template-columns: 1fr;
     }
     .rabbit-data-div > div > .statement {
         grid-column: span 1;
@@ -454,9 +472,9 @@ a {
         width: 100%;
         margin-top: 0;
     }
-    /* Rabbit Data */
-    .rabbit-info {
-        grid-template-columns: 1fr;
+    .rabbit-info div{
+        width: 100%;
+       background-color: red;
     }
     /* AdoptForm */
     .main-div .form-div {
@@ -485,8 +503,12 @@ a {
         margin-top: 0;
         margin-bottom: 0;
     }
+    .client-info {
+        padding: 0;
+    }
     .profile-div > .client-info > div {
         display: flex;
+        padding: 0;
         flex-direction: column;
     }
 }

@@ -8,17 +8,6 @@ import adopt from "../images/adopt.jpg";
 import { Avatar, Image, Button } from "antd";
 import { Carousel } from "react-bootstrap";
 import AdoptForm from "./AdoptForm";
-import {
-  MdDriveFileRenameOutline,
-  MdOutlineColorLens,
-  MdOutlineBloodtype,
-  MdPets,
-} from "react-icons/md";
-import { IoMdMale } from "react-icons/io";
-import { IoFemaleSharp, IoPricetagsOutline } from "react-icons/io5";
-import { LiaBirthdayCakeSolid } from "react-icons/lia";
-import { TbWeight } from "react-icons/tb";
-import { SiRabbitmq } from "react-icons/si";
 
 function RabbitData() {
   const navigateTo = useNavigate();
@@ -65,48 +54,44 @@ function RabbitData() {
             </Carousel>
           </div>
           <div className="rabbit-info">
-            <h4>
-              <b>About me</b>
-              <br />
-              Hi, my name is {data.name} and I am looking for a new home.
-            </h4>
+            <h4>Hi, my name is {data.name} and I am looking for a new home.</h4>
             <div>
-              <h6>Rabbit ID</h6>
-              <h6>{data.id}</h6>
+              <p>Rabbit ID</p>
+              <p>{data.id}</p>
             </div>
             <div>
-              <h6>Name</h6>
-              <h6>{data.name}</h6>
+              <p>Name</p>
+              <p>{data.name}</p>
             </div>
             <div>
-              <h6>Sex</h6>
-              <h6>{data.sex}</h6>
+              <p>Sex</p>
+              <p>{data.sex}</p>
             </div>
             <div>
-              <h6>Breed</h6>
-              <h6>{data.breed_type}</h6>
+              <p>Breed</p>
+              <p>{data.breed_type}</p>
             </div>
             <div>
-              <h6>Age</h6>
-              <h6>
+              <p>Age</p>
+              <p>
                 {age.years} yrs {age.months} mos
-              </h6>
+              </p>
             </div>
             <div>
-              <h6>Color</h6>
-              <h6>{data.color}</h6>
+              <p>Color</p>
+              <p>{data.color}</p>
             </div>
             <div>
-              <h6>Rabbit Type</h6>
-              <h6>{data.rabbit_type}</h6>
+              <p>Rabbit Type</p>
+              <p>{data.rabbit_type}</p>
             </div>
             <div>
-              <h6>Weight</h6>
-              <h6>{data.weight} klg</h6>
+              <p>Weight</p>
+              <p>{data.weight} klg</p>
             </div>
             <div>
-              <h6>Adoption Fee</h6>
-              <h6>Php{data.price}</h6>
+              <p>Adoption Fee</p>
+              <p>Php{data.price}</p>
             </div>
           </div>
           <div className="adopt-form-container">

@@ -62,21 +62,13 @@ function Adopt() {
       <Navbar />
       <img src={adopt} alt="" loading="lazy" />
       <div className="adopt-div bg-light">
-        <div className="d-flex justify-content-between">
+        <div className="btn-field">
           <h3>Adoptable rabbits</h3>
-          <div className="d-flex">
-            <input
-              className="input-search"
-              onChange={(e) => Filter(e.target.value)}
-              placeholder="Type here..."
-            ></input>
-            <button
-              className="btn-search"
-              onClick={(e) => Filter(e.target.value)}
-            >
-              Search
-            </button>
-          </div>
+          <input
+            className="input-search"
+            onChange={(e) => Filter(e.target.value)}
+            placeholder="Search"
+          />
         </div>
         <div id="adoptable" className="rabbitList bg-light">
           {record.length > 0 ? (
@@ -89,7 +81,6 @@ function Adopt() {
                 }
               >
                 <Avatar
-                  style={{ borderRadius: "0" }}
                   shape="square"
                   size={150}
                   src={
