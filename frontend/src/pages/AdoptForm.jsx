@@ -83,8 +83,9 @@ function AdoptForm({ data }) {
   const handleCityChange = (e) => {
     setValues((prev) => ({ ...prev, city: selectedCitymunCode }));
     const selectedCitymunCode = JSON.parse(e.target.value);
+    console.log(selectedCitymunCode);
     if (selectedCitymunCode) {
-      getAllBarangayByCityCodeList(selectedCitymunCode.citymunCode, (data) => {
+      getAllBarangayByCityCodeList(selectedCitymunCode, (data) => {
         setBrgyOptions(data);
       });
     } else {

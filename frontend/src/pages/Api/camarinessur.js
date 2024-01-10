@@ -18,8 +18,7 @@ export function getAllCityByProvinceCode(provCode, callback) {
 
 export function getAllBarangayByCityCodeList(code, callback) {
   fetchData(
-    "https://phaddress.onrender.com/api/v1/ph/barangays?provCode=0517&citymunCode=" +
-      `${code}`,
+    "https://phaddress.onrender.com/api/v1/ph/barangays?provCode=" + `${code.provCode}` + "&citymunCode=" + `${code.citymunCode}`,
     (data) => {
       callback(data);
     }
