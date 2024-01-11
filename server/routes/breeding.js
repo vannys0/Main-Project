@@ -14,23 +14,43 @@ router.get("/breeding", (req, res) => {
 });
 
 router.post("/pair-rabbit", (req, res) => {
-  const sql =
-    "INSERT INTO breeding_pair (`id`, `buck_id`, `doe_id`, `note`, `pairing_date`, `expected_due_date` ) VALUES (?)";
-  let randomID = Math.floor(100000 + Math.random() * 900000);
-  const id = `pair${randomID}`;
-  const values = [
-    id,
+  const checkPairSql =
+    "SELECT * FROM breeding_pair WHERE buck_id = ? OR doe_id = ?";
+  const checkPairValues = [
     req.body.male_rabbit_id,
     req.body.female_rabbit_id,
-    req.body.note,
-    req.body.date,
-    req.body.expected_due,
+    req.body.female_rabbit_id,
+    req.body.male_rabbit_id,
   ];
-  db.query(sql, [values], (err, data) => {
-    if (err) {
+
+  db.query(checkPairSql, checkPairValues, (checkErr, checkData) => {
+    if (checkErr) {
       return res.json("Error");
     }
-    return res.json(data);
+
+    if (checkData && checkData.length > 0) {
+      return res.json("Pair already exists");
+    }
+
+    const insertPairSql =
+      "INSERT INTO breeding_pair (`id`, `buck_id`, `doe_id`, `note`, `pairing_date`, `expected_due_date` ) VALUES (?)";
+    let randomID = Math.floor(100000 + Math.random() * 900000);
+    const id = `pair${randomID}`;
+    const insertValues = [
+      id,
+      req.body.male_rabbit_id,
+      req.body.female_rabbit_id,
+      req.body.note,
+      req.body.date,
+      req.body.expected_due,
+    ];
+
+    db.query(insertPairSql, [insertValues], (insertErr, insertData) => {
+      if (insertErr) {
+        return res.json("Error");
+      }
+      return res.json(insertData);
+    });
   });
 });
 

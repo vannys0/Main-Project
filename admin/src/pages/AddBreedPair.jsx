@@ -2,13 +2,11 @@ import React, { useEffect, useState } from "react";
 import "../Style.css";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
-import { Form } from "react-bootstrap";
 import { Html5QrcodeScanner } from "html5-qrcode";
 import axios from "axios";
-import { Button } from "antd";
+import { Button, Avatar } from "antd";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
-import { RiContactsBookLine } from "react-icons/ri";
 import appConfig from "../../config.json";
 const BASE_URL = appConfig.apiBasePath;
 
@@ -109,7 +107,7 @@ function BreedPair() {
     }
   }, []);
 
-  const onPair = (e) => {
+  const onPair = () => {
     if (!scanResult && !scanResult1) {
       Swal.fire({
         position: "center",
@@ -132,19 +130,6 @@ function BreedPair() {
       });
       return;
     }
-
-    // if (pair === pair1) {
-    //   Swal.fire({
-    //     icon: "error",
-    //     title: "Failed",
-    //     text: "Rabbits with the same breeding pair ID cannot be paired due to inbreeding concerns.",
-    //   }).then((result) => {
-    //     if (result.isConfirmed || result.dismiss === Swal.DismissReason.timer) {
-    //       window.location.reload();
-    //     }
-    //   });
-    //   return;
-    // }
 
     const currentDate = new Date();
     const futureDate = new Date();
@@ -176,15 +161,30 @@ function BreedPair() {
             expected_due: futureDate.toISOString(),
           })
           .then((res) => {
-            Swal.fire({
-              position: "center",
-              icon: "success",
-              title: "Successful",
-              showConfirmButton: false,
-              timer: 1500,
-            });
-            navigateTo("/breeding");
-            console.log(res);
+            if (res.data === "Pair already exists") {
+              Swal.fire({
+                icon: "error",
+                title: "Failed",
+                text: "This rabbits are already exists in the breeding pairs. Please try another pair.",
+              }).then((result) => {
+                if (
+                  result.isConfirmed ||
+                  result.dismiss === Swal.DismissReason.timer
+                ) {
+                  window.location.reload();
+                }
+              });
+            } else {
+              Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Successful",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+              navigateTo("/breeding");
+              console.log(res);
+            }
           })
           .catch((err) => console.log(err));
       }
@@ -207,8 +207,26 @@ function BreedPair() {
             <h6>Male</h6>
             {scanResult ? (
               <div className="d-flex flex-column gap-1">
-                <span>ID: {scanResult}</span>
-                <span>Rabbit Name: {rabbit.name}</span>
+                <Avatar
+                  shape="square"
+                  size={200}
+                  src={
+                    <img
+                      loading="lazy"
+                      src={`http://localhost:8081/uploads/${rabbit.image_path
+                        .split(",")[0]
+                        .trim()}`}
+                    />
+                  }
+                />
+                <div className="d-flex justify-content-between">
+                  <span>ID</span>
+                  <span>{scanResult}</span>
+                </div>
+                <div className="d-flex justify-content-between">
+                  <span>Name</span>
+                  <span>{rabbit.name}</span>
+                </div>
               </div>
             ) : (
               <div id="reader"></div>
@@ -220,9 +238,27 @@ function BreedPair() {
           <div className="ground">
             <h6>Female</h6>
             {scanResult1 ? (
-              <div className="d-flex flex-column gap-1">
-                <span>ID: {scanResult1}</span>
-                <span>Rabbit Name: {rabbit1.name}</span>
+              <div className="d-flex flex-column">
+                <Avatar
+                  shape="square"
+                  size={200}
+                  src={
+                    <img
+                      loading="lazy"
+                      src={`http://localhost:8081/uploads/${rabbit1.image_path
+                        .split(",")[0]
+                        .trim()}`}
+                    />
+                  }
+                />
+                <div className="d-flex justify-content-between">
+                  <span>ID</span>
+                  <span>{scanResult1}</span>
+                </div>
+                <div className="d-flex justify-content-between">
+                  <span>Name</span>
+                  <span>{rabbit1.name}</span>
+                </div>
               </div>
             ) : (
               <div id="reader1"></div>
