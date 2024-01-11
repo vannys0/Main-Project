@@ -52,6 +52,12 @@ a {
     flex-direction: column;
     background-color: #ffffff;
 }
+.carousel {
+    width: 100%;
+}
+.carousel img {
+    width: 100%;
+}
 .home-div h1 {
     font-weight: 700;
     margin: 20px 0;

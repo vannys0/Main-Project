@@ -3,7 +3,7 @@ import Navbar from "../components/Navbar.jsx";
 import "./style.css";
 import Footer from "../components/footer.jsx";
 import FarmImg from "../images/farm.jpg";
-import contact from "../images/contact.jpg";
+import contact from "../images/co.jpg";
 import { RiMailSendLine } from "react-icons/ri";
 import { MdOutlineAttachEmail, MdOutlinePhoneForwarded } from "react-icons/md";
 import { LiaFacebook } from "react-icons/lia";

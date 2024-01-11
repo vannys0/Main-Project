@@ -1,9 +1,9 @@
 import React from "react";
 import Navbar from "../components/Navbar.jsx";
 import "./style.css";
-import about from "../images/about.jpg";
-import contact from "../images/contact.jpg";
-import adopt from "../images/adopt.jpg";
+import about from "../images/ab.jpg";
+import contact from "../images/co.jpg";
+import adopt from "../images/a.jpg";
 import Carousel from "react-bootstrap/Carousel";
 import Footer from "../components/footer.jsx";
 import { Image } from "antd";

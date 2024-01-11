@@ -1,5 +1,5 @@
 
-.active {
+nav .active {
     border-bottom: 2px solid #0669AC;
     color: #0669AC;
 }
@@ -75,7 +75,7 @@ nav .menu .menu-icon {
 
 /* Responsiveness */
 @media (max-width: 480px) {
-    .active {
+    nav .active {
         border-bottom: 0;
     }
     .gradient-text {

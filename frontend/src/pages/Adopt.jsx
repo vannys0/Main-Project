@@ -6,7 +6,7 @@ import axios from "axios";
 import RabbitData from "./RabbitData.jsx";
 import Footer from "../components/footer.jsx";
 import { Input, Image, Avatar } from "antd";
-import adopt from "../images/adopt.jpg";
+import adopt from "../images/a.jpg";
 import AboutRabbit from "./AboutRabbit.jsx";
 import { Link, useNavigate } from "react-router-dom";
 import Accordion from "react-bootstrap/Accordion";

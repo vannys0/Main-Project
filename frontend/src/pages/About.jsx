@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "../components/Navbar.jsx";
 import "./style.css";
-import about from "../images/about.jpg";
+import about from "../images/ab.jpg";
 import Footer from "../components/footer.jsx";
 
 function About() {
