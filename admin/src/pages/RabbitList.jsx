@@ -98,8 +98,7 @@ function RabbitList() {
 
   const handleDelete = async (id) => {
     Swal.fire({
-      title: "Confirm delete?",
-      text: "Are you sure? You want to delete this?",
+      text: "Are you sure you want to delete this rabbit from the list?",
       showCancelButton: true,
       confirmButtonColor: "#d50000",
       cancelButtonColor: "#797979",
@@ -168,6 +167,7 @@ function RabbitList() {
         color: "#ffffff",
         fontSize: "14px",
         backgroundColor: "#1677ff",
+        textTransform: "uppercase",
       },
     },
   };

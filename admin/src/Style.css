@@ -78,7 +78,9 @@ body {
     padding: 20px;
     font-family: 'Montserrat', sans-serif;
   }
-  
+  .main-container h3 {
+    text-transform: uppercase;
+  }
   .main-title {
     display: flex;
     justify-content: space-between;

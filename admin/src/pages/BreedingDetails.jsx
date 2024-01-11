@@ -28,7 +28,7 @@ function BreedingDetails({ data }) {
         </span>
       </div>
       <Modal
-        title={`Details`}
+        title={`Breeding Details`}
         style={{
           top: 20,
         }}
@@ -41,28 +41,28 @@ function BreedingDetails({ data }) {
         ]}
       >
         <div className="details-div">
-          <div>
-            <p>ID : </p>
+          <div className="d-flex justify-content-between">
+            <p>ID</p>
             <p>{data.id}</p>
           </div>
-          <div>
-            <p>Male Id :</p>
+          <div className="d-flex justify-content-between">
+            <p>Male Id</p>
             <p>{data.buck_id}</p>
           </div>
-          <div>
-            <p>Female Id :</p>
+          <div className="d-flex justify-content-between">
+            <p>Female Id</p>
             <p>{data.doe_id}</p>
           </div>
-          <div>
-            <p>Note :</p>
+          <div className="d-flex justify-content-between">
+            <p>Note</p>
             <p>{data.note}</p>
           </div>
-          <div>
-            <p>Pairing Date :</p>
+          <div className="d-flex justify-content-between">
+            <p>Pairing Date</p>
             <p>{formatDate(data.pairing_date)}</p>
           </div>
-          <div>
-            <p>Estimated Due Date :</p>
+          <div className="d-flex justify-content-between">
+            <p>Estimated Due Date</p>
             <p>{formatDate(data.expected_due_date)}</p>
           </div>
         </div>

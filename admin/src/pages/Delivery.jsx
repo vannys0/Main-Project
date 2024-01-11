@@ -26,7 +26,7 @@ function Delivery() {
 
   const onApprove = (e, o) => {
     Swal.fire({
-      title: "Are you sure?",
+      title: "Approve Delivery",
       text: "Do you want to approve the delivery?",
       showCancelButton: true,
       confirmButtonColor: "#1677ff",
@@ -46,13 +46,12 @@ function Delivery() {
 
   const onDelivered = (id, rabbit_id) => {
     Swal.fire({
-      title: "Are you sure?",
-      text: "Do you want to confirm delivery?",
+      title: "Delivery Confirmation",
       showCancelButton: true,
       confirmButtonColor: "#1677ff",
       cancelButtonColor: "#797979",
-      confirmButtonText: "Yes",
-      html: '<input type="file" id="file" accept=".jpg, .jpeg, .png">',
+      confirmButtonText: "Confirm",
+      html: '<div><p>Upload Proof of Delivery.</p><input type="file" id="file" accept=".jpg, .jpeg, .png"></div>',
       preConfirm: () => {
         const fileInput = document.getElementById("file");
         const file = fileInput.files[0];
@@ -65,8 +64,8 @@ function Delivery() {
     }).then((result) => {
       if (result.isConfirmed) {
         const payload = new FormData();
-        const fileName = result.value.name; // Extracting just the filename
-        payload.append("file", result.value, fileName); // Append file with filename only
+        const fileName = result.value.name;
+        payload.append("file", result.value, fileName);
         payload.append("adoption_id", id);
         payload.append("transaction_date", new Date().toISOString());
         payload.append("transaction_status", "Completed");
@@ -116,6 +115,7 @@ function Delivery() {
         color: "#ffffff",
         fontSize: "14px",
         backgroundColor: "#1677ff",
+        textTransform: "uppercase",
       },
     },
   };
@@ -149,9 +149,9 @@ function Delivery() {
       cell: (record) => (
         <span>
           {record.delivery_status === "Approved" ? (
-            <Tag color="success">Approved</Tag>
+            <Tag color="success">APPROVED</Tag>
           ) : (
-            <Tag color="warning">Pending</Tag>
+            <Tag color="warning">PENDING</Tag>
           )}
         </span>
       ),

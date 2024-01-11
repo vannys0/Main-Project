@@ -11,46 +11,63 @@ function About() {
       <div className="about-div bg-light">
         <img src={about} alt="no image" loading="lazy" />
         <div>
-          <h4>Welcome to e-Leporidae</h4>
-          <p>
-            At e-Leporidae, we are driven by a simple but powerful mission: to
-            provide a safe and loving environment for rabbits in need of
-            rehoming. Our team is dedicated to promoting the well-being of these
-            gentle creatures and ensuring that they find their forever homes.
+          <h4>ABOUT US</h4>
+          <p className="justify">
+            Welcome to e-Leporidae, where our passion for the well-being of
+            rabbits drives a simple yet powerful mission.
+            <br />
+            <br />
+            Committed to creatE a safe and loving environment for rabbits in
+            need of rehoming. At e-Leporidae, our dedicated team works
+            tirelessly to promote the welfare of these gentle creatures,
+            ensuring that each one finds its forever home. We are fueled by a
+            deep love and respect for rabbits, and we believe that every bunny
+            deserves a happy and fulfilling life.
+            <br />
+            <br />
+            Whether you're a fellow enthusiast, a potential adopter, or someone
+            seeking to support our cause, we invite you to join us in making a
+            positive impact on the lives of these adorable and often
+            misunderstood animals.
           </p>
-          <h4>Our goal</h4>
+          <h4>CORE OBJECTIVES</h4>
           <p>
             <span>Educate rabbit owners on responsible care.</span>
             <br />
-            The core objective here is to inform and guide rabbit owners in the
-            practice of responsible care for these beloved pets. This
-            encompasses a range of critical aspects, such as nutrition, habitat,
-            exercise, and health maintenance. By providing educational resources
-            and advice, we aim to empower rabbit owners with the knowledge and
-            tools necessary to ensure their pets lead healthy, happy lives.
-            Responsible care entails understanding a rabbit's specific needs,
-            from providing a balanced diet to creating a safe and stimulating
-            environment. It also involves routine veterinary care to prevent and
-            address health issues. Ultimately, our mission is to foster a
-            community of informed and responsible rabbit owners who can offer
-            their furry companions the best possible quality of life.
+            <br />
+            At e-Leporidae, our focus is on equipping rabbit owners with the
+            information and guidance needed to responsibly care for their
+            cherished companions. This encompasses essential aspects such as
+            nutrition, habitat setup, exercise routines, and health maintenance.
+            Our mission involves offering educational resources and expert
+            advice to empower rabbit owners, enabling them to understand and
+            meet their pets' specific needs. Responsible care extends from
+            providing a well-balanced diet to creating a secure and stimulating
+            environment. Routine veterinary care is also emphasized to prevent
+            and address potential health issues. Ultimately, we aim to cultivate
+            a community of informed and responsible rabbit owners dedicated to
+            providing their furry friends with the highest possible quality of
+            life.
           </p>
           <p>
             <span>Create a supportive rabbit-loving community.</span>
             <br />
-            Our primary aim is to establish a nurturing and inclusive community
-            of individuals who share a profound love for rabbits. We believe
-            that by coming together, we can create an environment where rabbit
-            enthusiasts can connect, exchange knowledge, and offer mutual
-            support. This community will serve as a valuable resource for both
-            seasoned rabbit owners and those new to rabbit care, fostering a
-            sense of belonging and a shared passion for these wonderful
-            creatures. Whether it's through online forums, local meet-ups, or
-            educational events, we aim to build a network of like-minded
-            individuals who can provide guidance, share experiences, and
-            advocate for the well-being of rabbits. Our vision is to unite
-            rabbit lovers in a supportive and caring community dedicated to
-            enhancing the lives of these endearing animals.
+            <br />
+            Our specific aim is to cultivate a community that serves as a
+            valuable resource for both seasoned rabbit owners and those new to
+            rabbit care. Through online forums, local meet-ups, and educational
+            events, we strive to build a network of like-minded individuals who
+            can provide guidance, share experiences, and advocate for the
+            well-being of rabbits.
+            <br />
+            <br />
+            At e-Leporidae, our vision is to unite rabbit lovers in a supportive
+            and caring community dedicated to enhancing the lives of these
+            endearing animals.
+            <br />
+            <br />
+            Join us on this journey, and let's create a space where our shared
+            passion for rabbits flourishes.
           </p>
         </div>
       </div>

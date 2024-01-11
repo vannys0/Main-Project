@@ -9,13 +9,12 @@
     grid-area: sidebar;
     width: 260px;
     height: 100%;
-    border-right: 2px solid #eaeaea;
-    background-color: #fff;
+    background-color: #eaeaea;
     overflow-y: auto;
     transition: all 0.5s;
     -webkit-transition: all 0.5s;
   }
-  .active {
+  #sidebar .active {
     background-color: #1677ff;
   }
 
@@ -68,7 +67,7 @@
   
   .sidebar-list-item:not(.active):hover {
     color: rgba(0, 0, 0, 0.75);
-    background-color: #eaeaea;
+    background-color: #ffffff;
   }
 
   .sidebar-responsive {

@@ -4,7 +4,7 @@ import "./footer.css";
 function footer() {
   return (
     <div className="footer">
-      <span>© 2023 e-Leporidae</span>
+      <span>eLeporidae | Since 2021</span>
     </div>
   );
 }

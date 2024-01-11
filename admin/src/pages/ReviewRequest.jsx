@@ -43,62 +43,44 @@ function ReviewRequest({ data }) {
         <div className="d-flex flex-column">
           <div className="d-flex justify-content-between">
             <p>Fullname</p>
-            <p>
-              <b>{data.name}</b>
-            </p>
+            <p>{data.name}</p>
           </div>
           <div className="d-flex justify-content-between">
             <p>Phone number</p>
-            <p>
-              <b>{data.phone}</b>
-            </p>
+            <p>{data.phone}</p>
           </div>
           <div className="d-flex justify-content-between">
             <p>Email</p>
-            <p>
-              <b>{data.email}</b>
-            </p>
+            <p>{data.email}</p>
           </div>
           <div className="d-flex justify-content-between">
             <p>Address</p>
             <p>
-              <b>
-                {data.province}, {data.city}, {data.barangay}
-              </b>
+              {data.province}, {data.city}, {data.barangay}
             </p>
           </div>
           <div className="d-flex justify-content-between">
             <p>Adoption Date</p>
-            <p>
-              <b>{formatDate(data.adoption_date)}</b>
-            </p>
+            <p>{formatDate(data.adoption_date)}</p>
           </div>
           <div className="d-flex justify-content-between">
             <p>Reason to Adopt</p>
-            <p>
-              <b>{data.reason_for_adoption}</b>
-            </p>
+            <p>{data.reason_for_adoption}</p>
           </div>
           <div className="d-flex justify-content-between">
             <p>Other Pets</p>
-            <p>
-              <b>{data.other_pets ? data.other_pets : "None"}</b>
-            </p>
+            <p>{data.other_pets ? data.other_pets : "None"}</p>
           </div>
           <div className="d-flex justify-content-between">
             <p>Mode of payment</p>
-            <p>
-              <b>{data.mode_of_payment}</b>
-            </p>
+            <p>{data.mode_of_payment}</p>
           </div>
           {data.mode_of_payment === "Agriculture" ? (
             <div className="d-flex justify-content-between">
               <p>Agricultural Product</p>
               <p>
-                <b>
-                  {data.agriculture_product} Amount(P
-                  {data.agriculture_product_price})
-                </b>
+                {data.agriculture_product} Amount(P
+                {data.agriculture_product_price})
               </p>
             </div>
           ) : (

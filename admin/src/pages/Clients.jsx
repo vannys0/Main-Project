@@ -36,6 +36,7 @@ function Clients() {
         color: "#ffffff",
         fontSize: "14px",
         backgroundColor: "#1677ff",
+        textTransform: "uppercase",
       },
     },
   };

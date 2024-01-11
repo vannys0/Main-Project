@@ -50,12 +50,11 @@ function AdminUserProfile() {
     const formData = new FormData();
     formData.append("file", image);
     Swal.fire({
-      title: "Confirm?",
-      text: "Set as Profile Image?",
+      text: "Set this picture as your profile?",
       showCancelButton: true,
       confirmButtonColor: "#1677ff",
       cancelButtonColor: "#797979",
-      confirmButtonText: "Save changes",
+      confirmButtonText: "Save",
     }).then((result) => {
       if (result.isConfirmed) {
         axios
@@ -97,7 +96,7 @@ function AdminUserProfile() {
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
-        footer={<Button onClick={handleCancel}>Close</Button>}
+        footer={null}
       >
         <div className="profile-div">
           <div className="admin-thumbnail"></div>
@@ -161,108 +160,20 @@ function AdminUserProfile() {
             />
           </div>
           <div className="client-info">
-            <hr style={{ height: "2px solid black", width: "100%" }} />
-            <div>
-              <h6>User ID</h6>
-              <p>{userInfo.id}</p>
-            </div>
-            <hr style={{ height: "2px solid black", width: "100%" }} />
-            <div>
-              <h6>Full Name</h6>
-              <p>{userInfo.name}</p>
-            </div>
-            <hr style={{ height: "2px solid black", width: "100%" }} />
-            <div>
-              <h6>Email</h6>
-              <p>{userInfo.email}</p>
-            </div>
-          </div>
-        </div>
-        {/* <div className="client-profile">
-          <div className="d-flex flex-column gap-2 align-items-center justify-content-center">
-            <div>
-              {image ? (
-                <div className="d-flex flex-column gap-2 align-items-center justify-content-center">
-                  <Avatar
-                    shape="square"
-                    style={{
-                      width: "168px",
-                      height: "168px",
-                      border: "5px solid #eaeaea",
-                    }}
-                    src={
-                      <img
-                        src={URL.createObjectURL(image)}
-                        alt=""
-                        style={{ width: "100%" }}
-                      />
-                    }
-                  />
-                  <Button onClick={handleUploadProfile}>Upload profile</Button>
-                </div>
-              ) : hasProfileImage ? (
-                <div className="d-flex flex-column gap-2 align-items-center justify-content-center">
-                  <Avatar
-                    shape="square"
-                    style={{
-                      width: "168px",
-                      height: "168px",
-                      border: "5px solid #eaeaea",
-                    }}
-                    src={
-                      <img
-                        src={`http://localhost:8081/uploads/${userInfo.profile}`}
-                        alt=""
-                        style={{ width: "100%" }}
-                      />
-                    }
-                  />
-                  <Button onClick={handleUpload}>Change profile</Button>
-                </div>
-              ) : (
-                <div className="d-flex flex-column gap-2 align-items-center justify-content-center">
-                  <Avatar
-                    shape="square"
-                    style={{
-                      width: "168px",
-                      height: "168px",
-                      border: "5px solid #eaeaea",
-                    }}
-                    src={<img src={Default} alt="" />}
-                  />
-                  <Button onClick={handleUpload}>Upload profile</Button>
-                </div>
-              )}
-
-              <input
-                type="file"
-                name="file"
-                accept="image/*"
-                ref={inputRef}
-                onChange={handleImageChange}
-                style={{ display: "none" }}
-              />
-            </div>
-          </div>
-          <div className="client-data">
-            <div>
-              <p>User Type</p>
-              <p>{userInfo.user_type}</p>
-            </div>
-            <div>
+            <div className="d-flex justify-content-between">
               <p>User ID</p>
               <p>{userInfo.id}</p>
             </div>
-            <div>
-              <p>Name</p>
+            <div className="d-flex justify-content-between">
+              <p>Full Name</p>
               <p>{userInfo.name}</p>
             </div>
-            <div>
+            <div className="d-flex justify-content-between">
               <p>Email</p>
               <p>{userInfo.email}</p>
             </div>
           </div>
-        </div> */}
+        </div>
       </Modal>
     </div>
   );

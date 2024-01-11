@@ -45,12 +45,11 @@ function UserProfile() {
     const formData = new FormData();
     formData.append("file", image);
     Swal.fire({
-      title: "Confirm?",
-      text: "Set as Profile Image?",
+      text: "Set this picture as your profile?",
       showCancelButton: true,
       confirmButtonColor: "#1677ff",
       cancelButtonColor: "#797979",
-      confirmButtonText: "Save changes",
+      confirmButtonText: "Save",
     }).then((result) => {
       if (result.isConfirmed) {
         axios
@@ -92,7 +91,7 @@ function UserProfile() {
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
-        footer={<Button onClick={handleCancel}>Close</Button>}
+        footer={null}
       >
         <div className="profile-div">
           <div className="thumbnail"></div>
@@ -160,19 +159,16 @@ function UserProfile() {
             />
           </div>
           <div className="client-info">
-            <hr style={{ height: "2px solid black", width: "100%" }} />
-            <div>
-              <h6>User ID</h6>
+            <div className="d-flex justify-content-between">
+              <p>User ID</p>
               <p>{user.id}</p>
             </div>
-            <hr style={{ height: "2px solid black", width: "100%" }} />
-            <div>
-              <h6>Full Name</h6>
+            <div className="d-flex justify-content-between">
+              <p>Full Name</p>
               <p>{user.name}</p>
             </div>
-            <hr style={{ height: "2px solid black", width: "100%" }} />
-            <div>
-              <h6>Email</h6>
+            <div className="d-flex justify-content-between">
+              <p>Email</p>
               <p>{user.email}</p>
             </div>
           </div>

@@ -4,7 +4,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/footer";
 import axios from "axios";
 import "./style.css";
-import adopt from "../images/adopt.jpg";
+import adopt from "../images/a.jpg";
 import { Avatar, Image, Button } from "antd";
 import { Carousel } from "react-bootstrap";
 import AdoptForm from "./AdoptForm";
@@ -64,7 +64,7 @@ function RabbitData() {
               <p>{data.name}</p>
             </div>
             <div>
-              <p>Sex</p>
+              <p>Gender</p>
               <p>{data.sex}</p>
             </div>
             <div>
@@ -87,11 +87,11 @@ function RabbitData() {
             </div>
             <div>
               <p>Weight</p>
-              <p>{data.weight} klg</p>
+              <p>{data.weight} kgs</p>
             </div>
             <div>
               <p>Adoption Fee</p>
-              <p>Php{data.price}</p>
+              <p>P{data.price}</p>
             </div>
           </div>
           <div className="adopt-form-container">

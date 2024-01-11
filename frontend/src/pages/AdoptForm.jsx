@@ -264,7 +264,7 @@ function AdoptForm({ data }) {
             <option value="" hidden>
               Select
             </option>
-            <option value="Pick up">Pick up</option>
+            <option value="Pick up">Pick Up</option>
             <option value="Deliver">Deliver</option>
           </Form.Select>
           {errors.serviceoption && (
@@ -281,7 +281,9 @@ function AdoptForm({ data }) {
             <option value="" hidden>
               Select
             </option>
-            <option value="Cash">Cash</option>
+            <option value="Cash">
+              Cash <em>(Optional)</em>
+            </option>
             <option value="Agriculture">Agriculture</option>
           </Form.Select>
           {mopAgriculture && (
@@ -298,7 +300,7 @@ function AdoptForm({ data }) {
               />
               <br />
               <label htmlFor="agprodprice" className="label-name">
-                Product estimated amount <em>(Php)</em>
+                Product Estimated Amount <em>(PHP)</em>
               </label>
               <input
                 type="number"
@@ -310,7 +312,7 @@ function AdoptForm({ data }) {
           )}
           <br />
 
-          <label htmlFor="environment">Home environment</label>
+          <label htmlFor="environment">Home Environment</label>
           <input
             type="file"
             name="image"
@@ -320,7 +322,7 @@ function AdoptForm({ data }) {
             onChange={onFileChange}
           />
           <br />
-          <label htmlFor="reason">Why choose a rabbit?</label>
+          <label htmlFor="reason">Why Did You Choose Rabbit?</label>
           <Form.Select
             aria-label="Default select example"
             onChange={handleInput}
@@ -329,17 +331,17 @@ function AdoptForm({ data }) {
             <option value="" hidden>
               Select
             </option>
-            <option value="Quiet and gentle nature">
-              Quiet and gentle nature
-            </option>
-            <option value="Rabbits are inexpensive">
-              Rabbits are inexpensive
+            <option value="Rabbits live a long time">
+              Rabbits live a long time
             </option>
             <option value="Rabbits are a great pet">
               Rabbits are a great pet
             </option>
-            <option value="Rabbits live a long time">
-              Rabbits live a long time
+            <option value="Rabbits are inexpensive">
+              Rabbits are inexpensive
+            </option>
+            <option value="Quiet and gentle nature">
+              Quiet and gentle nature
             </option>
             <option value="Adaptability to indoor living">
               Adaptability to indoor living
@@ -350,7 +352,7 @@ function AdoptForm({ data }) {
 
           <br />
           <label htmlFor="otherpets">
-            Other pets <em>(Optional)</em>
+            Other Pets <i>(Optional)</i>
           </label>
           <textarea
             name="otherpets"

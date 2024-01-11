@@ -41,8 +41,7 @@ function Request() {
     fetchUserData(o)
       .then((userData) => {
         Swal.fire({
-          title: "Are you sure?",
-          text: "You want to approve this request?",
+          text: "Are you sure you want to approve this request?",
           showCancelButton: true,
           confirmButtonColor: "#2e7d32",
           cancelButtonColor: "#797979",
@@ -78,8 +77,7 @@ function Request() {
     fetchUserData(o)
       .then((userData) => {
         Swal.fire({
-          title: "Are you sure?",
-          text: "You want to decline this request?",
+          text: "Are you sure you want to decline this request?",
           showCancelButton: true,
           confirmButtonColor: "#d50000",
           cancelButtonColor: "#797979",
@@ -160,6 +158,7 @@ function Request() {
         color: "#ffffff",
         fontSize: "14px",
         backgroundColor: "#1677ff",
+        textTransform: "uppercase",
       },
     },
   };
@@ -201,32 +200,44 @@ function Request() {
       cell: (record) => (
         <span>
           {record.adoption_status === "Pending" ? (
-            <Tag color="warning">{record.adoption_status}</Tag>
+            <Tag color="warning">
+              <span style={{ textTransform: "uppercase" }}>
+                {record.adoption_status}
+              </span>
+            </Tag>
           ) : record.adoption_status === "Declined" ? (
-            <Tag color="error">{record.adoption_status}</Tag>
+            <Tag color="error">
+              <span style={{ textTransform: "uppercase" }}>
+                {record.adoption_status}
+              </span>
+            </Tag>
           ) : (
-            <Tag color="success">{record.adoption_status}</Tag>
+            <Tag color="success">
+              <span style={{ textTransform: "uppercase" }}>
+                {record.adoption_status}
+              </span>
+            </Tag>
           )}
         </span>
       ),
     },
-    {
-      name: "SGA",
-      cell: (record) => {
-        if (record.adoption_status !== "Pending") {
-          return null;
-        }
+    // {
+    //   name: "SGA",
+    //   cell: (record) => {
+    //     if (record.adoption_status !== "Pending") {
+    //       return null;
+    //     }
 
-        if (
-          record.mode_of_payment === "Agriculture" &&
-          record.agriculture_product_price >= record.price
-        ) {
-          return "Yes";
-        }
+    //     if (
+    //       record.mode_of_payment === "Agriculture" &&
+    //       record.agriculture_product_price >= record.price
+    //     ) {
+    //       return "Yes";
+    //     }
 
-        return "No";
-      },
-    },
+    //     return "No";
+    //   },
+    // },
     {
       name: "Actions",
       cell: (record) => (

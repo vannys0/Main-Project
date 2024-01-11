@@ -37,8 +37,7 @@ function Breeding() {
 
   const handleDelete = async (id) => {
     Swal.fire({
-      title: "Are you sure?",
-      text: "You want to cancel this breeding pair?",
+      text: "Are you sure you want to cancel this breeding pair?",
       showCancelButton: true,
       confirmButtonColor: "#d50000",
       cancelButtonColor: "#797979",
@@ -133,6 +132,7 @@ function Breeding() {
         color: "#ffffff",
         fontSize: "14px",
         backgroundColor: "#1677ff",
+        textTransform: "uppercase",
       },
     },
   };

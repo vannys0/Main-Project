@@ -42,22 +42,6 @@ function Sidebar({ openSidebarToggle, OpenSidebar }) {
       .catch();
   }, [user.id]);
 
-  function onLogout() {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You want to logout?",
-      showCancelButton: true,
-      confirmButtonColor: "#d50000",
-      cancelButtonColor: "#797979",
-      confirmButtonText: "Yes",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        authContext.signOut();
-        navigateTo("/");
-      }
-    });
-  }
-
   return (
     <aside
       id="sidebar"
@@ -66,7 +50,6 @@ function Sidebar({ openSidebarToggle, OpenSidebar }) {
       <div className="sidebar-title">
         <div className="sidebar-brand">
           <h3 className="gradient-text">eLeporidae</h3>
-          {/* <img className="logo" src={Logo} alt="" /> */}
         </div>
         <span className="icon close_icon" onClick={OpenSidebar}>
           <AiOutlineClose />
@@ -74,7 +57,7 @@ function Sidebar({ openSidebarToggle, OpenSidebar }) {
       </div>
       <ul className="sidebar-list">
         <h6 style={{ marginLeft: "20px", color: "#797979", fontWeight: "600" }}>
-          MAIN MENU
+          MENU
         </h6>
         <NavLink to="/dashboard" className="sidebar-list-item">
           <LuLayoutDashboard className="icon" /> Dashboard

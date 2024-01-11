@@ -145,6 +145,7 @@ function Dashboard() {
         color: "#ffffff",
         fontSize: "14px",
         backgroundColor: "#1677ff",
+        textTransform: "uppercase",
       },
     },
   };
@@ -186,7 +187,11 @@ function Dashboard() {
     },
     {
       name: "Status",
-      selector: (row) => row.adoption_status,
+      selector: (row) => (
+        <span style={{ textTransform: "uppercase" }}>
+          {row.adoption_status}
+        </span>
+      ),
       sortable: true,
     },
   ];
@@ -276,7 +281,7 @@ function Dashboard() {
               options={{
                 plugins: {
                   title: {
-                    text: "Adoptions",
+                    text: "ADOPTIONS",
                   },
                 },
               }}
@@ -293,7 +298,7 @@ function Dashboard() {
               options={{
                 plugins: {
                   title: {
-                    text: "Adoption Revenue",
+                    text: "ADOPTION REVENUE",
                   },
                 },
               }}
@@ -309,7 +314,7 @@ function Dashboard() {
               options={{
                 plugins: {
                   title: {
-                    text: "Adopted Rabbits by Sex",
+                    text: "ADOPTED RABBIT BY GENDER",
                   },
                 },
               }}

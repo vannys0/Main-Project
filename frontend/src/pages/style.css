@@ -58,8 +58,8 @@ a {
 .carousel img {
     width: 100%;
 }
-.home-div h1 {
-    font-weight: 700;
+.home-div h2 {
+    text-align: justify;
     margin: 20px 0;
     background: linear-gradient(to right, #5cb85c, #00828c);
     -webkit-background-clip: text;
@@ -227,10 +227,12 @@ a {
     align-self: center;
     grid-column: span 2;
 }
-.about-div > div > p:first-of-type {
+.about-div div .justify {
     grid-column: span 2;
+    text-align: justify;
 }
 .about-div > div > p {
+    text-align: justify;
     padding: 20px;
     border: 1px solid #eaeaea;
     background-color: #ffffff;
@@ -374,7 +376,6 @@ a {
     /* Home */
     .home-div {
         width: 100%;
-        padding: 0px 10px 10px 10px;
     }
     .home-content {
         width: 100%;

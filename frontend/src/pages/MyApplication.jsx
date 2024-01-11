@@ -42,8 +42,8 @@ function MyApplication() {
 
   const handleDelete = async (id) => {
     Swal.fire({
-      title: "Are you sure?",
-      text: "you want to cancel this?",
+      icon: "warning",
+      text: "Are you sure you want to cancel this request?",
       showCancelButton: true,
       confirmButtonColor: "#d50000",
       cancelButtonColor: "#797979",
@@ -99,23 +99,23 @@ function MyApplication() {
 
   const columns = [
     {
-      title: "Adoption ID",
+      title: "ADOPTION ID",
       dataIndex: "id",
       key: "id",
     },
     {
-      title: "Date",
+      title: "ADOPTION DATE",
       dataIndex: "adoption_date",
       key: "adoption_date",
       render: (text) => formatDate(text),
     },
     {
-      title: "Delivery Option",
+      title: "DELIVERY OPTION",
       dataIndex: "service_option",
       key: "service_option",
     },
     {
-      title: "Status",
+      title: "STATUS",
       dataIndex: "adoption_status",
       key: "adoption_status",
       render: (text) => {
@@ -123,11 +123,15 @@ function MyApplication() {
         if (text === "Pending") color = "warning";
         else if (text === "Declined") color = "error";
         else color = "success";
-        return <Tag color={color}>{text}</Tag>;
+        return (
+          <Tag color={color}>
+            <span style={{ textTransform: "uppercase" }}>{text}</span>
+          </Tag>
+        );
       },
     },
     {
-      title: "Actions",
+      title: "ACTIONS",
       key: "action",
       render: (text, record) => (
         <Dropdown

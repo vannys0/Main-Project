@@ -31,22 +31,14 @@ function Home() {
           </Carousel>
         </div>
         <div className="home-content">
-          <h1>Creating a better future for all rabbits.</h1>
-          <p>
-            eLeporidae's primary objective is to pave the way for a brighter
-            future for rabbits. At the core of our mission is a deep commitment
-            to the well-being and welfare of these beloved animals. We strive to
-            create a world where rabbits can thrive in safe and nurturing
-            environments, championing their health, happiness, and quality of
-            life. Our unwavering dedication to these furry companions
-            underscores our determination to ensure a better tomorrow for them
-            in every possible way.
-          </p>
-          <p>
-            Have questions or need help? Email us at
-            <span className="email"> eleporidae@gmail.com</span> and we'll be
-            happy to talk more with you!
-          </p>
+          <h2>
+            "Man is the only creature that consumes without producing. He does
+            not give milk, he does not lay eggs, he is too weak to pull the
+            plough, he cannot run fast enough to catch rabbits. Yet he is lord
+            of all the animals."
+          </h2>
+
+          <h4>- George Orwell</h4>
         </div>
       </div>
       <Footer />

@@ -36,8 +36,7 @@ function Navbar() {
 
   const handleLogout = () => {
     Swal.fire({
-      title: "Are you sure?",
-      text: "You want to logout?",
+      text: "Are you sure you want to logout?",
       showCancelButton: true,
       confirmButtonColor: "#d50000",
       cancelButtonColor: "#797979",

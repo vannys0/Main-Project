@@ -29,11 +29,7 @@ function ClientUserProfile({ data }) {
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
-        footer={
-          <div>
-            <Button onClick={handleCancel}>Close</Button>
-          </div>
-        }
+        footer={null}
       >
         <div className="profile-div">
           <div className="thumbnail"></div>
@@ -65,19 +61,16 @@ function ClientUserProfile({ data }) {
             )}
           </div>
           <div className="client-info">
-            <hr style={{ height: "2px solid black", width: "100%" }} />
-            <div>
-              <h6>User ID</h6>
+            <div className="d-flex justify-content-between">
+              <p>User ID</p>
               <p>{data.id}</p>
             </div>
-            <hr style={{ height: "2px solid black", width: "100%" }} />
-            <div>
-              <h6>Full Name</h6>
+            <div className="d-flex justify-content-between">
+              <p>Full Name</p>
               <p>{data.name}</p>
             </div>
-            <hr style={{ height: "2px solid black", width: "100%" }} />
-            <div>
-              <h6>Email</h6>
+            <div className="d-flex justify-content-between">
+              <p>Email</p>
               <p>{data.email}</p>
             </div>
           </div>

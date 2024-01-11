@@ -44,7 +44,11 @@ function Contact() {
             <button className="btn btn-success">
               <IoLocationOutline />
             </button>
-            <span>Concepcion, Libmanan, Camarines Sur</span>
+            <span>
+              Brgy. Concepcion, Libmanan, Camarines Sur 4407
+              <br />
+              Philippines
+            </span>
           </div>
           <div className="d-flex align-items-center gap-3">
             <button className="btn btn-success">
@@ -56,7 +60,7 @@ function Contact() {
             <button className="btn btn-success">
               <MdOutlinePhoneForwarded />
             </button>
-            <span>09564758842</span>
+            <span>+63 956 475 8842</span>
           </div>
           <div className="d-flex align-items-center gap-3">
             <button className="btn btn-success">
@@ -66,12 +70,12 @@ function Contact() {
           </div>
         </div>
         <form className="d-flex flex-column p-4">
-          <h5>Leave us a message</h5>
+          <h5>LEAVE US A MESSAGE</h5>
           <input
             type="email"
             name="email"
             onChange={onChange}
-            placeholder="youremail@gmail.com"
+            placeholder="Email"
             required
           />
           <input
@@ -89,10 +93,10 @@ function Contact() {
             required
           ></textarea>
           <button className="btn btn-success" onClick={onSendEmail}>
+            Send
             <span>
               <RiMailSendLine />
             </span>
-            Send
           </button>
         </form>
       </div>

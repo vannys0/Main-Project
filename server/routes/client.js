@@ -313,15 +313,19 @@ router.delete("/delete_routerlication/:id", (req, res) => {
 
 router.get("/myapplication/:id", (req, res) => {
   const id = req.params.id;
-  db.query("SELECT * FROM adoption WHERE user_id = ?", [id], (err, results) => {
-    if (err) {
-      console.error("Error fetching :", err);
-      res.status(500).json({ error: "Internal Server Error" });
-      return;
-    }
+  db.query(
+    "SELECT * FROM adoption WHERE user_id = ? ORDER BY adoption_date",
+    [id],
+    (err, results) => {
+      if (err) {
+        console.error("Error fetching :", err);
+        res.status(500).json({ error: "Internal Server Error" });
+        return;
+      }
 
-    return res.json(results);
-  });
+      return res.json(results);
+    }
+  );
 });
 
 router.delete("/delete_application/:id", (req, res) => {
