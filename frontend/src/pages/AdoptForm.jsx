@@ -19,7 +19,6 @@ const BASE_URL = appConfig.apiBasePath;
 function AdoptForm({ data }) {
   const user = SecureStore.getItem("userToken");
   const USER_NAME = user.name;
-  const { name, id } = useParams();
   const navigateTo = useNavigate();
   const [errors, setErrors] = useState({});
   const [prov, setProv] = useState([]);
@@ -44,14 +43,6 @@ function AdoptForm({ data }) {
   const showModal = () => {
     setOpen(true);
   };
-  const handleOk = () => {
-    setModalText("The modal will be closed after two seconds");
-    setConfirmLoading(true);
-    setTimeout(() => {
-      setOpen(false);
-      setConfirmLoading(false);
-    }, 2000);
-  };
   const handleCancel = () => {
     console.log("Clicked cancel button");
     setOpen(false);
@@ -61,10 +52,6 @@ function AdoptForm({ data }) {
     getAllProvince((data) => {
       setProv(data);
     });
-
-    // getAllCityByProvinceCodeList((data) => {
-    //   setCitymunOptions(data);
-    // });
   }, []);
   const handleProvinceChange = (e) => {
     setValues((prev) => ({ ...prev, province: selectedProvCode }));
@@ -99,11 +86,9 @@ function AdoptForm({ data }) {
   };
 
   const [values, setValues] = useState({
-    // Access to backend only
     user_name: user.name,
     user_email: user.email,
-    // End
-    rabbit_id: id,
+    rabbit_id: data.id,
     date: dateToday,
     phone: "",
     province: "",
@@ -145,7 +130,7 @@ function AdoptForm({ data }) {
     console.log(errors);
 
     axios
-      .post(`${BASE_URL}/rabbitdata/${id}/adopt-form`, formData)
+      .post(`${BASE_URL}/rabbitdata/${data.id}/adopt-form`, formData)
       .then((res) => {
         console.log(res);
         Swal.fire({
@@ -163,9 +148,10 @@ function AdoptForm({ data }) {
   return (
     <div>
       <Button type="primary" onClick={showModal}>
-        Apply for adoption
+        Adopt
       </Button>
       <Modal
+        width={600}
         style={{ top: 20 }}
         title="Adoption Form"
         open={open}
@@ -174,10 +160,10 @@ function AdoptForm({ data }) {
         onCancel={handleCancel}
         footer={[
           <Button key="cancel" onClick={handleCancel}>
-            Cancel
+            Back
           </Button>,
           <Button key="apply" type="primary" onClick={handleSubmit}>
-            Apply
+            Submit
           </Button>,
         ]}
       >

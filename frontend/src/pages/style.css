@@ -107,7 +107,6 @@ a {
     grid-column: span 3;
 }
 .rabbitList > div {
-    cursor: pointer;
     background-color: #f6ffed;
     border: 1px solid #eaeaea;
 }
@@ -288,7 +287,7 @@ a {
 .errmsg {
     color: red;
 }
-/* ABOUT RABBIT */
+/* RABBIT DATA */
 .rabbit-data-div {
     width: 80%;
     display: grid;
@@ -312,7 +311,18 @@ a {
     display: flex;
     justify-content: flex-end;
 }
-
+/* ABOUT RABBIT */
+.about-rabbit {
+    width: 100%;
+    display: grid;
+    gap: 10px;
+    grid-template-columns: 1fr 1fr;
+}
+.about-rabbit .about-rabbit-info {
+    gap: 4px;
+    display: flex;
+    flex-direction: column;
+}
 /* MyAPPLICATION */
 .application-div {
     position: relative;
@@ -469,7 +479,6 @@ a {
         justify-content: center;
         grid-column: span 3;
     }
-
     .rabbit-data-div > div {
         width: 100%;
     }
@@ -486,6 +495,22 @@ a {
     .rabbit-info div{
         width: 100%;
        background-color: red;
+    }
+    /* ABOUT RABBIT */
+    .about-rabbit {
+        padding: 0;
+        grid-template-columns: 1fr;
+    }
+    .about-rabbit .carousel {
+        padding: 0;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .about-rabbit .carousel img {
+        width: 100%;
+        align-self: center;
     }
     /* AdoptForm */
     .main-div .form-div {

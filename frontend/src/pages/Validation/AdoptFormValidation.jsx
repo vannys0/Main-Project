@@ -1,24 +1,3 @@
-function validateName(name) {
-  const namePattern = /^[A-Z][a-zA-Z]*$/;
-  const hasNumber = /\d/.test(name);
-  return name === ""
-    ? "Name is required"
-    : hasNumber
-    ? "Invalid name"
-    : namePattern.test(name)
-    ? ""
-    : "First letter must be uppercase";
-}
-
-function validateEmail(email) {
-  const emailPattern = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
-  return email === ""
-    ? "Email is required"
-    : emailPattern.test(email)
-    ? ""
-    : "Invalid email format";
-}
-
 function validatePhone(phone) {
   const phoneNumberPattern = /^09\d{9}$/;
   return phone === ""

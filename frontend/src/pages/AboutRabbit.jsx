@@ -5,12 +5,12 @@ import { Button, Modal } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { Carousel } from "react-bootstrap";
 import { Image, Avatar } from "antd";
+import AdoptForm from "./AdoptForm";
 import appConfig from "../../config.json";
 const BASE_URL = appConfig.apiBasePath;
 
 function AboutRabbit({ data }) {
   const navigateTo = useNavigate();
-  const [rabbit, setRabbit] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = () => {
     setIsModalOpen(true);
@@ -42,86 +42,74 @@ function AboutRabbit({ data }) {
 
   return (
     <>
-      <div className="d-flex justify-content-center">
-        <Button type="link" className="w-100" onClick={showModal}>
-          {data.name}
-        </Button>
-      </div>
+      <Link onClick={showModal}>See more</Link>
       <Modal
-        title="Details"
+        title="Rabbit Details"
         style={{
           top: 20,
         }}
         open={isModalOpen}
         onCancel={handleCancel}
         footer={[
-          <Button key="cancel" onClick={handleCancel}>
-            Close
-          </Button>,
-          <Button
-            key="adopt"
-            type="primary"
-            onClick={() =>
-              navigateTo(
-                `/rabbitdata/${JSON.stringify(data)}/${data.id}/adopt-form`
-              )
-            }
-          >
-            Adopt
-          </Button>,
+          <div className="d-flex justify-content-end gap-2">
+            <Button key="cancel" onClick={handleCancel}>
+              Back
+            </Button>
+            <AdoptForm data={data} />
+          </div>,
         ]}
       >
-        <div className="image-div">
+        <div className="about-rabbit">
           <Carousel>
-            {data.image_path.split(",").map((image, index) => (
-              <Carousel.Item key={index}>
-                <Avatar
-                  shape="square"
-                  size={300}
-                  src={
-                    <Image
-                      src={`http://localhost:8081/uploads/${image.trim()}`}
-                    />
-                  }
-                />
-              </Carousel.Item>
-            ))}
+            {data.image_path &&
+              data.image_path.split(",").map((image, index) => (
+                <Carousel.Item key={index}>
+                  <Avatar
+                    shape="square"
+                    size={250}
+                    src={
+                      <img
+                        src={`http://localhost:8081/uploads/${image.trim()}`}
+                      />
+                    }
+                  />
+                </Carousel.Item>
+              ))}
           </Carousel>
-        </div>
-        <br />
-        <p>Hi, my name is {data.name} and I am looking for a new home.</p>
-        <div className="d-flex flex-column">
-          <div className="d-flex justify-content-between">
-            <p>Rabbit Id</p>
-            <p>{data.id}</p>
-          </div>
-          <div className="d-flex justify-content-between">
-            <p>Sex</p>
-            <p>{data.sex}</p>
-          </div>
-          <div className="d-flex justify-content-between">
-            <p>Breed</p> <p>{data.breed_type}</p>
-          </div>
-          <div className="d-flex justify-content-between">
-            <p>Age</p>
-            <p>
-              {age.years} years {age.months} months
-            </p>
-          </div>
-          <div className="d-flex justify-content-between">
-            <p>Color</p>
-            <p>{data.color}</p>
-          </div>
-          <div className="d-flex justify-content-between">
-            <p>Weight</p>
-            <p>{data.weight} klg</p>
-          </div>
-          <div className="d-flex justify-content-between">
-            <p>Type</p>
-            <p>{data.rabbit_type}</p>
-          </div>
-          <div className="d-flex justify-content-between">
-            <p>Adoption Fee</p> <p> P{data.price}</p>
+          <div className="about-rabbit-info">
+            <h6>Hi, My name is {data.name}. I am looking for a new home.</h6>
+            <div className="d-flex justify-content-between">
+              <span>Rabbit Id</span>
+              <span>{data.id}</span>
+            </div>
+            <div className="d-flex justify-content-between">
+              <span>Sex</span>
+              <span>{data.sex}</span>
+            </div>
+            <div className="d-flex justify-content-between">
+              <span>Breed</span> <span>{data.breed_type}</span>
+            </div>
+            <div className="d-flex justify-content-between">
+              <span>Age</span>
+              <span>
+                {age.years} yrs {age.months} mos
+              </span>
+            </div>
+            <div className="d-flex justify-content-between">
+              <span>Color</span>
+              <span>{data.color}</span>
+            </div>
+            <div className="d-flex justify-content-between">
+              <span>Weight</span>
+              <span>{data.weight} kgs</span>
+            </div>
+            <div className="d-flex justify-content-between">
+              <span>Type</span>
+              <span>{data.rabbit_type}</span>
+            </div>
+            <div className="d-flex justify-content-between">
+              <span>Adoption Fee</span> <span> P{data.price}</span>
+            </div>
           </div>
         </div>
       </Modal>

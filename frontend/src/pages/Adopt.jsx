@@ -9,7 +9,6 @@ import { Input, Image, Avatar } from "antd";
 import adopt from "../images/a.jpg";
 import AboutRabbit from "./AboutRabbit.jsx";
 import { Link, useNavigate } from "react-router-dom";
-import Accordion from "react-bootstrap/Accordion";
 import appConfig from "../../config.json";
 const BASE_URL = appConfig.apiBasePath;
 
@@ -73,13 +72,7 @@ function Adopt() {
         <div id="adoptable" className="rabbitList bg-light">
           {record.length > 0 ? (
             record.map((data, i) => (
-              <div
-                key={i}
-                className="w-100 d-flex gap-3 p-3"
-                onClick={() =>
-                  navigateTo(`/rabbit_details/${data.id}`, { state: { data } })
-                }
-              >
+              <div key={i} className="w-100 d-flex gap-3 p-3">
                 <Avatar
                   shape="square"
                   size={150}
@@ -98,6 +91,7 @@ function Adopt() {
                   <span>{data.sex}</span>
                   <span>{data.breed_type}</span>
                   <span>{data.color}</span>
+                  <AboutRabbit data={data} />
                 </div>
               </div>
             ))
