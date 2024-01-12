@@ -58,22 +58,28 @@ a {
 .carousel img {
     width: 100%;
 }
-.home-div h2 {
-    text-align: justify;
-    margin: 20px 0;
-    background: linear-gradient(to right, #5cb85c, #00828c);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-family: 'Poppins', sans-serif;
-}
 .home-content {
     width: 80%;
     gap: 20px;
-    padding: 30px;
+    color: #52c41a;
+    margin: 10px 0;
+    padding: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+.home-content div {
+    width: 100%;
+    padding: 20px;
+    background-color: #f6ffed;
+    border: 1px solid #b7eb8f;
+}
+.home-content div h2 {
+    text-align: justify;
+}
+.home-content div h4 {
+    font-style: italic;
 }
 .email {
     color: #00828c;
@@ -102,17 +108,14 @@ a {
 }
 .rabbitList > div {
     cursor: pointer;
-    background-color: #ffffff;
+    background-color: #f6ffed;
     border: 1px solid #eaeaea;
 }
 .rabbitList > div:hover {
-    box-shadow: rgba(78, 156, 255, 0.6) 0px 1
-    0.5rem -0.125rem, rgb(78, 156, 255)
-    0.5rem 1rem / 1 / 0;
-
+    background-color: #b7eb8f;
 }
 .rabbitList > div > div > h4 {
-    color: #0669AC;
+    color: #52c41a;
     font-weight: bold;
     font-family: 'Poppins', sans-serif;
 }
@@ -132,12 +135,9 @@ a {
     border: 1px solid #eaeaea;
     background-color: #ffffff;
 }
-.btn-search {
-    font-size: 16px;
-    padding: 8px 12px;
-    border: none;
-    border-radius: 0 5px 5px 0;
-    background-color: #5cb85c;
+.input-search:focus,
+.input-search:valid {
+    border: 1px solid #b7eb8f;
 }
 /* CONTACT */
 .contact-div {
@@ -218,14 +218,18 @@ a {
 .about-div > div {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 20px;
+    gap: 10px;
     width: 80%;
-    padding: 30px 100px;
+    padding: 20px 100px 10px 100px;
 }
 .about-div > div > h4 {
+    padding: 10px;
+    color: #52c41a;
     text-align: center;
     align-self: center;
     grid-column: span 2;
+    background-color: #f6ffed;
+    border: 1px solid #b7eb8f;
 }
 .about-div div .justify {
     grid-column: span 2;
@@ -234,8 +238,7 @@ a {
 .about-div > div > p {
     text-align: justify;
     padding: 20px;
-    border: 1px solid #eaeaea;
-    background-color: #ffffff;
+    background-color: #b7eb8f;
 }
 .about-div > div > p > span {
     font-weight: bold;
@@ -314,7 +317,7 @@ a {
 .application-div {
     position: relative;
     width: 80%;
-    margin: 30px 0;
+    margin: 20px 0;
     padding: 20px;
     background-color: #fff;
     border: 1px solid #eaeaea;
@@ -379,7 +382,8 @@ a {
     }
     .home-content {
         width: 100%;
-        padding: 10px;
+        margin: 0;
+        padding: 0 20px 20px 20px;
     }
     .home-div .carousel {
         width: 100%;
@@ -390,7 +394,7 @@ a {
     /* Contact */
     .contact-div {
         width: 100%;
-        padding: 10px;
+        padding: 20px;
     }
     .contact-div > .contact-details {
         grid-template-columns: 1fr;
@@ -419,7 +423,7 @@ a {
     .about-div > div {
         gap: 0;
         width: 100%;
-        padding: 10px 10px 0 10px;
+        padding: 20px 20px 0 20px;
     }
     .about-div > div > p {
         grid-column: span 2;
@@ -497,7 +501,7 @@ a {
     /* Application */
     .application-div {
         width: 100vw;
-        height: 90dvh;
+        height: 75dvh;
         padding: 10px 10px 10px 10px;
         margin-top: 0;
     }
@@ -505,17 +509,10 @@ a {
     .profile-div {
         gap: 0;
         width: 100%;
-        padding-left: 20px;
-        padding-right: 20px;
         margin-top: 0;
         margin-bottom: 0;
     }
     .client-info {
         padding: 0;
-    }
-    .profile-div > .client-info > div {
-        display: flex;
-        padding: 0;
-        flex-direction: column;
     }
 }

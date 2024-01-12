@@ -23,7 +23,6 @@ import {
 } from "react";
 export const AuthContext = createContext(null);
 import SecureStore from "react-secure-storage";
-import SimpleChat from "./pages/SimpleChat.jsx";
 import PrivateRoute from "./pages/PrivateRoute";
 
 function App() {
@@ -149,14 +148,6 @@ function App() {
           <PrivateRoute>
             <AboutRabbit />
           </PrivateRoute>
-        </div>
-      ),
-    },
-    {
-      path: "/chat",
-      element: (
-        <div>
-          <SimpleChat />
         </div>
       ),
     },

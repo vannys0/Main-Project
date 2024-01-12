@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import "./Navbar.css";
-import Logo from "../images/Logo.png";
 import { IoMdMenu } from "react-icons/io";
 import Swal from "sweetalert2";
 import { UserOutlined, DownOutlined } from "@ant-design/icons";
