@@ -13,7 +13,7 @@
     justify-content: center;
     background-color: #eaeaea;
     background-image: url(../images/1.jpg);
-    background-size: 100%;
+    background-size: cover;
     background-repeat: no-repeat;
 }
 .loginPage .container {

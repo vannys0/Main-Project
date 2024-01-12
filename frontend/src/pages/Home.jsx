@@ -21,16 +21,36 @@ function Home() {
         <div className="carousel">
           <Carousel>
             <Carousel.Item>
-              <img src={carousel1} alt="" className="w-100" />
+              <img
+                src={carousel1}
+                loading="lazy"
+                alt="No Image"
+                className="w-100"
+              />
             </Carousel.Item>
             <Carousel.Item>
-              <img src={carousel2} alt="" className="w-100" />
+              <img
+                src={carousel2}
+                loading="lazy"
+                alt="No Image"
+                className="w-100"
+              />
             </Carousel.Item>
             <Carousel.Item>
-              <img src={carousel3} alt="" className="w-100" />
+              <img
+                src={carousel3}
+                loading="lazy"
+                alt="No Image"
+                className="w-100"
+              />
             </Carousel.Item>
             <Carousel.Item>
-              <img src={carousel4} alt="" className="w-100" />
+              <img
+                src={carousel4}
+                loading="lazy"
+                alt="No Image"
+                className="w-100"
+              />
             </Carousel.Item>
           </Carousel>
         </div>
@@ -48,6 +68,10 @@ function Home() {
               joy untroubled."
             </h2>
             <h4>- Fyodor Dostoevsky</h4>
+          </div>
+          <div className="d-flex flex-column align-items-center justify-content-center gap-4">
+            <h2>Creating a better future for all rabbits.</h2>
+            <h4>- eLeporidae</h4>
           </div>
         </div>
       </div>

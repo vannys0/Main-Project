@@ -5,8 +5,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-image: url(../images/1.jpg);
-    background-size: 100%;
+    background-image: url(../images/bg.jpg);
+    background-size: cover;
     background-repeat: no-repeat;
 }
 .brand-name {
@@ -71,7 +71,7 @@ form h4 {
 .input input:focus~label,
 .input input:valid~label {
     top: -12px;
-    color: #00828c;
+    color: #008c3d;
 }
 .main-container .inputs .input .icons {
     position: absolute;
@@ -107,7 +107,7 @@ form h4 {
 .signup-link a,
 .login-link a {
     cursor: pointer;
-    color: #1877f2;
+    color: #008c3d;
     text-decoration: none;
 }
 .submit,
@@ -118,8 +118,8 @@ form h4 {
     text-decoration: none;
     height: 40px;
     margin-top: 20px;
-    background-color: #00828c;
-    border: 2px solid #00828c;
+    background-color: #008c3d;
+    border: none;
     border-radius: 5px;
     color: #fff;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 4px 0px, rgba(99, 99, 99, 0.1) 0px -2px 8px 0px;

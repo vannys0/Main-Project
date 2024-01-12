@@ -94,7 +94,7 @@ function Signup() {
           <div className="inputs">
             {showAlert && (
               <div
-                className="d-flex justify-content-center alert alert-danger"
+                className="d-flex justify-content-center alert alert-warning"
                 role="alert"
               >
                 {errMessage}
