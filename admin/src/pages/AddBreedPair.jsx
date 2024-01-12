@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "../Style.css";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import { Html5QrcodeScanner } from "html5-qrcode";
 import axios from "axios";
+import { IoMdCloudUpload } from "react-icons/io";
 import { Button, Avatar } from "antd";
+import QrScanner from "qr-scanner";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import appConfig from "../../config.json";
@@ -20,28 +22,67 @@ function BreedPair() {
   const [scanResult1, setScanResult1] = useState();
   const [rabbit, setRabbit] = useState(null);
   const [rabbit1, setRabbit1] = useState(null);
+  const [image, setImage] = useState(null);
+  const [image1, setImage1] = useState(null);
+  const inputRef = useRef(null);
+  const inputRef1 = useRef(null);
+
+  const handleImageChange = async (e) => {
+    const file = e.target.files[0];
+    setImage(file);
+
+    const imageElement = new Image();
+    imageElement.src = URL.createObjectURL(file);
+
+    imageElement.onload = () => {
+      QrScanner.scanImage(imageElement)
+        .then((result) => {
+          console.log(result);
+          setScanResult(result);
+        })
+        .catch((error) => console.log(error || "No QR code found."));
+    };
+  };
+
+  const handleImageChange1 = async (e) => {
+    const file = e.target.files[0];
+    setImage1(file);
+
+    const imageElement = new Image();
+    imageElement.src = URL.createObjectURL(file);
+
+    imageElement.onload = () => {
+      QrScanner.scanImage(imageElement)
+        .then((result) => {
+          console.log(result);
+          setScanResult1(result);
+        })
+        .catch((error) => console.log(error || "No QR code found."));
+    };
+  };
+
+  const handleUpload = () => {
+    inputRef.current.click();
+  };
+
+  const handleUpload1 = () => {
+    inputRef1.current.click();
+  };
 
   useEffect(() => {
-    const scanner = new Html5QrcodeScanner("reader", {
-      qrbox: {
-        width: 250,
-        height: 250,
-      },
-      fps: 5,
-    });
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `${BASE_URL}/get_sex?id=${scanResult}`
+        );
+        const rabbitData = response.data[0];
 
-    scanner.render(success, error);
+        if (rabbitData) {
+          setRabbit(rabbitData);
 
-    function success(result) {
-      scanner.clear();
-      axios
-        .get(`${BASE_URL}/get_sex?id=${result}`)
-        .then((res) => {
-          setRabbit(res.data[0]);
-          const scannedSex = res.data[0].sex;
-          if (scannedSex === "Male") {
-            setScanResult(result);
-          } else {
+          const scannedSex = rabbitData.sex;
+
+          if (scannedSex !== "Male") {
             Swal.fire({
               icon: "error",
               title: "Invalid Rabbit",
@@ -55,36 +96,29 @@ function BreedPair() {
               }
             });
           }
-        })
-        .catch((err) => console.log(err));
-    }
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    };
 
-    function error(err) {
-      console.warn(err);
-    }
-  }, []);
+    fetchData();
+  }, [scanResult]);
 
   useEffect(() => {
-    const scanner1 = new Html5QrcodeScanner("reader1", {
-      qrbox: {
-        width: 250,
-        height: 250,
-      },
-      fps: 5,
-    });
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `${BASE_URL}/get_sex?id=${scanResult1}`
+        );
+        const rabbitData = response.data[0];
 
-    scanner1.render(success, error);
+        if (rabbitData) {
+          setRabbit1(rabbitData);
 
-    function success(result) {
-      scanner1.clear();
-      axios
-        .get(`${BASE_URL}/get_sex?id=${result}`)
-        .then((res) => {
-          setRabbit1(res.data[0]);
-          const scannedSex = res.data[0].sex;
-          if (scannedSex === "Female") {
-            setScanResult1(result);
-          } else {
+          const scannedSex = rabbitData.sex;
+
+          if (scannedSex !== "Female") {
             Swal.fire({
               icon: "error",
               title: "Invalid Rabbit",
@@ -97,15 +131,17 @@ function BreedPair() {
                 window.location.reload();
               }
             });
+          } else {
+            setScanResult1(rabbitData.id);
           }
-        })
-        .catch((err) => console.log(err));
-    }
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    };
 
-    function error(err) {
-      console.warn(err);
-    }
-  }, []);
+    fetchData();
+  }, [scanResult1]);
 
   const onPair = () => {
     if (!scanResult && !scanResult1) {
@@ -114,6 +150,19 @@ function BreedPair() {
         icon: "info",
         title: "Oops...",
         text: "No QR code has been scanned",
+      });
+      return;
+    }
+
+    if (!scanResult || !scanResult1) {
+      Swal.fire({
+        icon: "error",
+        title: "Failed",
+        text: "Please scan both male and female rabbits for pairing.",
+      }).then((result) => {
+        if (result.isConfirmed || result.dismiss === Swal.DismissReason.timer) {
+          window.location.reload();
+        }
       });
       return;
     }
@@ -204,10 +253,34 @@ function BreedPair() {
         <h3>Add Breeding Pair</h3>
         <div className="breed-ground">
           <div className="ground">
-            <h6>Male</h6>
-            {scanResult ? (
-              <div className="d-flex flex-column gap-1">
-                <Avatar
+            <div className="uploader">
+              {image ? (
+                <img
+                  className="qr-code"
+                  src={URL.createObjectURL(image)}
+                  alt=""
+                />
+              ) : (
+                <div
+                  className="d-flex flex-column justify-content-center align-items-center"
+                  onClick={handleUpload}
+                >
+                  <IoMdCloudUpload className="icons" />
+                  <span>Upload Image</span>
+                  <input
+                    type="file"
+                    name="file"
+                    accept=".png, .jpg, .jpeg"
+                    ref={inputRef}
+                    onChange={handleImageChange}
+                    style={{ display: "none" }}
+                  />
+                </div>
+              )}
+            </div>
+            {rabbit && (
+              <div className="result">
+                {/* <Avatar
                   shape="square"
                   size={200}
                   src={
@@ -218,50 +291,46 @@ function BreedPair() {
                         .trim()}`}
                     />
                   }
-                />
-                <div className="d-flex justify-content-between">
-                  <span>ID</span>
-                  <span>{scanResult}</span>
-                </div>
-                <div className="d-flex justify-content-between">
-                  <span>Name</span>
-                  <span>{rabbit.name}</span>
-                </div>
+                /> */}
+                <span>{scanResult}</span>
+                <span>{rabbit.name}</span>
               </div>
-            ) : (
-              <div id="reader"></div>
             )}
           </div>
           <div className="d-flex justify-content-center align-items-center">
             <h6>Match</h6>
           </div>
           <div className="ground">
-            <h6>Female</h6>
-            {scanResult1 ? (
-              <div className="d-flex flex-column">
-                <Avatar
-                  shape="square"
-                  size={200}
-                  src={
-                    <img
-                      loading="lazy"
-                      src={`http://localhost:8081/uploads/${rabbit1.image_path
-                        .split(",")[0]
-                        .trim()}`}
-                    />
-                  }
+            <div className="uploader">
+              {image1 ? (
+                <img
+                  className="qr-code"
+                  src={URL.createObjectURL(image1)}
+                  alt=""
                 />
-                <div className="d-flex justify-content-between">
-                  <span>ID</span>
-                  <span>{scanResult1}</span>
+              ) : (
+                <div
+                  className="d-flex flex-column justify-content-center align-items-center"
+                  onClick={handleUpload1}
+                >
+                  <IoMdCloudUpload className="icons" />
+                  <span>Upload Image</span>
+                  <input
+                    type="file"
+                    name="file"
+                    accept=".png, .jpg, .jpeg"
+                    ref={inputRef1}
+                    onChange={handleImageChange1}
+                    style={{ display: "none" }}
+                  />
                 </div>
-                <div className="d-flex justify-content-between">
-                  <span>Name</span>
-                  <span>{rabbit1.name}</span>
-                </div>
+              )}
+            </div>
+            {rabbit1 && (
+              <div className="result">
+                <span>{scanResult1}</span>
+                <span>{rabbit1.name}</span>
               </div>
-            ) : (
-              <div id="reader1"></div>
             )}
           </div>
           <div className="actions">

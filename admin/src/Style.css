@@ -285,7 +285,6 @@ body {
   display: grid;
   grid-template-columns: 1fr 2fr;
 }
-
 /* ADD BREEDING */
 .breed-ground {
   display: grid;
@@ -294,22 +293,56 @@ body {
   grid-template-columns: 1fr 1fr 1fr;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 4px 0px, rgba(99, 99, 99, 0.1) 0px -2px 8px 0px;
 }
+.main-container .breed-ground > .ground {
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.main-container .breed-ground > .ground:hover {
+  background-color: #eaeaea;
+}
 .breed-ground > .actions {
   display: flex;
   margin-top: 20px;
   justify-content: flex-end;
   grid-column: span 3;
 }
-.ground {
+.breed-ground .ground .uploader {
+  width: 100%;
+  height: 200px;
+  gap: 10px;
   display: flex;
-  padding: 20px 10px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed #eaeaea;
+}
+.breed-ground .ground .uploader .icons {
+  font-size: 70px;
+  color: #1677ff;
+  cursor: pointer;
+}
+.uploader-div .qr-div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.qr-code {
+  height: 100%;
+}
+.ground .result {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 1px solid #eaeaea;
+  border: 2px solid #eaeaea;
 }
 /* BREEDING DETAILS */
-
 .details-div > div {
   display: grid;
   grid-template-columns: 1fr 1fr;
