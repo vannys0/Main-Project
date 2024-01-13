@@ -87,7 +87,7 @@ function ScanRabbitQr() {
                     <span>{calculateAge(data.date_of_birth)}</span>
                   </div>
                   <div>
-                    <span>Sex</span>
+                    <span>Gender</span>
                     <span>{data.sex}</span>
                   </div>
                   <div>
@@ -104,7 +104,7 @@ function ScanRabbitQr() {
                   </div>
                   <div>
                     <span>Weight</span>
-                    <span>{data.weight} klg</span>
+                    <span>{data.weight} kgs</span>
                   </div>
                   <div className="scan-again-div">
                     <Button

@@ -30,8 +30,6 @@ function validateReason(reason) {
 function AdoptFormValidation(values) {
   let errors = {};
 
-  errors.email = validateEmail(values.email);
-  errors.name = validateName(values.name);
   errors.phone = validatePhone(values.phone);
   errors.province = validateProvince(values.province);
   errors.city = validateCity(values.city);

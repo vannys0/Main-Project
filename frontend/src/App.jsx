@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import Login from "./pages/Login.jsx";
 import Signup from "./pages/Signup.jsx";
 import Home from "./pages/Home.jsx";
@@ -6,13 +6,7 @@ import Adopt from "./pages/Adopt.jsx";
 import Contact from "./pages/Contact.jsx";
 import About from "./pages/About.jsx";
 import MyApplication from "./pages/MyApplication.jsx";
-import Application from "./pages/Application.jsx";
 import "./App.css";
-import { ToastContainer } from "react-toastify";
-import AdoptForm from "./pages/AdoptForm.jsx";
-import RabbitData from "./pages/RabbitData.jsx";
-import AboutRabbit from "./pages/AboutRabbit.jsx";
-import Profile from "./pages/Profile.jsx";
 import EmailVerification from "./pages/EmailVerification.jsx";
 import {
   createContext,
@@ -26,165 +20,38 @@ import SecureStore from "react-secure-storage";
 import PrivateRoute from "./pages/PrivateRoute";
 
 function App() {
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: (
-        <div>
-          <Login />
-        </div>
-      ),
-    },
-    {
-      path: "/signup",
-      element: (
-        <div>
-          <Signup />
-        </div>
-      ),
-    },
-    {
-      path: "/signup/verify_account",
-      element: (
-        <div>
-          <EmailVerification />
-        </div>
-      ),
-    },
-    {
-      path: "/home",
-      element: (
-        <div>
-          <PrivateRoute>
-            <Home />
-          </PrivateRoute>
-        </div>
-      ),
-    },
-    {
-      path: "/adopt",
-      element: (
-        <div>
-          <PrivateRoute>
-            <Adopt />
-          </PrivateRoute>
-        </div>
-      ),
-    },
-    {
-      path: "/contact",
-      element: (
-        <div>
-          <PrivateRoute>
-            <Contact />
-          </PrivateRoute>
-        </div>
-      ),
-    },
-    {
-      path: "/about",
-      element: (
-        <div>
-          <PrivateRoute>
-            <About />
-          </PrivateRoute>
-        </div>
-      ),
-    },
-    {
-      path: "/myapplication",
-      element: (
-        <div>
-          <PrivateRoute>
-            <MyApplication />
-          </PrivateRoute>
-        </div>
-      ),
-    },
-    {
-      path: "/myapplication/application/:id",
-      element: (
-        <div>
-          <PrivateRoute>
-            <Application />
-          </PrivateRoute>
-        </div>
-      ),
-    },
-    {
-      path: "/user_profile/:id",
-      element: (
-        <div>
-          <PrivateRoute>
-            <Profile />
-          </PrivateRoute>
-        </div>
-      ),
-    },
-    {
-      path: "/rabbitdata/:name/:id/adopt-form",
-      element: (
-        <div>
-          <PrivateRoute>
-            <AdoptForm />
-          </PrivateRoute>
-        </div>
-      ),
-    },
-    {
-      path: "/rabbit_details/:id",
-      element: (
-        <div>
-          <PrivateRoute>
-            <RabbitData />
-          </PrivateRoute>
-        </div>
-      ),
-    },
-    {
-      path: "/adopt/:id",
-      element: (
-        <div>
-          <PrivateRoute>
-            <AboutRabbit />
-          </PrivateRoute>
-        </div>
-      ),
-    },
-  ]);
-
   const signIn = useContext(AuthContext);
 
   const [state, dispatch] = useReducer(
     (prevState, action) => {
       switch (action.type) {
         case "RESTORE_TOKEN":
-          console.log("----RESTORE_TOKEN----");
           return {
             ...prevState,
             userToken: action.token,
           };
         case "SIGN_IN":
-          console.log("----SIGN_IN----");
           return {
             ...prevState,
             isSignOut: false,
             userToken: action.token,
           };
         case "SIGN_OUT":
-          console.log("----SIGN_OUT----");
           return {
             ...prevState,
             isSignOut: true,
             userToken: null,
           };
+        default:
+          return prevState;
       }
     },
     {
       isSignOut: false,
-      userToken: null,
+      userToken: SecureStore.getItem("userToken"),
     }
   );
+
 
   const authContext = useMemo(
     () => ({
@@ -200,28 +67,59 @@ function App() {
     []
   );
 
+
   useEffect(() => {
-    console.log("---------APP USE EFFECT---------");
-    let userToken = localStorage.getItem("userToken");
-    dispatch({ type: "RESTORE_TOKEN", token: userToken });
-  }, []);
+    if (!state.userToken) {
+      let userToken = SecureStore.getItem("userToken");
+      dispatch({ type: "RESTORE_TOKEN", token: userToken });
+    }
+  }, [state.userToken]);
 
   return (
     <AuthContext.Provider value={authContext}>
       <div className="app">
-        <ToastContainer
-          position="top-center"
-          autoClose={2000}
-          hideProgressBar
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover={false}
-          theme="light"
-        ></ToastContainer>
-        <RouterProvider router={router} />
+          <BrowserRouter>
+          <Routes>
+            <Route
+              path="/"
+              element={state.userToken ? <Navigate to="/home" /> : <Login />}
+            />
+            <Route
+              path="/signup"
+              element={state.userToken ? <Navigate to="/home" /> : <Signup />}
+            />
+            <Route
+              path="/signup/verify_account"
+              element={state.userToken ? <Navigate to="/home" /> : <EmailVerification />}
+            />
+            <Route
+              path="/home"
+              element={state.userToken ? <Home /> : <Navigate to="/" />}
+            />
+            <Route
+              path="/adopt"
+              element={state.userToken ? <Adopt /> : <Navigate to="/" />}
+            />
+            <Route
+              path="/contact"
+              element={state.userToken ? <Contact /> : <Navigate to="/" />}
+            />
+            <Route
+              path="/about"
+              element={state.userToken ? <About /> : <Navigate to="/" />}
+            />
+            <Route
+              path="/myapplication"
+              element={
+                state.userToken ? (
+                  <MyApplication />
+                ) : (
+                  <Navigate to="/myapplication" />
+                )
+              }
+            />
+          </Routes>
+        </BrowserRouter>
       </div>
     </AuthContext.Provider>
   );

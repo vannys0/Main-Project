@@ -324,6 +324,7 @@ a {
 .application-div {
     position: relative;
     width: 80%;
+    height: 70dvh;
     margin: 20px 0;
     padding: 20px;
     background-color: #fff;

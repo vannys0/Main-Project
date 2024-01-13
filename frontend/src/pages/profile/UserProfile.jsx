@@ -16,6 +16,11 @@ function UserProfile() {
   const [users, setUsers] = useState([]);
   const inputRef = useRef(null);
   const hasProfileImage = users && users.profile;
+  const [onEdit, setOnEdit] = useState(false)
+
+  const editProfile = () => {
+    setOnEdit(true)
+  }
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = () => {
