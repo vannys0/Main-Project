@@ -76,10 +76,10 @@ function Sidebar({ openSidebarToggle, OpenSidebar }) {
             marginTop: "10px",
           }}
         >
-          ADOPTIONS
+          REQUEST
         </h6>
         <NavLink to="/request" className="sidebar-list-item">
-          <RiPassPendingLine className="icon" /> Request
+          <RiPassPendingLine className="icon" /> Adoptions
         </NavLink>
         <h6
           style={{

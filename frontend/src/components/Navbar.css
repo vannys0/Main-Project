@@ -74,7 +74,7 @@ nav .menu .menu-icon {
 
 
 /* Responsiveness */
-@media (max-width: 480px) {
+@media (max-width: 640px) {
     nav .active {
         border-bottom: 0;
     }
