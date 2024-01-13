@@ -35,9 +35,6 @@ function AddRabbit() {
     const files = e.target.files;
     setSelectedFiles(files);
     console.log(e.target.files);
-    // setImg(e.target.files);
-    // setFile(URL.createObjectURL(file.Array.map()));
-    // setImgError(null);
   };
 
   const handleInput = (e) => {
@@ -166,11 +163,11 @@ function AddRabbit() {
             </div>
           </div>
           <div>
-            <label>Sex :</label>
+            <label>Gender :</label>
             <div>
               <Select
                 style={{ width: "100%" }}
-                placeholder="Sex"
+                placeholder="Gender"
                 onChange={(value) => handleInputSelect("sex", value)}
               >
                 <Select.Option value="Male">Male</Select.Option>

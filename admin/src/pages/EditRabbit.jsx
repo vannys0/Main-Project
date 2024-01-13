@@ -142,21 +142,6 @@ function EditRabbit() {
                   }
                   required
                 />
-
-                {/* <input
-                  type="date"
-                  name="date_of_birth"
-                  value={
-                    values.date_of_birth
-                      ? new Date(values.date_of_birth)
-                          .toISOString()
-                          .split("T")[0]
-                      : ""
-                  }
-                  className="form-control"
-                  onChange={handleInput}
-                  required
-                /> */}
               </div>
             </div>
             <div>
@@ -174,7 +159,6 @@ function EditRabbit() {
                 </Select>
               </div>
             </div>
-
             <div>
               <label>Breed Type :</label>
               <div>
@@ -184,9 +168,6 @@ function EditRabbit() {
                   value={values.breed_type}
                   onChange={(value) => handleInputSelect("breed_type", value)}
                 >
-                  {/* <Select.Option value={values.breed_type} hidden>
-                    {values.breed_type}
-                  </Select.Option> */}
                   {breedType.map((breed, index) => (
                     <Select.Option key={index} value={breed}>
                       {breed}
@@ -232,9 +213,6 @@ function EditRabbit() {
                 >
                   <Select.Option value="Pet rabbit">Pet rabbit</Select.Option>
                   <Select.Option value="Meat rabbit">Meat rabbit</Select.Option>
-                  <Select.Option value="Breeding rabbit">
-                    Breeding rabbit
-                  </Select.Option>
                 </Select>
                 {msgError.type && (
                   <span className="error-message">{msgError.type}</span>

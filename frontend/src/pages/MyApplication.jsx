@@ -19,7 +19,7 @@ function MyApplication() {
   const { id } = useParams();
   const [values, setValues] = useState([]);
   const user = SecureStore.getItem("userToken");
-  const itemPerPage = 7;
+  const itemPerPage = 5;
 
   const handleClick = (rowData) => {
     navigateTo(`/myapplication/application/${rowData.id}`, {

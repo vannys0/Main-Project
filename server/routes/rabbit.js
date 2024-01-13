@@ -18,9 +18,10 @@ router.post("/add-rabbit", upload.array("files", 5), (req, res) => {
   console.log(result);
   const imagePaths = req.files.map((file) => file.filename).join();
   const sql =
-    "INSERT INTO rabbit (`id`, `name`, `date_of_birth`, `sex`, `rabbit_type`, `color`, `breed_type`,  `weight`, `image_path`, `breeding_pair_id`) VALUES (?)";
+    "INSERT INTO rabbit (`id`, `name`, `date_of_birth`, `sex`, `rabbit_type`, `color`, `breed_type`,  `weight`, `image_path`, `breeding_pair_id`, `date_added`) VALUES (?)";
   let randomID = Math.floor(100000 + Math.random() * 900000);
   const id = `rabbit${randomID}`;
+  const dateAdded = new Date()
   const values = [
     id,
     result.name,
@@ -32,6 +33,7 @@ router.post("/add-rabbit", upload.array("files", 5), (req, res) => {
     result.weight,
     imagePaths,
     result.breeding_pair_id,
+    dateAdded
   ];
 
   db.query(sql, [values], (err, data) => {
@@ -66,7 +68,7 @@ router.post("/multi", upload.array("files", 5), (req, res) => {
 
 router.get("/rabbits", (req, res) => {
   db.query(
-    "SELECT * FROM rabbit WHERE is_adopted = false ORDER BY rehome_status",
+    "SELECT * FROM rabbit WHERE is_adopted = false ORDER BY rehome_status, date_added",
     (err, results) => {
       if (err) {
         console.error("Error fetching rabbit:", err);

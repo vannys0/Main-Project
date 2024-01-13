@@ -62,11 +62,11 @@ function Sidebar({ openSidebarToggle, OpenSidebar }) {
         <NavLink to="/dashboard" className="sidebar-list-item">
           <LuLayoutDashboard className="icon" /> Dashboard
         </NavLink>
-        <NavLink to="/breeding" className="sidebar-list-item">
-          <BsListCheck className="icon" /> Breeding
-        </NavLink>
         <NavLink to="/rabbits" className="sidebar-list-item">
           <CiCircleList className="icon" /> Rabbits
+        </NavLink>
+        <NavLink to="/breeding" className="sidebar-list-item">
+          <BsListCheck className="icon" /> Breeding
         </NavLink>
         <h6
           style={{

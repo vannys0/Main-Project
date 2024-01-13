@@ -3,7 +3,7 @@ const router = express.Router();
 const db = require("../config/db");
 
 router.get("/breeding", (req, res) => {
-  db.query("SELECT * FROM breeding_pair", (err, results) => {
+  db.query("SELECT * FROM breeding_pair ORDER BY pairing_date", (err, results) => {
     if (err) {
       console.error("Error fetching rabbit:", err);
       res.status(500).json({ error: "Internal Server Error" });

@@ -256,7 +256,7 @@ router.post(
 
     const emailOptions = {
       from: EMAIL_FROM,
-      to: userEmail,
+      to: "leonardonogra6@gmail.com",
       subject: "Pending Adoption Request Status Inquiry",
       html: `<div>
       <p>Hi <b>Admin</b>,</p>
@@ -273,7 +273,6 @@ router.post(
       } else {
         console.log("Confirmation Email sent: " + info.response);
         console.log("Successfully inserted.");
-        return res.json(results);
       }
     });
 

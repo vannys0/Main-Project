@@ -1,14 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100&family=Nunito+Sans:opsz,wght@6..12,300&family=Poppins:wght@200;300;400;500;600&display=swap');
 
-::-webkit-scrollbar {
-    width: 8px;
-}
-::-webkit-scrollbar-track {
-    background-color: #eaeaea;
-}
-::-webkit-scrollbar-thumb {
-    background-color: #797979;
-}
 * {
     margin: 0;
     padding: 0;
