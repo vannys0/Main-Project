@@ -75,7 +75,7 @@ function Adopt() {
               <div key={i} className="w-100 d-flex gap-3 p-3">
                 <Avatar
                   shape="square"
-                  size={150}
+                  size={170}
                   src={
                     <img
                       loading="lazy"
@@ -89,7 +89,6 @@ function Adopt() {
                   <h4>{data.name}</h4>
                   <span>{calculateAge(data.date_of_birth)}</span>
                   <span>{data.sex}</span>
-                  <span>{data.breed_type}</span>
                   <span>{data.color}</span>
                   <AboutRabbit data={data} />
                 </div>

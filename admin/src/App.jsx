@@ -7,7 +7,7 @@ import {
   useState,
 } from "react";
 import "./App.css";
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 export const AuthContext = createContext(null);
 import SecureStore from "react-secure-storage";
 import PrivateRoute from "./pages/PrivateRoute";
@@ -27,6 +27,134 @@ import ScanRabbitQr from "./pages/ScanRabbitQr";
 
 function App() {
   const signIn = useContext(AuthContext);
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: (
+        <div>
+          <Login />
+        </div>
+      ),
+    },
+    {
+      path: "/register",
+      element: (
+        <div>
+          <Register />
+        </div>
+      ),
+    },
+    {
+      path: "/dashboard",
+      element: (
+        <div>
+          <PrivateRoute>
+            <Dashboard />
+          </PrivateRoute>
+        </div>
+      ),
+    },
+    {
+      path: "/delivery",
+      element: (
+        <div>
+          <PrivateRoute>
+            <Delivery />
+          </PrivateRoute>
+        </div>
+      ),
+    },
+    {
+      path: "/clients",
+      element: (
+        <div>
+          <PrivateRoute>
+            <Clients />
+          </PrivateRoute>
+        </div>
+      ),
+    },
+    {
+      path: "/rabbits",
+      element: (
+        <div>
+          <PrivateRoute>
+            <RabbitList />
+          </PrivateRoute>
+        </div>
+      ),
+    },
+    {
+      path: "/add-rabbit",
+      element: (
+        <div>
+          <PrivateRoute>
+            <AddRabbit />
+          </PrivateRoute>
+        </div>
+      ),
+    },
+    {
+      path: "/scan-rabbit",
+      element: (
+        <div>
+          <PrivateRoute>
+            <ScanRabbitQr />
+          </PrivateRoute>
+        </div>
+      ),
+    },
+    {
+      path: "/edit-rabbit/:id",
+      element: (
+        <div>
+          <PrivateRoute>
+            <EditRabbit />
+          </PrivateRoute>
+        </div>
+      ),
+    },
+    {
+      path: "/breeding",
+      element: (
+        <div>
+          <PrivateRoute>
+            <Breeding />
+          </PrivateRoute>
+        </div>
+      ),
+    },
+    {
+      path: "/add-breed-pair",
+      element: (
+        <div>
+          <PrivateRoute>
+            <AddBreedPair />
+          </PrivateRoute>
+        </div>
+      ),
+    },
+    {
+      path: "/add_breeding_child/:id",
+      element: (
+        <div>
+          <PrivateRoute>
+            <AddBreedingChild />
+          </PrivateRoute>
+        </div>
+      ),
+    },
+    {
+      path: "/request",
+      element: (
+        <div>
+          <PrivateRoute>
+            <Request />
+          </PrivateRoute>
+        </div>
+      ),
+    },
+  ]);
 
   const [state, dispatch] = useReducer(
     (prevState, action) => {
@@ -48,7 +176,7 @@ function App() {
             isSignOut: true,
             userToken: null,
           };
-        default:
+                  default:
           return prevState;
       }
     },
@@ -82,62 +210,7 @@ function App() {
   return (
     <AuthContext.Provider value={authContext}>
       <div className="App">
-        <BrowserRouter>
-        <Routes>
-          <Route
-              path="/"
-              element={state.userToken ? <Navigate to="/dashboard" /> : <Login />}
-            />
-          <Route
-              path="/register"
-              element={state.userToken ? <Navigate to="/dashboard" /> : <Register />}
-            />
-          <Route
-              path="/dashboard"
-              element={state.userToken ? <Dashboard /> : <Navigate to="/" />}
-            />
-          <Route
-              path="/rabbits"
-              element={state.userToken ? <RabbitList /> : <Navigate to="/" />}
-            />
-          <Route
-              path="/scan-rabbit"
-              element={state.userToken ? <ScanRabbitQr /> : <Navigate to="/" />}
-            />
-          <Route
-              path="/add-rabbit"
-              element={state.userToken ? <AddRabbit /> : <Navigate to="/" />}
-            />
-          <Route
-              path="/edit-rabbit/:id"
-              element={state.userToken ? <EditRabbit /> : <Navigate to="/" />}
-            />
-          <Route
-              path="/breeding"
-              element={state.userToken ? <Breeding /> : <Navigate to="/" />}
-            />
-          <Route
-              path="/add-breed-pair"
-              element={state.userToken ? <AddBreedPair /> : <Navigate to="/" />}
-            />
-          <Route
-              path="/add-breeding-child/:id"
-              element={state.userToken ? <AddBreedingChild /> : <Navigate to="/" />}
-            />
-          <Route
-              path="/request"
-              element={state.userToken ? <Request /> : <Navigate to="/" />}
-            />
-          <Route
-              path="/delivery"
-              element={state.userToken ? <Delivery /> : <Navigate to="/" />}
-            />
-          <Route
-              path="/clients"
-              element={state.userToken ? <Clients /> : <Navigate to="/" />}
-            />
-        </Routes>
-        </BrowserRouter>
+         <RouterProvider router={router} />
       </div>
     </AuthContext.Provider>
   );

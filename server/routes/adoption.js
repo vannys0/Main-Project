@@ -59,43 +59,79 @@ router.get("/adoptions-deliver", (req, res) => {
 });
 
 router.put("/approve-adoption/:id", (req, res) => {
-  const sql = "UPDATE adoption SET `adoption_status` = ? WHERE id = ?";
+  const approveSql = "UPDATE adoption SET `adoption_status` = ? WHERE id = ?";
+  const declineSql = "UPDATE adoption SET `adoption_status` = 'Declined' WHERE rabbit_id = ? AND id != ? AND `adoption_status` = 'Pending'";
   const values = ["Approved"];
   const id = req.params.id;
   const user_name = req.body.user_name;
   const user_email = req.body.user_email;
   const rabbit_id = req.body.rabbit_id;
 
-  const emailOptions = {
-    from: EMAIL_FROM,
-    to: user_email,
-    subject: `Your adoption request ${id} has been approved.`,
-    html: `<div>
-      <p>Hello <b>${user_name}</b>,</p>
-      <p>Your adoption request to <b>${rabbit_id}</b> has been approved. We have notified the owner to start the process of your request.</p>
-      <p>Thank you!</p>
-      <p>E-Leporidae</p>
-    </div>`,
-  };
-
-  transporter.sendMail(emailOptions, (error, info) => {
-    if (error) {
-      console.log(error);
-      return res.json("Error sending confirmation email");
-    } else {
-      console.log("Confirmation Email sent: " + info.response);
-      console.log("Successfully inserted.");
-      return res.json(results);
-    }
-  });
-
-  db.query(sql, [...values, id], (err, data) => {
+  // Start a transaction
+  db.beginTransaction((err) => {
     if (err) {
+      console.error("Error starting transaction:", err);
       return res.json("Error");
     }
-    return res.json(data);
+
+    // Update the adoption status to 'Approved'
+    db.query(approveSql, [...values, id], (err, data) => {
+      if (err) {
+        console.error("Error updating adoption status to Approved:", err);
+        db.rollback(() => {
+          return res.json("Error");
+        });
+        return;
+      }
+
+      // Update the adoption status to 'Declined' for other adoption requests of the same rabbit
+      db.query(declineSql, [rabbit_id, id], (err) => {
+        if (err) {
+          console.error("Error updating adoption status to Declined:", err);
+          db.rollback(() => {
+            return res.json("Error");
+          });
+          return;
+        }
+
+        // Commit the transaction
+        db.commit((err) => {
+          if (err) {
+            console.error("Error committing transaction:", err);
+            db.rollback(() => {
+              return res.json("Error");
+            });
+            return;
+          }
+
+          // Send confirmation email
+          const emailOptions = {
+            from: EMAIL_FROM,
+            to: user_email,
+            subject: `Your adoption request ${id} has been approved.`,
+            html: `<div>
+              <p>Hello <b>${user_name}</b>,</p>
+              <p>Your adoption request to <b>${rabbit_id}</b> has been approved. We have notified the owner to start the process of your request.</p>
+              <p>Thank you!</p>
+              <p>E-Leporidae</p>
+            </div>`,
+          };
+
+          transporter.sendMail(emailOptions, (error, info) => {
+            if (error) {
+              console.log(error);
+              return res.json("Error sending confirmation email");
+            } else {
+              console.log("Confirmation Email sent: " + info.response);
+              return res.json(data);
+            }
+          });
+        });
+      });
+    });
   });
 });
+
 
 router.put("/approve-delivery/:id", (req, res) => {
   const sql = "UPDATE adoption SET `delivery_status` = ? WHERE id = ?";
