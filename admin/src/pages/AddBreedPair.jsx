@@ -253,6 +253,7 @@ function BreedPair() {
         <h3>Add Breeding Pair</h3>
         <div className="breed-ground">
           <div className="ground">
+            <span>Male</span>
             <div className="uploader">
               {image ? (
                 <img
@@ -301,6 +302,7 @@ function BreedPair() {
             <h6>Match</h6>
           </div>
           <div className="ground">
+          <span>Female</span>
             <div className="uploader">
               {image1 ? (
                 <img

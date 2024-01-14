@@ -1,12 +1,3 @@
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-track {
-  background-color: #eaeaea;
-}
-::-webkit-scrollbar-thumb {
-  background-color: #797979;
-}
 html {
   font-size: 90%;
 }
@@ -300,7 +291,7 @@ body {
   flex-direction: column;
   align-items: center;
 }
-.main-container .breed-ground > .ground:hover {
+.main-container .breed-ground > .ground .uploader:hover {
   background-color: #eaeaea;
 }
 .breed-ground > .actions {

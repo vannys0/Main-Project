@@ -12,6 +12,7 @@ function Signup() {
   const navigate = useNavigate();
   const [errMessage, setErrMessage] = useState("");
   const [showAlert, setShowAlert] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [values, setValues] = useState({
     name: "",
     email: "",
@@ -38,6 +39,7 @@ function Signup() {
     e.preventDefault();
 
     if (!validateEmail(values.email)) {
+
       setShowAlert(true);
       setErrMessage("Please enter a valid email");
       setTimeout(() => {
@@ -45,6 +47,7 @@ function Signup() {
       }, 5000);
       return;
     }
+    setLoading(true)
 
     if (values.password !== values.confirmPassword) {
       setShowAlert(true);
@@ -129,8 +132,8 @@ function Signup() {
               <label htmlFor="">Confirm your password</label>
             </div>
           </div>
-          <button type="submit" className="submit">
-            Sign up
+          <button type="submit" className="submit login-btn" disabled={loading}>
+            {loading ? "Loading..." : "Sign Up"}
           </button>
           <div className="signup-link">
             Already have an account? <Link to="/">Sign in</Link>

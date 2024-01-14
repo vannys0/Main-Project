@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const db = require("../config/db");
 const multer = require("multer");
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt')
 const saltRounds = 10;
 
 const storage = multer.diskStorage({
@@ -52,7 +52,6 @@ router.post("/signup", (req, res) => {
     if (err) {
       return res.status(500).json("Error checking email");
     }
-
     if (result.length > 0) {
       return res.status(400).json("Email already exists");
     } else {
@@ -62,12 +61,10 @@ router.post("/signup", (req, res) => {
           return res.status(500).json("Error sending email verification");
         } else {
           console.log("Email sent: " + info.response);
-
           const insertUserQuery =
             "INSERT INTO user (`id`, `name`, `email`, `password`, `user_type`, `otp`, `is_verified`) VALUES (?, ?, ?, ?, ?, ?, ?)";
           let randomID = Math.floor(100000 + Math.random() * 900000);
           const id = `user${randomID}`;
-          
           const hashPassword = bcrypt.hashSync(password, saltRounds); //how to hash password
           const values = [id, name, email, hashPassword, user_type, otp, false];
           db.query(insertUserQuery, values, (err, data) => {
@@ -143,9 +140,8 @@ router.post("/login-client", (req, res) => {
         email: o.email,
         Message: "Success",
       };
-      console.log(o);
 
-      if(bcrypt.compareSync(req.body.password, o.password)){ //check/compare the plain password and hash password.
+      if(bcrypt.compareSync(req.body.password, o.password)){
         return res.json(user);
       }else{
         return res.json({ Message: "Failed" });
@@ -207,19 +203,77 @@ router.post("/send_us_message", (req, res) => {
   });
 });
 
-router.get("/adopt", (req, res) => {
+router.get("/adoption-status/:rabbitId", (req, res) => {
+  const rabbitId = req.params.rabbitId;
+
   db.query(
-    "SELECT * FROM rabbit WHERE rehome_status = 'Rehome' AND is_adopted = false",
+    "SELECT adoption_status FROM adoption WHERE rabbit_id = ?",
+    [rabbitId],
     (err, results) => {
       if (err) {
-        console.error("Error fetching rabbits:", err);
+        console.error("Error fetching adoption status:", err);
         res.status(500).json({ error: "Internal Server Error" });
         return;
       }
-      res.json(results);
+
+      if (results.length > 0) {
+        res.json({ adoptionStatus: results[0].adoption_status });
+      } else {
+        res.json({ adoptionStatus: null });
+      }
     }
   );
 });
+
+router.get("/adopt", async (req, res) => {
+  try {
+    const rabbits = await fetchAdoptableRabbits();
+    const rabbitsWithAdoptionStatus = await Promise.all(
+      rabbits.map(async (rabbit) => {
+        const adoptionStatus = await fetchAdoptionStatus(rabbit.id);
+        return { ...rabbit, adoptionStatus };
+      })
+    );
+
+    res.json(rabbitsWithAdoptionStatus);
+  } catch (error) {
+    console.error("Error fetching adoptable rabbits:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+const fetchAdoptableRabbits = () => {
+  return new Promise((resolve, reject) => {
+    db.query(
+      "SELECT * FROM rabbit WHERE rehome_status = 'Rehome' AND is_adopted = false",
+      (err, results) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(results);
+        }
+      }
+    );
+  });
+};
+
+// Helper function to fetch adoption status for a rabbit
+const fetchAdoptionStatus = (rabbitId) => {
+  return new Promise((resolve, reject) => {
+    db.query(
+      "SELECT adoption_status FROM adoption WHERE rabbit_id = ?",
+      [rabbitId],
+      (err, results) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(results.length > 0 ? results[0].adoption_status : null);
+        }
+      }
+    );
+  });
+};
+
 
 router.get("/rabbitdata/:id", (req, res) => {
   const sql = "SELECT * FROM rabbit WHERE id = ?";

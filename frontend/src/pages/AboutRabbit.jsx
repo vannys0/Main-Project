@@ -40,6 +40,23 @@ function AboutRabbit({ data }) {
 
   const age = calculateAge(data.date_of_birth);
 
+  const [adoptionStatus, setAdoptionStatus] = useState(null);
+
+  useEffect(() => {
+    fetchAdoptionStatus(data.id);
+  }, [data.id]);
+
+  const fetchAdoptionStatus = async (rabbitId) => {
+    try {
+      const response = await axios.get(
+        `${BASE_URL}/adoption-status/${rabbitId}`
+      );
+      setAdoptionStatus(response.data.adoptionStatus);
+    } catch (error) {
+      console.error("Error fetching adoption status:", error);
+    }
+  };
+
   return (
     <>
       <Link onClick={showModal}>See more</Link>
@@ -55,7 +72,7 @@ function AboutRabbit({ data }) {
             <Button key="cancel" onClick={handleCancel}>
               Back
             </Button>
-            <AdoptForm data={data} />
+            {adoptionStatus === "Approved" ? <Button disabled>Adopt</Button> : <AdoptForm data={data} />}
           </div>,
         ]}
       >
@@ -77,6 +94,7 @@ function AboutRabbit({ data }) {
               ))}
           </Carousel>
           <div className="about-rabbit-info">
+            {adoptionStatus === "Approved" ? <h1 className="reserved">RESERVED</h1> : null}
             <h6>Hi, My name is {data.name}. I am looking for a new home.</h6>
             <div className="d-flex justify-content-between">
               <span>Rabbit Id</span>
