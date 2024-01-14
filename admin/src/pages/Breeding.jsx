@@ -57,6 +57,14 @@ function Breeding() {
     });
   };
 
+  function calculateDifferenceInDays(pairingDate) {
+    const today = new Date();
+    const differenceInDays = Math.floor(
+      (today - new Date(pairingDate)) / (1000 * 60 * 60 * 24)
+    );
+    return differenceInDays;
+  }
+
   const renderActions = (text, record) => {
     const pairingDate = new Date(record.pairing_date);
     const today = new Date();
@@ -81,21 +89,30 @@ function Breeding() {
     }
   };
 
-  const items = (record) => [
-    {
-      label: <BreedingDetails data={record} />,
-      key: "0",
-    },
-    {
-      label: renderActions(null, record),
-      key: "1",
-    },
-    {
-      label: <span onClick={() => handleDelete(record.id)}>Cancel</span>,
-      key: "2",
-      danger: true,
-    },
-  ];
+  const items = (record) => {
+    const differenceInDays = calculateDifferenceInDays(record.pairing_date);
+  
+    return [
+      {
+        label: <BreedingDetails data={record} />,
+        key: "0",
+      },
+      {
+        label: renderActions(null, record, differenceInDays),
+        key: "1",
+      },
+      {
+        label: differenceInDays > 30 ? (
+          <span onClick={() => handleDelete(record.id)}>Delete</span>
+        ) : (
+          <span onClick={() => handleDelete(record.id)}>Cancel</span>
+        ),
+        key: "2",
+        danger: true,
+      },
+    ];
+  };
+  
 
   async function stateValue(record) {
     const rabbit = await fetchBreedPair(record);
