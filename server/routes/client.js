@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const db = require("../config/db");
 const multer = require("multer");
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -65,7 +67,9 @@ router.post("/signup", (req, res) => {
             "INSERT INTO user (`id`, `name`, `email`, `password`, `user_type`, `otp`, `is_verified`) VALUES (?, ?, ?, ?, ?, ?, ?)";
           let randomID = Math.floor(100000 + Math.random() * 900000);
           const id = `user${randomID}`;
-          const values = [id, name, email, password, user_type, otp, false];
+          
+          const hashPassword = bcrypt.hashSync(password, saltRounds); //how to hash password
+          const values = [id, name, email, hashPassword, user_type, otp, false];
           db.query(insertUserQuery, values, (err, data) => {
             if (err) {
               return res.status(500).json("Error creating user");
@@ -125,8 +129,8 @@ router.post("/verify-otp", async (req, res) => {
 
 router.post("/login-client", (req, res) => {
   const sql =
-    "SELECT * FROM user WHERE `email` = ? AND `password` = ? AND user_type='client' AND is_verified = true";
-  db.query(sql, [req.body.email, req.body.password], (err, data) => {
+    "SELECT * FROM user WHERE `email` = ? AND user_type='client' AND is_verified = true";
+  db.query(sql, [req.body.email], (err, data) => {
     if (err) {
       return res.json({ Message: "Error" });
     }
@@ -139,8 +143,14 @@ router.post("/login-client", (req, res) => {
         email: o.email,
         Message: "Success",
       };
+      console.log(o);
 
-      return res.json(user);
+      if(bcrypt.compareSync(req.body.password, o.password)){ //check/compare the plain password and hash password.
+        return res.json(user);
+      }else{
+        return res.json({ Message: "Failed" });
+      }
+
     }
     return res.json({ Message: "Failed" });
   });
