@@ -30,36 +30,168 @@ function BreedPair() {
   const handleImageChange = async (e) => {
     const file = e.target.files[0];
     setImage(file);
-
+  
     const imageElement = new Image();
     imageElement.src = URL.createObjectURL(file);
+  
+    imageElement.onload = async () => {
+      try {
+        const result = await QrScanner.scanImage(imageElement);
+        console.log(result);
+        setScanResult(result);
+  
+        const fetchData = async () => {
+          try {
+            const response = await axios.get(
+              `${BASE_URL}/get_sex?id=${result}`
+            );
+            const rabbitData = response.data[0];
 
-    imageElement.onload = () => {
-      QrScanner.scanImage(imageElement)
-        .then((result) => {
-          console.log(result);
-          setScanResult(result);
-        })
-        .catch((error) => console.log(error || "No QR code found."));
+            if (!rabbitData) {
+              Swal.fire({
+                icon: "error",
+                title: "Invalid Rabbit",
+                text: "Rabbit not found in the records. Please check the QR code or try another one.",
+              }).then((result) => {
+                if (
+                  result.isConfirmed ||
+                  result.dismiss === Swal.DismissReason.timer
+                ) {
+                  window.location.reload();
+                }
+              });
+              return;
+            }
+  
+            if (rabbitData) {
+              setRabbit(rabbitData);
+  
+              const scannedSex = rabbitData.sex;
+
+              if(rabbitData.rehome_status === "Rehome") {
+                Swal.fire({
+                  icon: "error",
+                  title: "Unable to pair",
+                  text: "This rabbit is for rehome.",
+                }).then((result) => {
+                  if (
+                    result.isConfirmed ||
+                    result.dismiss === Swal.DismissReason.timer
+                  ) {
+                    window.location.reload();
+                  }
+                });
+              }
+  
+              if (scannedSex !== "Male") {
+                Swal.fire({
+                  icon: "error",
+                  title: "Invalid Rabbit",
+                  text: "Please scan a male rabbit at this reader.",
+                }).then((result) => {
+                  if (
+                    result.isConfirmed ||
+                    result.dismiss === Swal.DismissReason.timer
+                  ) {
+                    window.location.reload();
+                  }
+                });
+              }
+            }
+          } catch (err) {
+            console.error(err);
+          }
+        };
+  
+        fetchData();
+      } catch (error) {
+        console.log(error || "No QR code found.");
+      }
     };
   };
 
-  const handleImageChange1 = async (e) => {
-    const file = e.target.files[0];
-    setImage1(file);
+const handleImageChange1 = async (e) => {
+  const file = e.target.files[0];
+  setImage1(file);
 
-    const imageElement = new Image();
-    imageElement.src = URL.createObjectURL(file);
+  const imageElement = new Image();
+  imageElement.src = URL.createObjectURL(file);
 
-    imageElement.onload = () => {
-      QrScanner.scanImage(imageElement)
-        .then((result) => {
-          console.log(result);
-          setScanResult1(result);
-        })
-        .catch((error) => console.log(error || "No QR code found."));
-    };
+  imageElement.onload = async () => {
+    try {
+      const result = await QrScanner.scanImage(imageElement);
+      console.log(result);
+      setScanResult1(result);
+
+      const fetchData = async () => {
+        try {
+          const response = await axios.get(
+            `${BASE_URL}/get_sex?id=${result}`
+          );
+          const rabbitData = response.data[0];
+
+          if (!rabbitData) {
+            Swal.fire({
+              icon: "error",
+              title: "Invalid Rabbit",
+              text: "Rabbit not found in the records. Please check the QR code or try another one.",
+            }).then((result) => {
+              if (
+                result.isConfirmed ||
+                result.dismiss === Swal.DismissReason.timer
+              ) {
+                window.location.reload();
+              }
+            });
+            return;
+          }
+
+          if (rabbitData) {
+            setRabbit1(rabbitData);
+
+            const scannedSex = rabbitData.sex;
+
+            if(rabbitData.rehome_status === "Rehome") {
+              Swal.fire({
+                icon: "error",
+                title: "Unable to pair",
+                text: "This rabbit is for rehome.",
+              }).then((result) => {
+                if (
+                  result.isConfirmed ||
+                  result.dismiss === Swal.DismissReason.timer
+                ) {
+                  window.location.reload();
+                }
+              });
+            }
+
+            if (scannedSex !== "Female") {
+              Swal.fire({
+                icon: "error",
+                title: "Invalid Rabbit",
+                text: "Please scan a female rabbit at this reader.",
+              }).then((result) => {
+                if (
+                  result.isConfirmed ||
+                  result.dismiss === Swal.DismissReason.timer
+                ) {
+                  window.location.reload();
+                }
+              });
+            }
+          }
+        } catch (err) {
+          console.error(err);
+        }
+      };
+
+      fetchData();
+    } catch (error) {
+      console.log(error || "No QR code found.");
+    }
   };
+};
 
   const handleUpload = () => {
     inputRef.current.click();
@@ -281,19 +413,6 @@ function BreedPair() {
             </div>
             {rabbit && (
               <div className="result">
-                {/* <Avatar
-                  shape="square"
-                  size={200}
-                  src={
-                    <img
-                      loading="lazy"
-                      src={`http://localhost:8081/uploads/${rabbit.image_path
-                        .split(",")[0]
-                        .trim()}`}
-                    />
-                  }
-                /> */}
-                <span>{scanResult}</span>
                 <span>{rabbit.name}</span>
               </div>
             )}
@@ -330,7 +449,6 @@ function BreedPair() {
             </div>
             {rabbit1 && (
               <div className="result">
-                <span>{scanResult1}</span>
                 <span>{rabbit1.name}</span>
               </div>
             )}

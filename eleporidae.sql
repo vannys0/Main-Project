@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 14, 2024 at 05:34 PM
+-- Generation Time: Jan 15, 2024 at 02:42 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -77,7 +77,8 @@ CREATE TABLE `breeding_pair` (
 --
 
 INSERT INTO `breeding_pair` (`id`, `buck_id`, `doe_id`, `note`, `pairing_date`, `expected_due_date`) VALUES
-('pair940019', 'rabbit571815', 'rabbit166339', 'Pan and Tot', '2023-12-10', '2024-02-15');
+('pair508155', 'rabbit101874', 'rabbit481631', 'Yocky and Lexie', '2024-01-15', '2024-02-16'),
+('pair977431', 'rabbit166339', 'rabbit571815', 'Tan and Pancake', '2024-01-15', '2024-02-16');
 
 -- --------------------------------------------------------
 
@@ -118,26 +119,38 @@ CREATE TABLE `rabbit` (
 --
 
 INSERT INTO `rabbit` (`id`, `breeding_pair_id`, `name`, `date_of_birth`, `sex`, `rabbit_type`, `color`, `breed_type`, `weight`, `image_path`, `rehome_status`, `price`, `is_adopted`, `date_added`) VALUES
-('rabbit119521', NULL, 'Totoro', '2023-02-23', 'Male', 'Pet rabbit', 'Fawn', 'Beveren', '1.4', 'totoro.jpg', 'Rehome', 350, 1, NULL),
-('rabbit149972', 'pair345236', 'French-Bev', '2023-12-22', 'Male', 'Pet rabbit', 'Tan', 'French Lop-Beveren', '1.5', 'Lea.jpg', 'Rehome', 400, 0, NULL),
-('rabbit166339', NULL, 'Pancsssss', '2023-12-23', 'Female', 'Pet rabbit', 'Agouti', 'American', '1.1', 'Pancake.jpg', 'Rehome', 450, 0, NULL),
-('rabbit215324', 'pair345236', 'Male', '2024-01-02', 'Male', 'Pet rabbit', 'Tan', 'French Lop-Beveren', '1', 'Loki.jpg', 'Rehome', 350, 0, NULL),
-('rabbit289827', 'pair940019', 'Mix', '2024-01-14', 'Male', 'Pet rabbit', 'Agouti', 'Checkered Giant-American', '1', 'Tootsssss_QRCode.png', 'Rehome', 400, 0, '2024-01-14'),
-('rabbit320950', 'pair345236', 'Female', '2024-01-01', 'Female', 'Pet rabbit', 'Tan', 'French Lop-Beveren', '1', 'Lea.jpg', 'Rehome', 350, 1, NULL),
-('rabbit332716', NULL, 'Harrold', '2022-12-07', 'Male', 'Pet rabbit', 'Brown', 'American', '1.3', 'harold.jpg', 'Rehome', 450, 0, NULL),
-('rabbit335156', NULL, 'Lokkss', '2023-12-23', 'Male', 'Pet rabbit', 'Brown', 'Belgian Hare', '1', 'Loki.jpg', 'Rehome', 0, 0, NULL),
-('rabbit346045', NULL, 'Loki', '2023-05-26', 'Male', 'Pet rabbit', 'Black', 'American', '1.5', 'Loki.jpg', 'Rehome', 400, 0, NULL),
-('rabbit357444', NULL, 'Test', '2023-12-11', 'Male', 'Pet rabbit', 'Chinchilla', 'American', '2', 'Loki.jpg,Pancake.jpg,Gerald.jpg', 'Rehome', -7, 0, NULL),
-('rabbit360052', NULL, 'Gerald', '2023-01-04', 'Male', 'Pet rabbit', 'Fawn', 'Britannia Petite', '1.7', 'Gerald.jpg', 'Rehome', 350, 0, NULL),
-('rabbit375996', NULL, 'Pancake', '2023-03-06', 'Female', 'Pet rabbit', 'Sooty', 'Beveren', '1.8', 'Pancake.jpg', 'Rehome', 450, 0, NULL),
-('rabbit441541', NULL, 'Petter', '2023-03-15', 'Male', 'Pet rabbit', 'Agouti', 'French Lop', '1.2', 'petter.jpg', 'Rehome', 400, 0, NULL),
-('rabbit470950', NULL, 'Lea', '2023-02-21', 'Female', 'Pet rabbit', 'Sooty', 'Havana', '1.5', 'Lea.jpg', 'Rehome', 400, 0, NULL),
-('rabbit505640', NULL, 'Geregg', '2023-12-23', 'Male', 'Pet rabbit', 'Chinchilla', 'Belgian Hare', '1.2', 'Gerald.jpg', NULL, 0, 0, NULL),
-('rabbit555484', 'pair940019', 'pogi', '2024-01-14', 'Female', 'Meat rabbit', 'Brown', 'Silver Fox', '1', 'cryptoking.png', NULL, 0, 0, '2024-01-14'),
-('rabbit571815', NULL, 'Tootsssss', '2023-12-23', 'Male', 'Pet rabbit', 'Tan', 'Checkered Giant', '1.3', 'totoro.jpg', 'Rehome', 400, 0, NULL),
-('rabbit575924', NULL, 'With date', '2024-01-13', 'Male', 'Pet rabbit', 'Gray', 'American', '1', 'Testsssssttttttttttttttttttt_QRCode.png', NULL, 0, 0, '2024-01-13'),
-('rabbit581715', NULL, 'Pettssss', '2023-12-23', 'Male', 'Pet rabbit', 'Tan', 'American', '1.2', 'petter.jpg', NULL, 0, 0, NULL),
-('rabbit844637', NULL, 'Leo', '2023-06-21', 'Male', 'Pet rabbit', 'Tan', 'French Lop', '1.4', 'leo.jpg', 'Rehome', 400, 0, NULL);
+('rabbit101874', NULL, 'Yocky', '2023-04-03', 'Male', 'Pet rabbit', 'Gray', 'Unkown', '1', 'yocky.jpg', NULL, 0, 0, '2024-01-15'),
+('rabbit113538', NULL, 'Buns', '2022-08-10', 'Male', 'Pet rabbit', 'White', 'Dutch', '4.8', 'buns.jpg', 'Rehome', 450, 0, '2024-01-15'),
+('rabbit128373', NULL, 'Jojie and Hansel', '2023-07-02', 'Other', 'Pet rabbit', 'Other', 'Dutch', '3.4', 'jojie.jpg', NULL, 0, 0, '2024-01-15'),
+('rabbit224028', NULL, 'Bea', '2023-05-09', 'Female', 'Pet rabbit', 'Gray', 'Dutch', '3.1', 'bea.jpg', 'Rehome', 450, 0, '2024-01-15'),
+('rabbit234859', NULL, 'Bonn', '2023-01-06', 'Male', 'Pet rabbit', 'Other', 'Unkown', '4.9', 'bon.jpg', NULL, 0, 0, '2024-01-15'),
+('rabbit238053', NULL, 'Melai', '2023-06-26', 'Female', 'Pet rabbit', 'White', 'Dutch', '3.2', 'melai.jpg', 'Rehome', 500, 0, '2024-01-15'),
+('rabbit254871', NULL, 'Leo', '2023-08-29', 'Male', 'Pet rabbit', 'Brown', 'Dutch', '1.5', 'leo.jpg', 'Rehome', 400, 0, '2024-01-15'),
+('rabbit263010', NULL, 'Jake', '2023-10-11', 'Male', 'Pet rabbit', 'Other', 'Californian', '4.9', 'jake.jpg', NULL, 0, 0, '2024-01-15'),
+('rabbit293170', NULL, 'Jojie', '2023-07-30', 'Male', 'Pet rabbit', 'Brown', 'Dutch', '2.5', 'jejie.jpg', 'Rehome', 500, 0, '2024-01-15'),
+('rabbit333371', NULL, 'Dwel', '2023-06-21', 'Male', 'Pet rabbit', 'Black', 'Californian', '2.6', 'dwel.jpg', 'Rehome', 450, 0, '2024-01-15'),
+('rabbit397085', NULL, 'Tristan', '2023-05-25', 'Male', 'Pet rabbit', 'White', 'Unkown', '1.1', 'tristan.jpg', 'Rehome', 500, 0, '2024-01-15'),
+('rabbit417274', NULL, 'Pea', '2023-09-01', 'Female', 'Pet rabbit', 'Brown', 'Californian', '1.1', 'pea.jpg', 'Rehome', 400, 0, '2024-01-15'),
+('rabbit437857', NULL, 'Cy', '2023-08-17', 'Female', 'Pet rabbit', 'Brown', 'Unkown', '2.1', 'cy.jpg', 'Rehome', 400, 0, '2024-01-15'),
+('rabbit481631', NULL, 'Lexie', '2023-03-31', 'Female', 'Pet rabbit', 'Fawn', 'Dutch', '4.2', 'lexie.jpg', NULL, 0, 0, '2024-01-15'),
+('rabbit568965', NULL, 'Totoro', '2023-07-04', 'Male', 'Pet rabbit', 'Tan', 'New Zealand (Red, White, Black)', '1', 'totoro.jpg', 'Rehome', 450, 0, '2024-01-15'),
+('rabbit586550', NULL, 'Harrold', '2023-09-06', 'Male', 'Pet rabbit', 'Gray', 'Unkown', '2.4', 'harrold.jpg', 'Rehome', 400, 0, '2024-01-15'),
+('rabbit643070', NULL, 'James', '2022-12-07', 'Male', 'Pet rabbit', 'White', 'Unkown', '4.9', 'james.jpg', 'Rehome', 500, 0, '2024-01-15'),
+('rabbit643674', NULL, 'Yogu', '2023-06-12', 'Male', 'Pet rabbit', 'Black', 'Californian', '3.8', 'jogu.jpg', 'Rehome', 350, 0, '2024-01-15'),
+('rabbit662271', NULL, 'Clay', '2023-07-20', 'Male', 'Pet rabbit', 'White', 'Unkown', '2.2', 'clay.jpg', 'Rehome', 400, 0, '2024-01-15'),
+('rabbit672691', NULL, 'Golden', '2023-09-05', 'Male', 'Pet rabbit', 'White', 'Dutch', '1.2', 'golden.jpg', NULL, 0, 0, '2024-01-15'),
+('rabbit674540', NULL, 'Bogs', '2022-10-04', 'Male', 'Pet rabbit', 'White', 'Unkown', '5', 'bogs.jpg', NULL, 0, 0, '2024-01-15'),
+('rabbit689240', NULL, 'Hannah', '2023-11-05', 'Female', 'Pet rabbit', 'White', 'Californian', '1', 'hanna.jpg', 'Rehome', 400, 0, '2024-01-15'),
+('rabbit701277', NULL, 'James', '2023-01-02', 'Male', 'Pet rabbit', 'White', 'Californian', '4.1', 'james.jpg', NULL, 0, 0, '2024-01-15'),
+('rabbit715868', NULL, 'Mamot', '2023-09-05', 'Male', 'Pet rabbit', 'Gray', 'Californian', '1.9', 'mamot.jpg', 'Rehome', 350, 0, '2024-01-15'),
+('rabbit744477', NULL, 'Charl', '2023-09-11', 'Male', 'Pet rabbit', 'Brown', 'Unkown', '2.6', 'charl.jpg', NULL, 0, 0, '2024-01-15'),
+('rabbit789762', NULL, 'Joe', '2023-10-31', 'Male', 'Pet rabbit', 'White', 'Californian', '1.1', 'joe.jpg', NULL, 0, 0, '2024-01-15'),
+('rabbit810616', NULL, 'Charley', '2022-10-21', 'Male', 'Pet rabbit', 'Other', 'Dutch', '4.8', 'charley.jpg', 'Rehome', 500, 0, '2024-01-15'),
+('rabbit853417', NULL, 'Mar', '2023-04-30', 'Male', 'Pet rabbit', 'White', 'Dutch', '3.5', 'mar.jpg', NULL, 0, 0, '2024-01-15'),
+('rabbit951398', NULL, 'Jejie', '2022-10-03', 'Female', 'Pet rabbit', 'Brown', 'Dutch', '2.1', 'jejie.jpg', NULL, 0, 0, '2024-01-15'),
+('rabbit963752', NULL, 'Pancake', '2023-07-04', 'Male', 'Pet rabbit', 'White', 'Californian', '2.5', 'pancake.jpg', NULL, 0, 0, '2024-01-15'),
+('rabbit993205', NULL, 'Dutch', '2023-07-04', 'Male', 'Pet rabbit', 'White', 'Dutch', '2.3', 'dutch.jpg', NULL, 0, 0, '2024-01-15'),
+('rabbit996678', NULL, 'Lea', '2023-04-12', 'Female', 'Pet rabbit', 'Black', 'Californian', '2.6', 'lea.jpg', NULL, 0, 0, '2024-01-15');
 
 -- --------------------------------------------------------
 
@@ -152,14 +165,6 @@ CREATE TABLE `transaction` (
   `transaction_status` varchar(255) DEFAULT NULL,
   `proof_picture_path` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `transaction`
---
-
-INSERT INTO `transaction` (`id`, `adoption_id`, `transaction_date`, `transaction_status`, `proof_picture_path`) VALUES
-('transaction154081', 'adoption312258', '2024-01-14', 'Completed', 'Tootsssss_QRCode.png'),
-('transaction208075', 'adoption329386', '2024-01-14', 'Completed', 'Tootsssss_QRCode.png');
 
 -- --------------------------------------------------------
 
@@ -183,11 +188,8 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `name`, `email`, `password`, `user_type`, `profile`, `otp`, `is_verified`) VALUES
-('user186077', 'Francis Bawag', 'bawagfrancis@gmail.com', '$2b$10$ILa2hg6bqhoVfntdywBOFuTlSaJW5NMbAn.dkcd3QKc4aGvuqUyRK', 'client', NULL, 510224, 1),
-('user390405', 'Ivan Bengcolado', 'ivanbengcolado@gmail.com', '$2b$10$K0xNbGYUaS4vjRuF9vR0COg.wfereU/Ta4uHbwCYZthuzRDhdmjeK', 'client', NULL, 147777, 1),
-('user536122', 'Admin', 'admin@gmail.com', 'admin', 'admin', NULL, NULL, 0),
-('user930468', 'Leonardo Nogra', 'loenardonogra6@gmail.com', 'admin', 'admin', NULL, NULL, 0),
-('user940367', 'Leonardo Nogra', 'leonardonogra6@gmail.com', '$2b$10$gRqAW4AIXEHO62c9UeiFsOFoxE4VZtlXUfooWL4RpwEoSDecNtfLG', 'admin', NULL, 914540, 1);
+('user115861', 'Leonardo Nogra', 'leonardonogra6@gmail.com', 'admin', 'admin', NULL, NULL, 0),
+('user719207', 'Ivan Bengcolado', 'ivanbengcolado@gmail.com', '$2b$10$tpo4/yh9b64xy/EMmbme0u9W2ek8cgcHqRjhOqdx0RMTwzeFkLEKO', 'client', NULL, 981180, 1);
 
 --
 -- Indexes for dumped tables

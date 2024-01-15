@@ -70,12 +70,14 @@ function RabbitList() {
     axios
       .put(BASE_URL + "/update-rehome/" + o.id, {
         rehome_status: null,
+        price: 0,
       })
       .then((res) => {
         window.location.reload();
       })
       .catch((err) => console.log(err));
   };
+  
 
   useEffect(() => {
     axios
