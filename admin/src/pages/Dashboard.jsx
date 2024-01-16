@@ -25,7 +25,7 @@ import Sidebar from "../components/Sidebar";
 import SecureStore from "react-secure-storage";
 import axios from "axios";
 import { UserOutlined, UploadOutlined } from "@ant-design/icons";
-import { Table, Col, Row, Statistic, Space, Avatar } from "antd";
+import { Tag } from "antd";
 import DataTable from "react-data-table-component";
 import { RiPassPendingLine } from "react-icons/ri";
 import appConfig from "../../config.json";
@@ -189,7 +189,13 @@ function Dashboard() {
       name: "Status",
       selector: (row) => (
         <span style={{ textTransform: "uppercase" }}>
-          {row.adoption_status}
+          {row.adoption_status === "Approved" ? (
+            <Tag color="success">{row.adoption_status}</Tag>
+          ) : row.adoption_status === "Pending" ? (
+            <Tag color="warning">{row.adoption_status}</Tag>
+          ) : (
+            <Tag color="error">{row.adoption_status}</Tag>
+          )}
         </span>
       ),
       sortable: true,
@@ -325,6 +331,7 @@ function Dashboard() {
           <div
             className="rabbit-added"
             style={{
+              width: "100%",
               boxShadow:
                 "rgba(99, 99, 99, 0.2) 0px 2px 4px 0px, rgba(99, 99, 99, 0.1) 0px -2px 8px 0px",
               padding: "10px",
@@ -347,10 +354,11 @@ function Dashboard() {
           <div
             className="recent-activity"
             style={{
+              width: "100%",
               boxShadow:
                 "rgba(99, 99, 99, 0.2) 0px 2px 4px 0px, rgba(99, 99, 99, 0.1) 0px -2px 8px 0px",
               padding: "10px",
-              backgroundColor: "#fff",
+              backgroundColor: "#ffffff",
               cursor: "pointer",
             }}
             onClick={() => navigateTo("/request")}

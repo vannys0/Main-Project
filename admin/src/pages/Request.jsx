@@ -249,7 +249,9 @@ function Request() {
         >
           <a onClick={(e) => e.preventDefault()}>
             <Space>
-              <SlOptionsVertical style={{ color: "#1e1e1e" }} />
+              <SlOptionsVertical
+                style={{ color: "#1e1e1e", cursor: "pointer" }}
+              />
             </Space>
           </a>
         </Dropdown>

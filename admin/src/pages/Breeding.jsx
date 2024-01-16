@@ -91,7 +91,7 @@ function Breeding() {
 
   const items = (record) => {
     const differenceInDays = calculateDifferenceInDays(record.pairing_date);
-  
+
     return [
       {
         label: <BreedingDetails data={record} />,
@@ -102,17 +102,17 @@ function Breeding() {
         key: "1",
       },
       {
-        label: differenceInDays > 30 ? (
-          <span onClick={() => handleDelete(record.id)}>Delete</span>
-        ) : (
-          <span onClick={() => handleDelete(record.id)}>Cancel</span>
-        ),
+        label:
+          differenceInDays > 30 ? (
+            <span onClick={() => handleDelete(record.id)}>Delete</span>
+          ) : (
+            <span onClick={() => handleDelete(record.id)}>Cancel</span>
+          ),
         key: "2",
         danger: true,
       },
     ];
   };
-  
 
   async function stateValue(record) {
     const rabbit = await fetchBreedPair(record);
@@ -198,7 +198,9 @@ function Breeding() {
           placement="bottomLeft"
         >
           <a onClick={(e) => e.preventDefault()}>
-            <SlOptionsVertical style={{ color: "#1e1e1e" }} />
+            <SlOptionsVertical
+              style={{ color: "#1e1e1e", cursor: "pointer" }}
+            />
           </a>
         </Dropdown>
       ),

@@ -77,7 +77,6 @@ function RabbitList() {
       })
       .catch((err) => console.log(err));
   };
-  
 
   useEffect(() => {
     axios
@@ -210,7 +209,7 @@ function RabbitList() {
       cell: (row) => calculateAge(row.date_of_birth),
     },
     {
-      name: "Sex",
+      name: "Gender",
       selector: (row) => row.sex,
       sortable: true,
     },
@@ -245,7 +244,9 @@ function RabbitList() {
           placement="bottomLeft"
         >
           <a onClick={(e) => e.preventDefault()}>
-            <SlOptionsVertical style={{ color: "#1e1e1e" }} />
+            <SlOptionsVertical
+              style={{ color: "#1e1e1e", cursor: "pointer" }}
+            />
           </a>
         </Dropdown>
       ),

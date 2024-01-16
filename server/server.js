@@ -37,3 +37,6 @@ app.use("/api", chartutil);
 
 const config = require("./routes/config");
 app.use("/api", config);
+
+const transaction = require("./routes/transaction");
+app.use("/api", transaction);

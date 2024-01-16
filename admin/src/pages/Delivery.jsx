@@ -85,25 +85,25 @@ function Delivery() {
   const items = (record) => [
     record.delivery_status === "Approved"
       ? {
-          label: <span>Deliver</span>,
+          label: <span>Deliver Now</span>,
           key: "0",
           disabled: true,
         }
       : {
-          label: <span onClick={(e) => onApprove(e, record)}>Deliver</span>,
+          label: <span onClick={(e) => onApprove(e, record)}>Deliver Now</span>,
           key: "0",
         },
     record.delivery_status === "Approved"
       ? {
           label: (
             <span onClick={() => onDelivered(record.id, record.rabbit_id)}>
-              Delivered
+              Confirm Delivery
             </span>
           ),
           key: "1",
         }
       : {
-          label: <span>Delivered</span>,
+          label: <span>Confirm Delivery</span>,
           key: "1",
           disabled: true,
         },
@@ -149,9 +149,9 @@ function Delivery() {
       cell: (record) => (
         <span>
           {record.delivery_status === "Approved" ? (
-            <Tag color="success">APPROVED</Tag>
+            <Tag color="success">FOR DELIVERY</Tag>
           ) : (
-            <Tag color="warning">PENDING</Tag>
+            <Tag color="warning">PENDING DELIVERY</Tag>
           )}
         </span>
       ),
@@ -167,7 +167,9 @@ function Delivery() {
         >
           <a onClick={(e) => e.preventDefault()}>
             <Space>
-              <SlOptionsVertical style={{ color: "#1e1e1e" }} />
+              <SlOptionsVertical
+                style={{ color: "#1e1e1e", cursor: "pointer" }}
+              />
             </Space>
           </a>
         </Dropdown>

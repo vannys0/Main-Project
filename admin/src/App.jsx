@@ -24,6 +24,7 @@ import AddBreedPair from "./pages/AddBreedPair";
 import AddBreedingChild from "./pages/AddBreedingChild";
 import Clients from "./pages/Clients";
 import ScanRabbitQr from "./pages/ScanRabbitQr";
+import Transactions from "./pages/Transactions";
 
 function App() {
   const signIn = useContext(AuthContext);
@@ -154,6 +155,16 @@ function App() {
         </div>
       ),
     },
+    {
+      path: "/transactions",
+      element: (
+        <div>
+          <PrivateRoute>
+            <Transactions />
+          </PrivateRoute>
+        </div>
+      ),
+    },
   ]);
 
   const [state, dispatch] = useReducer(
@@ -176,7 +187,7 @@ function App() {
             isSignOut: true,
             userToken: null,
           };
-                  default:
+        default:
           return prevState;
       }
     },
@@ -210,7 +221,7 @@ function App() {
   return (
     <AuthContext.Provider value={authContext}>
       <div className="App">
-         <RouterProvider router={router} />
+        <RouterProvider router={router} />
       </div>
     </AuthContext.Provider>
   );

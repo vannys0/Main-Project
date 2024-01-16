@@ -1,16 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
-import {
-  BsCart3,
-  BsGrid1X2Fill,
-  BsTruck,
-  BsFillGrid3X3GapFill,
-  BsPeopleFill,
-  BsListCheck,
-  BsBoxArrowLeft,
-  BsFillCollectionFill,
-  BsPersonFill,
-  BsPersonCircle,
-} from "react-icons/bs";
+import { BsTruck, BsListCheck } from "react-icons/bs";
+import { GrTransaction } from "react-icons/gr";
 import { LuUsers, LuUser, LuLayoutDashboard } from "react-icons/lu";
 import { CiCircleList } from "react-icons/ci";
 import { NavLink, Link, useNavigate, useParams } from "react-router-dom";
@@ -93,6 +83,19 @@ function Sidebar({ openSidebarToggle, OpenSidebar }) {
         </h6>
         <NavLink to="/delivery" className="sidebar-list-item">
           <BsTruck className="icon" /> Delivery
+        </NavLink>
+        <h6
+          style={{
+            marginLeft: "20px",
+            color: "#797979",
+            fontWeight: "600",
+            marginTop: "10px",
+          }}
+        >
+          TRANSACTIONS
+        </h6>
+        <NavLink to="/transactions" className="sidebar-list-item">
+          <GrTransaction className="icon" /> Transactions
         </NavLink>
         <h6
           style={{

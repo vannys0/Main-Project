@@ -118,7 +118,7 @@ function EditRabbit() {
           </div>
           <form className="rabbit-form">
             <div>
-              <label>Name :</label>
+              <label>Name</label>
               <div>
                 <Input
                   name="name"
@@ -130,7 +130,7 @@ function EditRabbit() {
               </div>
             </div>
             <div>
-              <label>Date of birth :</label>
+              <label>Date of birth</label>
               <div>
                 <DatePicker
                   className="w-100"
@@ -145,7 +145,7 @@ function EditRabbit() {
               </div>
             </div>
             <div>
-              <label>Sex :</label>
+              <label>Gender</label>
               <div>
                 <Select
                   style={{ width: "100%" }}
@@ -160,7 +160,7 @@ function EditRabbit() {
               </div>
             </div>
             <div>
-              <label>Breed Type :</label>
+              <label>Breed Type</label>
               <div>
                 <Select
                   style={{ width: "100%" }}
@@ -180,7 +180,7 @@ function EditRabbit() {
               </div>
             </div>
             <div>
-              <label>Color :</label>
+              <label>Color</label>
               <div>
                 <Select
                   style={{ width: "100%" }}
@@ -203,7 +203,7 @@ function EditRabbit() {
               </div>
             </div>
             <div>
-              <label>Rabbit Type :</label>
+              <label>Rabbit Type</label>
               <div>
                 <Select
                   style={{ width: "100%" }}
@@ -220,7 +220,7 @@ function EditRabbit() {
               </div>
             </div>
             <div>
-              <label>Weight :</label>
+              <label>Weight</label>
               <div>
                 <InputNumber
                   style={{ width: "100%" }}

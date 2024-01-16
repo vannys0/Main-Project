@@ -194,22 +194,25 @@ body {
 }
 /* SCAN RABBIT */
 .scan-rabbit-div {
-  padding: 30px;
-  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 4px 0px, rgba(99, 99, 99, 0.1) 0px -2px 8px 0px;
 }
 .scan-result {
-  gap: 5px;
+  display: flex;
+  gap: 20px;
+}
+.scan-info {
+  width: 100%;
   display: flex;
   flex-direction: column;
+  gap: 4px;
+
 }
-.scan-result > div:not(.scan-again-div) {
+.scan-info > div {
   display: grid;
-  grid-template-columns: 1fr 3fr;
-}
-.scan-again-div {
-  display: flex;
-  justify-content: flex-end;
+  grid-template-columns: 1fr 2fr;
 }
 
 .active {
@@ -398,7 +401,7 @@ body {
     }
     /* Dashboard */
     .first-chart {
-      margin-top: 270px;
+      margin-top: 250px;
     }
     .activity {
       grid-template-columns: 1fr;

@@ -3,7 +3,7 @@ import "../Style.css";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import { Html5QrcodeScanner } from "html5-qrcode";
-import { Button } from "antd";
+import { Button, Avatar } from "antd";
 import axios from "axios";
 import appConfig from "../../config.json";
 const BASE_URL = appConfig.apiBasePath;
@@ -72,41 +72,59 @@ function ScanRabbitQr() {
           {scanResult ? (
             <div>
               {data ? (
-                <div className="scan-result">
+                <div>
                   <h5>Result</h5>
-                  <div>
-                    <span>Rabbit ID</span>
-                    <span>{data.id}</span>
+                  <div className="scan-result">
+                    <div>
+                      <Avatar
+                        shape="square"
+                        size={200}
+                        src={
+                          <img
+                            loading="lazy"
+                            src={`http://localhost:8081/uploads/${data.image_path
+                              .split(",")[0]
+                              .trim()}`}
+                          />
+                        }
+                      />
+                    </div>
+                    <div className="scan-info">
+                      <div>
+                        <span>Rabbit ID</span>
+                        <span>{data.id}</span>
+                      </div>
+                      <div>
+                        <span>Name</span>
+                        <span>{data.name}</span>
+                      </div>
+                      <div>
+                        <span>Age</span>
+                        <span>{calculateAge(data.date_of_birth)}</span>
+                      </div>
+                      <div>
+                        <span>Gender</span>
+                        <span>{data.sex}</span>
+                      </div>
+                      <div>
+                        <span>Rabbit Type</span>
+                        <span>{data.rabbit_type}</span>
+                      </div>
+                      <div>
+                        <span>Color</span>
+                        <span>{data.color}</span>
+                      </div>
+                      <div>
+                        <span>Breed Type</span>
+                        <span>{data.breed_type}</span>
+                      </div>
+                      <div>
+                        <span>Weight</span>
+                        <span>{data.weight} kgs</span>
+                      </div>
+                    </div>
                   </div>
-                  <div>
-                    <span>Name</span>
-                    <span>{data.name}</span>
-                  </div>
-                  <div>
-                    <span>Age</span>
-                    <span>{calculateAge(data.date_of_birth)}</span>
-                  </div>
-                  <div>
-                    <span>Gender</span>
-                    <span>{data.sex}</span>
-                  </div>
-                  <div>
-                    <span>Rabbit Type</span>
-                    <span>{data.rabbit_type}</span>
-                  </div>
-                  <div>
-                    <span>Color</span>
-                    <span>{data.color}</span>
-                  </div>
-                  <div>
-                    <span>Breed Type</span>
-                    <span>{data.breed_type}</span>
-                  </div>
-                  <div>
-                    <span>Weight</span>
-                    <span>{data.weight} kgs</span>
-                  </div>
-                  <div className="scan-again-div">
+                  <div className="d-flex justify-content-end">
                     <Button
                       type="primary"
                       onClick={() => window.location.reload()}
