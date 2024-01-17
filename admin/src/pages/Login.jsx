@@ -31,6 +31,7 @@ function Login() {
   };
 
   function loginUser(e) {
+    console.log("Login page click");
     e.preventDefault();
 
     if (!validateEmail(loginUserName)) {
@@ -50,8 +51,7 @@ function Login() {
         const user = response.data[0];
         if (
           user &&
-          user.email === loginUserName &&
-          user.password === loginPassword
+          user.email === loginUserName
         ) {
           SecureStore.setItem("userToken", user);
           authContext.signIn(user);
