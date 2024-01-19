@@ -4,6 +4,9 @@ import { UserOutlined } from "@ant-design/icons";
 import { Avatar } from "antd";
 import Default from "../../images/default-profile.png";
 import { Button, Modal } from "antd";
+import appConfig from "../../../config.json";
+const BASE_URL = appConfig.apiBasePath;
+const IMAGE_URL = appConfig.imagePath;
 
 function ClientUserProfile({ data }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -43,7 +46,7 @@ function ClientUserProfile({ data }) {
                 }}
                 src={
                   <img
-                    src={`http://localhost:8081/uploads/${data.profile}`}
+                    src={`${IMAGE_URL}/uploads/${data.profile}`}
                     alt=""
                     style={{ width: "100%" }}
                   />

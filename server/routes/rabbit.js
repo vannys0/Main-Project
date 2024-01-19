@@ -21,7 +21,7 @@ router.post("/add-rabbit", upload.array("files", 5), (req, res) => {
     "INSERT INTO rabbit (`id`, `name`, `date_of_birth`, `sex`, `rabbit_type`, `color`, `breed_type`,  `weight`, `image_path`, `breeding_pair_id`, `date_added`) VALUES (?)";
   let randomID = Math.floor(100000 + Math.random() * 900000);
   const id = `rabbit${randomID}`;
-  const dateAdded = new Date()
+  const dateAdded = new Date();
   const values = [
     id,
     result.name,
@@ -33,7 +33,7 @@ router.post("/add-rabbit", upload.array("files", 5), (req, res) => {
     result.weight,
     imagePaths,
     result.breeding_pair_id,
-    dateAdded
+    dateAdded,
   ];
 
   db.query(sql, [values], (err, data) => {

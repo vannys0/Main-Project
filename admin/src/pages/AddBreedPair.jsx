@@ -286,23 +286,6 @@ function BreedPair() {
       return;
     }
 
-    if (
-      rabbit &&
-      rabbit1 &&
-      rabbit.breeding_pair_id === rabbit1.breeding_pair_id
-    ) {
-      Swal.fire({
-        icon: "error",
-        title: "Failed",
-        text: "Same Parent.",
-      }).then((result) => {
-        if (result.isConfirmed || result.dismiss === Swal.DismissReason.timer) {
-          window.location.reload();
-        }
-      });
-      return;
-    }
-
     if (!scanResult || !scanResult1) {
       Swal.fire({
         icon: "error",
@@ -355,8 +338,8 @@ function BreedPair() {
             male_rabbit_id: scanResult,
             female_rabbit_id: scanResult1,
             note: result.value,
-            date: currentDate.toISOString(),
-            expected_due: futureDate.toISOString(),
+            date: currentDate,
+            expected_due: futureDate,
           })
           .then((res) => {
             if (res.data === "Pair already exists") {

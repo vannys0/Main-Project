@@ -411,7 +411,10 @@ body {
     .admin-profile,
     .edit-div {
       flex-direction: column;
-}
+    }
+    .breed-ground {
+      grid-template-columns: 1fr;
+    }
     /* Edit Rabbit */
     .grid-container .main-container .edit-div {
       display: flex;
@@ -423,6 +426,9 @@ body {
     /* Rabbit List */
     .search-filter-div {
       gap: 10px;
+      flex-direction: column;
+    }
+    .scan-result {
       flex-direction: column;
     }
   }

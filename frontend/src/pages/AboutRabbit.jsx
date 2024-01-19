@@ -8,6 +8,7 @@ import { Image, Avatar } from "antd";
 import AdoptForm from "./AdoptForm";
 import appConfig from "../../config.json";
 const BASE_URL = appConfig.apiBasePath;
+const IMAGE_URL = appConfig.imagePath;
 
 function AboutRabbit({ data }) {
   const navigateTo = useNavigate();
@@ -72,7 +73,11 @@ function AboutRabbit({ data }) {
             <Button key="cancel" onClick={handleCancel}>
               Back
             </Button>
-            {adoptionStatus === "Approved" ? <Button disabled>Adopt</Button> : <AdoptForm data={data} />}
+            {adoptionStatus === "Approved" ? (
+              <Button disabled>Adopt</Button>
+            ) : (
+              <AdoptForm data={data} />
+            )}
           </div>,
         ]}
       >
@@ -84,24 +89,22 @@ function AboutRabbit({ data }) {
                   <Avatar
                     shape="square"
                     size={250}
-                    src={
-                      <img
-                        src={`http://localhost:8081/uploads/${image.trim()}`}
-                      />
-                    }
+                    src={<img src={`${IMAGE_URL}/uploads/${image.trim()}`} />}
                   />
                 </Carousel.Item>
               ))}
           </Carousel>
           <div className="about-rabbit-info">
-            {adoptionStatus === "Approved" ? <h1 className="reserved">RESERVED</h1> : null}
+            {adoptionStatus === "Approved" ? (
+              <h1 className="reserved">RESERVED</h1>
+            ) : null}
             <h6>Hi, My name is {data.name}. I am looking for a new home.</h6>
             <div className="d-flex justify-content-between">
               <span>Rabbit Id</span>
               <span>{data.id}</span>
             </div>
             <div className="d-flex justify-content-between">
-              <span>Sex</span>
+              <span>Gender</span>
               <span>{data.sex}</span>
             </div>
             <div className="d-flex justify-content-between">
@@ -126,7 +129,7 @@ function AboutRabbit({ data }) {
               <span>{data.rabbit_type}</span>
             </div>
             <div className="d-flex justify-content-between">
-              <span>Adoption Fee</span> <span> P{data.price}</span>
+              <span>Price</span> <span> P{data.price}</span>
             </div>
           </div>
         </div>

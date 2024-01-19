@@ -23,6 +23,10 @@ function Request() {
   const [filteredValues, setFilteredValues] = useState([]);
   const [selectedStatus, setSelectedStatus] = useState("Pending");
 
+  const capitalizeFirstLetter = (str) => {
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+  };
+
   const fetchUserData = async (values) => {
     try {
       const user = await axios.get(`${BASE_URL}/user/${values.user_id}`);
@@ -172,9 +176,11 @@ function Request() {
     {
       name: "Address",
       cell: (record) => (
-        <span>
-          {record.barangay}, {record.city}, {record.province}
-        </span>
+        <p>
+          {capitalizeFirstLetter(record.barangay)},{" "}
+          {capitalizeFirstLetter(record.city)},{" "}
+          {capitalizeFirstLetter(record.province)}
+        </p>
       ),
     },
     {

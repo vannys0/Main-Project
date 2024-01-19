@@ -46,9 +46,7 @@ function RabbitData() {
             <Carousel>
               {data.image_path.split(",").map((image, index) => (
                 <Carousel.Item key={index}>
-                  <Image
-                    src={`http://localhost:8081/uploads/${image.trim()}`}
-                  />
+                  <Image src={`${BASE_URL}/uploads/${image.trim()}`} />
                 </Carousel.Item>
               ))}
             </Carousel>

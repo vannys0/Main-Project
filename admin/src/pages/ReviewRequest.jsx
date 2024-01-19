@@ -3,6 +3,8 @@ import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import "../Style.css";
 import { Button, Modal } from "antd";
+import appConfig from "../../config.json";
+const IMAGE_URL = appConfig.imagePath;
 
 function ReviewRequest({ data }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -22,6 +24,10 @@ function ReviewRequest({ data }) {
       month: "long",
       day: "numeric",
     });
+  };
+
+  const capitalizeFirstLetter = (str) => {
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
   };
 
   return (
@@ -56,7 +62,9 @@ function ReviewRequest({ data }) {
           <div className="d-flex justify-content-between">
             <p>Address</p>
             <p>
-              {data.province}, {data.city}, {data.barangay}
+              {capitalizeFirstLetter(data.barangay)},{" "}
+              {capitalizeFirstLetter(data.city)},{" "}
+              {capitalizeFirstLetter(data.province)}
             </p>
           </div>
           <div className="d-flex justify-content-between">
@@ -91,7 +99,7 @@ function ReviewRequest({ data }) {
         <div>
           <p>Home Environment</p>
           <img
-            src={`http://localhost:8081/uploads/${data.home_environment_image_path}`}
+            src={`${IMAGE_URL}/uploads/${data.home_environment_image_path}`}
             className="w-100"
           />
         </div>

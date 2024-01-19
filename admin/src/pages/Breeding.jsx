@@ -37,6 +37,28 @@ function Breeding() {
 
   const handleDelete = async (id) => {
     Swal.fire({
+      text: "Are you sure you want to delete this breeding pair?",
+      showCancelButton: true,
+      confirmButtonColor: "#d50000",
+      cancelButtonColor: "#797979",
+      confirmButtonText: "Yes",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Cancelled",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        axios.delete(BASE_URL + "/cancel_breeding/" + id);
+        window.location.reload();
+      }
+    });
+  };
+
+  const handleCancel = async (id) => {
+    Swal.fire({
       text: "Are you sure you want to cancel this breeding pair?",
       showCancelButton: true,
       confirmButtonColor: "#d50000",
@@ -106,7 +128,7 @@ function Breeding() {
           differenceInDays > 30 ? (
             <span onClick={() => handleDelete(record.id)}>Delete</span>
           ) : (
-            <span onClick={() => handleDelete(record.id)}>Cancel</span>
+            <span onClick={() => handleCancel(record.id)}>Cancel</span>
           ),
         key: "2",
         danger: true,

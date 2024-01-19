@@ -135,7 +135,7 @@ function AdminProfile() {
                     }}
                     src={
                       <img
-                        src={`http://localhost:8081/uploads/${userInfo.profile}`}
+                        src={`${BASE_URL}/uploads/${userInfo.profile}`}
                         alt=""
                         style={{ width: "100%" }}
                       />

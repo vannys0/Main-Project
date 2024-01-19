@@ -11,6 +11,7 @@ import AboutRabbit from "./AboutRabbit.jsx";
 import { Link, useNavigate } from "react-router-dom";
 import appConfig from "../../config.json";
 const BASE_URL = appConfig.apiBasePath;
+const IMAGE_URL = appConfig.imagePath;
 
 function Adopt() {
   const [rabbits, setRabbits] = useState([]);
@@ -79,7 +80,7 @@ function Adopt() {
                   src={
                     <img
                       loading="lazy"
-                      src={`http://localhost:8081/uploads/${data.image_path
+                      src={`${IMAGE_URL}/uploads/${data.image_path
                         .split(",")[0]
                         .trim()}`}
                     />

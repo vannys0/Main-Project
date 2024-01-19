@@ -8,6 +8,7 @@ import SecureStore from "react-secure-storage";
 import appConfig from "../../../config.json";
 import { useNavigate, useParams } from "react-router-dom";
 const BASE_URL = appConfig.apiBasePath;
+const IMAGE_URL = appConfig.imagePath;
 
 function UserProfile() {
   const user = SecureStore.getItem("userToken");
@@ -16,11 +17,11 @@ function UserProfile() {
   const [users, setUsers] = useState([]);
   const inputRef = useRef(null);
   const hasProfileImage = users && users.profile;
-  const [onEdit, setOnEdit] = useState(false)
+  const [onEdit, setOnEdit] = useState(false);
 
   const editProfile = () => {
-    setOnEdit(true)
-  }
+    setOnEdit(true);
+  };
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = () => {
@@ -129,7 +130,7 @@ function UserProfile() {
                   }}
                   src={
                     <img
-                      src={`http://localhost:8081/uploads/${users.profile}`}
+                      src={`${IMAGE_URL}/uploads/${users.profile}`}
                       alt=""
                       style={{ width: "100%" }}
                     />

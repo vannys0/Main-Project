@@ -24,6 +24,10 @@ function Delivery() {
       .catch((err) => console.log(err));
   }, []);
 
+  const capitalizeFirstLetter = (str) => {
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+  };
+
   const onApprove = (e, o) => {
     Swal.fire({
       title: "Approve Delivery",
@@ -65,9 +69,10 @@ function Delivery() {
       if (result.isConfirmed) {
         const payload = new FormData();
         const fileName = result.value.name;
+        const currentDate = new Date().toLocaleDateString("en-CA");
         payload.append("file", result.value, fileName);
         payload.append("adoption_id", id);
-        payload.append("transaction_date", new Date().toISOString());
+        payload.append("transaction_date", currentDate);
         payload.append("transaction_status", "Completed");
         payload.append("rabbit_id", rabbit_id);
 
@@ -139,9 +144,11 @@ function Delivery() {
     {
       name: "Address",
       cell: (record) => (
-        <span>
-          {record.barangay}, {record.city}, {record.province}
-        </span>
+        <p>
+          {capitalizeFirstLetter(record.barangay)},{" "}
+          {capitalizeFirstLetter(record.city)},{" "}
+          {capitalizeFirstLetter(record.province)}
+        </p>
       ),
     },
     {

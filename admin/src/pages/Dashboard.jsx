@@ -157,7 +157,7 @@ function Dashboard() {
       sortable: true,
     },
     {
-      name: "Sex",
+      name: "Gender",
       selector: (row) => row.sex,
       sortable: true,
     },

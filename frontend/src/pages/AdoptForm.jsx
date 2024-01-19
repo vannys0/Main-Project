@@ -6,7 +6,6 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { Form } from "react-bootstrap";
 import { Button, Modal } from "antd";
 import Swal from "sweetalert2";
-import Validation from "./Validation/AdoptFormValidation";
 import SecureStore from "react-secure-storage";
 import {
   getAllProvince,
@@ -28,6 +27,10 @@ function AdoptForm({ data }) {
   const [img, setImg] = useState();
   const [mopAgriculture, setmopAgriculture] = useState(false);
 
+  const capitalizeFirstLetter = (str) => {
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+  };
+
   function formatAsDate(date) {
     const day = String(date.getDate()).padStart(2, "0");
     const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -36,7 +39,7 @@ function AdoptForm({ data }) {
   }
   const currentDate = new Date();
   const dateToday = formatAsDate(currentDate);
-
+  const [msgError, setMsgError] = useState({});
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [modalText, setModalText] = useState("Content of the modal");
@@ -119,30 +122,64 @@ function AdoptForm({ data }) {
     setmopAgriculture(selected === "Agriculture" ? true : false);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrors(Validation(values));
-    const formData = new FormData();
-    formData.append("image", img);
-    const postData = JSON.stringify(values);
-    formData.append("values", postData);
 
-    console.log(errors);
+    const validationError = {};
+    const errMessage = "This field is required";
 
-    axios
-      .post(`${BASE_URL}/rabbitdata/${data.id}/adopt-form`, formData)
-      .then((res) => {
-        console.log(res);
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Application Sent",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        navigateTo("/myapplication");
-      })
-      .catch((err) => console.log(err));
+    if (!img) {
+      validationError.image = "No file choosen";
+    }
+    if (values.phone === "") {
+      validationError.phone = errMessage;
+    } else if (values.phone < 0) {
+      validationError.phone = "Invalid phone number";
+    }
+    if (values.province === "") {
+      validationError.province = errMessage;
+    }
+    if (values.city === "") {
+      validationError.city = errMessage;
+    }
+    if (values.barangay === "") {
+      validationError.barangay = errMessage;
+    }
+    if (values.mop === "") {
+      validationError.mop = errMessage;
+    }
+    if (values.serviceoption === "") {
+      validationError.serviceoption = errMessage;
+    }
+    if (values.reason === "") {
+      validationError.reason = errMessage;
+    }
+
+    setMsgError(validationError);
+
+    if (Object.keys(validationError).length === 0) {
+      const formData = new FormData();
+      formData.append("image", img);
+      const postData = JSON.stringify(values);
+      formData.append("values", postData);
+
+      console.log(errors);
+
+      await axios
+        .post(`${BASE_URL}/rabbitdata/${data.id}/adopt-form`, formData)
+        .then((res) => {
+          console.log(res);
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Application Sent",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          navigateTo("/myapplication");
+        })
+        .catch((err) => console.log(err));
+    }
   };
 
   return (
@@ -170,14 +207,14 @@ function AdoptForm({ data }) {
         <form encType="multipart/form-data">
           <label htmlFor="phone">Phone Number</label>
           <input
-            type="tel"
+            type="number"
             name="phone"
             maxLength={11}
             className="form-control"
             inputMode="tel"
             onChange={handleInput}
           />
-          {errors.phone != "" && <span className="error">{errors.phone}</span>}
+          {msgError.phone && <span className="error">{msgError.phone}</span>}
           <br />
           <label>Address</label>
           <div className="address">
@@ -192,12 +229,12 @@ function AdoptForm({ data }) {
                 </option>
                 {prov.map((option) => (
                   <option key={option.id} value={JSON.stringify(option)}>
-                    {option.provDesc}
+                    {capitalizeFirstLetter(option.provDesc)}
                   </option>
                 ))}
               </Form.Select>
-              {errors.province && (
-                <span className="error">{errors.province}</span>
+              {msgError.province && (
+                <span className="error">{msgError.province}</span>
               )}
             </div>
             <div>
@@ -211,11 +248,11 @@ function AdoptForm({ data }) {
                 </option>
                 {citymunOptions.map((option) => (
                   <option key={option.id} value={JSON.stringify(option)}>
-                    {option.citymunDesc}
+                    {capitalizeFirstLetter(option.citymunDesc)}
                   </option>
                 ))}
               </Form.Select>
-              {errors.city && <span className="error">{errors.city}</span>}
+              {msgError.city && <span className="error">{msgError.city}</span>}
             </div>
             <div>
               <Form.Select
@@ -228,12 +265,12 @@ function AdoptForm({ data }) {
                 </option>
                 {brgyOptions.map((option) => (
                   <option key={option.id} value={option.brgyDesc}>
-                    {option.brgyDesc}
+                    {capitalizeFirstLetter(option.brgyDesc)}
                   </option>
                 ))}
               </Form.Select>
-              {errors.barangay && (
-                <span className="error">{errors.barangay}</span>
+              {msgError.barangay && (
+                <span className="error">{msgError.barangay}</span>
               )}
             </div>
           </div>
@@ -241,7 +278,7 @@ function AdoptForm({ data }) {
           <hr />
           <br />
 
-          <label htmlFor="serviceoption">Delivery Option</label>
+          <label htmlFor="serviceoption">Delivery Options</label>
           <Form.Select
             aria-label="Default select example"
             onChange={handleInput}
@@ -253,8 +290,8 @@ function AdoptForm({ data }) {
             <option value="Pick up">Pick Up</option>
             <option value="Deliver">Deliver</option>
           </Form.Select>
-          {errors.serviceoption && (
-            <span className="error">{errors.serviceoption}</span>
+          {msgError.serviceoption && (
+            <span className="error">{msgError.serviceoption}</span>
           )}
           <br />
 
@@ -272,6 +309,7 @@ function AdoptForm({ data }) {
             </option>
             <option value="Agriculture">Agriculture</option>
           </Form.Select>
+          {msgError.mop && <span className="error">{msgError.mop}</span>}
           {mopAgriculture && (
             <div>
               <br />
@@ -307,8 +345,9 @@ function AdoptForm({ data }) {
             accept=".jpeg, .jpg, .png"
             onChange={onFileChange}
           />
+          {msgError.image && <span className="error">{msgError.image}</span>}
           <br />
-          <label htmlFor="reason">Why Did You Choose Rabbit?</label>
+          <label htmlFor="reason">Reason For Adoption</label>
           <Form.Select
             aria-label="Default select example"
             onChange={handleInput}
@@ -321,7 +360,7 @@ function AdoptForm({ data }) {
               Rabbits live a long time
             </option>
             <option value="Rabbits are a great pet">
-              Rabbits are a great pet
+              Rabbits are a great pets
             </option>
             <option value="Rabbits are inexpensive">
               Rabbits are inexpensive
@@ -332,10 +371,9 @@ function AdoptForm({ data }) {
             <option value="Adaptability to indoor living">
               Adaptability to indoor living
             </option>
-            <option value="Other">Other</option>
+            <option value="Other">Others</option>
           </Form.Select>
-          {errors.reason && <span className="error">{errors.reason}</span>}
-
+          {msgError.reason && <span className="error">{msgError.reason}</span>}
           <br />
           <label htmlFor="otherpets">
             Other Pets <i>(Optional)</i>

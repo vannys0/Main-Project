@@ -18,6 +18,7 @@ import SecureStore from "react-secure-storage";
 import { AuthContext } from "../App";
 import appConfig from "../../config.json";
 const BASE_URL = appConfig.apiBasePath;
+const IMAGE_URL = appConfig.imagePath;
 
 function Header({ OpenSidebar }) {
   const user = SecureStore.getItem("userToken");
@@ -143,7 +144,7 @@ function Header({ OpenSidebar }) {
                 <Avatar
                   src={
                     <img
-                      src={`http://localhost:8081/uploads/${userInfo.profile}`}
+                      src={`${IMAGE_URL}/uploads/${userInfo.profile}`}
                       alt=""
                       style={{ width: "100%" }}
                     />

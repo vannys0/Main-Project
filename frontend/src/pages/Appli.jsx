@@ -18,6 +18,10 @@ function Appli({ data }) {
     setIsModalOpen(false);
   };
 
+  const capitalizeFirstLetter = (str) => {
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+  };
+
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString("en-US", {
       year: "numeric",
@@ -114,7 +118,9 @@ function Appli({ data }) {
             <div className="d-flex justify-content-between">
               <p>Address</p>
               <p>
-                {data.barangay}, {data.city}, {data.province}
+                {capitalizeFirstLetter(data.barangay)},{" "}
+                {capitalizeFirstLetter(data.city)},{" "}
+                {capitalizeFirstLetter(data.province)}
               </p>
             </div>
             <div className="d-flex justify-content-between">
@@ -122,7 +128,7 @@ function Appli({ data }) {
               <p>{data.phone}</p>
             </div>
             <div className="d-flex justify-content-between">
-              <p>Delivery Option</p>
+              <p>Delivery Options</p>
               <p>{data.service_option}</p>
             </div>
             <div className="d-flex justify-content-between">
@@ -142,7 +148,7 @@ function Appli({ data }) {
               </>
             ) : null}
             <div className="d-flex justify-content-between">
-              <p>Adoption Fee</p>
+              <p>Price</p>
               <p>Php{data.price}</p>
             </div>
           </div>

@@ -15,6 +15,7 @@ function AddRabbit() {
   const OpenSidebar = () => {
     setOpenSidebarToggle(!openSidebarToggle);
   };
+
   const navigateTo = useNavigate();
   const [file, setFile] = useState([]);
   const [img, setImg] = useState();

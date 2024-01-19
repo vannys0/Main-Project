@@ -24,6 +24,7 @@ import { SearchOutlined } from "@ant-design/icons";
 import Swal from "sweetalert2";
 import appConfig from "../../config.json";
 const BASE_URL = appConfig.apiBasePath;
+const IMAGE_URL = appConfig.imagePath;
 
 function RabbitList() {
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false);
@@ -186,11 +187,7 @@ function RabbitList() {
             {firstImagePath && (
               <Avatar
                 shape="square"
-                src={
-                  <img
-                    src={`http://localhost:8081/uploads/${firstImagePath}`}
-                  />
-                }
+                src={<img src={`${IMAGE_URL}/uploads/${firstImagePath}`} />}
               />
             )}
           </div>

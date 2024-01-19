@@ -7,6 +7,7 @@ import { Button, Avatar } from "antd";
 import axios from "axios";
 import appConfig from "../../config.json";
 const BASE_URL = appConfig.apiBasePath;
+const IMAGE_URL = appConfig.imagePath;
 
 function ScanRabbitQr() {
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false);
@@ -82,7 +83,7 @@ function ScanRabbitQr() {
                         src={
                           <img
                             loading="lazy"
-                            src={`http://localhost:8081/uploads/${data.image_path
+                            src={`${IMAGE_URL}/uploads/${data.image_path
                               .split(",")[0]
                               .trim()}`}
                           />

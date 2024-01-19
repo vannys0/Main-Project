@@ -52,7 +52,6 @@ function App() {
     }
   );
 
-
   const authContext = useMemo(
     () => ({
       signIn: (data) => {
@@ -67,7 +66,6 @@ function App() {
     []
   );
 
-
   useEffect(() => {
     if (!state.userToken) {
       let userToken = SecureStore.getItem("userToken");
@@ -78,7 +76,7 @@ function App() {
   return (
     <AuthContext.Provider value={authContext}>
       <div className="app">
-          <BrowserRouter>
+        <BrowserRouter>
           <Routes>
             <Route
               path="/"
@@ -90,7 +88,13 @@ function App() {
             />
             <Route
               path="/signup/verify_account"
-              element={state.userToken ? <Navigate to="/home" /> : <EmailVerification />}
+              element={
+                state.userToken ? (
+                  <Navigate to="/home" />
+                ) : (
+                  <EmailVerification />
+                )
+              }
             />
             <Route
               path="/home"

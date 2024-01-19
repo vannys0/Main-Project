@@ -10,6 +10,7 @@ import DataTable from "react-data-table-component";
 import Default from "../images/default-profile.png";
 import appConfig from "../../config.json";
 const BASE_URL = appConfig.apiBasePath;
+const IMAGE_URL = appConfig.imagePath;
 
 function Clients() {
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false);
@@ -49,11 +50,7 @@ function Clients() {
         return (
           <Avatar
             shape="square"
-            src={
-              row.profile
-                ? `http://localhost:8081/uploads/${row.profile}`
-                : Default
-            }
+            src={row.profile ? `${IMAGE_URL}/uploads/${row.profile}` : Default}
             alt=""
           />
         );

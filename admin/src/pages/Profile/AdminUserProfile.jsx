@@ -6,13 +6,14 @@ import { UserOutlined, UploadOutlined } from "@ant-design/icons";
 import { Upload, Button, Avatar, Image, Modal } from "antd";
 import ImgCrop from "antd-img-crop";
 import {} from "@ant-design/icons";
-import appConfig from "../../../config.json";
-const BASE_URL = appConfig.apiBasePath;
 import SecureStore from "react-secure-storage";
 import Default from "../../images/default-profile.png";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import appConfig from "../../../config.json";
+const BASE_URL = appConfig.apiBasePath;
+const IMAGE_URL = appConfig.imagePath;
 
 function AdminUserProfile() {
   const user = SecureStore.getItem("userToken");
@@ -129,7 +130,7 @@ function AdminUserProfile() {
                   }}
                   src={
                     <img
-                      src={`http://localhost:8081/uploads/${userInfo.profile}`}
+                      src={`${IMAGE_URL}/uploads/${userInfo.profile}`}
                       alt=""
                       style={{ width: "100%" }}
                     />

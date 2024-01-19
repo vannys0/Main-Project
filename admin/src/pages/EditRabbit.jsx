@@ -20,7 +20,8 @@ import { breedType, rabbitColor } from "./API/RabbitApi";
 import Swal from "sweetalert2";
 import RabbitQr from "./RabbitQr";
 import appConfig from "../../config.json";
-const BASE_URL = appConfig.apiBasePath; //e.g "http://localhost:8080/api"
+const BASE_URL = appConfig.apiBasePath;
+const IMAGE_URL = appConfig.imagePath;
 
 function EditRabbit() {
   const [openSidebarToggle, setOpenSidebarToggle] = useState(false);
@@ -109,7 +110,7 @@ function EditRabbit() {
                         margin: "auto",
                         width: "100%",
                       }}
-                      src={`http://localhost:8081/uploads/${image.trim()}`}
+                      src={`${IMAGE_URL}/uploads/${image.trim()}`}
                       alt=""
                     />
                   </Carousel.Item>

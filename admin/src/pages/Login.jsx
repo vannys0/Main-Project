@@ -96,7 +96,7 @@ function Login() {
           <div className="inputs">
             {emailError && (
               <div
-                className="alert alert-warning d-flex align-items-center"
+                className="alert alert-warning d-flex justify-content-center align-items-center"
                 role="alert"
               >
                 <div>Invalid email format</div>
@@ -104,7 +104,7 @@ function Login() {
             )}
             {showAlert && (
               <div
-                className="d-flex align-items-center alert alert-danger"
+                className="d-flex align-items-center justify-content-center alert alert-warning"
                 role="alert"
               >
                 Incorrect email or password
@@ -112,7 +112,7 @@ function Login() {
             )}
             {errorLogin && (
               <div
-                className="d-flex align-items-center alert alert-danger"
+                className="d-flex align-items-center justify-content-center alert alert-danger"
                 role="alert"
               >
                 <div>An error occurred during login</div>
@@ -160,9 +160,9 @@ function Login() {
           <button type="submit" className="submit login-btn">
             Sign in
           </button>
-          <div>
+          {/* <div>
             Don't have an account? <Link to="/register">Sign up</Link>
-          </div>
+          </div> */}
         </form>
       </div>
     </div>

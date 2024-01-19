@@ -108,7 +108,7 @@ function Profile() {
                 }}
                 src={
                   <img
-                    src={`http://localhost:8081/uploads/${users.profile}`}
+                    src={`${BASE_URL}/uploads/${users.profile}`}
                     alt=""
                     style={{ width: "100%" }}
                   />

@@ -1,3 +1,4 @@
 {
-    "apiBasePath" : "http://localhost:8081/api"
+    "apiBasePath" : "https://api.eleporidae.online/api",
+    "imagePath" : "https://api.eleporidae.online"
 }

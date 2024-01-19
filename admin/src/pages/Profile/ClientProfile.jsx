@@ -49,7 +49,7 @@ function ClientProfile() {
                 }}
                 src={
                   <img
-                    src={`http://localhost:8081/uploads/${clients.profile}`}
+                    src={`${BASE_URL}/uploads/${clients.profile}`}
                     alt=""
                     style={{ width: "100%" }}
                   />
