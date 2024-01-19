@@ -25,6 +25,7 @@ import AddBreedingChild from "./pages/AddBreedingChild";
 import Clients from "./pages/Clients";
 import ScanRabbitQr from "./pages/ScanRabbitQr";
 import Transactions from "./pages/Transactions";
+import FamilyTree from "./pages/FamilyTree";
 
 function App() {
   const signIn = useContext(AuthContext);
@@ -161,6 +162,16 @@ function App() {
         <div>
           <PrivateRoute>
             <Transactions />
+          </PrivateRoute>
+        </div>
+      ),
+    },
+    {
+      path: "/family",
+      element: (
+        <div>
+          <PrivateRoute>
+            <FamilyTree />
           </PrivateRoute>
         </div>
       ),
