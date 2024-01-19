@@ -16,6 +16,9 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+const bcrypt = require('bcrypt')
+const saltRounds = 10;
+
 router.post("/send-email", (req, res) => {
   const { email, subject, message } = req.body;
   console.log(email, subject, message);
@@ -72,15 +75,21 @@ router.post("/login", (req, res) => {
   console.log(req.body);
   const email = req.body.LoginUserName;
   const password = req.body.LoginPassword;
-  const values = [req.body.LoginUserName, req.body.LoginPassword];
   db.query(
-    "SELECT * FROM user where email = ? AND password = ? AND user_type='admin'",
+    "SELECT * FROM user where `email` = ? AND `user_type` = 'admin'",
     [email, password],
     (err, results) => {
       if (err) {
         return err;
       }
-      return res.json(results);
+      console.log(results);
+      console.log(password + " : "+  results[0].password);
+      if(bcrypt.compareSync(password, results[0].password)){
+        return res.json(results);
+      }else{
+        return res.json({ Message: "Failed" });
+      }
+
     }
   );
 });
@@ -88,13 +97,15 @@ router.post("/login", (req, res) => {
 router.post("/register", (req, res) => {
   let randomID = Math.floor(100000 + Math.random() * 900000);
   const id = `user${randomID}`;
+  const hashPassword = bcrypt.hashSync(req.body.password, saltRounds); //how to hash password
   const values = [
     id,
     req.body.fullname,
     req.body.email,
-    req.body.password,
+    hashPassword,
     req.body.user_type,
   ];
+
   const sql =
     "INSERT INTO user (`id`, `name`, `email`, `password`, `user_type`) VALUES (?)";
   db.query(sql, [values], (err, result) => {
