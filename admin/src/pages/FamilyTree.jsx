@@ -44,9 +44,6 @@ function FamilTree() {
 
     const handleInputSelect = (value) => {
         const rabbit = JSON.parse(value);
-        console.log(rabbit);
-
-        console.log(rabbit.id);
         var orgChart = {
             name: rabbit.id,
             attributes: { name: rabbit.name},
@@ -81,6 +78,7 @@ function FamilTree() {
 
             for await (var key of mapRabbit.keys()) {
                 if (mapRabbit.get(key).breeding_pair_id !== null) {
+
                     const gkey = mapRabbit.get(
                         mapBP.get(mapRabbit.get(key).breeding_pair_id).buck_id
                     ).id;
@@ -91,11 +89,24 @@ function FamilTree() {
                     } else {
                         mapGenealogy.set(gkey, [mapRabbit.get(key)]);
                     }
+
+                    const doeKey = mapRabbit.get(
+                        mapBP.get(mapRabbit.get(key).breeding_pair_id).doe_id
+                    ).id;
+                    if (mapGenealogy.has(doeKey)) {
+                        let v = mapGenealogy.get(doeKey);
+                        v.push(mapRabbit.get(key));
+                        mapGenealogy.set(doeKey, v);
+                    } else {
+                        mapGenealogy.set(doeKey, [mapRabbit.get(key)]);
+                    }
+
                 } else {
                     mapGenealogy.set(key, []);
                 }
             }
             // setCurrentRabbit(mapRabbit.get("rabbit101874"));
+            console.log(mapGenealogy);
             setGeneology(mapGenealogy);
         }
         fetchMyAPI();
@@ -173,7 +184,7 @@ function FamilTree() {
                 };
 
                 p.name = parent.id;
-                p.attributes = { name: parent.name };
+                p.attributes = { name: parent.name};
                 p.children = ancestors(g, parent.id);
                 result = result.concat(p);
             });
@@ -193,11 +204,6 @@ function FamilTree() {
             <div className="main-container bg-light">
                 <div className="d-flex justify-content-between">
                     <h3>Genealogy</h3>
-                    {
-                    
-                    
-                    console.log(data[0])
-                    }
                     <Select onChange={(value) => handleInputSelect(value)} style={{ width: "25%" }} placeholder="Rabbits">
                         {data.map((data, i) => (
                                 <Select.Option value={JSON.stringify(data)} key={i}>
@@ -212,7 +218,7 @@ function FamilTree() {
                     style={{ width: "50em", height: "20em" }}
                     className="d-flex justify-content-between h-100 w-100"
                 >
-                    <Tree data={rabbitGen} />
+                    <Tree data={rabbitGen} translate={{x: 20, y: 300}}/>
                 </div>
             </div>
         </div>
