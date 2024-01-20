@@ -26,6 +26,8 @@ function BreedPair() {
   const [image1, setImage1] = useState(null);
   const inputRef = useRef(null);
   const inputRef1 = useRef(null);
+  const [maleRabbit, setMaleRabbit] = useState({});
+  const [femaleRabbit, setFeMaleRabbit] = useState({});
 
   const handleImageChange = async (e) => {
     const file = e.target.files[0];
@@ -208,6 +210,7 @@ function BreedPair() {
           `${BASE_URL}/get_sex?id=${scanResult}`
         );
         const rabbitData = response.data[0];
+        setMaleRabbit(rabbitData);
 
         if (rabbitData) {
           setRabbit(rabbitData);
@@ -244,6 +247,7 @@ function BreedPair() {
           `${BASE_URL}/get_sex?id=${scanResult1}`
         );
         const rabbitData = response.data[0];
+        setFeMaleRabbit(rabbitData);
 
         if (rabbitData) {
           setRabbit1(rabbitData);
@@ -272,10 +276,26 @@ function BreedPair() {
       }
     };
 
-    fetchData();
+    fetchData();  
   }, [scanResult1]);
 
   const onPair = () => {
+    
+    if(maleRabbit.breeding_pair_id === null || femaleRabbit.breeding_pair_id === null){
+      onSave();
+      return
+    }
+
+    if(maleRabbit.breeding_pair_id === femaleRabbit.breeding_pair_id){
+      Swal.fire({
+        position: "center",
+        icon: "info",
+        title: "Oops...",
+        text: "Siblings is not allowed",
+      });
+      return;
+    }
+
     if (!scanResult && !scanResult1) {
       Swal.fire({
         position: "center",
@@ -311,6 +331,13 @@ function BreedPair() {
       });
       return;
     }
+
+    onSave();
+
+    console.log("onpair");
+  };
+
+  function onSave(){
 
     const currentDate = new Date();
     const futureDate = new Date();
@@ -370,9 +397,7 @@ function BreedPair() {
           .catch((err) => console.log(err));
       }
     });
-
-    console.log("onpair");
-  };
+  }
 
   return (
     <div className="grid-container">
