@@ -40,3 +40,6 @@ app.use("/api", config);
 
 const transaction = require("./routes/transaction");
 app.use("/api", transaction);
+
+const family = require("./routes/family");
+app.use("/api", family);
