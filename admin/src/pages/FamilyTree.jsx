@@ -98,10 +98,10 @@ function FamilTree() {
                 .get(BASE_URL + "/family-breeding")
                 .then((res) => res.data);
 
-            let mapBP = await new Map();
-            let mapRabbit = await new Map();
-            let mapRabbitByBreedingPair = await new Map();
-            let mapGenealogy = await new Map();
+            const mapBP = new Map();
+            const mapRabbit = new Map();
+            const mapRabbitByBreedingPair = new Map();
+            const mapGenealogy = new Map();
 
             for (let i = 0; i < rabbits.length; i++) {
                 const id = rabbits[i].id;
@@ -118,24 +118,25 @@ function FamilTree() {
             }
 
             for (let i = 0; i < breedingPairs.length; i++) {
-                const id = breedingPairs[i].id;
+                let id = breedingPairs[i].id;
                 const buckId = breedingPairs[i].buck_id;
                 const doeId = breedingPairs[i].doe_id;
 
                 mapBP.set(id, breedingPairs[i]);
-
                 if (mapGenealogy.has(buckId)) {
                     const v = mapGenealogy.get(buckId);
-                    mapGenealogy.set(buckId, [...v, ...mapRabbitByBreedingPair.get(id)]);
+                    const v2 = mapRabbitByBreedingPair.get(id) === undefined ? [] : mapRabbitByBreedingPair.get(id);
+                    mapGenealogy.set(buckId, [...v, ...v2]);
                 } else {
                     mapGenealogy.set(buckId, mapRabbitByBreedingPair.get(id));
                 }
 
                 if (mapGenealogy.has(doeId)) {
                     const v = mapGenealogy.get(doeId);
-                    mapGenealogy.set(doeId, [...v, ...mapRabbitByBreedingPair.get(id)]);
+                    const v2 = mapRabbitByBreedingPair.get(id) === undefined ? [] : mapRabbitByBreedingPair.get(id);
+                    mapGenealogy.set(doeId, [...v, ...v2]);
                 } else {
-                    mapGenealogy.set(doeId, mapRabbitByBreedingPair.get(id));
+                    mapGenealogy.set(doeId, mapRabbitByBreedingPair.get(id) === undefined ? [] : mapRabbitByBreedingPair.get(id));
                 }
             }
             setGeneology(mapGenealogy);
