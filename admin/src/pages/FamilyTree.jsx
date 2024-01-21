@@ -126,16 +126,14 @@ function FamilTree() {
 
                 if (mapGenealogy.has(buckId)) {
                     const v = mapGenealogy.get(buckId);
-                    v.push(mapRabbitByBreedingPair.get(id));
-                    mapGenealogy.set(buckId, v);
+                    mapGenealogy.set(buckId, [...v, ...mapRabbitByBreedingPair.get(id)]);
                 } else {
                     mapGenealogy.set(buckId, mapRabbitByBreedingPair.get(id));
                 }
 
                 if (mapGenealogy.has(doeId)) {
                     const v = mapGenealogy.get(doeId);
-                    v.push(mapRabbitByBreedingPair.get(id));
-                    mapGenealogy.set(doeId, v);
+                    mapGenealogy.set(doeId, [...v, ...mapRabbitByBreedingPair.get(id)]);
                 } else {
                     mapGenealogy.set(doeId, mapRabbitByBreedingPair.get(id));
                 }
