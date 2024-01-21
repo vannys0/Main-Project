@@ -128,7 +128,7 @@ function FamilTree() {
                     const v2 = mapRabbitByBreedingPair.get(id) === undefined ? [] : mapRabbitByBreedingPair.get(id);
                     mapGenealogy.set(buckId, [...v, ...v2]);
                 } else {
-                    mapGenealogy.set(buckId, mapRabbitByBreedingPair.get(id));
+                    mapGenealogy.set(buckId, mapRabbitByBreedingPair.get(id) === undefined ? [] : mapRabbitByBreedingPair.get(id));
                 }
 
                 if (mapGenealogy.has(doeId)) {
