@@ -14,48 +14,81 @@ function FamilTree() {
     const [geneology, setGeneology] = useState(new Map());
     const [data, setData] = useState([]);
     const [rabbitGen, setRabbitGen] = useState({});
-
     const OpenSidebar = () => {
         setOpenSidebarToggle(!openSidebarToggle);
     };
-
-    // useEffect(() => {
-    //     axios
-    //         .get(BASE_URL + "/family-rabbits")
-    //         .then((res) => {
-    //             console.log(res);
-    //             setData(res.data);
-    //         })
-    //         .catch((err) => console.log(err));
-    //     console.log("current rabt");
-    //     console.log(data[0].id);
-
-    //     var orgChart = {
-    //         name: data[0].id,
-    //         attributes: { name: data[0].name},
-    //         children: ancestors(geneology, data[0].id),
-    //     };
-    //     setRabbitGen(orgChart);
-
-        
-       
-    // }, []);
-
 
     const handleInputSelect = (value) => {
         const rabbit = JSON.parse(value);
         var orgChart = {
             name: rabbit.id,
-            attributes: { name: rabbit.name},
+            attributes: { name: rabbit.name },
             children: ancestors(geneology, rabbit.id),
         };
         setRabbitGen(orgChart);
-        
+
     };
 
     useEffect(() => {
-        async function fetchMyAPI() {
+        //old implementation
+        // async function fetchMyAPI() {
 
+        //     let rabbits = await axios
+        //         .get(BASE_URL + "/family-rabbits")
+        //         .then((res) => res.data);
+
+        //     setData(rabbits); // Option component
+        //     let breedingPairs = await axios
+        //         .get(BASE_URL + "/family-breeding")
+        //         .then((res) => res.data);
+
+        //     let mapBP = await new Map();
+        //     let mapRabbit = await new Map();
+        //     let mapGenealogy = await new Map();
+
+        //     for (let i = 0; i < rabbits.length; i++) {
+        //         mapRabbit.set(rabbits[i].id, rabbits[i]);
+        //     }
+        //     for (let i = 0; i < breedingPairs.length; i++) {
+        //         mapBP.set(breedingPairs[i].id, breedingPairs[i]);
+        //     }
+
+        //     for await (var key of mapRabbit.keys()) {
+        //         if (mapRabbit.get(key).breeding_pair_id !== null) {
+
+        //             const gkey = mapRabbit.get(
+        //                 mapBP.get(mapRabbit.get(key).breeding_pair_id).buck_id
+        //             ).id;
+        //             if (mapGenealogy.has(gkey)) {
+        //                 let v = mapGenealogy.get(gkey);
+        //                 v.push(mapRabbit.get(key));
+        //                 mapGenealogy.set(gkey, v);
+        //             } else {
+        //                 mapGenealogy.set(gkey, [mapRabbit.get(key)]);
+        //             }
+
+        //             const doeKey = mapRabbit.get(
+        //                 mapBP.get(mapRabbit.get(key).breeding_pair_id).doe_id
+        //             ).id;
+        //             if (mapGenealogy.has(doeKey)) {
+        //                 let v = mapGenealogy.get(doeKey);
+        //                 v.push(mapRabbit.get(key));
+        //                 mapGenealogy.set(doeKey, v);
+        //             } else {
+        //                 mapGenealogy.set(doeKey, [mapRabbit.get(key)]);
+        //             }
+
+        //         } else {
+        //             mapGenealogy.set(key, []);
+        //         }
+        //     }
+        //     // setCurrentRabbit(mapRabbit.get("rabbit101874"));
+        //     console.log(mapGenealogy);
+        //     setGeneology(mapGenealogy);
+        // }
+
+        //new implementation of tree
+        async function fetchData() {
             let rabbits = await axios
                 .get(BASE_URL + "/family-rabbits")
                 .then((res) => res.data);
@@ -67,50 +100,62 @@ function FamilTree() {
 
             let mapBP = await new Map();
             let mapRabbit = await new Map();
+            let mapRabbitByBreedingPair = await new Map();
             let mapGenealogy = await new Map();
 
             for (let i = 0; i < rabbits.length; i++) {
-                mapRabbit.set(rabbits[i].id, rabbits[i]);
-            }
-            for (let i = 0; i < breedingPairs.length; i++) {
-                mapBP.set(breedingPairs[i].id, breedingPairs[i]);
-            }
+                const id = rabbits[i].id;
+                const breedingPairId = rabbits[i].breeding_pair_id;
+                mapRabbit.set(id, rabbits[i]);
 
-            for await (var key of mapRabbit.keys()) {
-                if (mapRabbit.get(key).breeding_pair_id !== null) {
-
-                    const gkey = mapRabbit.get(
-                        mapBP.get(mapRabbit.get(key).breeding_pair_id).buck_id
-                    ).id;
-                    if (mapGenealogy.has(gkey)) {
-                        let v = mapGenealogy.get(gkey);
-                        v.push(mapRabbit.get(key));
-                        mapGenealogy.set(gkey, v);
-                    } else {
-                        mapGenealogy.set(gkey, [mapRabbit.get(key)]);
-                    }
-
-                    const doeKey = mapRabbit.get(
-                        mapBP.get(mapRabbit.get(key).breeding_pair_id).doe_id
-                    ).id;
-                    if (mapGenealogy.has(doeKey)) {
-                        let v = mapGenealogy.get(doeKey);
-                        v.push(mapRabbit.get(key));
-                        mapGenealogy.set(doeKey, v);
-                    } else {
-                        mapGenealogy.set(doeKey, [mapRabbit.get(key)]);
-                    }
-
+                if (mapRabbitByBreedingPair.has(breedingPairId)) {
+                    const v = mapRabbitByBreedingPair.get(breedingPairId);
+                    v.push(rabbits[i]);
+                    mapRabbitByBreedingPair.set(breedingPairId, v);
                 } else {
-                    mapGenealogy.set(key, []);
+                    mapRabbitByBreedingPair.set(breedingPairId, [rabbits[i]]);
                 }
             }
-            // setCurrentRabbit(mapRabbit.get("rabbit101874"));
-            console.log(mapGenealogy);
+
+            for (let i = 0; i < breedingPairs.length; i++) {
+                const id = breedingPairs[i].id;
+                const buckId = breedingPairs[i].buck_id;
+                const doeId = breedingPairs[i].doe_id;
+
+                mapBP.set(id, breedingPairs[i]);
+
+                if (mapGenealogy.has(buckId)) {
+                    const v = mapGenealogy.get(buckId);
+                    v.push(mapRabbitByBreedingPair.get(id));
+                    mapGenealogy.set(buckId, v);
+                } else {
+                    mapGenealogy.set(buckId, mapRabbitByBreedingPair.get(id));
+                }
+
+                if (mapGenealogy.has(doeId)) {
+                    const v = mapGenealogy.get(doeId);
+                    v.push(mapRabbitByBreedingPair.get(id));
+                    mapGenealogy.set(doeId, v);
+                } else {
+                    mapGenealogy.set(doeId, mapRabbitByBreedingPair.get(id));
+                }
+            }
             setGeneology(mapGenealogy);
+            setDefaultTree(rabbits, mapGenealogy);
+
         }
-        fetchMyAPI();
+        // fetchMyAPI();
+        fetchData();
     }, []);
+
+    function setDefaultTree(rabbits, mapGenealogy) {
+        var orgChart = {
+            name: rabbits[0].id,
+            attributes: { name: rabbits[0].name },
+            children: ancestors(mapGenealogy, rabbits[0].id),
+        };
+        setRabbitGen(orgChart);
+    }
 
     //   const handleSearch = (event) => {
     //     const value = event.target.value.toLowerCase();
@@ -184,7 +229,7 @@ function FamilTree() {
                 };
 
                 p.name = parent.id;
-                p.attributes = { name: parent.name};
+                p.attributes = { name: parent.name };
                 p.children = ancestors(g, parent.id);
                 result = result.concat(p);
             });
@@ -206,10 +251,10 @@ function FamilTree() {
                     <h3>Genealogy</h3>
                     <Select onChange={(value) => handleInputSelect(value)} style={{ width: "25%" }} placeholder="Rabbits">
                         {data.map((data, i) => (
-                                <Select.Option value={JSON.stringify(data)} key={i}>
-                                    {data.name}
-                                </Select.Option>
-                            ))}
+                            <Select.Option value={JSON.stringify(data)} key={i}>
+                                {data.name}
+                            </Select.Option>
+                        ))}
                     </Select>
                 </div>
 
@@ -218,7 +263,7 @@ function FamilTree() {
                     style={{ width: "50em", height: "20em" }}
                     className="d-flex justify-content-between h-100 w-100"
                 >
-                    <Tree data={rabbitGen} translate={{x: 20, y: 300}}/>
+                    <Tree data={rabbitGen} translate={{ x: 20, y: 300 }} />
                 </div>
             </div>
         </div>
